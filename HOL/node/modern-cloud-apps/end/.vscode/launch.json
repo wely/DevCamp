@@ -1,0 +1,55 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/app.js",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
+            "runtimeExecutable": null,
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "NODE_ENV": "development",
+
+                //"AZURE_STORAGE_ACCOUNT": "incidentblobs4w5agyt32va",
+                //"AZURE_STORAGE_ACCESS_KEY": "nFPdD3Ac41CiUYoB/bApo2iRFK/8XGouY17lY7Q3EGo2MYAOSj8t5vYTyRGrwjlAmggHvn0jXPzJA9Jq4eiLLw=="
+
+                "AZURE_STORAGE_ACCOUNT": "citypower",
+                "AZURE_STORAGE_ACCESS_KEY": "MMd4BVxKeDzCtItxYP3NJ53nu30s0pBC6Uw+7h7A9WFour6EpF3GbRSdFLcWZcE8c7URTab8JFE7yhA6Vtp13g==",
+                "AZURE_STORAGE_BLOB_CONTAINER": "images",
+                "AZURE_STORAGE_QUEUE": "thumbnails"
+                
+            },
+            "console": "internalConsole",
+            "sourceMaps": false,
+            "outFiles": []
+        },
+        {
+            "name": "Attach",
+            "type": "node",
+            "request": "attach",
+            "port": 5858,
+            "address": "localhost",
+            "restart": false,
+            "sourceMaps": false,
+            "outFiles": [],
+            "localRoot": "${workspaceRoot}",
+            "remoteRoot": null
+        },
+        {
+            "name": "Attach to Process",
+            "type": "node",
+            "request": "attach",
+            "processId": "${command.PickProcess}",
+            "port": 5858,
+            "sourceMaps": false,
+            "outFiles": []
+        }
+    ]
+}
