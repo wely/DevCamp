@@ -5,16 +5,16 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DevCamp.API;
-using DevCamp.API.Models;
+using IncidentAPI;
+using IncidentAPI.Models;
 using Microsoft.Rest;
 
-namespace DevCamp.API
+namespace IncidentAPI
 {
     public static partial class IncidentOperationsExtensions
     {
         /// <param name='operations'>
-        /// Reference to the DevCamp.API.IIncidentOperations.
+        /// Reference to the IncidentAPI.IIncidentOperations.
         /// </param>
         /// <param name='newIncident'>
         /// Required.
@@ -29,7 +29,7 @@ namespace DevCamp.API
         }
         
         /// <param name='operations'>
-        /// Reference to the DevCamp.API.IIncidentOperations.
+        /// Reference to the IncidentAPI.IIncidentOperations.
         /// </param>
         /// <param name='newIncident'>
         /// Required.
@@ -44,7 +44,7 @@ namespace DevCamp.API
         }
         
         /// <param name='operations'>
-        /// Reference to the DevCamp.API.IIncidentOperations.
+        /// Reference to the IncidentAPI.IIncidentOperations.
         /// </param>
         public static string GetAllIncidents(this IIncidentOperations operations)
         {
@@ -56,7 +56,7 @@ namespace DevCamp.API
         }
         
         /// <param name='operations'>
-        /// Reference to the DevCamp.API.IIncidentOperations.
+        /// Reference to the IncidentAPI.IIncidentOperations.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -68,7 +68,7 @@ namespace DevCamp.API
         }
         
         /// <param name='operations'>
-        /// Reference to the DevCamp.API.IIncidentOperations.
+        /// Reference to the IncidentAPI.IIncidentOperations.
         /// </param>
         public static int GetAllIncidentsCount(this IIncidentOperations operations)
         {
@@ -80,7 +80,7 @@ namespace DevCamp.API
         }
         
         /// <param name='operations'>
-        /// Reference to the DevCamp.API.IIncidentOperations.
+        /// Reference to the IncidentAPI.IIncidentOperations.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -92,7 +92,7 @@ namespace DevCamp.API
         }
         
         /// <param name='operations'>
-        /// Reference to the DevCamp.API.IIncidentOperations.
+        /// Reference to the IncidentAPI.IIncidentOperations.
         /// </param>
         /// <param name='incidentId'>
         /// Required.
@@ -107,7 +107,7 @@ namespace DevCamp.API
         }
         
         /// <param name='operations'>
-        /// Reference to the DevCamp.API.IIncidentOperations.
+        /// Reference to the IncidentAPI.IIncidentOperations.
         /// </param>
         /// <param name='incidentId'>
         /// Required.
@@ -122,7 +122,7 @@ namespace DevCamp.API
         }
         
         /// <param name='operations'>
-        /// Reference to the DevCamp.API.IIncidentOperations.
+        /// Reference to the IncidentAPI.IIncidentOperations.
         /// </param>
         public static int GetIncidentCount(this IIncidentOperations operations)
         {
@@ -134,7 +134,7 @@ namespace DevCamp.API
         }
         
         /// <param name='operations'>
-        /// Reference to the DevCamp.API.IIncidentOperations.
+        /// Reference to the IncidentAPI.IIncidentOperations.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

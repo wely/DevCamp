@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 
-namespace DevCamp.API.Models
+namespace IncidentAPI.Models
 {
     public partial class Incident
     {

@@ -4,12 +4,12 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using DevCamp.API;
+using IncidentAPI;
 using Microsoft.Rest;
 
-namespace DevCamp.API
+namespace IncidentAPI
 {
-    public partial class APIClient : ServiceClient<APIClient>, IAPIClient
+    public partial class IncidentAPIClient : ServiceClient<IncidentAPIClient>, IIncidentAPIClient
     {
         private Uri _baseUri;
         
@@ -41,9 +41,9 @@ namespace DevCamp.API
         }
         
         /// <summary>
-        /// Initializes a new instance of the APIClient class.
+        /// Initializes a new instance of the IncidentAPIClient class.
         /// </summary>
-        public APIClient()
+        public IncidentAPIClient()
             : base()
         {
             this._incident = new IncidentOperations(this);
@@ -51,13 +51,13 @@ namespace DevCamp.API
         }
         
         /// <summary>
-        /// Initializes a new instance of the APIClient class.
+        /// Initializes a new instance of the IncidentAPIClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public APIClient(params DelegatingHandler[] handlers)
+        public IncidentAPIClient(params DelegatingHandler[] handlers)
             : base(handlers)
         {
             this._incident = new IncidentOperations(this);
@@ -65,7 +65,7 @@ namespace DevCamp.API
         }
         
         /// <summary>
-        /// Initializes a new instance of the APIClient class.
+        /// Initializes a new instance of the IncidentAPIClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -74,7 +74,7 @@ namespace DevCamp.API
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public APIClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers)
+        public IncidentAPIClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers)
             : base(rootHandler, handlers)
         {
             this._incident = new IncidentOperations(this);
@@ -82,7 +82,7 @@ namespace DevCamp.API
         }
         
         /// <summary>
-        /// Initializes a new instance of the APIClient class.
+        /// Initializes a new instance of the IncidentAPIClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -91,7 +91,7 @@ namespace DevCamp.API
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public APIClient(Uri baseUri, params DelegatingHandler[] handlers)
+        public IncidentAPIClient(Uri baseUri, params DelegatingHandler[] handlers)
             : this(handlers)
         {
             if (baseUri == null)
@@ -102,7 +102,7 @@ namespace DevCamp.API
         }
         
         /// <summary>
-        /// Initializes a new instance of the APIClient class.
+        /// Initializes a new instance of the IncidentAPIClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials for authenticating with the service.
@@ -111,7 +111,7 @@ namespace DevCamp.API
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public APIClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers)
+        public IncidentAPIClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers)
             : this(handlers)
         {
             if (credentials == null)
@@ -127,7 +127,7 @@ namespace DevCamp.API
         }
         
         /// <summary>
-        /// Initializes a new instance of the APIClient class.
+        /// Initializes a new instance of the IncidentAPIClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -139,7 +139,7 @@ namespace DevCamp.API
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public APIClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers)
+        public IncidentAPIClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers)
             : this(handlers)
         {
             if (baseUri == null)

@@ -48,6 +48,14 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
@@ -169,23 +177,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APIClient\APIClient.cs" />
-    <Compile Include="APIClient\APIClientExtensions.cs" />
-    <Compile Include="APIClient\IAPIClient.cs" />
-    <Compile Include="APIClient\IIncidentOperations.cs" />
-    <Compile Include="APIClient\IncidentOperations.cs" />
-    <Compile Include="APIClient\IncidentOperationsExtensions.cs" />
-    <Compile Include="APIClient\Models\Incident.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\NewController.cs" />
+    <Compile Include="Controllers\IncidentController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IncidentAPIClient\IIncidentAPIClient.cs" />
+    <Compile Include="IncidentAPIClient\IIncidentOperations.cs" />
+    <Compile Include="IncidentAPIClient\IncidentAPIClient.cs" />
+    <Compile Include="IncidentAPIClient\IncidentAPIClientExtensions.cs" />
+    <Compile Include="IncidentAPIClient\IncidentOperations.cs" />
+    <Compile Include="IncidentAPIClient\IncidentOperationsExtensions.cs" />
+    <Compile Include="IncidentAPIClient\Models\Incident.cs" />
+    <Compile Include="Mappers\IncidentMappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\IncidentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\street.jpg">
@@ -207,8 +217,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\New\Index.cshtml" />
+    <Content Include="Views\Incident\Create.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Incident\Details.cshtml" />
+    <Content Include="Views\Incident\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

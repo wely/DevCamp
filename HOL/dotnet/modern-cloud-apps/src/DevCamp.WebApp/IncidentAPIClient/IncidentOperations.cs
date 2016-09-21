@@ -10,14 +10,14 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DevCamp.API;
-using DevCamp.API.Models;
+using IncidentAPI;
+using IncidentAPI.Models;
 using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
-namespace DevCamp.API
+namespace IncidentAPI
 {
-    internal partial class IncidentOperations : IServiceOperations<APIClient>, IIncidentOperations
+    internal partial class IncidentOperations : IServiceOperations<IncidentAPIClient>, IIncidentOperations
     {
         /// <summary>
         /// Initializes a new instance of the IncidentOperations class.
@@ -25,17 +25,17 @@ namespace DevCamp.API
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal IncidentOperations(APIClient client)
+        internal IncidentOperations(IncidentAPIClient client)
         {
             this._client = client;
         }
         
-        private APIClient _client;
+        private IncidentAPIClient _client;
         
         /// <summary>
-        /// Gets a reference to the DevCamp.API.APIClient.
+        /// Gets a reference to the IncidentAPI.IncidentAPIClient.
         /// </summary>
-        public APIClient Client
+        public IncidentAPIClient Client
         {
             get { return this._client; }
         }

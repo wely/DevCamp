@@ -4,9 +4,9 @@
 using System;
 using System.Linq;
 
-namespace DevCamp.API
+namespace IncidentAPI
 {
-    public static partial class APIClientExtensions
+    public static partial class IncidentAPIClientExtensions
     {
     }
 }

@@ -5,10 +5,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DevCamp.API.Models;
+using IncidentAPI.Models;
 using Microsoft.Rest;
 
-namespace DevCamp.API
+namespace IncidentAPI
 {
     public partial interface IIncidentOperations
     {

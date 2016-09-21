@@ -3,12 +3,12 @@
 
 using System;
 using System.Linq;
-using DevCamp.API;
+using IncidentAPI;
 using Microsoft.Rest;
 
-namespace DevCamp.API
+namespace IncidentAPI
 {
-    public partial interface IAPIClient : IDisposable
+    public partial interface IIncidentAPIClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.
