@@ -104,11 +104,17 @@ function addQueueMessage(blob) {
 
     return new Promise(function (resolve, reject) {
 
+        // Create message object
+        var message = {
+            BlobContainerName: blob.container,
+            BlobName: blob.name
+        };
+
         // Confirm queue
         queueService.createQueueIfNotExists(process.env.AZURE_STORAGE_QUEUE, function (error, result, response) {
 
             // Insert new queue message
-            queueService.createMessage(process.env.AZURE_STORAGE_QUEUE, blob.name, function (error, result, response) {
+            queueService.createMessage(process.env.AZURE_STORAGE_QUEUE, JSON.stringify(message), function (error, result, response) {
 
                 // Successfully created queue message
                 resolve();
