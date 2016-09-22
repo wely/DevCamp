@@ -42,5 +42,16 @@ namespace IncidentAPI
         /// Cancellation token.
         /// </param>
         Task<HttpOperationResponse<int>> GetIncidentCountWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='incidentId'>
+        /// Required.
+        /// </param>
+        /// <param name='newIncident'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<string>> UpdateIncidentWithOperationResponseAsync(string incidentId, Incident newIncident, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

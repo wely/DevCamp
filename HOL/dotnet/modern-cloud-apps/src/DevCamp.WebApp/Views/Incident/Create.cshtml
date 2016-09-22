@@ -20,24 +20,24 @@
             <!-- Left Column -->
             <div class="col-sm-6">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.OutageType, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.OutageType, htmlAttributes: new { @class = "control-label" })
                     @Html.DropDownListFor(model => model.OutageType, DevCamp.WebApp.ViewModels.IncidentViewModel.GetOutageTypes().AsQueryable(), "Select an outage type", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.OutageType, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
                     @Html.TextAreaFor(model => model.Description, 4, 55, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Street, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Street, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
                 </div>
@@ -46,7 +46,7 @@
 
                     <div class="col-xs-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label" })
                             @Html.DropDownListFor(model => model.State, DevCamp.WebApp.ViewModels.IncidentViewModel.GetStates().AsQueryable(), "Select", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
                         </div>
@@ -54,7 +54,7 @@
 
                     <div class="col-xs-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.ZipCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.ZipCode, htmlAttributes: new { @class = "control-label" })
                             @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
                         </div>
@@ -63,25 +63,25 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.IsEmergency, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.IsEmergency, htmlAttributes: new { @class = "control-label" })
                     @Html.CheckBoxFor(model => Model.IsEmergency, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IsEmergency, "", new { @class = "text-danger" })
                 </div>
