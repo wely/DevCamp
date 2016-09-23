@@ -1,5 +1,9 @@
 var appInsights = require("applicationinsights");
 
 module.exports.setup = function () {
-    appInsights.setup().start();
+
+    if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
+        appInsights.setup().start();
+    }
+    
 };

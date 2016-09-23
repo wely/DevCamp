@@ -62,7 +62,7 @@ function createIncident(fields, files) {
         };
 
         // POST new incident to API
-        var apiUrl = process.env.API_URL;
+        var apiUrl = process.env.INCIDENT_API_URL + '/incidents';
 
         request.post(apiUrl, { form: incident, json: true }, function (error, results) {
 

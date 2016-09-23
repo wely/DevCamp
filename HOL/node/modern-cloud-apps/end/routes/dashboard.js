@@ -67,7 +67,7 @@ function getData() {
     return new Promise(function (resolve, reject) {
 
         // Define URL to use for the API
-        var apiUrl = process.env.API_URL;
+        var apiUrl = process.env.INCIDENT_API_URL + '/incidents';
 
         // Make a GET request with the Request libary
         request(apiUrl, { json: true }, function (error, results, body) {

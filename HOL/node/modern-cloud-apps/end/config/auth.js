@@ -3,11 +3,11 @@ var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 
 var config = {
     creds: {
-        returnURL: 'http://localhost:3001/auth/openid/return',
+        returnURL: process.env.AAD_RETURN_URL,
         identityMetadata: 'https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration', // For using Microsoft you should never need to change this.
         validateIssuer: false,
-        clientID: '4ac4339d-dc45-4bd1-9a67-4f204487e41b',
-        clientSecret: 'f740tJ72fgwQYxyARUkfFcf', // if you are doing code or id_token code
+        clientID: process.env.AAD_CLIENT_ID,
+        clientSecret: process.env.AAD_CLIENT_SECRET, // if you are doing code or id_token code
         skipUserProfile: true, // for AzureAD should be set to true.
         responseType: 'id_token', // for login only flows use id_token. For accessing resources use `id_token code`
         responseMode: 'form_post', // For login only flows we should have token passed back to us in a POST
