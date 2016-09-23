@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace DevCamp.WebApp.Controllers
@@ -10,8 +8,12 @@ namespace DevCamp.WebApp.Controllers
     {
         public ActionResult Index()
         {
+            //##### API DATA HERE #####
+                //##### ADD CACHING HERE #####
+                //##### ADD CACHING HERE #####
+            //##### API DATA HERE #####
+
             return View();
         }
-
     }
 }

@@ -163,6 +163,17 @@ namespace IncidentAPI.Models
             set { this._street = value; }
         }
         
+        private string _thumbnailUri;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ThumbnailUri
+        {
+            get { return this._thumbnailUri; }
+            set { this._thumbnailUri = value; }
+        }
+        
         private string _zipCode;
         
         /// <summary>
@@ -248,6 +259,10 @@ namespace IncidentAPI.Models
             if (this.Street != null)
             {
                 outputObject["Street"] = this.Street;
+            }
+            if (this.ThumbnailUri != null)
+            {
+                outputObject["ThumbnailUri"] = this.ThumbnailUri;
             }
             if (this.ZipCode != null)
             {
