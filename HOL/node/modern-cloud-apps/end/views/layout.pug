@@ -16,31 +16,7 @@ html(lang='en', class={home: home})
   body
 
     // Top Navigation
-    nav.navbar.navbar-default
-      .navbar-header
-        button(type='button', data-toggle='collapse', data-target='.navbar-collapse').navbar-toggle.collapsed
-          span.sr-only
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
-        a.navbar-brand(href='/') Outages
-      
-      .collapse.navbar-collapse.navbar-collapse
-        ul.nav.navbar-nav
-          li(class={active: title === 'Outage Dashboard'})
-            a(href='/dashboard') Dashboard
-          li(class={active: title === 'Report an Outage'})
-            a(href='/new') Report Outage
-        
-        ul.nav.navbar-nav.navbar-right
-          li.dropdown
-            a(href='#', data-toggle='dropdown', role='button').dropdown-toggle Hi, Garth Ford
-            ul.dropdown-menu
-              li
-                a(href='#') Profile
-              li(role='separator').divider
-              li
-                a(href='#') Logout
+    include _navigation.pug
 
     // Body
     block content

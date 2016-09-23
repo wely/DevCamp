@@ -4,7 +4,7 @@ var request = require('request');
 
 // Setup Redis
 var redis = require("redis");
-var client = redis.createClient(6380, process.env.REDIS_SERVER, { auth_pass: process.env.REDIS_KEY, tls: { servername: process.env.REDIS_SERVER } });
+var client = redis.createClient(process.env.REDISCACHE_SSLPORT, process.env.REDISCACHE_HOSTNAME, { auth_pass: process.env.REDISCACHE_PRIMARY_KEY, tls: { servername: process.env.REDISCACHE_HOSTNAME } });
 
 
 /* GET dashboard. */
@@ -16,12 +16,21 @@ router.get('/', function (req, res) {
         if (reply) {
             // Cached key exists
 
-            console.log('Found key, sooo tappin dat cache');
+            // Parse results
+            var incidents;
+            if (reply === 'undefined') {
+                // No results, return null
+                incidents = null;
+            }
+            else {
+                incidents = JSON.parse(reply);
+            }
 
             // Render view
             res.render('dashboard', {
                 title: 'Outage Dashboard',
-                incidents: JSON.parse(reply)
+                incidents: incidents,
+                user: req.user
             });
 
         }
@@ -39,7 +48,8 @@ router.get('/', function (req, res) {
                 // Render view
                 res.render('dashboard', {
                     title: 'Outage Dashboard',
-                    incidents: data
+                    incidents: data,
+                    user: req.user
                 });
 
             });

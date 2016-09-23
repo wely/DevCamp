@@ -4,6 +4,7 @@ var router = express.Router();
 var request = require('request');
 var formidable = require('formidable');
 var mime = require('mime');
+var auth = require('../config/auth');
 
 // Setup Azure Storage
 var azure = require('azure-storage');
@@ -12,8 +13,11 @@ var queueService = azure.createQueueService();
 queueService.messageEncoder = new azure.QueueMessageEncoder.TextBase64QueueMessageEncoder();
 
 /* GET new outage */
-router.get('/', function (req, res) {
-    res.render('new', { title: 'Report an Outage' });
+router.get('/', auth.ensureAuthenticated, function (req, res) {
+    res.render('new', {
+        title: 'Report an Outage',
+        user: req.user
+    });
 });
 
 /* POST new outage */
