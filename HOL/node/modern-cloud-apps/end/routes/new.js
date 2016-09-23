@@ -4,6 +4,7 @@ var router = express.Router();
 var request = require('request');
 var formidable = require('formidable');
 var mime = require('mime');
+var auth = require('../config/auth');
 
 // Setup Azure Storage
 var azure = require('azure-storage');
@@ -12,8 +13,11 @@ var queueService = azure.createQueueService();
 queueService.messageEncoder = new azure.QueueMessageEncoder.TextBase64QueueMessageEncoder();
 
 /* GET new outage */
-router.get('/', function (req, res) {
-    res.render('new', { title: 'Report an Outage' });
+router.get('/', auth.ensureAuthenticated, function (req, res) {
+    res.render('new', {
+        title: 'Report an Outage',
+        user: req.user
+    });
 });
 
 /* POST new outage */
@@ -58,7 +62,7 @@ function createIncident(fields, files) {
         };
 
         // POST new incident to API
-        var apiUrl = 'http://incidentapi4w5agyt32vajs.azurewebsites.net/incidents';
+        var apiUrl = process.env.INCIDENT_API_URL + '/incidents';
 
         request.post(apiUrl, { form: incident, json: true }, function (error, results) {
 

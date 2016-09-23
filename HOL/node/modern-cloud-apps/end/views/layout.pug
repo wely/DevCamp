@@ -13,34 +13,21 @@ html(lang='en', class={home: home})
       link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css')
       link(rel='stylesheet', href='/css/main.css')
 
+    //- // Application Insights
+    //- script(type='text/javascript').
+    //-   var appInsights=window.appInsights||function(config){
+    //-     function i(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s="AuthenticatedUserContext",h="start",c="stop",l="Track",a=l+"Event",v=l+"Page",y=u.createElement(o),r,f;y.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(y);try{t.cookie=u.cookie}catch(p){}for(t.queue=[],t.version="1.0",r=["Event","Exception","Metric","PageView","Trace","Dependency"];r.length;)i("track"+r.pop());return i("set"+s),i("clear"+s),i(h+a),i(c+a),i(h+v),i(c+v),i("flush"),config.disableExceptionTracking||(r="onerror",i("_"+r),f=e[r],e[r]=function(config,i,u,e,o){var s=f&&f(config,i,u,e,o);return s!==!0&&t["_"+r](config,i,u,e,o),s}),t
+    //-   }({
+    //-     instrumentationKey:"5d625fee-d99d-4e9d-8f49-ceea23a54204"
+    //-   });
+
+    //-   window.appInsights=appInsights;
+    //-   appInsights.trackPageView();
+
   body
 
     // Top Navigation
-    nav.navbar.navbar-default
-      .navbar-header
-        button(type='button', data-toggle='collapse', data-target='.navbar-collapse').navbar-toggle.collapsed
-          span.sr-only
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
-        a.navbar-brand(href='/') Outages
-      
-      .collapse.navbar-collapse.navbar-collapse
-        ul.nav.navbar-nav
-          li(class={active: title === 'Outage Dashboard'})
-            a(href='/dashboard') Dashboard
-          li(class={active: title === 'Report an Outage'})
-            a(href='/new') Report Outage
-        
-        ul.nav.navbar-nav.navbar-right
-          li.dropdown
-            a(href='#', data-toggle='dropdown', role='button').dropdown-toggle Hi, Garth Ford
-            ul.dropdown-menu
-              li
-                a(href='#') Profile
-              li(role='separator').divider
-              li
-                a(href='#') Logout
+    include _navigation.pug
 
     // Body
     block content
