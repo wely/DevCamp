@@ -67,7 +67,7 @@ function getData() {
     return new Promise(function (resolve, reject) {
 
         // Define URL to use for the API
-        var apiUrl = 'http://incidentapi4w5agyt32vajs.azurewebsites.net/incidents';
+        var apiUrl = process.env.API_URL;
 
         // Make a GET request with the Request libary
         request(apiUrl, { json: true }, function (error, results, body) {

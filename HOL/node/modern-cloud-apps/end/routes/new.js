@@ -62,7 +62,7 @@ function createIncident(fields, files) {
         };
 
         // POST new incident to API
-        var apiUrl = 'http://incidentapi4w5agyt32vajs.azurewebsites.net/incidents';
+        var apiUrl = process.env.API_URL;
 
         request.post(apiUrl, { form: incident, json: true }, function (error, results) {
 
