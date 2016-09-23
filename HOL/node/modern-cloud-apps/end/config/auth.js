@@ -15,7 +15,7 @@ var config = {
     }
 };
 
-exports.config = function (app) {
+module.exports.setup = function (app) {
 
     // Passport session setup. (Section 2)
 
