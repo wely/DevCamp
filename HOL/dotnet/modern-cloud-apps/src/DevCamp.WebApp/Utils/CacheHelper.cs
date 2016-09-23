@@ -7,6 +7,11 @@ namespace DevCamp.WebApp.Utils
 {
     public class CacheHelper
     {
+        public class CacheKeys
+        {
+            public static string IncidentData = "incidentdata";
+        }
+
         static string REDISCACHE_HOSTNAME = ConfigurationManager.AppSettings["REDISCACHE_HOSTNAME"];
         static string REDISCACHE_PORT = ConfigurationManager.AppSettings["REDISCACHE_PORT"];
         static string REDISCACHE_SSLPORT = ConfigurationManager.AppSettings["REDISCACHE_SSLPORT"];
@@ -54,9 +59,13 @@ namespace DevCamp.WebApp.Utils
         public static void AddtoCache(string CacheKey, object ObjectToCache, int CacheExpiration = 60)
         {
             IDatabase cache = CacheConnection.GetDatabase();
-
             cache.StringSet(CacheKey, JsonConvert.SerializeObject(ObjectToCache), TimeSpan.FromSeconds(CacheExpiration));
         }
 
+        public static void ClearCache(string CacheKey)
+        {
+            IDatabase cache = CacheConnection.GetDatabase();
+            cache.KeyDelete(CacheKey);
+        }
     }
 }

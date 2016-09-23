@@ -79,6 +79,11 @@ namespace DevCamp.WebApp.Controllers
                         //### Add Queue code here #####
 
                     }
+
+                    //##### CLEAR CACHE ####
+                    CacheHelper.ClearCache(CacheHelper.CacheKeys.IncidentData);
+                    //##### CLEAR CACHE ####
+
                     return RedirectToAction("Index", "Dashboard");
                 }
             }
