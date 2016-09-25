@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
@@ -12,8 +9,10 @@ using Microsoft.IdentityModel.Protocols;
 using Microsoft.Owin.Security.Notifications;
 using System.Threading.Tasks;
 using System.IdentityModel.Tokens;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Owin;
+using DevCamp.WebApp.App_Start;
 
+[assembly: OwinStartup(typeof(Startup))]
 namespace DevCamp.WebApp.App_Start
 {
     public partial class Startup
@@ -22,7 +21,7 @@ namespace DevCamp.WebApp.App_Start
         public static string aadInstance = ConfigurationManager.AppSettings["ida:AADInstance"];
         private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
 
-        public void ConfigureAuth(IAppBuilder app)
+        public void Configuration(IAppBuilder app)
         {
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
