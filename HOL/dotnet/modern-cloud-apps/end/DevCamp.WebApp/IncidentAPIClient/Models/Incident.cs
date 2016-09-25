@@ -141,6 +141,17 @@ namespace IncidentAPI.Models
             set { this._resolved = value; }
         }
         
+        private string _sortKey;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string SortKey
+        {
+            get { return this._sortKey; }
+            set { this._sortKey = value; }
+        }
+        
         private string _state;
         
         /// <summary>
@@ -251,6 +262,10 @@ namespace IncidentAPI.Models
             if (this.Resolved != null)
             {
                 outputObject["Resolved"] = this.Resolved.Value;
+            }
+            if (this.SortKey != null)
+            {
+                outputObject["SortKey"] = this.SortKey;
             }
             if (this.State != null)
             {

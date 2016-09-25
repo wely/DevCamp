@@ -47,7 +47,7 @@ namespace IncidentAPI
             : base()
         {
             this._incident = new IncidentOperations(this);
-            this._baseUri = new Uri("http://incidentapi4w5agyt32vajs.azurewebsites.net");
+            this._baseUri = new Uri("http://incidentapilwcvaqj7qehhw.azurewebsites.net");
         }
         
         /// <summary>
@@ -61,7 +61,7 @@ namespace IncidentAPI
             : base(handlers)
         {
             this._incident = new IncidentOperations(this);
-            this._baseUri = new Uri("http://incidentapi4w5agyt32vajs.azurewebsites.net");
+            this._baseUri = new Uri("http://incidentapilwcvaqj7qehhw.azurewebsites.net");
         }
         
         /// <summary>
@@ -78,7 +78,7 @@ namespace IncidentAPI
             : base(rootHandler, handlers)
         {
             this._incident = new IncidentOperations(this);
-            this._baseUri = new Uri("http://incidentapi4w5agyt32vajs.azurewebsites.net");
+            this._baseUri = new Uri("http://incidentapilwcvaqj7qehhw.azurewebsites.net");
         }
         
         /// <summary>

@@ -10,6 +10,7 @@ namespace DevCamp.WebApp.Controllers
 {
     public class DashboardController : Controller
     {
+        [AllowAnonymous]
         public async Task<ViewResult> Index()
         {
             //##### API DATA HERE #####
