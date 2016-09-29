@@ -13,7 +13,7 @@ var queueService = azure.createQueueService();
 queueService.messageEncoder = new azure.QueueMessageEncoder.TextBase64QueueMessageEncoder();
 
 /* GET new outage */
-router.get('/', auth.ensureAuthenticated, function (req, res) {
+router.get('/', function (req, res) {
     res.render('new', {
         title: 'Report an Outage',
         user: req.user
