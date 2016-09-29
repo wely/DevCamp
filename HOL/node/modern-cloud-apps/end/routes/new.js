@@ -62,11 +62,15 @@ function createIncident(fields, files) {
         };
 
         // POST new incident to API
-        var apiUrl = process.env.INCIDENT_API_URL + '/incidents';
+        var apiUrl = `https://${process.env.INCIDENT_API_URL}/incidents`;
 
         request.post(apiUrl, { form: incident, json: true }, function (error, results) {
 
             // Successfully created a new incident
+
+            // Clear cache
+            // TODO: clear.
+            
             var incidentId = results.body.id;
             resolve([incidentId, files]);
 
