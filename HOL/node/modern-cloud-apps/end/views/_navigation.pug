@@ -20,6 +20,9 @@ nav.navbar.navbar-default
               a(href='#', data-toggle='dropdown', role='button').dropdown-toggle Hi, #{user.displayName}
               ul.dropdown-menu
                 li
+                  a(href='/profile') Profile
+                li.divider(role='separator"')
+                li
                   a(href='/logout') Logout
         else
           ul.nav.navbar-nav.navbar-right

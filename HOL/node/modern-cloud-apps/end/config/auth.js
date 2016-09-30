@@ -9,9 +9,9 @@ var config = {
         clientID: process.env.AAD_CLIENT_ID,
         clientSecret: process.env.AAD_CLIENT_SECRET, // if you are doing code or id_token code
         skipUserProfile: true, // for AzureAD should be set to true.
-        responseType: 'id_token', // for login only flows use id_token. For accessing resources use `id_token code`
+        responseType: 'id_token code', // for login only flows use id_token. For accessing resources use `id_token code`
         responseMode: 'form_post', // For login only flows we should have token passed back to us in a POST
-        scope: ['email', 'profile'] // additional scopes you may wish to pass
+        scope: ['User.Read'] // additional scopes you may wish to pass
     }
 };
 
@@ -66,8 +66,14 @@ module.exports.setup = function (app) {
         validateIssuer: config.creds.validateIssuer
     },
         function (iss, sub, profile, accessToken, refreshToken, done) {
+
             console.log('Example: Email address we received was: ', profile.email);
-            // asynchronous verification, for effect...
+            
+            // Add the token to the profile
+            // TODO: Add logic for token refreshment
+            profile.token = accessToken;
+            
+            // Asynchronous verification for effect...
             process.nextTick(function () {
                 findByEmail(profile.email, function (err, user) {
                     if (err) {
@@ -81,7 +87,9 @@ module.exports.setup = function (app) {
                     return done(null, user);
                 });
             });
-        }
+        
+    }
+
     ));
 
     //Routes (Section 4)
@@ -112,7 +120,7 @@ module.exports.setup = function (app) {
     app.post('/auth/openid',
         passport.authenticate('azuread-openidconnect', { failureRedirect: '/login' }),
         function (req, res) {
-            console.log('Authenitcation was called in the Sample');
+            console.log('Authentication was called in the Sample');
             res.redirect('/');
         });
 
@@ -158,9 +166,9 @@ module.exports.setup = function (app) {
 
 };
 
-exports.ensureAuthenticated = function (req, res, next) {
+module.exports.ensureAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
     res.redirect('/login');
-}
+};

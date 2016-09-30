@@ -22,6 +22,7 @@ expressConfiguration.setup(app);
 app.use('/', require('./routes/index'));
 app.use('/dashboard', require('./routes/dashboard'));
 app.use('/new', require('./routes/new'));
+app.use('/profile', require('./routes/profile'));
 
 // Configure Authentication
 authConfiguration.setup(app);
@@ -30,7 +31,7 @@ authConfiguration.setup(app);
 errorConfiguration.setup(app);
 
 // Start Server
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 3000);
 var server = app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + server.address().port);
 });
