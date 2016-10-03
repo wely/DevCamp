@@ -1,0 +1,5373 @@
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('6af6eefa-b363-427f-bb86-9478fc90a9f0')/events",
+  "@odata.nextLink": "https://graph.microsoft.com/v1.0/me/events?$skip=10",
+  "value": [
+    {
+      "@odata.etag": "W/\"XEgylCQp9EuWXCCBDZfS+gAD4uE=\"",
+      "id": "AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U-1AAAA__fdAAAx09gFg23FSqCLJOKWyNnoAABDe0HSAAA=",
+      "createdDateTime": "2016-10-03T17:44:31.1192684Z",
+      "lastModifiedDateTime": "2016-10-03T17:44:11.713Z",
+      "changeKey": "XEgylCQp9EuWXCCBDZfS+gAD4uE=",
+      "categories": [],
+      "originalStartTimeZone": "Eastern Standard Time",
+      "originalEndTimeZone": "Eastern Standard Time",
+      "responseStatus": {
+        "response": "none",
+        "time": "0001-01-01T00:00:00Z"
+      },
+      "iCalUId": "040000008200E00074C5B7101A82E0080000000070BB79427C1DD2010000000000000000100000004F732F9026491D4DB44D7099F6762142",
+      "reminderMinutesBeforeStart": 15,
+      "isReminderOn": true,
+      "hasAttachments": false,
+      "subject": "Platelet Donation",
+      "body": {
+        "contentType": "html",
+        "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=us-ascii\">\r\n<meta name=\"ProgId\" content=\"Word.Document\">\r\n<meta name=\"Generator\" content=\"Microsoft Word 15\">\r\n<meta name=\"Originator\" content=\"Microsoft Word 15\">\r\n<link rel=\"File-List\" href=\"cid:filelist.xml@01D21D7C.393C2980\"><style>\r\n<!--\r\n@font-face\r\n\t{font-family:\"Cambria Math\"}\r\n@font-face\r\n\t{font-family:Calibri}\r\np.MsoNormal, li.MsoNormal, div.MsoNormal\r\n\t{margin:0in;\r\n\tmargin-bottom:.0001pt;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\na:link, span.MsoHyperlink\r\n\t{color:#0563C1;\r\n\ttext-decoration:underline}\r\na:visited, span.MsoHyperlinkFollowed\r\n\t{color:#954F72;\r\n\ttext-decoration:underline}\r\nspan.EmailStyle17\r\n\t{font-family:\"Calibri\",sans-serif;\r\n\tcolor:windowtext}\r\n.MsoChpDefault\r\n\t{font-family:\"Calibri\",sans-serif}\r\n@page WordSection1\r\n\t{margin:1.0in 1.0in 1.0in 1.0in}\r\ndiv.WordSection1\r\n\t{}\r\n-->\r\n</style>\r\n</head>\r\n<body lang=\"EN-US\" link=\"#0563C1\" vlink=\"#954F72\" style=\"\">\r\n<div class=\"WordSection1\">\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n</div>\r\n</body>\r\n</html>\r\n"
+      },
+      "bodyPreview": "",
+      "importance": "normal",
+      "sensitivity": "normal",
+      "start": {
+        "dateTime": "2016-10-14T11:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2016-10-14T15:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "",
+        "address": {}
+      },
+      "isAllDay": false,
+      "isCancelled": false,
+      "isOrganizer": true,
+      "recurrence": null,
+      "responseRequested": true,
+      "seriesMasterId": null,
+      "showAs": "busy",
+      "type": "singleInstance",
+      "attendees": [
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Steven Follis",
+            "address": "Steven.Follis@microsoft.com"
+          }
+        }
+      ],
+      "organizer": {
+        "emailAddress": {
+          "name": "Steven Follis",
+          "address": "Steven.Follis@microsoft.com"
+        }
+      },
+      "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U%2F1AAAA%2B%2BfdAAAx09gFg23FSqCLJOKWyNnoAABDe0HSAAA%3D&exvsurl=1&viewModel=ICalendarItemDetailsViewModelFactory",
+      "onlineMeetingUrl": null
+    },
+    {
+      "@odata.etag": "W/\"Eb5AF46bg0aPo86X2QXNcwAAD8ZDew==\"",
+      "id": "AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U-1AAAA__fdAAAx09gFg23FSqCLJOKWyNnoAABDe0HRAAA=",
+      "createdDateTime": "2016-10-03T17:19:07.6001749Z",
+      "lastModifiedDateTime": "2016-10-03T18:55:12.8100468Z",
+      "changeKey": "Eb5AF46bg0aPo86X2QXNcwAAD8ZDew==",
+      "categories": [],
+      "originalStartTimeZone": "Eastern Standard Time",
+      "originalEndTimeZone": "Eastern Standard Time",
+      "responseStatus": {
+        "response": "organizer",
+        "time": "0001-01-01T00:00:00Z"
+      },
+      "iCalUId": "040000008200E00074C5B7101A82E00800000000202D51B6781DD201000000000000000010000000D906F17FAE71924BA020289A910BF951",
+      "reminderMinutesBeforeStart": 15,
+      "isReminderOn": true,
+      "hasAttachments": false,
+      "subject": "CSC Discussion",
+      "body": {
+        "contentType": "html",
+        "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=us-ascii\">\r\n<meta name=\"ProgId\" content=\"Word.Document\">\r\n<meta name=\"Generator\" content=\"Microsoft Word 15\">\r\n<meta name=\"Originator\" content=\"Microsoft Word 15\">\r\n<link rel=\"File-List\" href=\"cid:filelist.xml@01D21D78.B5A75890\"><style>\r\n<!--\r\n@font-face\r\n\t{font-family:Wingdings}\r\n@font-face\r\n\t{font-family:\"Cambria Math\"}\r\n@font-face\r\n\t{font-family:Calibri}\r\np.MsoNormal, li.MsoNormal, div.MsoNormal\r\n\t{margin:0in;\r\n\tmargin-bottom:.0001pt;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\na:link, span.MsoHyperlink\r\n\t{color:#0563C1;\r\n\ttext-decoration:underline}\r\na:visited, span.MsoHyperlinkFollowed\r\n\t{color:#954F72;\r\n\ttext-decoration:underline}\r\nspan.EmailStyle17\r\n\t{font-family:\"Calibri\",sans-serif;\r\n\tcolor:windowtext}\r\nspan.SpellE\r\n\t{}\r\n.MsoChpDefault\r\n\t{font-family:\"Calibri\",sans-serif}\r\n@page WordSection1\r\n\t{margin:1.0in 1.0in 1.0in 1.0in}\r\ndiv.WordSection1\r\n\t{}\r\n-->\r\n</style>\r\n</head>\r\n<body lang=\"EN-US\" link=\"#0563C1\" vlink=\"#954F72\" style=\"\">\r\n<div class=\"WordSection1\">\r\n<p class=\"MsoNormal\"><a name=\"_InsertRtfSavedPosition\"></a>Israel, </p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\">Talked with the team today and Rick has bandwidth to run point on CSC.<span style=\"\">&nbsp;\r\n</span>I realize you’re up in Redmond this week – do you have availability for a quick touch point?<span style=\"\">&nbsp;\r\n</span>Wanting to bring him further up to speed and get him introduced to Ivan and Ajit.\r\n</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\">Could potentially do later today if that gets it in before you start tomorrow.\r\n</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\">Thanks, </p>\r\n<p class=\"MsoNormal\">Steven</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span style=\"font-size:8.0pt; color:#404040\">.........................................................................................................................................</span><b><span style=\"font-size:14.0pt\"></span></b></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><a name=\"OutJoinLink\"><span style=\"font-size:14.0pt; font-family:Wingdings; color:#0066CC\"><span style=\"\">à</span></span></a><span style=\"\"><span style=\"font-size:14.0pt; color:#0066CC\">\r\n</span></span><a href=\"https://meet.lync.com/microsoft/stfollis/SVP5S2C9\"><span style=\"\"><span style=\"font-size:16.0pt; color:#0066CC\">Join Skype Meeting</span></span><span style=\"\"></span></a><span style=\"\"><span style=\"font-size:14.0pt\"><span style=\"\">&nbsp;\r\n</span><a name=\"OutSharedNoteBorder\"><span style=\"\">&nbsp;</span></a><span style=\"\">&nbsp;&nbsp;</span><a name=\"OutSharedNoteLink\"><span style=\"\">&nbsp;</span></a></span></span><span style=\"font-size:14.0pt\"></span></p>\r\n<table class=\"MsoNormalTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse\">\r\n<tbody>\r\n<tr style=\"\">\r\n<td width=\"400\" valign=\"top\" style=\"width:300.0pt; padding:0in 0in 0in 0in\">\r\n<p class=\"MsoNormal\" style=\"margin-right:0in; margin-bottom:12.0pt; margin-left:16.0pt; line-height:125%; text-autospace:none\">\r\n<span style=\"font-size:10.0pt; line-height:125%\">This is an online meeting for Skype for Business, the professional meetings and communications app formerly known as Lync.</span></p>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:13.0pt; color:black\">Join by phone</span><span lang=\"EN\" style=\"font-size:8.0pt; color:black\"></span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:8.0pt\">&nbsp;</span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:10.0pt\">Toll-free number:\r\n<a href=\"tel:&#43;1%20(866)%20679-9995,43412943%23\"><span style=\"color:#0066CC\">&#43;1 (866) 679-9995</span></a><span style=\"\">&nbsp;\r\n</span><span style=\"\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style=\"\">&nbsp;</span></span><span lang=\"EN\" style=\"font-size:3.0pt\"><span style=\"\">&nbsp;</span></span><span lang=\"EN\" style=\"font-size:8.0pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:10.0pt\">Toll number:\r\n<a href=\"tel:&#43;1%20(323)%20849-4874,43412943%23\"><span style=\"color:#0066CC\">&#43;1 (323) 849-4874</span></a><span style=\"\">&nbsp;\r\n</span><span style=\"\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style=\"\">&nbsp;</span></span><span lang=\"EN\" style=\"font-size:3.0pt\"><span style=\"\">&nbsp;</span></span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:3.0pt\">&nbsp;</span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><u><span lang=\"EN\" style=\"font-size:10.0pt; color:#943634\"><a href=\"https://dialin.lync.com/microsoft.com/stfollis?id=43412943\"><span style=\"color:#0066CC\">Find a local number</span></a></span></u><span lang=\"EN\" style=\"\">\r\n</span><span lang=\"EN\" style=\"font-size:10.5pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:8.0pt\">&nbsp;</span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:10.0pt\">Conference ID: 43412943</span><span lang=\"EN\" style=\"font-size:10.5pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:3.0pt\"><span style=\"\">&nbsp;\r\n</span></span><span lang=\"EN\" style=\"font-size:10.0pt\"><a href=\"http://go.microsoft.com/fwlink/?LinkId=389737\"><span style=\"color:#0066CC\">Help</span></a></span><span lang=\"EN\" style=\"font-size:3.0pt\"><span style=\"\">&nbsp;&nbsp;\r\n</span></span><span lang=\"EN\" style=\"font-size:8.0pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:14.0pt\">&nbsp;</span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:14.0pt\"></span><span lang=\"EN\" style=\"font-size:8.0pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"\">Welcome to Skype for Business Online Meetings. All participants using the Join by Phone option must dial the full number for call access.\r\n</span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><sub><span lang=\"EN\" style=\"font-size:1.0pt; color:white\">[!OC([1033])!]</span></sub><span lang=\"EN\" style=\"font-size:3.0pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:10.0pt; line-height:115%; text-autospace:none\">\r\n<span lang=\"EN\" style=\"font-size:8.0pt; line-height:115%; color:#404040\">.........................................................................................................................................</span><span lang=\"EN\" style=\"font-size:10.5pt; line-height:115%\"></span></p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n</div>\r\n</body>\r\n</html>\r\n"
+      },
+      "bodyPreview": "Israel,\r\n\r\nTalked with the team today and Rick has bandwidth to run point on CSC.  I realize you’re up in Redmond this week – do you have availability for a quick touch point?  Wanting to bring him further up to speed and get him introduced to Ivan and Aj",
+      "importance": "normal",
+      "sensitivity": "normal",
+      "start": {
+        "dateTime": "2016-10-04T14:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2016-10-04T14:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "Skype Meeting"
+      },
+      "isAllDay": false,
+      "isCancelled": false,
+      "isOrganizer": true,
+      "recurrence": null,
+      "responseRequested": true,
+      "seriesMasterId": null,
+      "showAs": "busy",
+      "type": "singleInstance",
+      "attendees": [
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Steven Follis",
+            "address": "Steven.Follis@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "accepted",
+            "time": "2016-10-03T18:52:51.801Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rick Rainey",
+            "address": "rickra@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "4501-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Israel Vega",
+            "address": "ivega@microsoft.com"
+          }
+        }
+      ],
+      "organizer": {
+        "emailAddress": {
+          "name": "Steven Follis",
+          "address": "Steven.Follis@microsoft.com"
+        }
+      },
+      "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U%2F1AAAA%2B%2BfdAAAx09gFg23FSqCLJOKWyNnoAABDe0HRAAA%3D&exvsurl=1&viewModel=ICalendarItemDetailsViewModelFactory",
+      "onlineMeetingUrl": "https://meet.lync.com/microsoft/stfollis/SVP5S2C9"
+    },
+    {
+      "@odata.etag": "W/\"Eb5AF46bg0aPo86X2QXNcwAAD8ZDYw==\"",
+      "id": "AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U-1AAAA__fdAAARvkAXjpuDRo_jzpfZBc1zAAAPsRuIAAA=",
+      "createdDateTime": "2016-10-03T14:40:31.6030882Z",
+      "lastModifiedDateTime": "2016-10-03T14:40:31.7662364Z",
+      "changeKey": "Eb5AF46bg0aPo86X2QXNcwAAD8ZDYw==",
+      "categories": [],
+      "originalStartTimeZone": "UTC",
+      "originalEndTimeZone": "UTC",
+      "responseStatus": {
+        "response": "organizer",
+        "time": "0001-01-01T00:00:00Z"
+      },
+      "iCalUId": "040000008200E00074C5B7101A82E00800000000BF469A17841DD20100000000000000001000000039FCC624520E7B409E4CF089D0B5AE46",
+      "reminderMinutesBeforeStart": 15,
+      "isReminderOn": false,
+      "hasAttachments": true,
+      "subject": "Munich Marriott Hotel check out",
+      "body": {
+        "contentType": "html",
+        "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=us-ascii\">\r\n</head>\r\n<body>\r\n<div style=\"font-family:Segoe UI; font-size:11pt; text-align:center\">\r\n<div style=\"padding-top:15px\"><span style=\"font-size:14pt\">Munich Marriott Hotel reservation</span><br>\r\nReservation code: 83330326</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div>Reservation for: Steven W Follis<br>\r\nCheck in: Saturday, November 12<br>\r\nCheck out: Wednesday, November 16<br>\r\nPhone: 89-360020</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div style=\"font-size:10pt; color:#666666\">This event was automatically added to your calendar from email by Outlook.</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div style=\"font-size:10pt; color:#666666\">Let us know what you think about this feature via the\r\n<a href=\"https://www.yammer.com/microsoft.com/#/threads/inGroup?type=in_group&amp;feedId=5999277\" style=\"text-decoration:none; color:#0078D7\">\r\nOutlook Events from Email</a> group on Yammer or via <a href=\"mailto:outlookeventsfromemaildogfood&#43;microsoft.com@yammer.com\" style=\"text-decoration:none; color:#0078D7\">\r\nemail</a>.</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n</div>\r\n</body>\r\n</html>\r\n"
+      },
+      "bodyPreview": "Munich Marriott Hotel reservation\r\nReservation code: 83330326\r\n\r\nReservation for: Steven W Follis\r\nCheck in: Saturday, November 12\r\nCheck out: Wednesday, November 16\r\nPhone: 89-360020\r\n\r\nThis event was automatically added to your calendar from email by Ou",
+      "importance": "normal",
+      "sensitivity": "private",
+      "start": {
+        "dateTime": "2016-11-16T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2016-11-17T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "Munich Marriott Hotel",
+        "address": {
+          "street": "Berliner Str 93 Munich, 80805 DE",
+          "city": "",
+          "state": "",
+          "countryOrRegion": "",
+          "postalCode": ""
+        }
+      },
+      "isAllDay": true,
+      "isCancelled": false,
+      "isOrganizer": true,
+      "recurrence": null,
+      "responseRequested": true,
+      "seriesMasterId": null,
+      "showAs": "free",
+      "type": "singleInstance",
+      "attendees": [],
+      "organizer": {
+        "emailAddress": {
+          "name": "Steven Follis",
+          "address": "Steven.Follis@microsoft.com"
+        }
+      },
+      "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U%2F1AAAA%2B%2BfdAAARvkAXjpuDRo%2BjzpfZBc1zAAAPsRuIAAA%3D&exvsurl=1&viewModel=ICalendarItemDetailsViewModelFactory",
+      "onlineMeetingUrl": null
+    },
+    {
+      "@odata.etag": "W/\"Eb5AF46bg0aPo86X2QXNcwAAD8ZDYQ==\"",
+      "id": "AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U-1AAAA__fdAAARvkAXjpuDRo_jzpfZBc1zAAAPsRuHAAA=",
+      "createdDateTime": "2016-10-03T14:40:31.3258358Z",
+      "lastModifiedDateTime": "2016-10-03T14:40:31.5800669Z",
+      "changeKey": "Eb5AF46bg0aPo86X2QXNcwAAD8ZDYQ==",
+      "categories": [],
+      "originalStartTimeZone": "UTC",
+      "originalEndTimeZone": "UTC",
+      "responseStatus": {
+        "response": "organizer",
+        "time": "0001-01-01T00:00:00Z"
+      },
+      "iCalUId": "040000008200E00074C5B7101A82E008000000008FF86F17841DD20100000000000000001000000088556BA79896564DBCAA01C72BC979E3",
+      "reminderMinutesBeforeStart": 15,
+      "isReminderOn": false,
+      "hasAttachments": true,
+      "subject": "Munich Marriott Hotel check in",
+      "body": {
+        "contentType": "html",
+        "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=us-ascii\">\r\n</head>\r\n<body>\r\n<div style=\"font-family:Segoe UI; font-size:11pt; text-align:center\">\r\n<div style=\"padding-top:15px\"><span style=\"font-size:14pt\">Munich Marriott Hotel reservation</span><br>\r\nReservation code: 83330326</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div>Reservation for: Steven W Follis<br>\r\nCheck in: Saturday, November 12<br>\r\nCheck out: Wednesday, November 16<br>\r\nPhone: 89-360020</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div style=\"font-size:10pt; color:#666666\">This event was automatically added to your calendar from email by Outlook.</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div style=\"font-size:10pt; color:#666666\">Let us know what you think about this feature via the\r\n<a href=\"https://www.yammer.com/microsoft.com/#/threads/inGroup?type=in_group&amp;feedId=5999277\" style=\"text-decoration:none; color:#0078D7\">\r\nOutlook Events from Email</a> group on Yammer or via <a href=\"mailto:outlookeventsfromemaildogfood&#43;microsoft.com@yammer.com\" style=\"text-decoration:none; color:#0078D7\">\r\nemail</a>.</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n</div>\r\n</body>\r\n</html>\r\n"
+      },
+      "bodyPreview": "Munich Marriott Hotel reservation\r\nReservation code: 83330326\r\n\r\nReservation for: Steven W Follis\r\nCheck in: Saturday, November 12\r\nCheck out: Wednesday, November 16\r\nPhone: 89-360020\r\n\r\nThis event was automatically added to your calendar from email by Ou",
+      "importance": "normal",
+      "sensitivity": "private",
+      "start": {
+        "dateTime": "2016-11-12T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2016-11-13T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "Munich Marriott Hotel",
+        "address": {
+          "street": "Berliner Str 93 Munich, 80805 DE",
+          "city": "",
+          "state": "",
+          "countryOrRegion": "",
+          "postalCode": ""
+        }
+      },
+      "isAllDay": true,
+      "isCancelled": false,
+      "isOrganizer": true,
+      "recurrence": null,
+      "responseRequested": true,
+      "seriesMasterId": null,
+      "showAs": "free",
+      "type": "singleInstance",
+      "attendees": [],
+      "organizer": {
+        "emailAddress": {
+          "name": "Steven Follis",
+          "address": "Steven.Follis@microsoft.com"
+        }
+      },
+      "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U%2F1AAAA%2B%2BfdAAARvkAXjpuDRo%2BjzpfZBc1zAAAPsRuHAAA%3D&exvsurl=1&viewModel=ICalendarItemDetailsViewModelFactory",
+      "onlineMeetingUrl": null
+    },
+    {
+      "@odata.etag": "W/\"Eb5AF46bg0aPo86X2QXNcwAAD8ZDXQ==\"",
+      "id": "AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U-1AAAA__fdAAARvkAXjpuDRo_jzpfZBc1zAAAPsRuGAAA=",
+      "createdDateTime": "2016-10-03T14:31:59.6229541Z",
+      "lastModifiedDateTime": "2016-10-03T14:31:59.705029Z",
+      "changeKey": "Eb5AF46bg0aPo86X2QXNcwAAD8ZDXQ==",
+      "categories": [],
+      "originalStartTimeZone": "UTC",
+      "originalEndTimeZone": "UTC",
+      "responseStatus": {
+        "response": "notResponded",
+        "time": "0001-01-01T00:00:00Z"
+      },
+      "iCalUId": "040000008200E00074C5B7101A82E00800000000D0ECA7F8B01DD201000000000000000010000000E625ECFC5B5CD945938EB69455587FAA",
+      "reminderMinutesBeforeStart": 15,
+      "isReminderOn": true,
+      "hasAttachments": false,
+      "subject": "India Public Holiday - Wasim OOF",
+      "body": {
+        "contentType": "html",
+        "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Word 15 (filtered medium)\">\r\n<style>\r\n<!--\r\n@font-face\r\n\t{font-family:\"Cambria Math\"}\r\n@font-face\r\n\t{font-family:Calibri}\r\np.MsoNormal, li.MsoNormal, div.MsoNormal\r\n\t{margin:0in;\r\n\tmargin-bottom:.0001pt;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\na:link, span.MsoHyperlink\r\n\t{color:#0563C1;\r\n\ttext-decoration:underline}\r\na:visited, span.MsoHyperlinkFollowed\r\n\t{color:#954F72;\r\n\ttext-decoration:underline}\r\np.msonormal0, li.msonormal0, div.msonormal0\r\n\t{margin-right:0in;\r\n\tmargin-left:0in;\r\n\tfont-size:12.0pt;\r\n\tfont-family:\"Times New Roman\",serif}\r\nspan.EmailStyle18\r\n\t{font-family:\"Calibri\",sans-serif;\r\n\tcolor:windowtext}\r\n.MsoChpDefault\r\n\t{font-size:10.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\n@page WordSection1\r\n\t{margin:1.0in 1.0in 1.0in 1.0in}\r\ndiv.WordSection1\r\n\t{}\r\n-->\r\n</style>\r\n</head>\r\n<body lang=\"EN-US\" link=\"#0563C1\" vlink=\"#954F72\">\r\n<div class=\"WordSection1\">\r\n<p class=\"MsoNormal\">India Public Holiday - Wasim OOF</p>\r\n<p class=\"MsoNormal\"></p>\r\n<p class=\"MsoNormal\">Regards,</p>\r\n<p class=\"MsoNormal\">Wasim</p>\r\n</div>\r\n</body>\r\n</html>\r\n"
+      },
+      "bodyPreview": "India Public Holiday - Wasim OOF\r\n\r\nRegards,\r\nWasim",
+      "importance": "normal",
+      "sensitivity": "normal",
+      "start": {
+        "dateTime": "2016-10-31T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2016-11-01T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "India"
+      },
+      "isAllDay": true,
+      "isCancelled": false,
+      "isOrganizer": false,
+      "recurrence": null,
+      "responseRequested": true,
+      "seriesMasterId": null,
+      "showAs": "free",
+      "type": "singleInstance",
+      "attendees": [
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Wasim Bloch",
+            "address": "wabloch@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "AzureCAT GSI",
+            "address": "GSIAzureCOE@microsoft.com"
+          }
+        }
+      ],
+      "organizer": {
+        "emailAddress": {
+          "name": "Wasim Bloch",
+          "address": "wabloch@microsoft.com"
+        }
+      },
+      "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U%2F1AAAA%2B%2BfdAAARvkAXjpuDRo%2BjzpfZBc1zAAAPsRuGAAA%3D&exvsurl=1&viewModel=ICalendarItemDetailsViewModelFactory",
+      "onlineMeetingUrl": null
+    },
+    {
+      "@odata.etag": "W/\"Eb5AF46bg0aPo86X2QXNcwAAD8ZDWA==\"",
+      "id": "AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U-1AAAA__fdAAARvkAXjpuDRo_jzpfZBc1zAAAPsRuFAAA=",
+      "createdDateTime": "2016-10-03T14:27:04.9592955Z",
+      "lastModifiedDateTime": "2016-10-03T14:27:05.0063383Z",
+      "changeKey": "Eb5AF46bg0aPo86X2QXNcwAAD8ZDWA==",
+      "categories": [],
+      "originalStartTimeZone": "UTC",
+      "originalEndTimeZone": "UTC",
+      "responseStatus": {
+        "response": "notResponded",
+        "time": "0001-01-01T00:00:00Z"
+      },
+      "iCalUId": "040000008200E00074C5B7101A82E0080000000010A7DB48B01DD2010000000000000000100000005E3D187C8591DF4D953C045C32EBED42",
+      "reminderMinutesBeforeStart": 15,
+      "isReminderOn": true,
+      "hasAttachments": false,
+      "subject": "India Public Holiday - Wasim OOF",
+      "body": {
+        "contentType": "html",
+        "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Word 15 (filtered medium)\">\r\n<style>\r\n<!--\r\n@font-face\r\n\t{font-family:\"Cambria Math\"}\r\n@font-face\r\n\t{font-family:Calibri}\r\np.MsoNormal, li.MsoNormal, div.MsoNormal\r\n\t{margin:0in;\r\n\tmargin-bottom:.0001pt;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\na:link, span.MsoHyperlink\r\n\t{color:#0563C1;\r\n\ttext-decoration:underline}\r\na:visited, span.MsoHyperlinkFollowed\r\n\t{color:#954F72;\r\n\ttext-decoration:underline}\r\np.msonormal0, li.msonormal0, div.msonormal0\r\n\t{margin-right:0in;\r\n\tmargin-left:0in;\r\n\tfont-size:12.0pt;\r\n\tfont-family:\"Times New Roman\",serif}\r\nspan.EmailStyle18\r\n\t{font-family:\"Calibri\",sans-serif;\r\n\tcolor:windowtext}\r\n.MsoChpDefault\r\n\t{font-size:10.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\n@page WordSection1\r\n\t{margin:1.0in 1.0in 1.0in 1.0in}\r\ndiv.WordSection1\r\n\t{}\r\n-->\r\n</style>\r\n</head>\r\n<body lang=\"EN-US\" link=\"#0563C1\" vlink=\"#954F72\">\r\n<div class=\"WordSection1\">\r\n<p class=\"MsoNormal\">India Public Holiday</p>\r\n<p class=\"MsoNormal\"></p>\r\n<p class=\"MsoNormal\">Regards,</p>\r\n<p class=\"MsoNormal\">Wasim</p>\r\n</div>\r\n</body>\r\n</html>\r\n"
+      },
+      "bodyPreview": "India Public Holiday\r\n\r\nRegards,\r\nWasim",
+      "importance": "normal",
+      "sensitivity": "normal",
+      "start": {
+        "dateTime": "2016-10-11T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2016-10-12T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "India"
+      },
+      "isAllDay": true,
+      "isCancelled": false,
+      "isOrganizer": false,
+      "recurrence": null,
+      "responseRequested": true,
+      "seriesMasterId": null,
+      "showAs": "free",
+      "type": "singleInstance",
+      "attendees": [
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Wasim Bloch",
+            "address": "wabloch@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "AzureCAT GSI",
+            "address": "GSIAzureCOE@microsoft.com"
+          }
+        }
+      ],
+      "organizer": {
+        "emailAddress": {
+          "name": "Wasim Bloch",
+          "address": "wabloch@microsoft.com"
+        }
+      },
+      "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U%2F1AAAA%2B%2BfdAAARvkAXjpuDRo%2BjzpfZBc1zAAAPsRuFAAA%3D&exvsurl=1&viewModel=ICalendarItemDetailsViewModelFactory",
+      "onlineMeetingUrl": null
+    },
+    {
+      "@odata.etag": "W/\"Eb5AF46bg0aPo86X2QXNcwAAD8ZDaQ==\"",
+      "id": "AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U-1AAAA__fdAAAx09gFg23FSqCLJOKWyNnoAABDe0HQAAA=",
+      "createdDateTime": "2016-10-03T14:26:10.774305Z",
+      "lastModifiedDateTime": "2016-10-03T15:13:38.5721315Z",
+      "changeKey": "Eb5AF46bg0aPo86X2QXNcwAAD8ZDaQ==",
+      "categories": [],
+      "originalStartTimeZone": "W. Europe Standard Time",
+      "originalEndTimeZone": "W. Europe Standard Time",
+      "responseStatus": {
+        "response": "accepted",
+        "time": "2016-10-03T14:25:00Z"
+      },
+      "iCalUId": "040000008200E00074C5B7101A82E008000000001042B047921DD20100000000000000001000000009637A90754FD546B161BE631B19550E",
+      "reminderMinutesBeforeStart": 15,
+      "isReminderOn": true,
+      "hasAttachments": false,
+      "subject": "LFCS exam prep ongoing schedule",
+      "body": {
+        "contentType": "html",
+        "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=us-ascii\">\r\n<meta name=\"Generator\" content=\"Microsoft Word 15 (filtered medium)\">\r\n<style>\r\n<!--\r\n@font-face\r\n\t{font-family:Wingdings}\r\n@font-face\r\n\t{font-family:\"Cambria Math\"}\r\n@font-face\r\n\t{font-family:Calibri}\r\np.MsoNormal, li.MsoNormal, div.MsoNormal\r\n\t{margin:0cm;\r\n\tmargin-bottom:.0001pt;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\na:link, span.MsoHyperlink\r\n\t{color:#0563C1;\r\n\ttext-decoration:underline}\r\na:visited, span.MsoHyperlinkFollowed\r\n\t{color:#954F72;\r\n\ttext-decoration:underline}\r\np.msonormal0, li.msonormal0, div.msonormal0\r\n\t{margin-right:0cm;\r\n\tmargin-left:0cm;\r\n\tfont-size:12.0pt;\r\n\tfont-family:\"Times New Roman\",serif}\r\nspan.EmailStyle18\r\n\t{font-family:\"Calibri\",sans-serif;\r\n\tcolor:windowtext}\r\n.MsoChpDefault\r\n\t{font-size:10.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\n@page WordSection1\r\n\t{margin:72.0pt 72.0pt 72.0pt 72.0pt}\r\ndiv.WordSection1\r\n\t{}\r\n-->\r\n</style>\r\n</head>\r\n<body lang=\"EN-US\" link=\"#0563C1\" vlink=\"#954F72\">\r\n<div class=\"WordSection1\">\r\n<p class=\"MsoNormal\"><a name=\"_InsertRtfSavedPosition\"></a>&nbsp;</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span style=\"font-size:8.0pt; color:#404040\">.........................................................................................................................................</span><b><span style=\"font-size:14.0pt\"></span></b></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><a name=\"OutJoinLink\"><span style=\"font-size:14.0pt; font-family:Wingdings; color:#0066CC\">à</span></a><span style=\"\"><span style=\"font-size:14.0pt; color:#0066CC\">\r\n</span></span><a href=\"https://join.microsoft.com/meet/stvorein/3SB19LN7\"><span style=\"\"><span style=\"font-size:16.0pt; color:#0066CC\">Join Skype Meeting</span></span><span style=\"\"></span></a><span style=\"\"><span style=\"font-size:14.0pt\">&nbsp;\r\n<a name=\"OutSharedNoteBorder\">&nbsp;</a>&nbsp;&nbsp;<a name=\"OutSharedNoteLink\">&nbsp;</a></span></span><span style=\"font-size:14.0pt\"></span></p>\r\n<table class=\"MsoNormalTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse\">\r\n<tbody>\r\n<tr>\r\n<td width=\"400\" valign=\"top\" style=\"width:300.0pt; padding:0cm 0cm 0cm 0cm\">\r\n<p class=\"MsoNormal\" style=\"margin-right:0cm; margin-bottom:12.0pt; margin-left:16.0pt; line-height:125%; text-autospace:none\">\r\n<span style=\"font-size:10.0pt; line-height:125%\">This is an online meeting for Skype for Business, the professional meetings and communications app formerly known as Lync.</span></p>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:13.0pt; color:black\">Join by phone</span><span lang=\"EN\" style=\"font-size:8.0pt; color:black\"></span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:8.0pt\">&nbsp;</span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:10.0pt\"><a href=\"tel:&#43;1%20(425)%20706-3500,7398930%23\"><span style=\"color:#0066CC\">&#43;14257063500</span></a> (USA - Redmond Campus) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; English\r\n (United States) </span><span lang=\"EN\" style=\"font-size:8.0pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:10.0pt\"><a href=\"tel:&#43;1%20(888)%20320-3585,7398930%23\"><span style=\"color:#0066CC\">&#43;1 (888) 320-3585</span></a> (USA - Redmond Campus) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n English (United States) </span><span lang=\"EN\" style=\"font-size:3.0pt\">&nbsp;</span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:3.0pt\">&nbsp;</span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><u><span lang=\"EN\" style=\"font-size:10.0pt; color:#943634\"><a href=\"https://join.microsoft.com/dialin?id=7398930\"><span style=\"color:#0066CC\">Find a local number</span></a></span></u><span lang=\"EN\">\r\n</span><span lang=\"EN\" style=\"font-size:10.5pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:8.0pt\">&nbsp;</span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:10.0pt\">Conference ID: 7398930</span><span lang=\"EN\" style=\"font-size:10.5pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:10.0pt; color:#0066CC\"><a href=\"https://join.microsoft.com/dialin\"><span style=\"color:#0066CC\">Forgot your dial-in PIN?</span></a></span><span lang=\"EN\" style=\"font-size:3.0pt\">\r\n</span><span lang=\"EN\">|</span><span lang=\"EN\" style=\"font-size:10.0pt\"><a href=\"http://o15.officeredir.microsoft.com/r/rlidLync15?clid=1033&amp;p1=5&amp;p2=2009\"><span style=\"color:#0066CC\">Help</span></a></span><span lang=\"EN\" style=\"font-size:3.0pt\">&nbsp;&nbsp;\r\n</span><span lang=\"EN\" style=\"font-size:8.0pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:14.0pt\">&nbsp;</span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><sub><span lang=\"EN\" style=\"font-size:1.0pt; color:white\">[!OC([1033])!]</span></sub><span lang=\"EN\" style=\"font-size:3.0pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:10.0pt; line-height:115%; text-autospace:none\">\r\n<span lang=\"EN\" style=\"font-size:8.0pt; line-height:115%; color:#404040\">.........................................................................................................................................</span><span lang=\"EN\" style=\"font-size:10.5pt; line-height:115%\"></span></p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n</div>\r\n</body>\r\n</html>\r\n"
+      },
+      "bodyPreview": ".........................................................................................................................................\r\n--> Join Skype Meeting\r\nThis is an online meeting for Skype for Business, the professional meetings and commun",
+      "importance": "normal",
+      "sensitivity": "normal",
+      "start": {
+        "dateTime": "2016-10-05T14:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2016-10-05T15:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "Skype Meeting"
+      },
+      "isAllDay": false,
+      "isCancelled": false,
+      "isOrganizer": false,
+      "recurrence": {
+        "pattern": {
+          "type": "weekly",
+          "interval": 1,
+          "month": 0,
+          "dayOfMonth": 0,
+          "daysOfWeek": [
+            "monday",
+            "wednesday"
+          ],
+          "firstDayOfWeek": "sunday",
+          "index": "first"
+        },
+        "range": {
+          "type": "endDate",
+          "startDate": "2016-10-05",
+          "endDate": "2016-10-31",
+          "recurrenceTimeZone": "W. Europe Standard Time",
+          "numberOfOccurrences": 0
+        }
+      },
+      "responseRequested": true,
+      "seriesMasterId": null,
+      "showAs": "busy",
+      "type": "seriesMaster",
+      "attendees": [
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Steffen Vorein",
+            "address": "Steffen.Vorein@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Michiel van Otegem",
+            "address": "mioteg@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Steven Follis",
+            "address": "Steven.Follis@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ravi Alwani",
+            "address": "Ravi.Alwani@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "tentativelyAccepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rick Rainey",
+            "address": "rickra@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Wasim Bloch",
+            "address": "wabloch@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Peter De Tender",
+            "address": "pedete@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ninad Kanthi",
+            "address": "Ninad.Kanthi@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ross Sponholtz",
+            "address": "ross@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ben Trinh",
+            "address": "bentrin@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Alok Jain",
+            "address": "alojain@microsoft.com"
+          }
+        }
+      ],
+      "organizer": {
+        "emailAddress": {
+          "name": "Steffen Vorein",
+          "address": "Steffen.Vorein@microsoft.com"
+        }
+      },
+      "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U%2F1AAAA%2B%2BfdAAAx09gFg23FSqCLJOKWyNnoAABDe0HQAAA%3D&exvsurl=1&viewModel=ICalendarItemDetailsViewModelFactory",
+      "onlineMeetingUrl": "https://join.microsoft.com/meet/stvorein/3SB19LN7"
+    },
+    {
+      "@odata.etag": "W/\"Eb5AF46bg0aPo86X2QXNcwAAD8ZDUQ==\"",
+      "id": "AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U-1AAAA__fdAAARvkAXjpuDRo_jzpfZBc1zAAAPsRuDAAA=",
+      "createdDateTime": "2016-10-03T13:49:20.1740674Z",
+      "lastModifiedDateTime": "2016-10-03T13:49:20.2961787Z",
+      "changeKey": "Eb5AF46bg0aPo86X2QXNcwAAD8ZDUQ==",
+      "categories": [],
+      "originalStartTimeZone": "UTC",
+      "originalEndTimeZone": "UTC",
+      "responseStatus": {
+        "response": "organizer",
+        "time": "0001-01-01T00:00:00Z"
+      },
+      "iCalUId": "040000008200E00074C5B7101A82E008000000009B66E3F07C1DD201000000000000000010000000EFD32A2AB834C841B7F35A87C7E74EEC",
+      "reminderMinutesBeforeStart": 15,
+      "isReminderOn": false,
+      "hasAttachments": true,
+      "subject": "The Ritz-Carlton, Bangalore check out",
+      "body": {
+        "contentType": "html",
+        "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=us-ascii\">\r\n</head>\r\n<body>\r\n<div style=\"font-family:Segoe UI; font-size:11pt; text-align:center\">\r\n<div style=\"padding-top:15px\"><span style=\"font-size:14pt\">The Ritz-Carlton, Bangalore reservation</span><br>\r\nReservation code: 83292939</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div>Reservation for: Steven W Follis<br>\r\nCheck in: Sunday, November 6<br>\r\nCheck out: Friday, November 11<br>\r\nPhone: 80-4914-8000</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div style=\"font-size:10pt; color:#666666\">This event was automatically added to your calendar from email by Outlook.</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div style=\"font-size:10pt; color:#666666\">Let us know what you think about this feature via the\r\n<a href=\"https://www.yammer.com/microsoft.com/#/threads/inGroup?type=in_group&amp;feedId=5999277\" style=\"text-decoration:none; color:#0078D7\">\r\nOutlook Events from Email</a> group on Yammer or via <a href=\"mailto:outlookeventsfromemaildogfood&#43;microsoft.com@yammer.com\" style=\"text-decoration:none; color:#0078D7\">\r\nemail</a>.</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n</div>\r\n</body>\r\n</html>\r\n"
+      },
+      "bodyPreview": "The Ritz-Carlton, Bangalore reservation\r\nReservation code: 83292939\r\n\r\nReservation for: Steven W Follis\r\nCheck in: Sunday, November 6\r\nCheck out: Friday, November 11\r\nPhone: 80-4914-8000\r\n\r\nThis event was automatically added to your calendar from email by",
+      "importance": "normal",
+      "sensitivity": "private",
+      "start": {
+        "dateTime": "2016-11-11T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2016-11-12T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "The Ritz-Carlton, Bangalore",
+        "address": {
+          "street": "No 99 Residency Road Bangalore, 560025 IN",
+          "city": "",
+          "state": "",
+          "countryOrRegion": "",
+          "postalCode": ""
+        }
+      },
+      "isAllDay": true,
+      "isCancelled": false,
+      "isOrganizer": true,
+      "recurrence": null,
+      "responseRequested": true,
+      "seriesMasterId": null,
+      "showAs": "free",
+      "type": "singleInstance",
+      "attendees": [],
+      "organizer": {
+        "emailAddress": {
+          "name": "Steven Follis",
+          "address": "Steven.Follis@microsoft.com"
+        }
+      },
+      "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U%2F1AAAA%2B%2BfdAAARvkAXjpuDRo%2BjzpfZBc1zAAAPsRuDAAA%3D&exvsurl=1&viewModel=ICalendarItemDetailsViewModelFactory",
+      "onlineMeetingUrl": null
+    },
+    {
+      "@odata.etag": "W/\"Eb5AF46bg0aPo86X2QXNcwAAD8ZDTw==\"",
+      "id": "AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U-1AAAA__fdAAARvkAXjpuDRo_jzpfZBc1zAAAPsRuCAAA=",
+      "createdDateTime": "2016-10-03T13:49:19.9788893Z",
+      "lastModifiedDateTime": "2016-10-03T13:49:20.1550497Z",
+      "changeKey": "Eb5AF46bg0aPo86X2QXNcwAAD8ZDTw==",
+      "categories": [],
+      "originalStartTimeZone": "UTC",
+      "originalEndTimeZone": "UTC",
+      "responseStatus": {
+        "response": "organizer",
+        "time": "0001-01-01T00:00:00Z"
+      },
+      "iCalUId": "040000008200E00074C5B7101A82E008000000008BC5C5F07C1DD201000000000000000010000000373349AF3095BC48B020C559548E044B",
+      "reminderMinutesBeforeStart": 15,
+      "isReminderOn": false,
+      "hasAttachments": true,
+      "subject": "The Ritz-Carlton, Bangalore check in",
+      "body": {
+        "contentType": "html",
+        "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=us-ascii\">\r\n</head>\r\n<body>\r\n<div style=\"font-family:Segoe UI; font-size:11pt; text-align:center\">\r\n<div style=\"padding-top:15px\"><span style=\"font-size:14pt\">The Ritz-Carlton, Bangalore reservation</span><br>\r\nReservation code: 83292939</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div>Reservation for: Steven W Follis<br>\r\nCheck in: Sunday, November 6<br>\r\nCheck out: Friday, November 11<br>\r\nPhone: 80-4914-8000</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div style=\"font-size:10pt; color:#666666\">This event was automatically added to your calendar from email by Outlook.</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n<div style=\"font-size:10pt; color:#666666\">Let us know what you think about this feature via the\r\n<a href=\"https://www.yammer.com/microsoft.com/#/threads/inGroup?type=in_group&amp;feedId=5999277\" style=\"text-decoration:none; color:#0078D7\">\r\nOutlook Events from Email</a> group on Yammer or via <a href=\"mailto:outlookeventsfromemaildogfood&#43;microsoft.com@yammer.com\" style=\"text-decoration:none; color:#0078D7\">\r\nemail</a>.</div>\r\n<div height=\"30px\">&nbsp;</div>\r\n</div>\r\n</body>\r\n</html>\r\n"
+      },
+      "bodyPreview": "The Ritz-Carlton, Bangalore reservation\r\nReservation code: 83292939\r\n\r\nReservation for: Steven W Follis\r\nCheck in: Sunday, November 6\r\nCheck out: Friday, November 11\r\nPhone: 80-4914-8000\r\n\r\nThis event was automatically added to your calendar from email by",
+      "importance": "normal",
+      "sensitivity": "private",
+      "start": {
+        "dateTime": "2016-11-06T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2016-11-07T00:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "The Ritz-Carlton, Bangalore",
+        "address": {
+          "street": "No 99 Residency Road Bangalore, 560025 IN",
+          "city": "",
+          "state": "",
+          "countryOrRegion": "",
+          "postalCode": ""
+        }
+      },
+      "isAllDay": true,
+      "isCancelled": false,
+      "isOrganizer": true,
+      "recurrence": null,
+      "responseRequested": true,
+      "seriesMasterId": null,
+      "showAs": "free",
+      "type": "singleInstance",
+      "attendees": [],
+      "organizer": {
+        "emailAddress": {
+          "name": "Steven Follis",
+          "address": "Steven.Follis@microsoft.com"
+        }
+      },
+      "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U%2F1AAAA%2B%2BfdAAARvkAXjpuDRo%2BjzpfZBc1zAAAPsRuCAAA%3D&exvsurl=1&viewModel=ICalendarItemDetailsViewModelFactory",
+      "onlineMeetingUrl": null
+    },
+    {
+      "@odata.etag": "W/\"Eb5AF46bg0aPo86X2QXNcwAADRLMnQ==\"",
+      "id": "AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U-1AAAA__fdAAARvkAXjpuDRo_jzpfZBc1zAAAM-g5EAAA=",
+      "createdDateTime": "2016-10-01T21:32:15.6712935Z",
+      "lastModifiedDateTime": "2016-10-01T21:32:15.9085092Z",
+      "changeKey": "Eb5AF46bg0aPo86X2QXNcwAADRLMnQ==",
+      "categories": [],
+      "originalStartTimeZone": "Eastern Standard Time",
+      "originalEndTimeZone": "Eastern Standard Time",
+      "responseStatus": {
+        "response": "notResponded",
+        "time": "0001-01-01T00:00:00Z"
+      },
+      "iCalUId": "040000008200E00074C5B7101A82E00800000000E0F2D94CDD09D2010000000000000000100000000CF755FCE7A8114185C59FDEC66991E3",
+      "reminderMinutesBeforeStart": 15,
+      "isReminderOn": true,
+      "hasAttachments": false,
+      "subject": "OMS Tech Fridays - Fall Season",
+      "body": {
+        "contentType": "html",
+        "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=iso-8859-1\">\r\n<meta name=\"Generator\" content=\"Microsoft Word 15 (filtered medium)\">\r\n<style>\r\n<!--\r\n@font-face\r\n\t{font-family:Wingdings}\r\n@font-face\r\n\t{font-family:\"Cambria Math\"}\r\n@font-face\r\n\t{font-family:Calibri}\r\np.MsoNormal, li.MsoNormal, div.MsoNormal\r\n\t{margin:0in;\r\n\tmargin-bottom:.0001pt;\r\n\tfont-size:11.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\na:link, span.MsoHyperlink\r\n\t{color:#0563C1;\r\n\ttext-decoration:underline}\r\na:visited, span.MsoHyperlinkFollowed\r\n\t{color:#954F72;\r\n\ttext-decoration:underline}\r\np.msonormal0, li.msonormal0, div.msonormal0\r\n\t{margin-right:0in;\r\n\tmargin-left:0in;\r\n\tfont-size:12.0pt;\r\n\tfont-family:\"Times New Roman\",serif}\r\nspan.EmailStyle18\r\n\t{font-family:\"Calibri\",sans-serif;\r\n\tcolor:windowtext}\r\n.MsoChpDefault\r\n\t{font-size:10.0pt;\r\n\tfont-family:\"Calibri\",sans-serif}\r\n@page WordSection1\r\n\t{margin:1.0in 1.0in 1.0in 1.0in}\r\ndiv.WordSection1\r\n\t{}\r\n-->\r\n</style>\r\n</head>\r\n<body lang=\"EN-US\" link=\"#0563C1\" vlink=\"#954F72\">\r\n<div class=\"WordSection1\">\r\n<p class=\"MsoNormal\"><u><span style=\"font-size:20.0pt; color:red\">Sending New Invite as previous was corrupted</span></u></p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\">Hello,</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\">Please join us every other Friday for an hour focused on technical information regarding Microsoft’s business continuity and disaster recovery solutions including:</p>\r\n<p class=\"MsoNormal\">Azure Site Recovery (ASR), Azure Backup (AB), Operational Insights (OI), Azure Automation (AA), and related technologies.&nbsp;\r\n</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\">Our goal in this series will be to deliver deep technical content on a specific component or aspect of a component each time.&nbsp;\r\n</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\">Every call will follow this basic outline:</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\"><b>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OMS Overview (10-15 minutes)<a name=\"_InsertRtfSavedPosition\"></a></b></p>\r\n<p class=\"MsoNormal\"><b>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Technical Deep Dive/Partner Focus of the Week (30 minutes)</b></p>\r\n<p class=\"MsoNormal\"><b>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Q&amp;A (10-15 minutes)</b></p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\">We will post the specific topic being covered a few days prior as well as recordings and other materials from past discussions here:</p>\r\n<p class=\"MsoNormal\"><a href=\"http://aka.ms/OMSFridays\">http://aka.ms/OMSFridays</a>.</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\">Note that this discussion is open to anyone and everyone interested in learning technical details about OMS.&nbsp; Please feel free to share this series with whomever may be interested.</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span style=\"font-size:8.0pt; color:#404040\">.........................................................................................................................................</span><b><span style=\"font-size:14.0pt\"></span></b></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><a name=\"OutJoinLink\"><span style=\"font-size:14.0pt; font-family:Wingdings; color:#0066CC\">à</span></a><span style=\"font-size:14.0pt; color:#0066CC\">\r\n</span><a href=\"https://join.microsoft.com/meet/rodaley/SENBXRQ2\"><span style=\"font-size:16.0pt; color:#0066CC\">Join Skype Meeting</span></a><span style=\"font-size:14.0pt\">&nbsp;\r\n<a name=\"OutSharedNoteBorder\">&nbsp;</a>&nbsp;&nbsp;<a name=\"OutSharedNoteLink\">&nbsp;</a></span><span style=\"font-size:14.0pt\"></span></p>\r\n<table class=\"MsoNormalTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse\">\r\n<tbody>\r\n<tr>\r\n<td width=\"400\" valign=\"top\" style=\"width:300.0pt; padding:0in 0in 0in 0in\">\r\n<p class=\"MsoNormal\" style=\"margin-right:0in; margin-bottom:12.0pt; margin-left:16.0pt; line-height:125%; text-autospace:none\">\r\n<span style=\"font-size:10.0pt; line-height:125%\">This is an online meeting for Skype for Business, the professional meetings and communications app formerly known as Lync.</span></p>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:13.0pt; color:black\">Join by phone</span><span lang=\"EN\" style=\"font-size:8.0pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:10.0pt\"><a href=\"tel:&#43;17036571761\"><span style=\"color:#0066CC\">&#43;17036571761</span></a> (USA, Reston) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; English (United States)\r\n</span><span lang=\"EN\" style=\"font-size:3.0pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><u><span lang=\"EN\" style=\"font-size:10.0pt; color:#943634\"><a href=\"https://join.microsoft.com/dialin\"><span style=\"color:#0066CC\">Find a local number</span></a></span></u><span lang=\"EN\">\r\n</span><span lang=\"EN\" style=\"font-size:10.5pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:8.0pt\">&nbsp;</span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:2.0pt; text-autospace:none\"><span lang=\"EN\" style=\"font-size:10.0pt\">Conference ID: 36857073</span><span lang=\"EN\" style=\"font-size:10.5pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:10.0pt; color:#0066CC\"><a href=\"https://join.microsoft.com/dialin\"><span style=\"color:#0066CC\">Forgot your dial-in PIN?</span></a></span><span lang=\"EN\" style=\"font-size:3.0pt\">\r\n</span><span lang=\"EN\">|</span><span lang=\"EN\" style=\"font-size:10.0pt\"><a href=\"http://o15.officeredir.microsoft.com/r/rlidLync15?clid=1033&amp;p1=5&amp;p2=2009\"><span style=\"color:#0066CC\">Help</span></a></span><span lang=\"EN\" style=\"font-size:3.0pt\">&nbsp;&nbsp;&nbsp;&nbsp;\r\n</span><span lang=\"EN\" style=\"font-size:8.0pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><span lang=\"EN\" style=\"font-size:14.0pt\">&nbsp;</span></p>\r\n<p class=\"MsoNormal\" style=\"text-autospace:none\"><sub><span lang=\"EN\" style=\"font-size:1.0pt; color:white\">[!OC([1033])!]</span></sub><span lang=\"EN\" style=\"font-size:3.0pt\"></span></p>\r\n<p class=\"MsoNormal\" style=\"margin-bottom:10.0pt; line-height:115%; text-autospace:none\">\r\n<span lang=\"EN\" style=\"font-size:8.0pt; line-height:115%; color:#404040\">.........................................................................................................................................</span><span lang=\"EN\" style=\"font-size:10.5pt; line-height:115%\"></span></p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n<p class=\"MsoNormal\">&nbsp;</p>\r\n</div>\r\n</body>\r\n</html>\r\n"
+      },
+      "bodyPreview": "Sending New Invite as previous was corrupted\r\n\r\nHello,\r\n\r\nPlease join us every other Friday for an hour focused on technical information regarding Microsoft’s business continuity and disaster recovery solutions including:\r\nAzure Site Recovery (ASR), Azure",
+      "importance": "normal",
+      "sensitivity": "normal",
+      "start": {
+        "dateTime": "2016-09-16T17:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2016-09-16T18:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "",
+        "address": {}
+      },
+      "isAllDay": false,
+      "isCancelled": false,
+      "isOrganizer": false,
+      "recurrence": {
+        "pattern": {
+          "type": "weekly",
+          "interval": 2,
+          "month": 0,
+          "dayOfMonth": 0,
+          "daysOfWeek": [
+            "friday"
+          ],
+          "firstDayOfWeek": "sunday",
+          "index": "first"
+        },
+        "range": {
+          "type": "endDate",
+          "startDate": "2016-09-16",
+          "endDate": "2016-12-09",
+          "recurrenceTimeZone": "Eastern Standard Time",
+          "numberOfOccurrences": 0
+        }
+      },
+      "responseRequested": true,
+      "seriesMasterId": null,
+      "showAs": "tentative",
+      "type": "seriesMaster",
+      "attendees": [
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Roan Daley",
+            "address": "Roan.Daley@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Hewitt Wright",
+            "address": "Hewitt.Wright@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "David Barkol",
+            "address": "dabarkol@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Americas Cloud Infrastructure GBB",
+            "address": "AmericasCIGBB@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "EPG C+E DC TSP BB",
+            "address": "CESSDCTSP@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "EPG C+E SS Datacenter SSP BB",
+            "address": "cessdcssp@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Cloud Solution Architect Community",
+            "address": "CSA-All@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Azure Site Recovery Tech Talk",
+            "address": "asrtechtalk@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Martin Pichardo",
+            "address": "martinpi@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Neelam Gupta",
+            "address": "negupt@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Errol Koos",
+            "address": "Errol.Koos@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Pradeep Menon",
+            "address": "prmen@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Bill McCluskey",
+            "address": "wimcclus@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Don McCormick",
+            "address": "Don.McCormick@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Karl Rautenstrauch",
+            "address": "Karl.Rautenstrauch@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Anthony de Lagarde",
+            "address": "Anthony.deLagarde@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Lourens van Dyk",
+            "address": "lourev@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Alan La Pietra",
+            "address": "Alan.LaPietra@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Brent Funk",
+            "address": "brfunk@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Peter Barrera",
+            "address": "Peter.Barrera@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Shawn Weisfeld",
+            "address": "Shawn.Weisfeld@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Marek Smejkal",
+            "address": "Marek.Smejkal@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Magnus Borssen",
+            "address": "magnus.borssen@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sergio Pattinama",
+            "address": "sergiop@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Dan Pessin",
+            "address": "Dan.Pessin@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Paul Singh",
+            "address": "Paul.Singh@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Kate Baroni",
+            "address": "Kate.Baroni@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Archana Mehta",
+            "address": "armeht@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ryuki Yoshimatsu",
+            "address": "ryukiy@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Nicole Welch",
+            "address": "Nicole.Welch@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Cenk Ersoy",
+            "address": "cenker@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jay Lockhart",
+            "address": "jay.lockhart@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ryan Berry (CSA)",
+            "address": "Ryan.Berry@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Abhishek Agrawal (CDM)",
+            "address": "abhiag@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Andres Springborn",
+            "address": "andressp@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Lisa Downey",
+            "address": "Lisa.Downey@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Niko Dukic",
+            "address": "Niko.Dukic@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Juraj Sucik",
+            "address": "Juraj.Sucik@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "David Pazdera",
+            "address": "David.Pazdera@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Gonzalo Fiuza Berti",
+            "address": "Gonzalo.Fiuza@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Eason Lai",
+            "address": "eason.lai@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mario Kunz",
+            "address": "Mario.Kunz@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Frank Lopez",
+            "address": "frlope@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Giridhar Mosay",
+            "address": "giridham@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Yuji Adachi",
+            "address": "yuadac@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ketur Shah",
+            "address": "Ketur.Shah@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Kevin Brown",
+            "address": "Kevin.D.Brown@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Paul Rousell",
+            "address": "Paul.Rousell@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rob Kuehfus (InFront Consulting Group)",
+            "address": "b-rokueh@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Alejandro Pacheco Masdíaz",
+            "address": "Alejandro.Pacheco@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Walter Myers",
+            "address": "walterm@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sebastian Del Rio",
+            "address": "sebastid@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Kevin Cassidy",
+            "address": "Kevin.Cassidy@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Manjunath Kalmath",
+            "address": "Manjunath.Kalmath@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Madhavi Mallela",
+            "address": "mamalle@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Alain Dormehl",
+            "address": "Alain.Dormehl@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Steve Caravajal",
+            "address": "Steve.Caravajal@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Islam Gomaa",
+            "address": "Islam.Gomaa@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Eric Grenon",
+            "address": "ericg@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rui Carmo",
+            "address": "Rui.Carmo@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "John Kelbley",
+            "address": "johnkel@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Serih Cook",
+            "address": "serihz@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Justin Jakowski",
+            "address": "Justin.Jakowski@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Braulio Chavez Salazar",
+            "address": "braulioc@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Pamila Raina",
+            "address": "pamilar@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Pedro Pablo Malagon Amor",
+            "address": "pedropm@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Matt Trachtenberg",
+            "address": "Matthew.Trachtenberg@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Britt Johnston",
+            "address": "Britt.Johnston@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mathieu Rietman",
+            "address": "Mathieu.Rietman@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Manish Amin",
+            "address": "maamin@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Michael Pasco",
+            "address": "Michael.Pasco@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Hennie Swanepoel",
+            "address": "Hendrik.Swanepoel@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Simon Rolfe",
+            "address": "Simon.Rolfe@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Gurinder Singh",
+            "address": "gursi@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Corey Nordstrom",
+            "address": "Corey.Nordstrom@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Joe Hintzen",
+            "address": "jhintzen@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Robin Ray-Howett",
+            "address": "Robin.Ray-Howett@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mukund Mohan",
+            "address": "mukundm@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Valery Sponza",
+            "address": "valerys@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Menzo Steinhorst",
+            "address": "menzos@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "NY Metro Core Infrastructure",
+            "address": "NYMCI@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "NY Metro ATS Only",
+            "address": "NYMATSOnly@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "NYM Azure Team",
+            "address": "NYMAZ@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "New York Metro ATU and STU Managers",
+            "address": "nymatustumgrs@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Dan McGuigan",
+            "address": "danmcgu@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "John DarConte",
+            "address": "John.DarConte@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sal Lalehzar",
+            "address": "sal.lalehzar@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sana Khan",
+            "address": "Sana.Khan@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Brian Maslowski",
+            "address": "brianmas@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jay Askew",
+            "address": "James.Askew@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Vamsee Sistla",
+            "address": "vsistla@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Edward D'Esposito",
+            "address": "eddespos@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jaime Basilico",
+            "address": "James.Basilico@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Heman Kodappully",
+            "address": "Heman.Kodappully@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Laxmi Narayan Bhardwaj",
+            "address": "laxminb@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Aviraj Ajgekar",
+            "address": "aviraj@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ben Kemper",
+            "address": "bekemp@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "John Yokim",
+            "address": "johny@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Phil Feinberg",
+            "address": "Phil.Feinberg@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Thomas Henseler",
+            "address": "Thomas.Henseler@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Adriano Gomes",
+            "address": "Adriano.Gomes@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Dean Kontometros",
+            "address": "dekontom@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Manny Gonzalez",
+            "address": "Manny.Gonzalez@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "John O'Sullivan",
+            "address": "John.OSullivan@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Dwayne Jackson",
+            "address": "dwaynej@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jason Marston",
+            "address": "Jason.Marston@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Robert Turnage",
+            "address": "Robert.Turnage@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Piotr Dragowski",
+            "address": "Piotr.Dragowski@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rupert Benbrook",
+            "address": "Rupert.Benbrook@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mary Jacquemont",
+            "address": "maryja@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Christian Epstein",
+            "address": "chrie@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Christopher Robbins (N3, LLC)",
+            "address": "v-chrobb@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Harvey Sirota",
+            "address": "hasi@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Brig Lamoreaux",
+            "address": "Brig.Lamoreaux@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Armen Brown",
+            "address": "arbrow@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Khondaker Haque",
+            "address": "Khondaker.Haque@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Eric van Wijk",
+            "address": "Eric.van.Wijk@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rudi Maritz",
+            "address": "rumaritz@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Dan Mulligan",
+            "address": "Dan.Mulligan@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jason Dinwiddie",
+            "address": "jasondin@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Tyrone Millard",
+            "address": "Tyrone.Millard@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sang Won Seo",
+            "address": "swseo@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "C+E Technical Enablement",
+            "address": "cetech@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Haoming Li",
+            "address": "Haoming.Li@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rikin Shah",
+            "address": "Rikin.Shah@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Fung Han Lim",
+            "address": "FungHan.Lim@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Spencer Quak",
+            "address": "squak@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Henry Shi",
+            "address": "shjia@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Vishal Mehrotra",
+            "address": "vishm@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jaclyn DeGiorgio",
+            "address": "dejaclyn@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jaron Burbidge",
+            "address": "jaronb@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Carlos José Salgueiro",
+            "address": "Carlos.Salgueiro@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sandeep Batra",
+            "address": "sandba@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Travis McGann",
+            "address": "travim@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jonas Hanke",
+            "address": "Jonas.Hanke@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jonathan Fernandes (N3 LLC)",
+            "address": "v-jonfer@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Nuno Centeno",
+            "address": "Nuno.Centeno@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Des FitzGerald",
+            "address": "Des.FitzGerald@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Alonso Liu",
+            "address": "yill@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Olivier Berline",
+            "address": "Olivier.Berline@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Peter Liljenroth",
+            "address": "Peter.Liljenroth@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Javier Rodriguez Fernandez",
+            "address": "javier@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Bilal Hashmi",
+            "address": "Bilal.Hashmi@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Anthony Tyler",
+            "address": "Anthony.Tyler@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Bob Roudebush",
+            "address": "Bob.Roudebush@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sathyanarayana Subbaiah",
+            "address": "ssubbai@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Guido Govers",
+            "address": "guido.govers@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mike Silva",
+            "address": "msilva@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Chris Vugrinec",
+            "address": "chvugrin@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jeff Baker (CSA)",
+            "address": "Jeff.Baker@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Zachary Bonugli",
+            "address": "Zachary.bonugli@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jose Guardia Mateos",
+            "address": "josegm@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ben Zadeh",
+            "address": "Ben.Zadeh@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Chandra Sekar (CSA)",
+            "address": "Chandra.Sekar@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Chad Story",
+            "address": "Chad.Story@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Marcus Heymann",
+            "address": "Marcus.Heymann@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sang Yoon Shin",
+            "address": "sashin@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Charlie Kang (Adecco Personnel Limited)",
+            "address": "a-chkang@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Thomas Varlet",
+            "address": "Thomas.Varlet@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Marshall Copeland",
+            "address": "Marshall.Copeland@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Paul Bui",
+            "address": "paulbui@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Paul Butterworth (GBB)",
+            "address": "Paul.Butterworth@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Christoper Gunawan",
+            "address": "Christoper.Gunawan@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jason Errett",
+            "address": "Jason.Errett@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Christian Linacre",
+            "address": "Christian.Linacre@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Boon Teng Tan",
+            "address": "BoonTeng.Tan@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Marco Antonio Padilha",
+            "address": "Marco.Padilha@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Nicholas Eberts",
+            "address": "Nicholas.Eberts@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rakesh Shah",
+            "address": "Rakesh.Shah@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mike Lee",
+            "address": "Lee.Mike@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Marty Chen",
+            "address": "martych@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rob Hubbell",
+            "address": "rohubb@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Arash Rassoulpour",
+            "address": "Arash.Rassoulpour@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Bret Swedeen",
+            "address": "Bret.Swedeen@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Hisham Mortada",
+            "address": "hishamm@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Daniel Falkner",
+            "address": "Daniel.Falkner@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Joerg Jooss",
+            "address": "Joerg.Jooss@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Benedict Berger",
+            "address": "beber@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Damola Solanke",
+            "address": "dasolank@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sumeeth Evans",
+            "address": "Sumeeth.Evans@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Gino Filicetti",
+            "address": "Gino.Filicetti@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sam Giles",
+            "address": "samgiles@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Adrian Botusan",
+            "address": "adbotus@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Priya Aswani",
+            "address": "paswani@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Frank Cerbone",
+            "address": "Frank.Cerbone@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Adrian Corona Temores",
+            "address": "acorona@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Florian Bonneville",
+            "address": "Florian.Bonneville@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ruth Bacci",
+            "address": "Ruth.Bacci@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ryan CrawCour",
+            "address": "ryancraw@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Aris Prabhawa",
+            "address": "arprabha@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Wes Johns",
+            "address": "Wesley.Johns@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Stuart Kirk",
+            "address": "Stuart.Kirk@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Shad Phillips",
+            "address": "shadph@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Alexis Castanares",
+            "address": "Alexis.Castanares@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "MWD Cloud Infrastructure TSP",
+            "address": "mwdcloudinfrastructuretsp@service.microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "David Apolinar",
+            "address": "David.Apolinar@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ryan Zoeller",
+            "address": "Ryan.Zoeller@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ion Gott",
+            "address": "Ion.Gott@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "roan.daley@gmail.com",
+            "address": "roan.daley@gmail.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jason Grossman",
+            "address": "Jason.Grossman@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Stuart Landrum",
+            "address": "Stuart.Landrum@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Dwayne Hall",
+            "address": "DWAYNE.HALL@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Kevin Parr",
+            "address": "Kevin.Parr@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Scott Drabick",
+            "address": "Scott.Drabick@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sascha Dittmann",
+            "address": "Sascha.Dittmann@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Christof Claessens",
+            "address": "christoc@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Gustav Kaleta",
+            "address": "gkaleta@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Katrien De Graeve",
+            "address": "Katrien.DeGraeve@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Patrick Mandemaker",
+            "address": "Patrick.Mandemaker@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Paul Chiola",
+            "address": "pauch@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Peggy Pinelo Merchan",
+            "address": "peggypm@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Silvia Spera",
+            "address": "Silvia.Spera@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rene Alamo",
+            "address": "reneal@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Matt Mazza",
+            "address": "Matthew.Mazza@ricoh-usa.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "jason.milczek@ricoh-usa.com",
+            "address": "jason.milczek@ricoh-usa.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Marty.Everett@ricoh-usa.com",
+            "address": "Marty.Everett@ricoh-usa.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Zach.Peerand (Zach.Peerand@ricoh-usa.com)",
+            "address": "Zach.Peerand@ricoh-usa.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sanjeev Devarapalli",
+            "address": "Sanjeev.Devarapalli@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Janerie Wheeler",
+            "address": "jwheeler@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Faizan Khan",
+            "address": "Faizan.Khan@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Vandy Rodrigues",
+            "address": "vandyr@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Gerald Tiu",
+            "address": "Gerald.Tiu@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Garvin Casimir",
+            "address": "gacas@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Joseph A. Hancuff",
+            "address": "jhancuff@inovalon.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rick Rupertus",
+            "address": "Rick.Rupertus@cfainstitute.org"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Shadoe DiStefano",
+            "address": "sdistefano@merkleinc.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "John Strange",
+            "address": "jostran@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rich Johnson",
+            "address": "richjohn@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Fred Harmon",
+            "address": "Fred.Harmon@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Tatiana Lavrentieva",
+            "address": "talavren@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Miao Jiang",
+            "address": "mijiang@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ed Knox",
+            "address": "edknox@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Steve Roach",
+            "address": "Steven.Roach@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Prashant Nayak",
+            "address": "pnayak@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Randy Campbell",
+            "address": "Randy.Campbell@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jerry Yang",
+            "address": "Jerry.Yang@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Michelle Hlaing",
+            "address": "Michelle.Hlaing@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jason Savino",
+            "address": "jasonsav@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Louis Berman",
+            "address": "lberman@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Srinivasan Chandrasekar",
+            "address": "srinicha@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mitch Wierman",
+            "address": "Mitch.Wierman@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mike Yeaney",
+            "address": "miyean@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Adam Hems",
+            "address": "adamhems@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Heng Wei",
+            "address": "hengwei@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ted Breedon",
+            "address": "tebree@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "David Coe",
+            "address": "David.Coe@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "JJ Delgado Arizmendi",
+            "address": "jdelgado@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Chris Lewis (ATS - EDU)",
+            "address": "Christian.Lewis@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Brad Schacht",
+            "address": "Brad.Schacht@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "OP Ravi",
+            "address": "OP.Ravi@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Pishoy Bous",
+            "address": "Pishoy.Bous@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Abhishek Anand",
+            "address": "Abhishek.Anand@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jim Priestley",
+            "address": "Jim.Priestley@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "James Prendergast",
+            "address": "James.Prendergast@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mike Carlin",
+            "address": "Mike.Carlin@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Bruce Pham",
+            "address": "brpham@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Omar Parker",
+            "address": "oparker@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Tim Lawless",
+            "address": "Tim.Lawless@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rogerio Cordeiro",
+            "address": "rogerioc@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Fred Meurgey",
+            "address": "frederic.meurgey@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Laura Weng",
+            "address": "Laura.Weng@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Carsten Lemm",
+            "address": "Carsten.Lemm@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Raza Khan",
+            "address": "razkha@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jason Boeshart",
+            "address": "jaboes@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jason Beck",
+            "address": "Jason.Beck@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Akshay Mehta",
+            "address": "Akshay.Mehta@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Janet Amezcua Rogel",
+            "address": "Janet.Amezcua@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Joaquin Porrata-Doria",
+            "address": "jporrata@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Brandon Rohrer (CSA)",
+            "address": "Brandon.Rohrer@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Steve Wiederrich",
+            "address": "swieder@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Danny Argov",
+            "address": "Daniel.Argov@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Kyle Hoffman",
+            "address": "kylehoff@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Patrick El-Azem",
+            "address": "Patrick.El-Azem@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "John Jenner",
+            "address": "John.Jenner@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Fred Ohm",
+            "address": "frohm@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Brian Harrison",
+            "address": "brharr@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sohail Zakaria",
+            "address": "sozakari@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Neel Nanda",
+            "address": "Neel.Nanda@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Randy Holloway",
+            "address": "Randy.Holloway@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Christian Lavista",
+            "address": "Christian.Lavista@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Betza De Leon",
+            "address": "betzal@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Udy Sarma",
+            "address": "udsarm@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Luyao Wang",
+            "address": "luywang@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Daniel Wang",
+            "address": "nawan@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ben Watson (HYBRID CLOUD)",
+            "address": "Ben.H.Watson@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Dave Strebel",
+            "address": "Dave.Strebel@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Alejandra Hernandez",
+            "address": "mahernan@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mark Stanfill",
+            "address": "Mark.Stanfill@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Kira Keahey",
+            "address": "kikeahe@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Enrique Ruiz Mateos",
+            "address": "Enrique.Ruiz@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Michael DeSilver",
+            "address": "Michael.DeSilver@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Eddie Ohlson",
+            "address": "Eddie.Ohlson@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Hiroshi Tanaka (GBB TSP)",
+            "address": "hirost@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Lyle Dodge",
+            "address": "lyle.dodge@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Paulo Teixeira",
+            "address": "Paulo.Teixeira@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Tony Surma",
+            "address": "tony.surma@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Charles Christian",
+            "address": "Charles.Christian@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Danilo Diaz",
+            "address": "danilod@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jeff Woolsey",
+            "address": "Jeff.Woolsey@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Chris Campbell",
+            "address": "chrcam@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mauricio Caro",
+            "address": "Mauricio.Caro@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mark Fussell",
+            "address": "mfussell@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Shane Ochotny",
+            "address": "Shane.Ochotny@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Norberto Garcia",
+            "address": "ngarcia@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Andre Magni",
+            "address": "Andre.Magni@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Art Rask",
+            "address": "artrask@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Elena Luk'yanenko",
+            "address": "elenaluk@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Michael Collier",
+            "address": "Michael.Collier@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jim Dierkes",
+            "address": "Jim.Dierkes@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Carla Staeben",
+            "address": "staeben@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Travis Nielsen",
+            "address": "travis.Nielsen@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "John Patrick Dandison",
+            "address": "johndand@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mike McKeown",
+            "address": "mikemcke@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Alec Minty",
+            "address": "alminty@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Zhenxin Jiao",
+            "address": "zhejia@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Megha Chawla",
+            "address": "Megha.Chawla@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Blake DuBois",
+            "address": "bdubois@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Lokeshkumar Krishnaswamy",
+            "address": "lokrishn@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mark Kromer",
+            "address": "makromer@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Kevin Lopez",
+            "address": "Kevin.Lopez@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Damon Hensley",
+            "address": "Damon.Hensley@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Matthew Witman",
+            "address": "matt.witman@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Gaurav Aggarwal",
+            "address": "gaurav.aggarwal@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Michele Ferrari",
+            "address": "michele.ferrari@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "John Jones",
+            "address": "John.Jones@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Vicky Fu",
+            "address": "vickyfu@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mark Sparling",
+            "address": "Mark.Sparling@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "P.J. Grinsell",
+            "address": "P.J.Grinsell@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Perry Campione",
+            "address": "Perry.Campione@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Robert Kiilsgaard",
+            "address": "Robert.Kiilsgaard@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Brad Allen",
+            "address": "ballen@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Allan Da Costa Pinto",
+            "address": "allandcp@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Delbert Murphy",
+            "address": "delbertm@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ryan Gaukroger",
+            "address": "Ryan.Gaukroger@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Andy Thomas",
+            "address": "Andy.Thomas@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rob Klause",
+            "address": "roklau@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Chad.Martin@ricoh-usa.com",
+            "address": "Chad.Martin@ricoh-usa.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Thomas Lichtenstern",
+            "address": "Thomas.Lichtenstern@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Clive Graven",
+            "address": "cliveg@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Eric Tacik",
+            "address": "etacik@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Chris Walker",
+            "address": "chris.walker@cfainstitute.org"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Caleb Lovelace",
+            "address": "Caleb.Lovelace@cfainstitute.org"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jenna Lee",
+            "address": "jenlee@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Christopher Martin",
+            "address": "Christopher.Martin@axaltacs.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Boris Nisenbaum",
+            "address": "borisn@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Cohn, Ian",
+            "address": "Ian.Cohn@allscripts.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ghantasala, Sree",
+            "address": "Sree.Ghantasala@allscripts.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Dean Tomaino",
+            "address": "deatoma@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Kittinger, Steve",
+            "address": "Steve.Kittinger@allscripts.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Tomlinson, Peter",
+            "address": "Peter.Tomlinson@allscripts.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Amante, David",
+            "address": "Dave.Amante@allscripts.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mike Gaal",
+            "address": "mikegaal@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Gisela Torres Buitrago",
+            "address": "giselat@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ron Abellera",
+            "address": "ronabel@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Kim McMinn",
+            "address": "Kim.McMinn@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "David Feng (HYBRID)",
+            "address": "David.Feng@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rob Kuehfus",
+            "address": "rob.kuehfus@infrontconsulting.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Stefan Cronjaeger",
+            "address": "scronj@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Alptekin Gokceyrek",
+            "address": "algokce@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Toshitaka Ishibashi",
+            "address": "Toshitaka.Ishibashi@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Gaurav Sinha",
+            "address": "gsinha@exchange.microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "John Wildes",
+            "address": "John.Wildes@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Mike Egbert",
+            "address": "mikegber@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Julius Gabby",
+            "address": "jugabb@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Renato Silva Borges da Rocha",
+            "address": "Renato.Rocha@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Glenn Sparkes",
+            "address": "gsparkes@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Rob Hagan",
+            "address": "rhagan@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jose Miguel Parrella",
+            "address": "Jose.Miguel@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ryan Frazier",
+            "address": "Ryan.Frazier@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sam Khoury",
+            "address": "Sam.Khoury@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Alex Luzes",
+            "address": "aluzes@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Todd Thorson",
+            "address": "Todd.Thorson@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Andrew Zeller",
+            "address": "azeller@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Vamshidhar Kommineni",
+            "address": "Vamshidhar.Kommineni@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sean Mikha",
+            "address": "semikha@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Bill Barna",
+            "address": "bibar@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ravi Tella",
+            "address": "ratella@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Karl Kuhnhausen",
+            "address": "karlku@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Abbas Ali Mir",
+            "address": "Abbas.Mir@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Michelle Eubanks",
+            "address": "Michelle.Eubanks@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "John Ferrari",
+            "address": "John.Ferrari@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Eduardo Kassner",
+            "address": "Eduardo.Kassner@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Subramani Ananthapadmanabhan",
+            "address": "asubmani@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Fari Breguet",
+            "address": "farib@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Keeler, Daniel J.",
+            "address": "Daniel.Keeler@versummaterials.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Kirstein, Eric J.",
+            "address": "Eric.Kirstein@versummaterials.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Arey, Gretchen",
+            "address": "Gretchen.Arey@versummaterials.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Bihes Issa",
+            "address": "Bihes.Issa@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Anita Sood",
+            "address": "anitas@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Chuck Enstall",
+            "address": "censtall@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Dan Gartner",
+            "address": "Dan.Gartner@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Bart Robertson",
+            "address": "bartr@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Adrian Judele (Rinf Temps)",
+            "address": "a-adjude@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "David Yu",
+            "address": "davyu@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Tom Nolan",
+            "address": "tnolan@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Derek Anderson",
+            "address": "danderson@medassets.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Maciej Stopa",
+            "address": "Maciej.Stopa@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Bruce Cosden",
+            "address": "brcosden@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Marc Schweigert",
+            "address": "marcsc@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Guorong Feng",
+            "address": "wifeng@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Luis Botero",
+            "address": "Luis.Botero@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Krunoslav Mihalic",
+            "address": "Krunoslav.Mihalic@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Jared Lohr (Business Builders)",
+            "address": "v-jalohr@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Steffen Krause",
+            "address": "Steffen.Krause@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Sean Clark",
+            "address": "seaclark@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ravin Salgado (Corestaff)",
+            "address": "v-rasalg@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Olivier Subramanian",
+            "address": "Olivier.Subramanian@Microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required",
+          "emailAddress": {
+            "name": "Ahmed Farag",
+            "address": "Ahmed.Farag@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "optional",
+          "emailAddress": {
+            "name": "Bill MacKenzie",
+            "address": "Bill.MacKenzie@infrontconsulting.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "optional",
+          "emailAddress": {
+            "name": "Michael Topp",
+            "address": "Michael.Topp@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "optional",
+          "emailAddress": {
+            "name": "Dale Lightner",
+            "address": "Dale.Lightner@microsoft.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "optional",
+          "emailAddress": {
+            "name": "Susantha Silva",
+            "address": "susanthas@infrontconsulting.com"
+          }
+        },
+        {
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "optional",
+          "emailAddress": {
+            "name": "Kevin Sullivan",
+            "address": "Kevin.Sullivan@microsoft.com"
+          }
+        }
+      ],
+      "organizer": {
+        "emailAddress": {
+          "name": "Roan Daley",
+          "address": "Roan.Daley@microsoft.com"
+        }
+      },
+      "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGNhNTc0ZmEwLWNlYjItNDBhZC1iMzBhLTkxZTQ2ODc4NDIzNwBGAAAAAAAv6dhUxw9IT5PeLtyndKp9BwBmgaTHo6kuR6iAdGY25U%2F1AAAA%2B%2BfdAAARvkAXjpuDRo%2BjzpfZBc1zAAAM%2Fg5EAAA%3D&exvsurl=1&viewModel=ICalendarItemDetailsViewModelFactory",
+      "onlineMeetingUrl": null
+    }
+  ]
+}

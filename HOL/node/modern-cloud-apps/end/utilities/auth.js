@@ -11,13 +11,13 @@ var config = {
         skipUserProfile: true, // for AzureAD should be set to true.
         responseType: 'id_token code', // for login only flows use id_token. For accessing resources use `id_token code`
         responseMode: 'form_post', // For login only flows we should have token passed back to us in a POST
-        scope: ['User.Read'] // additional scopes you may wish to pass
+        scope: 'User.Read Mail.Send Calendars.ReadWrite' // additional scopes you may wish to pass
     }
 };
 
 module.exports.setup = function (app) {
 
-    // Passport session setup. (Section 2)
+    // Passport session setup.
 
     //   To support persistent login sessions, Passport needs to be able to
     //   serialize users into and deserialize users out of the session.  Typically,
@@ -67,7 +67,7 @@ module.exports.setup = function (app) {
     },
         function (iss, sub, profile, accessToken, refreshToken, done) {
 
-            console.log('Example: Email address we received was: ', profile.email);
+            console.log(`Email address we received was: ${profile.email}`);
             
             // Add the token to the profile
             // TODO: Add logic for token refreshment
@@ -92,14 +92,9 @@ module.exports.setup = function (app) {
 
     ));
 
-    //Routes (Section 4)
-
+    //Routes
     app.get('/', function (req, res) {
         res.render('index', { user: req.user });
-    });
-
-    app.get('/account', ensureAuthenticated, function (req, res) {
-        res.render('account', { user: req.user });
     });
 
     app.get('/login',
@@ -109,7 +104,7 @@ module.exports.setup = function (app) {
             res.redirect('/');
         });
 
-    // Our POST routes (Section 3)
+    // Our POST routes
 
     // POST /auth/openid
     //   Use passport.authenticate() as route middleware to authenticate the
@@ -120,7 +115,7 @@ module.exports.setup = function (app) {
     app.post('/auth/openid',
         passport.authenticate('azuread-openidconnect', { failureRedirect: '/login' }),
         function (req, res) {
-            console.log('Authentication was called in the Sample');
+            console.log('Authentication was called');
             res.redirect('/');
         });
 
@@ -132,7 +127,6 @@ module.exports.setup = function (app) {
     app.get('/auth/openid/return',
         passport.authenticate('azuread-openidconnect', { failureRedirect: '/login' }),
         function (req, res) {
-
             res.redirect('/');
         });
 
@@ -153,7 +147,7 @@ module.exports.setup = function (app) {
     });
 
 
-    // Simple route middleware to ensure user is authenticated. (Section 4)
+    // Simple route middleware to ensure user is authenticated.
 
     //   Use this route middleware on any resource that needs to be protected.  If
     //   the request is authenticated (typically via a persistent login session),

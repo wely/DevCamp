@@ -4,16 +4,17 @@ var router = express.Router();
 var request = require('request');
 var formidable = require('formidable');
 var mime = require('mime');
-var auth = require('../config/auth');
+var authUtility = require('../utilities/auth');
+var emailUtility = require('../utilities/email');
+var calendarUtility = require('../utilities/calendar');
+var storageUtility = require('../utilities/storage');
 
 // Setup Azure Storage
-var azure = require('azure-storage');
-var blobService = azure.createBlobService();
-var queueService = azure.createQueueService();
-queueService.messageEncoder = new azure.QueueMessageEncoder.TextBase64QueueMessageEncoder();
+var queueService = storageUtility.getQueueService();
+var blobService = storageUtility.getBlobService();
 
 /* GET new outage */
-router.get('/', function (req, res) {
+router.get('/', authUtility.ensureAuthenticated, function (req, res) {
     res.render('new', {
         title: 'Report an Outage',
         user: req.user
@@ -21,17 +22,22 @@ router.get('/', function (req, res) {
 });
 
 /* POST new outage */
-router.post('/', function (req, res) {
+router.post('/', authUtility.ensureAuthenticated, function (req, res) {
+
+    // Store user information
+    var user = req.user;
 
     // Parse a form submission
     var form = new formidable.IncomingForm();
-    form.parse(req, function (err, fields, files) {
+    form.parse(req, (err, fields, files) => {
 
         // Process the fields into a new incident, upload image, and add thumbnail queue message
         createIncident(fields, files)
             .then(uploadImage)
             .then(addQueueMessage)
-            .then(function () {
+            .then(emailConfirmation(user))
+            .then(createCalendarEvent(user))
+            .then(() => {
 
                 // Successfully processed form upload
                 // Redirect to dashboard
@@ -61,16 +67,18 @@ function createIncident(fields, files) {
             "IsEmergency": (fields.emergency === "on") ? true : false
         };
 
-        // POST new incident to API
+        // Get API URL from environment variable
         var apiUrl = `https://${process.env.INCIDENT_API_URL}/incidents`;
 
+        // POST new incident to API
         request.post(apiUrl, { form: incident, json: true }, function (error, results) {
 
             // Successfully created a new incident
 
             // Clear cache
             // TODO: clear.
-            
+            console.log('Created incident');
+
             var incidentId = results.body.id;
             resolve([incidentId, files]);
 
@@ -84,25 +92,35 @@ function uploadImage(input) {
 
     return new Promise(function (resolve, reject) {
 
-        // Define variables to use with the Blob Service
-        var stream = fs.createReadStream(input[1].image.path);
-        var streamLength = input[1].image.size;
-        var options = { contentSettings: { contentType: input[1].image.type } };
-        var blobName = input[0] + '.' + mime.extension(input[1].image.type);
-        var blobContainerName = process.env.AZURE_STORAGE_BLOB_CONTAINER;
+        // Check if no image was uploaded
+        if (input[1].image.size === 0) {
+            console.log('No image uploaded');
+            resolve();
+        }
+        else {
 
-        // Confirm blob container
-        blobService.createContainerIfNotExists(blobContainerName, function (containerError) {
+            // Define variables to use with the Blob Service
+            var stream = fs.createReadStream(input[1].image.path);
+            var streamLength = input[1].image.size;
+            var options = { contentSettings: { contentType: input[1].image.type } };
+            var blobName = input[0] + '.' + mime.extension(input[1].image.type);
+            var blobContainerName = process.env.AZURE_STORAGE_BLOB_CONTAINER;
 
-            // Upload new blob
-            blobService.createBlockBlobFromStream(blobContainerName, blobName, stream, streamLength, options, function (blobError, blob) {
+            // Confirm blob container
+            blobService.createContainerIfNotExists(blobContainerName, function (containerError) {
 
-                // Successfully uploaded the image
-                resolve(blob);
+                // Upload new blob
+                blobService.createBlockBlobFromStream(blobContainerName, blobName, stream, streamLength, options, function (blobError, blob) {
+
+                    // Successfully uploaded the image
+                    console.log('Uploaded image');
+                    resolve(blob);
+
+                });
 
             });
 
-        });
+        }
 
     });
 
@@ -112,22 +130,91 @@ function addQueueMessage(blob) {
 
     return new Promise(function (resolve, reject) {
 
-        // Create message object
-        var message = {
-            BlobContainerName: blob.container,
-            BlobName: blob.name
-        };
+        if (blob) {
 
-        // Confirm queue
-        queueService.createQueueIfNotExists(process.env.AZURE_STORAGE_QUEUE, function (error, result, response) {
+            // Create message object
+            var message = {
+                BlobContainerName: blob.container,
+                BlobName: blob.name
+            };
 
-            // Insert new queue message
-            queueService.createMessage(process.env.AZURE_STORAGE_QUEUE, JSON.stringify(message), function (error, result, response) {
+            // Confirm queue
+            queueService.createQueueIfNotExists(process.env.AZURE_STORAGE_QUEUE, function (error, result, response) {
 
-                // Successfully created queue message
-                resolve();
+                // Insert new queue message
+                queueService.createMessage(process.env.AZURE_STORAGE_QUEUE, JSON.stringify(message), function (error, result, response) {
+
+                    // Successfully created queue message
+                    console.log('Added message to queue');
+                    resolve();
+
+                });
 
             });
+
+        }
+        else {
+            console.log('No message was added to the queue');
+            resolve();
+        }
+
+    });
+
+}
+
+function emailConfirmation(user) {
+
+    return new Promise(function (resolve, reject) {
+
+        // Generate email markup
+        var mailBody = emailUtility.generateMailBody(user.displayName, user.email);
+
+        // Set configuration options
+        var options = {
+            url: 'https://graph.microsoft.com/v1.0/me/sendMail',
+            json: true,
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + user.token
+            },
+            body: mailBody
+        };
+
+        // POST new message to Graph API
+        request(options, function (error, response) {
+
+            console.log('Email confirmation message sent.');
+            resolve();
+
+        });
+
+    });
+
+}
+
+function createCalendarEvent(user) {
+
+    return new Promise(function (resolve, reject) {
+
+        // Build out the Event body
+        var eventBody = calendarUtility.generateEventBody();
+
+        // Configure HTTP request
+        var options = {
+            url: 'https://graph.microsoft.com/v1.0/me/events',
+            json: true,
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + user.token
+            },
+            body: eventBody
+        };
+
+        // Execute request
+        request(options, function (error, results) {
+
+            console.log('Created calendar event.');
+            resolve();
 
         });
 
