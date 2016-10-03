@@ -17,6 +17,10 @@
                         <div class="panel-heading">Outage: @Html.ActionLink(string.Format("{0}", item.ID), "Details", "Incident", new { ID = item.ID }, new { })</div>
                         <table class="table">
                             <tr>
+                                <th>Type</th>
+                                <td>@item.OutageType</td>
+                            </tr>
+                            <tr>
                                 <th>Address</th>
                                 <td>@item.Street</td>
                             </tr>

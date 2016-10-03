@@ -12,6 +12,11 @@ namespace IncidentAPI
 {
     public partial interface IIncidentOperations
     {
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<string>> ClearDataWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
         /// <param name='newIncident'>
         /// Required.
         /// </param>
@@ -42,6 +47,11 @@ namespace IncidentAPI
         /// Cancellation token.
         /// </param>
         Task<HttpOperationResponse<int>> GetIncidentCountWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<string>> SampleDataWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='incidentId'>
         /// Required.

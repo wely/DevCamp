@@ -31,7 +31,7 @@ namespace DevCamp.WebApp.Controllers
             return View(incidentView);
         }
 
-
+        [Authorize]
         public ActionResult Create()
         {
             //####### FILL IN THE DETAILS FOR THE NEW INCIDENT BASED ON THE USER
@@ -53,8 +53,7 @@ namespace DevCamp.WebApp.Controllers
 
         [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
+       public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
         {
             try
             {

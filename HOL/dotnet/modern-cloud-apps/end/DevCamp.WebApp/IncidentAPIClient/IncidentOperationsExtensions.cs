@@ -16,6 +16,30 @@ namespace IncidentAPI
         /// <param name='operations'>
         /// Reference to the IncidentAPI.IIncidentOperations.
         /// </param>
+        public static string ClearData(this IIncidentOperations operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IIncidentOperations)s).ClearDataAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the IncidentAPI.IIncidentOperations.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<string> ClearDataAsync(this IIncidentOperations operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<string> result = await operations.ClearDataWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the IncidentAPI.IIncidentOperations.
+        /// </param>
         /// <param name='newIncident'>
         /// Required.
         /// </param>
@@ -142,6 +166,30 @@ namespace IncidentAPI
         public static async Task<int> GetIncidentCountAsync(this IIncidentOperations operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             Microsoft.Rest.HttpOperationResponse<int> result = await operations.GetIncidentCountWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the IncidentAPI.IIncidentOperations.
+        /// </param>
+        public static string SampleData(this IIncidentOperations operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IIncidentOperations)s).SampleDataAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the IncidentAPI.IIncidentOperations.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<string> SampleDataAsync(this IIncidentOperations operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<string> result = await operations.SampleDataWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
         

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.IdentityModel.Tokens;
 using Microsoft.Owin;
 using DevCamp.WebApp.App_Start;
+using System.Web.Helpers;
 
 [assembly: OwinStartup(typeof(Startup))]
 namespace DevCamp.WebApp.App_Start
@@ -23,6 +24,8 @@ namespace DevCamp.WebApp.App_Start
 
         public void Configuration(IAppBuilder app)
         {
+            //AntiForgeryConfig.UniqueClaimTypeIdentifier = "";
+
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
