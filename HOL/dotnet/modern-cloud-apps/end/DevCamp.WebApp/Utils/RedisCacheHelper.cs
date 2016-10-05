@@ -5,7 +5,7 @@ using System.Configuration;
 
 namespace DevCamp.WebApp.Utils
 {
-    public class CacheHelper
+    public class RedisCacheHelper
     {
         public class CacheKeys
         {

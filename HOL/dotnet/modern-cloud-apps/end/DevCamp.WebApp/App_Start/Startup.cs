@@ -12,20 +12,21 @@ using System.IdentityModel.Tokens;
 using Microsoft.Owin;
 using DevCamp.WebApp.App_Start;
 using System.Web.Helpers;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.IdentityModel.Claims;
+using Microsoft.Identity.Client;
+using DevCamp.WebApp.Utils;
+using ADAL = Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 [assembly: OwinStartup(typeof(Startup))]
 namespace DevCamp.WebApp.App_Start
 {
     public partial class Startup
     {
-        public static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
-        public static string aadInstance = ConfigurationManager.AppSettings["ida:AADInstance"];
-        private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
-
         public void Configuration(IAppBuilder app)
         {
-            //AntiForgeryConfig.UniqueClaimTypeIdentifier = "";
-
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
@@ -37,21 +38,44 @@ namespace DevCamp.WebApp.App_Start
                     // The `Scope` describes the permissions that your app will need.  See https://azure.microsoft.com/documentation/articles/active-directory-v2-scopes/
                     // In a real application you could use issuer validation for additional checks, like making sure the user's organization has signed up for your app, for instance.
 
-                    ClientId = clientId,
-                    Authority = String.Format(CultureInfo.InvariantCulture, aadInstance, "common", "/v2.0"),
-                    RedirectUri = redirectUri,
-                    Scope = "openid email profile",
-                    ResponseType = "id_token",
-                    PostLogoutRedirectUri = redirectUri,
+                    ClientId = ProfileHelper.ClientId,
+                    Authority = String.Format(CultureInfo.InvariantCulture, ProfileHelper.AADInstance, "common", ""),
+                    RedirectUri = ProfileHelper.RedirectUri,
+                    Scope = ConfigurationManager.AppSettings["ida:GraphScopes"],
+                    ResponseType = "code id_token",
+                    PostLogoutRedirectUri = ProfileHelper.RedirectUri,
                     TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = false,
+                        ValidateIssuer = false
                     },
                     Notifications = new OpenIdConnectAuthenticationNotifications
                     {
-                        AuthenticationFailed = OnAuthenticationFailed,
+                        AuthorizationCodeReceived = OnAuthorizationCodeReceived,
+                        AuthenticationFailed = OnAuthenticationFailed
                     }
                 });
+        }
+
+        private async Task OnAuthorizationCodeReceived(AuthorizationCodeReceivedNotification notification)
+        {// Get the user's object id (used to name the token cache)
+
+            string userObjId = notification.AuthenticationTicket.Identity
+              .FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+
+            // Create a token cache
+            HttpContextBase httpContext = notification.OwinContext.Get<HttpContextBase>(typeof(HttpContextBase).FullName);
+            SessionTokenCache tokenCache = new SessionTokenCache(userObjId, httpContext);
+
+            // Exchange the auth code for a token
+            ADAL.ClientCredential clientCred = new ADAL.ClientCredential(ProfileHelper.AppId, ProfileHelper.AppSecret);
+
+            // Create the auth context
+            ADAL.AuthenticationContext authContext = new ADAL.AuthenticationContext(
+              string.Format(CultureInfo.InvariantCulture, ProfileHelper.AADInstance, "common", ""),
+              false, tokenCache);
+
+            ADAL.AuthenticationResult authResult = await authContext.AcquireTokenByAuthorizationCodeAsync(
+              notification.Code, notification.Request.Uri, clientCred, "https://graph.microsoft.com");
         }
 
         private Task OnAuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)

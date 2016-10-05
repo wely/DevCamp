@@ -5,7 +5,7 @@
         @*The 'preferred_username' claim can be used for showing the user's primary way of identifying themselves.*@
 
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            Hi, @(System.Security.Claims.ClaimsPrincipal.Current.FindFirst("preferred_username").Value)!<span class="caret"></span>
+            Hi, @(System.Security.Claims.ClaimsPrincipal.Current.FindFirst("name").Value)!<span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
             <li>@Html.ActionLink("Profile", "Index", "Profile")</li>
