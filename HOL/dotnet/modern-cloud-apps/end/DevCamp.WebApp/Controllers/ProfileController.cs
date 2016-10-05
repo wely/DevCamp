@@ -1,25 +1,15 @@
-﻿using DevCamp.WebApp.ViewModels;
+﻿using DevCamp.WebApp.Utils;
+using DevCamp.WebApp.ViewModels;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
-using System.Security.Claims;
+using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.Graph;
-using System;
-using DevCamp.WebApp.Utils;
-using System.Threading.Tasks;
-using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Protocols;
-using System.Collections.Generic;
-using System.Linq;
-using System.Configuration;
-using System.Net.Http;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using System.Net.Http.Headers;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace DevCamp.WebApp.Controllers
 {

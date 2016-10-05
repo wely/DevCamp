@@ -4,13 +4,9 @@ using DevCamp.WebApp.ViewModels;
 using IncidentAPI;
 using IncidentAPI.Models;
 using Newtonsoft.Json;
-using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using DevCamp.WebApp.Models;
 
 namespace DevCamp.WebApp.Controllers
 {
@@ -87,7 +83,7 @@ namespace DevCamp.WebApp.Controllers
                     //##### CLEAR CACHE ####
 
                     //##### SEND EMAIL #####
-                    EmailHelper.SendIncidentEmail(incidentToSave, Url.Action("Index", "Profile", null, Request.Url.Scheme));
+                    await EmailHelper.SendIncidentEmail(incidentToSave, Url.Action("Index", "Profile", null, Request.Url.Scheme));
                     //##### SEND EMAIL  #####
 
                     //##### CREATE CALENDAR EVENT #####

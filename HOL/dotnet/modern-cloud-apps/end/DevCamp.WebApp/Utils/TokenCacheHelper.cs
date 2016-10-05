@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System.Web;
-using Newtonsoft.Json;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace DevCamp.WebApp.Utils
 {

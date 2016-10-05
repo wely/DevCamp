@@ -1,23 +1,18 @@
-﻿using System;
-using Owin;
+﻿using DevCamp.WebApp.App_Start;
+using DevCamp.WebApp.Utils;
+using Microsoft.IdentityModel.Protocols;
+using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Notifications;
 using Microsoft.Owin.Security.OpenIdConnect;
+using Owin;
+using System;
 using System.Configuration;
 using System.Globalization;
-using Microsoft.IdentityModel.Protocols;
-using Microsoft.Owin.Security.Notifications;
-using System.Threading.Tasks;
 using System.IdentityModel.Tokens;
-using Microsoft.Owin;
-using DevCamp.WebApp.App_Start;
-using System.Web.Helpers;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
-using System.IdentityModel.Claims;
-using Microsoft.Identity.Client;
-using DevCamp.WebApp.Utils;
 using ADAL = Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 [assembly: OwinStartup(typeof(Startup))]

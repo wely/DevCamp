@@ -1,29 +1,11 @@
 ﻿using DevCamp.WebApp.Models;
 using IncidentAPI.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
+using System.Net.Mime;
 using System.Threading.Tasks;
-using DevCamp.WebApp.Mappers;
-using DevCamp.WebApp.Utils;
-using DevCamp.WebApp.ViewModels;
-using IncidentAPI;
-using System.Security.Claims;
-using System.Web.Mvc;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.OpenIdConnect;
 using System.Web;
-using Microsoft.Graph;
-using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Protocols;
-using System.Configuration;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 
 namespace DevCamp.WebApp.Utils
 {
@@ -46,7 +28,7 @@ namespace DevCamp.WebApp.Utils
         </html>";
         // Send an email message.
         // This snippet sends a message to the current user on behalf of the current user.
-        public static async void SendIncidentEmail(Incident incidentData, string AuthRedirectUrl)
+        public static async Task SendIncidentEmail(Incident incidentData, string AuthRedirectUrl)
         {
             string userObjId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
 
@@ -66,7 +48,8 @@ namespace DevCamp.WebApp.Utils
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // New code:
-                StringContent msgContent = new StringContent(JsonConvert.SerializeObject(msg.Message));
+                StringContent msgContent = new StringContent(JsonConvert.SerializeObject(msg), System.Text.Encoding.UTF8, "application/json");
+                msgContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
                 HttpResponseMessage response = await client.PostAsync("https://graph.microsoft.com/v1.0/me/sendMail", msgContent);
                 if (response.IsSuccessStatusCode)
                 {

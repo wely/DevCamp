@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevCamp.WebApp.ViewModels;
+﻿using DevCamp.WebApp.ViewModels;
 using Newtonsoft.Json;
+using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace DevCamp.WebApp.Utils
