@@ -6,7 +6,6 @@ var request = require('request');
 var redis = require("redis");
 var client = redis.createClient(process.env.REDISCACHE_SSLPORT, process.env.REDISCACHE_HOSTNAME, { auth_pass: process.env.REDISCACHE_PRIMARY_KEY, tls: { servername: process.env.REDISCACHE_HOSTNAME } });
 
-
 /* GET dashboard. */
 router.get('/', function (req, res) {
 
