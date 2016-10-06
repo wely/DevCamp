@@ -4,10 +4,9 @@ using DevCamp.WebApp.ViewModels;
 using IncidentAPI;
 using IncidentAPI.Models;
 using Newtonsoft.Json;
-using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Threading.Tasks;
 
 namespace DevCamp.WebApp.Controllers
 {
@@ -32,23 +31,16 @@ namespace DevCamp.WebApp.Controllers
         }
 
         [Authorize]
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             //####### FILL IN THE DETAILS FOR THE NEW INCIDENT BASED ON THE USER
-            // The object ID claim will only be emitted for work or school accounts at this time.
-            //Claim oid = ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier");
-            //ViewBag.ObjectId = oid == null ? string.Empty : oid.Value;
+            UserProfileViewModel userProfile = await ProfileHelper.GetCurrentUserProfile(Url.Action("Index", "Profile", null, Request.Url.Scheme));
+            IncidentViewModel incident = new IncidentViewModel();
 
-            // The 'preferred_username' claim can be used for showing the user's primary way of identifying themselves
-            //ViewBag.Username = ClaimsPrincipal.Current.FindFirst("preferred_username").Value;
-
-            // The subject or nameidentifier claim can be used to uniquely identify the user
-            //ViewBag.Subject = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
-
-
-
+            incident.FirstName = userProfile.GivenName;
+            incident.LastName = userProfile.Surname;
             //####### 
-            return View();
+            return View(incident);
         }
 
         [Authorize]
@@ -87,8 +79,16 @@ namespace DevCamp.WebApp.Controllers
                     }
 
                     //##### CLEAR CACHE ####
-                    CacheHelper.ClearCache(CacheHelper.CacheKeys.IncidentData);
+                    RedisCacheHelper.ClearCache(RedisCacheHelper.CacheKeys.IncidentData);
                     //##### CLEAR CACHE ####
+
+                    //##### SEND EMAIL #####
+                    await EmailHelper.SendIncidentEmail(incidentToSave, Url.Action("Index", "Profile", null, Request.Url.Scheme));
+                    //##### SEND EMAIL  #####
+
+                    //##### CREATE CALENDAR EVENT #####
+                    //CalendarHelper.CreateIncidentEvent(incidentToSave, Url.Action("Index", "Profile", null, Request.Url.Scheme));
+                    //##### CREATE CALENDAR EVENT #####
 
                     return RedirectToAction("Index", "Dashboard");
                 }
