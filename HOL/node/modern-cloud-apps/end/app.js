@@ -5,11 +5,11 @@ var expressConfiguration = require('./utilities/express');
 var authConfiguration = require('./utilities/auth');
 var errorConfiguration = require('./utilities/errors');
 
-// Setup Application Insights
-appInsightsConfiguration.setup();
-
 // Create Express Application
 var app = express();
+
+// Setup Application Insights
+appInsightsConfiguration.setup(app);
 
 // Configure Locals
 var env = process.env.NODE_ENV || 'development';
