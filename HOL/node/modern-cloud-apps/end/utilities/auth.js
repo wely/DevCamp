@@ -11,7 +11,7 @@ var config = {
         skipUserProfile: true, // for AzureAD should be set to true.
         responseType: 'id_token code', // for login only flows use id_token. For accessing resources use `id_token code`
         responseMode: 'form_post', // For login only flows we should have token passed back to us in a POST
-        scope: 'User.Read Mail.Send Calendars.ReadWrite' // additional scopes you may wish to pass
+        scope: ['User.Read', 'Mail.Send', 'Calendars.ReadWrite'] // additional scopes you may wish to pass
     }
 };
 
