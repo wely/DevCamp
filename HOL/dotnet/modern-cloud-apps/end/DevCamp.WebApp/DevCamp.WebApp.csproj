@@ -263,7 +263,6 @@
     <Compile Include="Mappers\IncidentMappers.cs" />
     <Compile Include="Models\MailMessage.cs" />
     <Compile Include="Utils\AuthHelper.cs" />
-    <Compile Include="Utils\CalendarHelper.cs" />
     <Compile Include="Utils\EmailHelper.cs" />
     <Compile Include="Utils\TokenCacheHelper.cs" />
     <Compile Include="ViewModels\UserProfileViewModel.cs" />
