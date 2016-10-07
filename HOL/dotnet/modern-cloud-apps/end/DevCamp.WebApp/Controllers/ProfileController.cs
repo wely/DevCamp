@@ -30,7 +30,7 @@ namespace DevCamp.WebApp.Controllers
             {
                 // Signal OWIN to send an authorization request to Azure
                 HttpContext.GetOwinContext().Authentication.Challenge(
-                  new AuthenticationProperties { RedirectUri = "/" },
+                  new AuthenticationProperties { RedirectUri = loginRedirectUri.ToString() },
                   OpenIdConnectAuthenticationDefaults.AuthenticationType);
             }
         }
@@ -65,7 +65,7 @@ namespace DevCamp.WebApp.Controllers
             string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
             AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
 
-            string accessToken = await authHelper.GetUserAccessToken(Url.Action("Index", "Profile", null, Request.Url.Scheme));
+            string accessToken = await authHelper.GetUserAccessToken(loginRedirectUri.ToString());
             UserProfileViewModel userProfile = new UserProfileViewModel();
 
             using (var client = new HttpClient())

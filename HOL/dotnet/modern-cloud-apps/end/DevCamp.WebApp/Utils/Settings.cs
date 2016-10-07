@@ -39,7 +39,7 @@ namespace DevCamp.WebApp.Utils
         public static string AAD_APP_SECRET = ConfigurationManager.AppSettings["AAD_APP_SECRET"];
         public static string AAD_GRAPH_SCOPES = ConfigurationManager.AppSettings["ida:GraphScopes"];
         public static string GRAPH_SENDMESSAGE_URL = GRAPH_CURRENT_USER_URL + "sendMail";
-        public static string GRAPH_CURRENT_USER_URL = GRAPH_API_URL + "v1.0/me";
+        public static string GRAPH_CURRENT_USER_URL = GRAPH_API_URL + "/v1.0/me";
         public static string SESSIONKEY_ACCESSTOKEN = "accesstoken";
         public static string SESSIONKEY_USERINFO = "userinfo";
         public static string EMAIL_MESSAGE_BODY = getEmailMessageBody();
