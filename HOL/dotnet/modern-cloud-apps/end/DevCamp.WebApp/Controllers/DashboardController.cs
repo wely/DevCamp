@@ -22,7 +22,7 @@ namespace DevCamp.WebApp.Controllers
 
                 //Check Cache
                 string cachedData = string.Empty;
-                if (RedisCacheHelper.UseCachedDataSet(RedisCacheHelper.CacheKeys.IncidentData, out cachedData))
+                if (RedisCacheHelper.UseCachedDataSet(Settings.REDISCCACHE_KEY_INCIDENTDATA, out cachedData))
                 {
                     incidents = JsonConvert.DeserializeObject<List<Incident>>(cachedData);
                 }
@@ -31,7 +31,7 @@ namespace DevCamp.WebApp.Controllers
                     //If stale refresh
                     var results = await client.Incident.GetAllIncidentsAsync();
                     incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
-                    RedisCacheHelper.AddtoCache(RedisCacheHelper.CacheKeys.IncidentData, incidents, CACHE_EXPIRATION_SECONDS);
+                    RedisCacheHelper.AddtoCache(Settings.REDISCCACHE_KEY_INCIDENTDATA, incidents, CACHE_EXPIRATION_SECONDS);
                 }
                 //##### Add caching here #####
             }

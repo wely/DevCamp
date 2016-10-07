@@ -8,7 +8,7 @@ namespace DevCamp.WebApp.Utils
     {
        public static IncidentAPIClient GetIncidentAPIClient()
         {
-            var client = new IncidentAPIClient(new Uri(string.Format("https://{0}", ConfigurationManager.AppSettings["INCIDENT_API_URL"])));
+            var client = new IncidentAPIClient(new Uri(string.Format("https://{0}", Settings.INCIDENT_API_URL)));
             return client;
         }
 

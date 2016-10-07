@@ -62,8 +62,8 @@ namespace DevCamp.WebApp.Controllers
 
             SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
             string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
-            string authority = string.Format(ProfileHelper.AADInstance, tenantId, "");
-            AuthHelper authHelper = new AuthHelper(authority, ProfileHelper.AppId, ProfileHelper.AppSecret, tokenCache);
+            string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
+            AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
 
             string accessToken = await authHelper.GetUserAccessToken(Url.Action("Index", "Profile", null, Request.Url.Scheme));
             UserProfileViewModel userProfile = new UserProfileViewModel();
@@ -75,7 +75,7 @@ namespace DevCamp.WebApp.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // New code:
-                HttpResponseMessage response = await client.GetAsync("https://graph.microsoft.com/v1.0/me");
+                HttpResponseMessage response = await client.GetAsync(Settings.GRAPH_CURRENT_USER_URL);
                 if (response.IsSuccessStatusCode)
                 {
                     string resultString = await response.Content.ReadAsStringAsync();

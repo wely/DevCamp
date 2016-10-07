@@ -13,12 +13,6 @@ namespace DevCamp.WebApp.Utils
 {
     public class StorageHelper
     {
-        static string account = ConfigurationManager.AppSettings["AZURE_STORAGE_ACCOUNT"];
-        static string key = ConfigurationManager.AppSettings["AZURE_STORAGE_ACCESS_KEY"];
-        static string AZURE_STORAGE_BLOB_CONTAINER = ConfigurationManager.AppSettings["AZURE_STORAGE_BLOB_CONTAINER"];
-        static string AZURE_STORAGE_QUEUE = ConfigurationManager.AppSettings["AZURE_STORAGE_QUEUE"];
-        static string blobStorageConnectionString = String.Format("DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}", account, key);
-
         /// <summary>
         /// Adds an incident message to the queue
         /// </summary>
@@ -27,14 +21,14 @@ namespace DevCamp.WebApp.Utils
         /// <returns></returns>
         public static async Task AddMessageToQueue(string IncidentId, string ImageFileName)
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(blobStorageConnectionString);
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Settings.AZURE_STORAGE_CONNECTIONSTRING);
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
-            CloudQueue msgQ = queueClient.GetQueueReference(AZURE_STORAGE_QUEUE);
+            CloudQueue msgQ = queueClient.GetQueueReference(Settings.AZURE_STORAGE_QUEUE);
             msgQ.CreateIfNotExists();
 
             JObject qMsgJson = new JObject();
             qMsgJson.Add("IncidentId", IncidentId);
-            qMsgJson.Add("BlobContainerName", AZURE_STORAGE_BLOB_CONTAINER);
+            qMsgJson.Add("BlobContainerName", Settings.AZURE_STORAGE_BLOB_CONTAINER);
             qMsgJson.Add("BlobName", getIncidentBlobFilename(IncidentId, ImageFileName));
 
             var qMsgPayload = JsonConvert.SerializeObject(qMsgJson);
@@ -55,10 +49,10 @@ namespace DevCamp.WebApp.Utils
 
             try
             {
-                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(blobStorageConnectionString);
+                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Settings.AZURE_STORAGE_CONNECTIONSTRING);
 
                 CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-                CloudBlobContainer container = blobClient.GetContainerReference(AZURE_STORAGE_BLOB_CONTAINER);
+                CloudBlobContainer container = blobClient.GetContainerReference(Settings.AZURE_STORAGE_BLOB_CONTAINER);
                 container.CreateIfNotExists();
                 container.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
 

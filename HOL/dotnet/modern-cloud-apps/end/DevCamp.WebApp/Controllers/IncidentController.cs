@@ -79,16 +79,12 @@ namespace DevCamp.WebApp.Controllers
                     }
 
                     //##### CLEAR CACHE ####
-                    RedisCacheHelper.ClearCache(RedisCacheHelper.CacheKeys.IncidentData);
+                    RedisCacheHelper.ClearCache(Settings.REDISCCACHE_KEY_INCIDENTDATA);
                     //##### CLEAR CACHE ####
 
                     //##### SEND EMAIL #####
                     await EmailHelper.SendIncidentEmail(incidentToSave, Url.Action("Index", "Profile", null, Request.Url.Scheme));
                     //##### SEND EMAIL  #####
-
-                    //##### CREATE CALENDAR EVENT #####
-                    //CalendarHelper.CreateIncidentEvent(incidentToSave, Url.Action("Index", "Profile", null, Request.Url.Scheme));
-                    //##### CREATE CALENDAR EVENT #####
 
                     return RedirectToAction("Index", "Dashboard");
                 }

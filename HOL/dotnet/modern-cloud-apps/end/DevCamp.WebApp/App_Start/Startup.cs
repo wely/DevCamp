@@ -33,12 +33,12 @@ namespace DevCamp.WebApp.App_Start
                     // The `Scope` describes the permissions that your app will need.  See https://azure.microsoft.com/documentation/articles/active-directory-v2-scopes/
                     // In a real application you could use issuer validation for additional checks, like making sure the user's organization has signed up for your app, for instance.
 
-                    ClientId = ProfileHelper.ClientId,
-                    Authority = String.Format(CultureInfo.InvariantCulture, ProfileHelper.AADInstance, "common", ""),
-                    RedirectUri = ProfileHelper.RedirectUri,
-                    Scope = ConfigurationManager.AppSettings["ida:GraphScopes"],
+                    ClientId = Settings.AAD_APP_CLIENTID,
+                    Authority = Settings.AAD_AUTHORITY,
+                    RedirectUri = Settings.AAD_APP_REDIRECTURI,
+                    Scope = Settings.AAD_GRAPH_SCOPES,
                     ResponseType = "code id_token",
-                    PostLogoutRedirectUri = ProfileHelper.RedirectUri,
+                    PostLogoutRedirectUri = "/",
                     TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = false
@@ -62,15 +62,13 @@ namespace DevCamp.WebApp.App_Start
             SessionTokenCache tokenCache = new SessionTokenCache(userObjId, httpContext);
 
             // Exchange the auth code for a token
-            ADAL.ClientCredential clientCred = new ADAL.ClientCredential(ProfileHelper.AppId, ProfileHelper.AppSecret);
+            ADAL.ClientCredential clientCred = new ADAL.ClientCredential(Settings.AAD_APP_ID, Settings.AAD_APP_SECRET);
 
             // Create the auth context
-            ADAL.AuthenticationContext authContext = new ADAL.AuthenticationContext(
-              string.Format(CultureInfo.InvariantCulture, ProfileHelper.AADInstance, "common", ""),
-              false, tokenCache);
+            ADAL.AuthenticationContext authContext = new ADAL.AuthenticationContext(Settings.AAD_AUTHORITY, false, tokenCache);
 
             ADAL.AuthenticationResult authResult = await authContext.AcquireTokenByAuthorizationCodeAsync(
-              notification.Code, notification.Request.Uri, clientCred, "https://graph.microsoft.com");
+              notification.Code, notification.Request.Uri, clientCred, Settings.GRAPH_API_URL);
         }
 
         private Task OnAuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)

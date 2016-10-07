@@ -11,21 +11,7 @@ namespace DevCamp.WebApp.Utils
 {
     public class EmailHelper
     {
-        const string emailContent = @"
-        <html>
-        <head>
-        <meta http-equiv='Content-Type' content='text/html; charset=us-ascii\'>
-        <title></title>
-        </head>
-        <body style='font-family:Calibri' >
-        <div style='width:50%;background-color:#CCC;padding:10px;margin:0 auto;text-align:center;'>
-        <h1>City Power &amp; Light</h1>
-        <h2>New Incident Reported by {0}</h2>
-        <p>A new incident has been reported to the City Power &amp; Light outage system.</p>   
-        <br />
-        </div>
-        </body>
-        </html>";
+
         // Send an email message.
         // This snippet sends a message to the current user on behalf of the current user.
         public static async Task SendIncidentEmail(Incident incidentData, string AuthRedirectUrl)
@@ -34,12 +20,12 @@ namespace DevCamp.WebApp.Utils
 
             SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext.Current.Request.RequestContext.HttpContext);
             string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
-            string authority = string.Format(ProfileHelper.AADInstance, tenantId, "");
-            AuthHelper authHelper = new AuthHelper(authority, ProfileHelper.AppId, ProfileHelper.AppSecret, tokenCache);
+            string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
+            AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
 
             string accessToken = await authHelper.GetUserAccessToken(AuthRedirectUrl);
 
-            EmailMessage msg = getEmailContent(incidentData);
+            EmailMessage msg = getEmailBodyContent(incidentData, userObjId);
 
             using (var client = new HttpClient())
             {
@@ -50,7 +36,7 @@ namespace DevCamp.WebApp.Utils
                 // New code:
                 StringContent msgContent = new StringContent(JsonConvert.SerializeObject(msg), System.Text.Encoding.UTF8, "application/json");
                 msgContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
-                HttpResponseMessage response = await client.PostAsync("https://graph.microsoft.com/v1.0/me/sendMail", msgContent);
+                HttpResponseMessage response = await client.PostAsync(Settings.GRAPH_SENDMESSAGE_URL, msgContent);
                 if (response.IsSuccessStatusCode)
                 {
                     string resultString = await response.Content.ReadAsStringAsync();
@@ -58,13 +44,13 @@ namespace DevCamp.WebApp.Utils
             }
         }
 
-        private static EmailMessage getEmailContent(Incident incidentData)
+        private static EmailMessage getEmailBodyContent(Incident incidentData, string EmailFromAddress)
         {
             EmailMessage msg = new EmailMessage();
-            msg.Message.body.contentType = "HTML";
-            msg.Message.body.content = string.Format(emailContent, incidentData.FirstName);
-            msg.Message.subject = "New Incident Reported";
-            Models.EmailAddress emailTo = new Models.EmailAddress() { name = "self", address = @"ivega@microsoft.com" };
+            msg.Message.body.contentType = Settings.EMAIL_MESSAGE_TYPE;
+            msg.Message.body.content = string.Format(Settings.EMAIL_MESSAGE_BODY, incidentData.FirstName);
+            msg.Message.subject = Settings.EMAIL_MESSAGE_SUBJECT;
+            Models.EmailAddress emailTo = new Models.EmailAddress() { name = EmailFromAddress, address = EmailFromAddress };
             ToRecipient sendTo = new ToRecipient();
             sendTo.emailAddress = emailTo;
             msg.Message.toRecipients.Add(sendTo);

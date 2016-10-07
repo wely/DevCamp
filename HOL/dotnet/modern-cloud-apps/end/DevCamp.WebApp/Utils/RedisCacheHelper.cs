@@ -7,20 +7,9 @@ namespace DevCamp.WebApp.Utils
 {
     public class RedisCacheHelper
     {
-        public class CacheKeys
-        {
-            public static string IncidentData = "incidentdata";
-        }
-
-        static string REDISCACHE_HOSTNAME = ConfigurationManager.AppSettings["REDISCACHE_HOSTNAME"];
-        static string REDISCACHE_PORT = ConfigurationManager.AppSettings["REDISCACHE_PORT"];
-        static string REDISCACHE_SSLPORT = ConfigurationManager.AppSettings["REDISCACHE_SSLPORT"];
-        static string REDISCACHE_PRIMARY_KEY = ConfigurationManager.AppSettings["REDISCACHE_PRIMARY_KEY"];
-        static string redisCacheConnectionString = $"{REDISCACHE_HOSTNAME}:{REDISCACHE_SSLPORT},password={REDISCACHE_PRIMARY_KEY},abortConnect=false,ssl=true";
-
         private static Lazy<ConnectionMultiplexer> lazyConnection = new Lazy<ConnectionMultiplexer>(() =>
         {
-            return ConnectionMultiplexer.Connect(redisCacheConnectionString);
+            return ConnectionMultiplexer.Connect(Settings.REDISCACHE_CONNECTIONSTRING);
         });
 
         static ConnectionMultiplexer CacheConnection
