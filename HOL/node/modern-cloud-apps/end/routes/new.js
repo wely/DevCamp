@@ -4,17 +4,9 @@ var router = express.Router();
 var request = require('request');
 var formidable = require('formidable');
 var mime = require('mime');
-var authUtility = require('../utilities/auth');
-var emailUtility = require('../utilities/email');
-var calendarUtility = require('../utilities/calendar');
-var storageUtility = require('../utilities/storage');
-
-// Setup Azure Storage
-var queueService = storageUtility.getQueueService();
-var blobService = storageUtility.getBlobService();
 
 /* GET new outage */
-router.get('/', authUtility.ensureAuthenticated, function (req, res) {
+router.get('/', function (req, res) {
     res.render('new', {
         title: 'Report an Outage',
         user: req.user
@@ -22,7 +14,7 @@ router.get('/', authUtility.ensureAuthenticated, function (req, res) {
 });
 
 /* POST new outage */
-router.post('/', authUtility.ensureAuthenticated, function (req, res) {
+router.post('/', function (req, res) {
 
     // Store user information
     var user = req.user;

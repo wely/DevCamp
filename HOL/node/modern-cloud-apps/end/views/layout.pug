@@ -13,13 +13,10 @@ html(lang='en', class={home: home})
       link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css')
       link(rel='stylesheet', href='/css/main.css')
 
-    // Application Insights
-    include ./appInsights.html
-
   body
 
     // Top Navigation
-    include _navigation.pug
+    include navigation.pug
 
     // Body
     block content

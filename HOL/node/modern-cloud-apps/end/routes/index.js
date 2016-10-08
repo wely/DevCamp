@@ -5,8 +5,7 @@ var router = express.Router();
 router.get('/', function (req, res) {
     res.render('index', {
         title: 'City Power & Light',
-        home: true,
-        user: req.user
+        home: true
     });
 });
 
