@@ -3,7 +3,7 @@
 *.war
 *.ear
 *.class
-
+!gradle-wrapper.jar
 # eclipse specific git ignore
 *.pydevproject
 .project

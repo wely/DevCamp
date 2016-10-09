@@ -70,7 +70,8 @@ public class AzureADResponseFilter extends OncePerRequestFilter {
 
         try {
 
-            String currentUri = request.getScheme() + "://" + request.getServerName()
+
+        	String currentUri = request.getScheme() + "://" + request.getServerName()
                     + ("http".equals(request.getScheme()) && request.getServerPort() == 80
                             || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? ""
                                     : ":" + request.getServerPort())
@@ -150,13 +151,19 @@ public class AzureADResponseFilter extends OncePerRequestFilter {
                 public String getHeader(String name) {
                     if ("X-CSRF-TOKEN".equals(name)) {
                         log.info("read csrf token from request header: {}", csrfToken);
+                        log.info("   request method {}", request.getMethod());
                         return csrfToken;
                     }
                     return super.getHeader(name);
                 }
+                @Override
+                public String getMethod() {
+                	return "GET";
+                }
             }, response);
         } else {
             // in regular cases, do nothing.
+            log.info("continue on with filter");
             filterChain.doFilter(request, response);
         }
     }
