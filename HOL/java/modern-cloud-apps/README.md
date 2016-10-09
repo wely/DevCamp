@@ -1,4 +1,4 @@
-# NodeJS Hands on Lab - Modern Applications
+# Java Hands on Lab - Modern Applications
 
 ## Overview
 
