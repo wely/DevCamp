@@ -17,8 +17,7 @@ apply plugin: 'war'
 
 
 war {
-	baseName = 'devcamp'
-	version = '0.0.1-SNAPSHOT'
+	baseName = 'ROOT'
 }
 
 sourceCompatibility = 1.8
