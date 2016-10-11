@@ -56,10 +56,10 @@ public class StorageHelper {
         CloudQueue msgQ = queueClient.getQueueReference(AZURE_STORAGE_QUEUE);
         msgQ.createIfNotExists();
 
-        JSONObject json = new JSONObject();
-        json.append("IncidentId", IncidentId);
-        json.append("BlobContainerName", AZURE_STORAGE_BLOB_CONTAINER);
-        json.append("BlobName", getIncidentBlobFilename(IncidentId, ImageFileName));
+        JSONObject json = new JSONObject()
+	    .put("IncidentId", IncidentId)
+	    .put("BlobContainerName", AZURE_STORAGE_BLOB_CONTAINER)
+	    .put("BlobName",getIncidentBlobFilename(IncidentId,ImageFileName));
 
         String msgPayload = json.toString();
         CloudQueueMessage qMsg = new CloudQueueMessage(msgPayload);

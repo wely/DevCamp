@@ -3,31 +3,19 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var formidable = require('formidable');
-var mime = require('mime');
-var authUtility = require('../utilities/auth');
-var emailUtility = require('../utilities/email');
-var calendarUtility = require('../utilities/calendar');
 var storageUtility = require('../utilities/storage');
 
-// Setup Azure Storage
-var queueService = storageUtility.getQueueService();
-var blobService = storageUtility.getBlobService();
-
 /* GET new outage */
-router.get('/', authUtility.ensureAuthenticated, function (req, res) {
+router.get('/', function (req, res) {
     res.render('new', {
-        title: 'Report an Outage',
-        user: req.user
+        title: 'Report an Outage'
     });
 });
 
 /* POST new outage */
-router.post('/', authUtility.ensureAuthenticated, function (req, res) {
+router.post('/', function (req, res) {
 
-    // Store user information
-    var user = req.user;
-
-    // Parse a form submission
+    // Parse a form submission with formidable
     var form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
 
@@ -35,8 +23,6 @@ router.post('/', authUtility.ensureAuthenticated, function (req, res) {
         createIncident(fields, files)
             .then(uploadImage)
             .then(addQueueMessage)
-            .then(emailConfirmation(user))
-            .then(createCalendarEvent(user))
             .then(() => {
 
                 // Successfully processed form upload
@@ -68,15 +54,12 @@ function createIncident(fields, files) {
         };
 
         // Get API URL from environment variable
-        var apiUrl = `https://${process.env.INCIDENT_API_URL}/incidents`;
+        var apiUrl = `${process.env.INCIDENT_API_URL}/incidents`;
 
         // POST new incident to API
         request.post(apiUrl, { form: incident, json: true }, function (error, results) {
 
             // Successfully created a new incident
-
-            // Clear cache
-            // TODO: clear.
             console.log('Created incident');
 
             var incidentId = results.body.id;
@@ -99,25 +82,10 @@ function uploadImage(input) {
         }
         else {
 
-            // Define variables to use with the Blob Service
-            var stream = fs.createReadStream(input[1].image.path);
-            var streamLength = input[1].image.size;
-            var options = { contentSettings: { contentType: input[1].image.type } };
-            var blobName = input[0] + '.' + mime.extension(input[1].image.type);
-            var blobContainerName = process.env.AZURE_STORAGE_BLOB_CONTAINER;
-
-            // Confirm blob container
-            blobService.createContainerIfNotExists(blobContainerName, function (containerError) {
-
-                // Upload new blob
-                blobService.createBlockBlobFromStream(blobContainerName, blobName, stream, streamLength, options, function (blobError, blob) {
-
-                    // Successfully uploaded the image
-                    console.log('Uploaded image');
-                    resolve(blob);
-
-                });
-
+            // Use the storage utility to upload a blob to Azure Storage
+            storageUtility.uploadBlob(input).then(function (blob) {
+                console.log('Image uploaded');
+                resolve(blob);
             });
 
         }
@@ -132,91 +100,15 @@ function addQueueMessage(blob) {
 
         if (blob) {
 
-            // Create message object
-            var message = {
-                BlobContainerName: blob.container,
-                BlobName: blob.name
-            };
-
-            // Confirm queue
-            queueService.createQueueIfNotExists(process.env.AZURE_STORAGE_QUEUE, function (error, result, response) {
-
-                // Insert new queue message
-                queueService.createMessage(process.env.AZURE_STORAGE_QUEUE, JSON.stringify(message), function (error, result, response) {
-
-                    // Successfully created queue message
-                    console.log('Added message to queue');
-                    resolve();
-
-                });
-
-            });
+            storageUtility.createQueueMessage(blob).then(function() {
+                resolve();
+            });            
 
         }
         else {
-            console.log('No message was added to the queue');
+            console.log('No message to add to the queue');
             resolve();
         }
-
-    });
-
-}
-
-function emailConfirmation(user) {
-
-    return new Promise(function (resolve, reject) {
-
-        // Generate email markup
-        var mailBody = emailUtility.generateMailBody(user.displayName, user.email);
-
-        // Set configuration options
-        var options = {
-            url: 'https://graph.microsoft.com/v1.0/me/sendMail',
-            json: true,
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + user.token
-            },
-            body: mailBody
-        };
-
-        // POST new message to Graph API
-        request(options, function (error, response) {
-
-            console.log('Email confirmation message sent.');
-            resolve();
-
-        });
-
-    });
-
-}
-
-function createCalendarEvent(user) {
-
-    return new Promise(function (resolve, reject) {
-
-        // Build out the Event body
-        var eventBody = calendarUtility.generateEventBody();
-
-        // Configure HTTP request
-        var options = {
-            url: 'https://graph.microsoft.com/v1.0/me/events',
-            json: true,
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + user.token
-            },
-            body: eventBody
-        };
-
-        // Execute request
-        request(options, function (error, results) {
-
-            console.log('Created calendar event.');
-            resolve();
-
-        });
 
     });
 

@@ -23,7 +23,9 @@ package devCamp.WebApp;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -47,6 +49,7 @@ import com.microsoft.aad.adal4j.AuthenticationResult;
 import com.microsoft.aad.adal4j.ClientCredential;
 
 import devCamp.WebApp.Utils.AuthHelper;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 public class AzureADAuthenticationFilter extends OncePerRequestFilter {
 
@@ -57,7 +60,9 @@ public class AzureADAuthenticationFilter extends OncePerRequestFilter {
     public static final String tenant = "86bea8f4-503f-46f2-ba4e-befba8ae383a";
     public static final String authority = "https://login.microsoftonline.com/";
 
- 
+    public static final RequestMatcher DEFAULT_AAD_MATCHER = new DefaultAADAuthenticationMatcher();
+    private RequestMatcher requireAADAuthenticationMatcher = DEFAULT_AAD_MATCHER;
+    
     
     
     @Override
@@ -71,6 +76,10 @@ public class AzureADAuthenticationFilter extends OncePerRequestFilter {
                                     : ":" + request.getServerPort())
                     + request.getRequestURI();
 
+            if (this.requireAADAuthenticationMatcher.matches(request)){
+                filterChain.doFilter(request, response);
+                return;
+            }
             // check if user has a session
             if (!AuthHelper.isAuthenticated(request)) {
 
@@ -144,7 +153,7 @@ public class AzureADAuthenticationFilter extends OncePerRequestFilter {
             request.setAttribute("error", exc.getMessage());
             response.sendRedirect(((HttpServletRequest) request).getContextPath() + "/error.jsp");
         }
-
+        log.info("doFilter");
         filterChain.doFilter(request, response);
     }
 
@@ -207,6 +216,22 @@ public class AzureADAuthenticationFilter extends OncePerRequestFilter {
                 + URLEncoder.encode(currentUri, "UTF-8") + "&client_id=" + clientId
                 + "&resource=https%3a%2f%2fgraph.windows.net" + "&nonce=" + UUID.randomUUID() + "&site_id=500879";
         return redirectUrl;
+    }
+    
+    public void setAADAuthenticationMatcher(RequestMatcher matcher) {
+    	requireAADAuthenticationMatcher = matcher;
+    }
+    
+    private static final class DefaultAADAuthenticationMatcher implements RequestMatcher  {
+
+    	private final HashSet<String> allowedMethods = new HashSet<String> (
+    			Arrays.asList("GET","HEAD","TRACE","OPTIONS"));
+
+    	@Override
+		public boolean matches(HttpServletRequest request) {
+			return !this.allowedMethods.contains(request.getMethod());
+		}
+    	
     }
 
 }
