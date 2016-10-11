@@ -10,7 +10,7 @@ City Power & Light is a sample application that allows citizens to to report "in
 
 In this lab, you will work with an existing API to connect to the web application front end. This will allow you perform CRUD operations for incidents. You will also configure additional Azure features for Redis Cache, Azure Storage Queues, and Azure Blob Storage.
 
-> This guide uses [Eclipse](https://eclipse.org) for editing, however please feel free to use your editor of choice.
+> This guide uses [Eclipse STS](https://spring.io/tools) for editing, however please feel free to use your editor of choice.
 
 ## Objectives
 
@@ -46,17 +46,27 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-001.png)
 
-1. Once package restoration completes, open the **start** folder in VSCode
-
-    > If you have added `code` to your command line path you can simply run `code .` from the prompt
+1. Once package restoration completes, open Eclipse STS and Import the  **start** folder
 
     ![image](./media/image-002.png)
 
-1. Let's run the application in Debug Mode.  Click the Debug icon on the left toolbar, then select the green "start" triangle.  In the Environment dropdown select **Node.js**.  VSCode then scaffolds out the files that it needs for debugging support in a launch.json file, stored at the root of your poject folder in a `.vscode` folder.  Click the green start triangle a second time to launch the application.
+1. Let's run the application in Debug Mode.  Click the Debug icon on
+   the top toolbar, then select "Debug Configurations...".
 
     ![image](./media/image-003.png)
 
-1. Open a browser and navigate to `http://localhost:3000`. You should now see the running application
+   Click on "Spring Boot App" and click the + icon in the top left to create a
+   new run configuration.  Choose the Start project,
+   devCamp.WebApp.DevcampApplication for the main type.
+
+    ![image](./media/image-003a.png)
+
+   Click "Apply" and "Run".  In the console pane you should see
+   something like this:
+
+    ![image](./media/image-003b.png)
+
+1. Open a browser and navigate to `http://localhost:8080`. You should now see the running application
 
     ![image](./media/image-004.png)
 
@@ -78,7 +88,8 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-007.png)
 
-    You should be greeted by the default ASP.NET landing page
+    You should be greeted by the default ASP.NET landing page. Capture
+    the URL in notepad or other text editor.
     ![image](./media/image-008.png)
 
 1. Since we provisioned a new instance of DocumentDB, there are not any records to use as sample data.  To generate sample data, our API has a route that can be hit at any time to reset the documents in our collection.  In the browser, add `/incidents/sampledata` to your API's URL to generate sample documents.
@@ -101,103 +112,177 @@ This hands-on-lab has the following exercises:
 
     We can see that several incidents have been created and are now available to the API.
 
-1. Back in VSCode, let's begin integrating the API into our code.  We will need to query the API's endpoint URL, and we have options of where to store that string.  While we could insert it directly into our code, a better practice is to abstract such a configuration setting into an environment variable.  VSCode makes it straightforward to define variables at runtime in the debugging settings.
+1. Back in Eclipse, let's begin integrating the API into our code.  We will need to query the API's endpoint URL, and we have options of where to store that string.  While we could insert it directly into our code, a better practice is to abstract such a configuration setting into an environment variable.
 
-    Stop the debugger by pressing the red "stop" square, and open the `.vscode/launch.json` file that was previously generated.  Under `configurations` look for the `env` node.  This section defines key/value pairs that will be passed into enviromment variables whenever the debugger is launched. Add an entry for `INCIDENT_API_URL` and set the value to the ASP.NET WebAPI that we earlier loaded into the browser. Do not add a trailing slash.
+    Stop the debugger by pressing the red "stop" square, and open the
+    run configuration you created earlier.  Click the "Environment"
+    tab.  This section defines key/value pairs that will be passed
+    into enviromment variables whenever the debugger is launched. Add
+    an entry for `INCIDENT_API_URL` and set the value to the ASP.NET
+    WebAPI that we earlier loaded into the browser (and captured in
+    notepad). Do not add a trailing slash. Click OK to save the
+    environment variable, then apply and close.
 
     ![image](./media/image-009.png)
 
-    Now that the URL is loaded as an environment variable, we can access it from our application by referencing `process.env.INCIDENT_API_URL`.  We will repeat this process several times to configure our application with Azure services.
+    Now that the URL is loaded as an environment variable, we can
+    access it from our application by calling System.getenv("INCIDENT_API_URL")`.  We will repeat this process several times to configure our application with Azure services.
 
     > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application
 
-1. The dashboard page is handled by the `/routes/dashboard.js` file. Open the file and paste this function at the bottom:
+1. Several components will work together to call and display the
+   incidents in the database.  First we will need an object to hold
+   the data associated with each incident.  We've supplied that object
+   in devCamp.WebApp.IncidentAPIClient.Models.IncedentBean.Java.  Open
+   that file and look at the properties and methods.
 
-    ```javascript
-    function getIncidents() {
+1. Create the class devCamp.WebApp.IncidentAPIClient.IncidentAPIClient.java with the
+   following code:
 
-        return new Promise(function (resolve, reject) {
+    ```java
+package devCamp.WebApp.IncidentAPIClient;
 
-            // Define URL to use for the API
-            var apiUrl = `${process.env.INCIDENT_API_URL}/incidents`;
+import java.util.List;
 
-            // Make a GET request with the Request libary
-            request(apiUrl, { json: true }, function (error, results, body) {
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
-                // Resolve the Promise with incident data
-                resolve(body);
+import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
 
-            });
+public class IncidentAPIClient {
+	private Log log = LogFactory.getLog(IncidentAPIClient.class);
+	private String baseURI;
 
-        });
+	public String getBaseURI() {
+		return baseURI;
+	}
 
-    }
-    ```
+	public void setBaseURI(String baseURI) {
+		this.baseURI = baseURI;
+	}
 
-    This function uses the popular [request](https://github.com/request/request) library to generate a HTTP GET to the API endpoint. It is also wrapping the call in [JavaScript Promise syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) to avoid nested callbacks when consuming the function.
+	public List<IncidentBean> GetAllIncidents() {
+		log.info("Performing get /incidents web service");
+		final String uri = baseURI+"/incidents";
+        RestTemplate restTemplate = new RestTemplate();
 
-    > Ensure that the version you have locally of Node is recent enough to support Promises. To be safe it is advised to [upgrade](https://nodejs.org/en/) to Node v6
+        ResponseEntity<List<IncidentBean>> IncidentResponse =
+		        restTemplate.exchange(uri,
+		                    HttpMethod.GET, null, new ParameterizedTypeReference<List<IncidentBean>>() {
+		            });
 
-    Next, adjust the response rendering to first use our function:
+		return IncidentResponse.getBody();
+	}
 
-    ```javascript
-    // Query the API for incident data
-    getIncidents().then(function (incidents) {
+	public IncidentAPIClient(String baseURI) {
+		if (baseURI == null){
+			//throw argument null exception
+		}
+		this.baseURI = baseURI;
 
-        // Render view
-        res.render('dashboard', {
-            title: 'Outage Dashboard',
-            incidents: incidents
-        });
-
-    });
-    ```
-
-    At the top of the file, add `var request = require('request');` below the other require statements to load the library.
-
-1.  On the command line, execute `npm install request --save` to download the request library and save it to `package.json`.
-
-1. To test if the API returns data, set a breakpoint by clicking in the gap left of the line number containing `resolve(body)`.  Then start the VSCode debugger and open your browser to `http://localhost:3000/dashboard`.
-
-    ![image](./media/image-014.png)
-
-    The breakpoint should be hit as the page loads.  Hover over the `body` parameter to examine the array of returned inicdents from the API.  This is the array that will be passed to the view for rendering. Next we need to update our view to accomodate the data.
-
-1. Open `views/dashboard.pug` and adjust the template to include incident data:
-
-    ```pug
-    extends layout
-
-    block content
-
-        .container
-
-            h1 #{title}
-
-            .row
-                if incidents
-                    each incident in incidents
-                        .col-sm-4
-                            .panel.panel-default
-                                .panel-heading Incident #{incident.id.split('-').pop()}
-                                    i.glyphicon.glyphicon-flash.pull-rights
-                                table.table
-                                    tr
-                                        th Address
-                                        td #{incident.Street}
-                                    tr
-                                        th Contact
-                                        td
-                                            a(href=`tel:${incident.PhoneNumber}`) #{incident.FirstName} #{incident.LastName}
-                                    tr
-                                        th Reported
-                                        td #{moment(incident.Created).format('MM/DD/YYYY')}
+	}
+}
 
     ```
 
-    > Pug is the same library as Jade, [which underwent a rename](https://github.com/pugjs/pug/issues/2184)
+    This class uses the popular
+    [RestTemplate](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) library
+    to generate a HTTP GET to the API endpoint, and to convert the
+    return javascript into a java object.  In this case, we've
+    specified that it should return a `List<IncidentBean>`.
 
-1. With the dashboard route code and the view template updated, run the application via the Debug Tab in VSCode and check the dashboard page.
+1.  Next, create an object to create an IncidentAPIClient with the
+    proper URI. Create the class devCamp.WebApp.Utils.IncidentAPIClient:
+
+    ```java
+package devCamp.WebApp.Utils;
+
+import devCamp.WebApp.IncidentAPIClient.IncidentAPIClient;
+
+public class IncidentAPIHelper {
+	public static IncidentAPIClient getIncidentAPIClient() {
+
+		String apiurl= System.getenv("INCIDENT_API_URL");
+		return new IncidentAPIClient(apiurl);
+	}
+}
+
+    ```
+
+1. Open DevCamp.WebApp.Controllers.java. In the dashboard function,
+    comment out this section of code that generated the dummy
+    dashboard data:
+
+    ```java
+		ArrayList<IncidentBean> theList = new ArrayList<>();
+		for (int i = 1;i<=3;++i){
+			IncidentBean bean = new IncidentBean();
+			bean.setId("12345");
+			bean.setStreet("123 Main St.");
+			bean.setFirstName("Jane");
+			bean.setLastName("Doe");
+			bean.setCreated("1/01/2016");
+			theList.add(bean);
+		}
+    ```
+
+    Insert this code to call the GetAllIncidents API and put the
+    resulting list of IncidentBean in the model.
+
+    ```java
+		IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
+		ArrayList<IncidentBean> theList = client.GetAllIncidents();
+        model.addAttribute("allIncidents",theList);
+    ```
+
+    Before we test this code, open the HTML template for the dashboard
+    page, located in
+    src/main/resources/templates/Dashboard/index.html. The following
+    section loops through all of the incidents in the allIncidents
+    object in the model, and formats them nicely for the display.
+
+    ```
+			<div th:each="incident : ${allIncidents}">
+				<div class="col-sm-4">
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Outage <span th:text="${incident.Id}"></span>
+						</div>
+						<table class="table">
+							<tr>
+								<th>Address</th>
+								<td><span th:text="${incident.Street}"></span></td>
+							</tr>
+							<tr>
+								<th>Contact</th>
+								<td><a href="tel:14174444444"><span
+										th:text="${incident.FirstName}"></span> <span
+										th:text="${incident.LastName}"></span></a></td>
+							</tr>
+							<tr>
+								<th>Reported</th>
+								<td><span th:text="${incident.Created}"></span></td>
+							</tr>
+						</table>
+					</div>
+
+				</div>
+
+			</div>
+
+    ```
+
+
+1. Run the application via the Debug Tab in Eclipse and check the
+   dashboard page at http://localhost:8080/dashboard.
 
     ![image](./media/image-015.png)
 
@@ -206,11 +291,10 @@ The cards now represent data returned from our API, replacing the static mockup 
 ## Exercise 2: Add a caching layer
 Querying our API is a big step forward, but querying a cache would increase performance and limit the load on our API.  Azure offers a managed (PaaS) service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
 
-We deployed an instance of Azure Redis Cache in the ARM Template, but need to add application logic
-* First, check the cache to see if a set of incidents is available
-* If not, query the API
-* Cache response from API
-* Set cached response to expire after 60 seconds
+We deployed an instance of Azure Redis Cache in the ARM Template, but
+need to add application logic. Spring has great support for caching,
+and can easily use Azure Redis Cache to hold the data.
+
 
 1. First, let's add our Redis information to local environment variables. In the [Azure Portal](https://portal.azure.com) navigate to the Resource Group and select the Redis instance.
 
@@ -224,93 +308,161 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
     ![image](./media/image-018.png)
 
-    In VSCode, open `.vscode/launch.json` and add four variables for `REDISCACHE_HOSTNAME`, `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and `REDISCACHE_SSLPORT`
-
-    ```json
-    "env": {
-            "NODE_ENV": "development",
-            "INCIDENT_API_URL": "http://incidentapimm6lqhplzxjp2.azurewebsites.net",
-            "REDISCACHE_HOSTNAME": "incidentcachemm6lqhplzxjp2.redis.cache.windows.net",
-            "REDISCACHE_PRIMARY_KEY": "bZcVx7XSRICO+RlKrh2eqvIAFMv0y3i5LQbk91LILSY=",
-            "REDISCACHE_PORT": "6379",
-            "REDISCACHE_SSLPORT": "6380"
-        },
-    ```
+    In Eclipse open the run configuration, click the environment tab
+    and add four variables for `REDISCACHE_HOSTNAME`,
+    `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and
+    `REDISCACHE_SSLPORT`.  Click apply and close.
 
     We will use these variables to configure a Redis client.
 
-1. From the command line, run `npm install redis --save` to install the Redis library.
-
-1. To create a Redis client, open `routes/dashboard.js` and extend the require statements to include the Redis library:
-
-    ```javascript
-    var express = require('express');
-    var router = express.Router();
-    var request = require('request');
-
-    // Setup Redis Client
-    var redis = require("redis");
-    var client = redis.createClient(process.env.REDISCACHE_SSLPORT, process.env.REDISCACHE_HOSTNAME, { auth_pass: process.env.REDISCACHE_PRIMARY_KEY, tls: { servername: process.env.REDISCACHE_HOSTNAME } });
+1. To add support to your Spring environment, open the build.gradle
+   file and add the following entries under dependencies:
+   ```java
+	compile("javax.cache:cache-api")
+  	compile('org.springframework.data:spring-data-redis')
+	compile('redis.clients:jedis')
+    compile('org.springframework.boot:spring-boot-starter-cache')
     ```
+    In Spring, you can apply caching to a Spring
+   [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html). We
+   need to create a class `devCamp.WebApp.IncidentAPIClient.IncidentService.java` with this
+   code:
 
-1. Our `getIncidents()` function needs to be enhanced.  The following will use the Redis client to implement the cache logic bullet points from above.
+   ```java
 
-    ```javascript
-    function getIncidents() {
+package devCamp.WebApp.IncidentAPIClient;
 
-        return new Promise(function (resolve, reject) {
+import java.util.List;
 
-            // Check cache for incidentData key
-            client.get('incidentData', function (error, reply) {
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
-                if (reply) {
-                    // Cached key exists
-                    console.log('Cached key found');
+import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
+import devCamp.WebApp.Utils.IncidentApiHelper;
 
-                    // Parse results
-                    var incidents;
-                    if (reply === 'undefined') {
-                        // No results, return null
-                        incidents = null;
-                    }
-                    else {
-                        incidents = JSON.parse(reply);
-                    }
+@Service
+public class IncidentService {
 
-                    // Resolve Promise with incident data
-                    resolve(incidents);
+	private Log log = LogFactory.getLog(IncidentService.class);
 
-                }
-                else {
-                    // Cached key does not exist
-                    console.log('Cached key not found');
+	@Cacheable("incidents")
+	public List<IncidentBean> GetAllIncidents() {
+		IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
+		return client.GetAllIncidents();
+	}
+}
+   ```
 
-                    // Define URL to use for the API
-                    var apiUrl = `${process.env.INCIDENT_API_URL}/incidents`;
+    The `@Service` annotation tells Spring that this is a service
+    class, and the `@Cacheable` annotation tells spring that the
+    result of the GetAllIncidents is cachable, and will automatically
+    use the cached version if available.
 
-                    // Make a GET request with the Request libary
-                    request(apiUrl, { json: true }, function (error, results, body) {
+    We still have to configure Spring caching to use Azure Redis
+    Cache. To do this, create a new class
+    devCamp.WebApp.CacheConfig.java with this code:
 
-                        // Store results in cache
-                        client.set("incidentData", JSON.stringify(body), 'EX', 60, function (error, reply) {
-                            console.log('Stored results in cache');
-                        });
+    ```java
+package devCamp.WebApp;
 
-                        // Resolve Promise with incident data
-                        resolve(body);
+import java.util.Arrays;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 
-                    });
+import redis.clients.jedis.JedisPoolConfig;
 
-                }
+@Configuration
+@EnableCaching
+public class CacheConfig extends CachingConfigurerSupport {
+	private Log log = LogFactory.getLog(CacheConfig.class);
 
-            });
+    @Bean
+    public JedisConnectionFactory redisConnectionFactory() {
+    		JedisPoolConfig poolConfig = new JedisPoolConfig();
+    		poolConfig.setMaxTotal(5);
+    		poolConfig.setTestOnBorrow(true);
+    		poolConfig.setTestOnReturn(true);
+    		JedisConnectionFactory ob = new JedisConnectionFactory(poolConfig);
+    		ob.setUsePool(true);
+    		String redishost = System.getenv("REDISCACHE_HOSTNAME");
+    		log.info("REDISCACHE_HOSTNAME="+redishost);
+    		ob.setHostName(redishost);
+    		String redisport = System.getenv("REDISCACHE_PORT");
+    		log.info("REDISCACHE_PORT="+redisport);
+    		try {
+				ob.setPort(Integer.parseInt(  redisport));
+			} catch (NumberFormatException e1) {
+				// if the port is not in the ENV, use the default
+				ob.setPort(6379);
+			}
+    		String rediskey = System.getenv("REDISCACHE_PRIMARY_KEY");
+    		log.info("REDISCACHE_PRIMARY_KEY="+rediskey);
+    		ob.setPassword(rediskey);
+    		ob.afterPropertiesSet();
+			RedisTemplate<Object,Object> tmp = new RedisTemplate<>();
+			tmp.setConnectionFactory(ob);
 
-        });
+    		//make sure redis connection is working
+    		try {
+    			String msg = tmp.getConnectionFactory().getConnection().ping();
+        		log.info("redis ping response="+msg);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		return ob;
+    	}
 
+    @Bean(name="redisTemplate")
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory cf) {
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<String, String>();
+        redisTemplate.setConnectionFactory(cf);
+        return redisTemplate;
     }
+
+    @Bean
+    public CacheManager cacheManager() {
+    	RedisCacheManager manager =new RedisCacheManager(redisTemplate(redisConnectionFactory()));
+    	manager.setDefaultExpiration(300);
+        return manager;
+    }
+
+}
+
+
     ```
 
-All application requests for the dashboard will now first try to use Azure Redis Cache.  Under high traffic, this will improve page performance and decrease the API's scaling needs.
+    There is a lot going on in this class.  The `@Configuration`
+    annotation tells Spring that this class declares one or more beans
+    that will generate bean and service definitions.  The
+    `@EnableCaching` annotation enables Spring's annotation driving
+    caching mechanism for the application.
+
+    The `CacheConfig` class contains beans that will configure the
+    annotation driven caching. The `redisConnectionFactory` function
+    creates a new `JedisConnectionFactory` with the appropriate
+    connection to the Azure Redis cache. It also does a test to make
+    sure it is properly communicating with the cache.
+
+    The `cacheManager` function configures Spring to use the
+    redisConnectionFactory function to connect to the cache.
+
+    All application requests for the dashboard will now first try to
+    use Azure Redis Cache. Under high traffic, this will improve page
+    performance and decrease the API's scaling needs.
 
 ## Exercise 3: Write images to Azure Blob Storage
 
