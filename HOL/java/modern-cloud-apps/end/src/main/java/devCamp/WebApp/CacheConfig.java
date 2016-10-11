@@ -34,7 +34,12 @@ public class CacheConfig extends CachingConfigurerSupport {
     		ob.setHostName(redishost);
     		String redisport = System.getenv("REDISCACHE_PORT");
     		log.info("REDISCACHE_PORT="+redisport);
-    		ob.setPort(Integer.parseInt(  redisport));
+    		try {
+				ob.setPort(Integer.parseInt(  redisport));
+			} catch (NumberFormatException e1) {
+				// if the port is not in the ENV, use the default
+				ob.setPort(6379);
+			}
     		String rediskey = System.getenv("REDISCACHE_PRIMARY_KEY");
     		log.info("REDISCACHE_PRIMARY_KEY="+rediskey);
     		ob.setPassword(rediskey);

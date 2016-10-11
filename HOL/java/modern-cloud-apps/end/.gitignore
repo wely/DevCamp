@@ -3,6 +3,9 @@
 *.war
 *.ear
 *.class
+.DS_Store
+.gradle
+/build/
 !gradle-wrapper.jar
 # eclipse specific git ignore
 *.pydevproject
