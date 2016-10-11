@@ -51,14 +51,19 @@ This hands-on-lab has the following exercises:
     ![image](./media/image-002.png)
 
 1. Let's run the application in Debug Mode.  Click the Debug icon on
-   the top toolbar, then select "Debug Configurations...".   Click on
-   "Spring Boot App" and click the + icon in the top left to create a
-   new run configuration.  Choose the Start project,
-   devCamp.WebApp.DevcampApplication for the main type, and click
-   "Apply" and "Run".
+   the top toolbar, then select "Debug Configurations...".
 
     ![image](./media/image-003.png)
+
+   Click on "Spring Boot App" and click the + icon in the top left to create a
+   new run configuration.  Choose the Start project,
+   devCamp.WebApp.DevcampApplication for the main type.
+
     ![image](./media/image-003a.png)
+
+   Click "Apply" and "Run".  In the console pane you should see
+   something like this:
+
     ![image](./media/image-003b.png)
 
 1. Open a browser and navigate to `http://localhost:8080`. You should now see the running application
@@ -83,7 +88,8 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-007.png)
 
-    You should be greeted by the default ASP.NET landing page
+    You should be greeted by the default ASP.NET landing page. Capture
+    the URL in notepad or other text editor.
     ![image](./media/image-008.png)
 
 1. Since we provisioned a new instance of DocumentDB, there are not any records to use as sample data.  To generate sample data, our API has a route that can be hit at any time to reset the documents in our collection.  In the browser, add `/incidents/sampledata` to your API's URL to generate sample documents.
@@ -106,13 +112,21 @@ This hands-on-lab has the following exercises:
 
     We can see that several incidents have been created and are now available to the API.
 
-1. Back in VSCode, let's begin integrating the API into our code.  We will need to query the API's endpoint URL, and we have options of where to store that string.  While we could insert it directly into our code, a better practice is to abstract such a configuration setting into an environment variable.  VSCode makes it straightforward to define variables at runtime in the debugging settings.
+1. Back in Eclipse, let's begin integrating the API into our code.  We will need to query the API's endpoint URL, and we have options of where to store that string.  While we could insert it directly into our code, a better practice is to abstract such a configuration setting into an environment variable.
 
-    Stop the debugger by pressing the red "stop" square, and open the `.vscode/launch.json` file that was previously generated.  Under `configurations` look for the `env` node.  This section defines key/value pairs that will be passed into enviromment variables whenever the debugger is launched. Add an entry for `INCIDENT_API_URL` and set the value to the ASP.NET WebAPI that we earlier loaded into the browser. Do not add a trailing slash.
+    Stop the debugger by pressing the red "stop" square, and open the
+    run configuration you created earlier.  Click the "Environment"
+    tab.  This section defines key/value pairs that will be passed
+    into enviromment variables whenever the debugger is launched. Add
+    an entry for `INCIDENT_API_URL` and set the value to the ASP.NET
+    WebAPI that we earlier loaded into the browser (and captured in
+    notepad). Do not add a trailing slash. Click OK to save the
+    environment variable, then apply and close.
 
     ![image](./media/image-009.png)
 
-    Now that the URL is loaded as an environment variable, we can access it from our application by referencing `process.env.INCIDENT_API_URL`.  We will repeat this process several times to configure our application with Azure services.
+    Now that the URL is loaded as an environment variable, we can
+    access it from our application by calling System.getenv("INCIDENT_API_URL")`.  We will repeat this process several times to configure our application with Azure services.
 
     > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application
 
