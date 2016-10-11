@@ -472,10 +472,9 @@ public class CacheConfig extends CachingConfigurerSupport {
     use Azure Redis Cache. Under high traffic, this will improve page
     performance and decrease the API's scaling needs.
 
-
-    1.Change the devCamp.WebApp.Controllers.DashboardController.java
+1. Change the devCamp.WebApp.Controllers.DashboardController.java
 class to use the IncidentService rather than the IncidentAPIClient
-directly.  To do this add these lines inside the DachboardController class:
+directly. To do this add these lines inside the DashboardController class:
 
     ```java
 	@Autowired
@@ -483,11 +482,12 @@ directly.  To do this add these lines inside the DachboardController class:
     ```
 
     Also, change these two lines:
-```java
+    ```java
 		IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
 		ArrayList<IncidentBean> theList = client.GetAllIncidents();
     ```
     to this:
+
     ```java
 		List<IncidentBean> theList = service.GetAllIncidents();
     ```
