@@ -1,4 +1,4 @@
-package com.contoso;
+package devCamp.WebApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
