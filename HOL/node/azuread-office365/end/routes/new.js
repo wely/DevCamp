@@ -4,16 +4,18 @@ var router = express.Router();
 var request = require('request');
 var formidable = require('formidable');
 var storageUtility = require('../utilities/storage');
+var authUtility = require('../utilities/auth');
+var emailUtility = require('../utilities/email');
 
 /* GET new outage */
-router.get('/', function (req, res) {
+router.get('/', authUtility.ensureAuthenticated, function (req, res) {
     res.render('new', {
         title: 'Report an Outage'
     });
 });
 
 /* POST new outage */
-router.post('/', function (req, res) {
+router.post('/', authUtility.ensureAuthenticated, function (req, res) {
 
     // Parse a form submission with formidable
     var form = new formidable.IncomingForm();
@@ -23,6 +25,7 @@ router.post('/', function (req, res) {
         createIncident(fields, files)
             .then(uploadImage)
             .then(addQueueMessage)
+            .then(emailConfirmation(req.user))
             .then(() => {
 
                 // Successfully processed form upload
@@ -100,15 +103,45 @@ function addQueueMessage(blob) {
 
         if (blob) {
 
-            storageUtility.createQueueMessage(blob).then(function() {
+            storageUtility.createQueueMessage(blob).then(function () {
                 resolve();
-            });            
+            });
 
         }
         else {
             console.log('No message to add to the queue');
             resolve();
         }
+
+    });
+
+}
+
+function emailConfirmation(user) {
+
+    return new Promise(function (resolve, reject) {
+
+        // Generate email markup
+        var mailBody = emailUtility.generateMailBody(user.displayName, user.email);
+
+        // Set configuration options
+        var options = {
+            url: 'https://graph.microsoft.com/v1.0/me/sendMail',
+            json: true,
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + user.token
+            },
+            body: mailBody
+        };
+
+        // POST new message to Graph API
+        request(options, function (error, response) {
+
+            console.log('Email confirmation message sent.');
+            resolve();
+
+        });
 
     });
 

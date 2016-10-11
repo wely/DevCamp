@@ -13,7 +13,6 @@ In this lab, you will continue enhancing the City Power & Light application by a
 > This guide use [Visual Studio Code](https://code.visualstudio.com/) for editing, however please feel free to use your editor of choice.  If you are interested in using full Visual Studio + [Node.js Tools for Visual Studio Extension (NTVS)](https://www.visualstudio.com/vs/node-js/), please see [here](https://github.com/Microsoft/nodejstools/wiki/Projects#create-project-from-existing-files) for instructions on wrapping existing code into a VS Project.
 
 ## Objectives
-
 In this hands-on lab, you will learn how to:
 
 * Take an anonymous application and add user authentication via AzureAD
@@ -22,9 +21,10 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-* The source for the starter app is located in the `HOL\node\modern-cloud-apps\start` folder. 
-* The finished project is located in the `HOL\node\modern-cloud-apps\end` folder. 
+* The source for the starter app is located in the `HOL\node\azuread-office365\start` folder. 
+* The finished project is located in the `HOL\node\azuread-office365\end` folder. 
 * Deployed the starter ARM Template
+* Completion of the first modern-apps lab
 
 ## Exercises
 
@@ -32,7 +32,7 @@ This hands-on-lab has the following exercises:
 
 * Exercise 1: Setup authentication 
 * Exercise 2: Create a user profile page
-* Exercise 3: Interact with the Microsoft Graph
+* Exercise 3: Send a confirmation email to the user on incident creation
 
 ## Exercise 1: Integrate the API
 
@@ -289,9 +289,262 @@ AzureAD can handle authentication for web applications. First we will create a n
     });
     ```
 
+1. The Passport middleware adds a `user` object to the `req` object. In order to use this object in our views to display user data, we need to update how we call `res.render()` in each of our routes. 
+
+    For `routes/dashboard.js` and `routes/index.js` find where `res.render()` is called and add an attribute for `user: req.user`. For example, for `dashboard.js` the updated call would look like:
+
+    ```javascript
+    // Render view
+    res.render('dashboard', {
+        title: 'Outage Dashboard',
+        incidents: incidents,
+        user: req.user
+    });
+    ```
+
+    Simply piping the user data into our views is useful, but what if we want to make a page in our application only visible to logged in users? To do this we need to check the user's status before loading a route.  Let's make `routes/new.js` a secure page by adding some authentication.  Reference our `authUtility` file, and then pass `authUtility.ensureAuthenticated` into both our `.get` and `.post` routes.  Here's an abbreviated snippet of `routes/new.js`:
+
+    ```javascript
+    var fs = require('fs');
+    var express = require('express');
+    var router = express.Router();
+    var request = require('request');
+    var formidable = require('formidable');
+    var storageUtility = require('../utilities/storage');
+    var authUtility = require('../utilities/auth');
+
+    /* GET new outage */
+    router.get('/', authUtility.ensureAuthenticated, function (req, res) {
+        res.render('new', {
+            title: 'Report an Outage'
+        });
+    });
+
+    /* POST new outage */
+    router.post('/', authUtility.ensureAuthenticated, function (req, res) {
+
+        // Parse a form submission with formidable
+        var form = new formidable.IncomingForm();
+        form.parse(req, (err, fields, files) => {
+    ```
+
+    With these edits, each page will receive a `user` object if a user is authenticated, and when the **Report an Outage** page is loaded it will ensure the user is authenticated.  
+
 1. To install dependencies, run an `npm install passport passport-azure-ad --save` from the command line.
 
-1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `views/navigation.pug` and remove the commented out blocks of code by deleting the `//-` characters.
+1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `views/navigation.pug` and remove the commented out blocks of code by deleting the `//-` characters. Now load the application in the browser and you should see the **Login** button on the top navigation.
+
+    ![image](./media/image-009.png)
+
+    Click on the link for **Report Outage**. Since you are not currently authenticated, the application redirects you to Azure to provide a username and apssword.  Sign in, and you will be redirect back to the homescreen with a username in the top right corner. Click the name to dropdown a link for a **Profile** page and to **Sign Out**.  
+
+    ![image](./media/image-010.png)
+
+The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
+
+## Exercise 2: Create a user profile page
+Next, we are goign to create a page to display information about the logged in user.  While AzureAD returns a name and email address, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a route, and then query the Graph for user information.
+
+1. Create a new file named `views/profile.pug`. Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
+
+    ```pug
+    extends layout
+
+    block content
+
+        .container
+            h1 User Profile
+
+            if attributes
+                table.table.table-striped.table-bordered
+                    each key, value in attributes
+                        tr
+                            th= value
+                            td= key
+    ```
+
+1. With the view prepped, create a route at `routes/profile.js`.  When the route is loaded, it will query the Microsoft Graph "Me" endpoint.  This query requires a token to be passed in an `authorization` request header, which we grab from the `user` object provided by Passport.
+
+    ```javascript
+    var express = require('express');
+    var router = express.Router();
+    var request = require('request');
+    var authUtility = require('../utilities/auth');
+
+    /* GET profile page. */
+    router.get('/', authUtility.ensureAuthenticated, function (req, res) {
+
+        // Create options object configuring the HTTP call
+        var options = {
+            url: 'https://graph.microsoft.com/v1.0/me',
+            method: 'GET',
+            json: true,
+            headers: {
+                authorization: 'Bearer ' + req.user.token
+            }
+        };
+
+        // Query Graph API
+        request(options, function (error, results, body) {
+
+            // Render page with returned attributes
+            res.render('profile', {
+                title: 'Profile',
+                user: req.user,
+                attributes: body
+            });
+
+        });
+
+    });
+
+    module.exports = router;
+    ```
+
+1. With the view and route created, we can now load `http://localhost:3000/profile` in the browser.
+
+    ![image](./media/image-011.png)
+
+We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
+
+## Exercise 3: Interact with the Microsoft Graph
+In the previous exercise you read data from the Microsoft Graph, but other endpoints can be used for more sophisticated tasks.  In this exercise we will use the Graph to send an email message whenever a new incident is reported.
+
+1. Create a new file in `utilities/mail.js` that will take a recipient and generate a JSON message body for passing into the Graph API. 
+
+    ```javascript
+    // https://graph.microsoft.io/en-us/docs/api-reference/v1.0/api/user_post_messages
+
+    // The contents of the outbound email message that will be sent to the user
+    var emailContent = `
+    <html>
+
+    <head>
+    <meta http-equiv='Content-Type' content='text/html; charset=us-ascii\'>
+    <title></title>
+    </head>
+
+    <body style="font-family:Calibri">
+    <div style="width:50%;background-color:#CCC;padding:10px;margin:0 auto;text-align:center;">
+        <h1>City Power &amp; Light</h1>
+        <h2>New Incident Reported by {{name}}</h2>
+        <p>A new incident has been reported to the City Power &amp; Light outage system.</p>   
+        <br />
+    </div>
+    </body>
+
+    </html>
+    `;
+
+    /**
+    * Returns the outbound email message content with the supplied name populated in the text
+    * @param {string} name The proper noun to use when addressing the email
+    * @return {string} the formatted email body
+    */
+    function getEmailContent(name) {
+        return emailContent.replace('{{name}}', name);
+    }
+
+    /**
+    * Wraps the email's message content in the expected [soon-to-deserialized JSON] format
+    * @param {string} content the message body of the email message
+    * @param {string} recipient the email address to whom this message will be sent
+    * @return the message object to send over the wire
+    */
+    function wrapEmail(content, recipient) {
+        var emailAsPayload = {
+            Message: {
+                Subject: 'New Incident Reported',
+                Body: {
+                    ContentType: 'HTML',
+                    Content: content
+                },
+                ToRecipients: [
+                    {
+                        EmailAddress: {
+                            Address: recipient
+                        }
+                    }
+                ]
+            },
+            SaveToSentItems: true
+        };
+        return emailAsPayload;
+    }
+
+    /**
+    * Delegating method to wrap the formatted email message into a POST-able object
+    * @param {string} name the name used to address the recipient
+    * @param {string} recipient the email address to which the connect email will be sent
+    */
+    function generateMailBody(name, recipient) {
+        return wrapEmail(getEmailContent(name), recipient);
+    }
+
+    module.exports.generateMailBody = generateMailBody; 
+    ```
+
+    > There are [numerous settings](https://graph.microsoft.io/en-us/docs/api-reference/v1.0/api/user_post_messages) you can include in a mail message
+
+1. Extend `routes/new.js` to call our helper by adding a new function after the end of `function uploadImage()` and before the module export statement.
+
+    ```javascript
+    function emailConfirmation(user) {
+
+        return new Promise(function (resolve, reject) {
+
+            // Generate email markup
+            var mailBody = emailUtility.generateMailBody(user.displayName, user.email);
+
+            // Set configuration options
+            var options = {
+                url: 'https://graph.microsoft.com/v1.0/me/sendMail',
+                json: true,
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + user.token
+                },
+                body: mailBody
+            };
+
+            // POST new message to Graph API
+            request(options, function (error, response) {
+
+                console.log('Email confirmation message sent.');
+                resolve();
+
+            });
+
+        });
+
+    }
+
+    ```
+
+    Also update the series of chained promises in the original `.post` to include a reference to the new `emailConfirmation` function
+
+    ```javascript
+    // Process the fields into a new incident, upload image, and add thumbnail queue message
+    createIncident(fields, files)
+        .then(uploadImage)
+        .then(addQueueMessage)
+        .then(emailConfirmation(req.user))
+        .then(() => {
+
+            // Successfully processed form upload
+            // Redirect to dashboard
+            res.redirect('/dashboard');
+
+        });
+    ```
+
+    Finally, add a reference at the top of the page for `var emailUtility = require('../utilities/email');`
+
+ 1. Load the application in the browser, and create a new incident.  You should soon receive an email in the current user's inbox.
+
+    ![image](./media/image-012.png)       
+
+Sending this email did not require the setting up of a dedicated email server, but instead leveraged capabilities within the Microsfot Graph.  We could have also created a calendar event, or a task related to the incident for a given user, all via the API.
 
 ## Summary
-Our application started as a prototype on our local machine, but now uses a variety of Azure services.  We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
+Our application can now bifurcate anonymous and authenticated users to ensure flexibility between public and private data.  We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.

@@ -14,7 +14,8 @@ router.get('/', function (req, res) {
         // Render view
         res.render('dashboard', {
             title: 'Outage Dashboard',
-            incidents: incidents
+            incidents: incidents,
+            user: req.user
         });
 
     });
