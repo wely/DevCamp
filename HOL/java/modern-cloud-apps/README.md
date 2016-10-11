@@ -168,6 +168,17 @@ This hands-on-lab has the following exercises:
             this.baseURI = baseURI;
         }
 
+        public IncidentBean CreateIncident(IncidentBean incident) {
+            //call REST API to create the incident
+            final String uri = baseURI+"/incidents";
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            
+            IncidentBean createdBean = restTemplate.postForObject(uri, incident, IncidentBean.class);
+            return createdBean;
+        }
+
         public List<IncidentBean> GetAllIncidents() {
             log.info("Performing get /incidents web service");
             final String uri = baseURI+"/incidents";
@@ -181,6 +192,29 @@ This hands-on-lab has the following exercises:
             return IncidentResponse.getBody();
         }
 
+        public IncidentBean GetById(String incidentId) {
+                //call REST API to create the incident
+                final String uri = String.format("%s/incidents/%s", baseURI,incidentId);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                
+                IncidentBean retval = restTemplate.getForObject(uri, IncidentBean.class);
+                
+                return retval;		
+            }
+        
+            public IncidentBean UpdateIncident(String incidentId,IncidentBean newIncident){
+                //call REST API to create the incident
+                final String uri = baseURI+"/incidents";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                
+                IncidentBean retval = null;
+                return retval;		
+            }
+            
         public IncidentAPIClient(String baseURI) {
             if (baseURI == null){
                 //throw argument null exception
@@ -357,6 +391,25 @@ and can easily use Azure Redis Cache to hold the data.
             IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
             return client.GetAllIncidents();
         }
+
+        @CacheEvict(cacheNames="incidents", allEntries=true)
+        public IncidentBean CreateIncident(IncidentBean incident) {
+            return IncidentApiHelper.getIncidentAPIClient().CreateIncident(incident);		
+        }
+        
+        @CacheEvict(cacheNames="incidents", allEntries=true)
+        public IncidentBean UpdateIncident(String incidentId,IncidentBean newIncident){
+            return IncidentApiHelper.getIncidentAPIClient().UpdateIncident(incidentId,newIncident);
+        }
+        
+        public IncidentBean GetById(String incidentId) {
+            return IncidentApiHelper.getIncidentAPIClient().GetById(incidentId);		
+        }
+
+        @CacheEvict(cacheNames="incidents", allEntries=true)
+        public void ClearCache() {
+        }
+        
     }
    ```
 
@@ -364,6 +417,9 @@ and can easily use Azure Redis Cache to hold the data.
     class, and the `@Cacheable` annotation tells spring that the
     result of the GetAllIncidents is cachable and will automatically
     use the cached version if available.
+
+    The `@CacheEvict` annotation on the other API calls tells Spring to clear the cache 
+    when those functions are called; these are the ones that make changes to the Incident database.
 
     We still have to configure Spring caching to use Azure Redis
     Cache. To do this, create a new class
