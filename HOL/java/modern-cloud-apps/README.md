@@ -10,7 +10,7 @@ City Power & Light is a sample application that allows citizens to to report "in
 
 In this lab, you will work with an existing API to connect to the web application front end. This will allow you perform CRUD operations for incidents. You will also configure additional Azure features for Redis Cache, Azure Storage Queues, and Azure Blob Storage.
 
-> This guide uses [Eclipse](https://eclipse.org) for editing, however please feel free to use your editor of choice.
+> This guide uses [Eclipse STS](https://spring.io/tools) for editing, however please feel free to use your editor of choice.
 
 ## Objectives
 
@@ -46,17 +46,22 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-001.png)
 
-1. Once package restoration completes, open the **start** folder in VSCode
-
-    > If you have added `code` to your command line path you can simply run `code .` from the prompt
+1. Once package restoration completes, open Eclipse STS and Import the  **start** folder
 
     ![image](./media/image-002.png)
 
-1. Let's run the application in Debug Mode.  Click the Debug icon on the left toolbar, then select the green "start" triangle.  In the Environment dropdown select **Node.js**.  VSCode then scaffolds out the files that it needs for debugging support in a launch.json file, stored at the root of your poject folder in a `.vscode` folder.  Click the green start triangle a second time to launch the application.
+1. Let's run the application in Debug Mode.  Click the Debug icon on
+   the top toolbar, then select "Debug Configurations...".   Click on
+   "Spring Boot App" and click the + icon in the top left to create a
+   new run configuration.  Choose the Start project,
+   devCamp.WebApp.DevcampApplication for the main type, and click
+   "Apply" and "Run".
 
     ![image](./media/image-003.png)
+    ![image](./media/image-003a.png)
+    ![image](./media/image-003b.png)
 
-1. Open a browser and navigate to `http://localhost:3000`. You should now see the running application
+1. Open a browser and navigate to `http://localhost:8080`. You should now see the running application
 
     ![image](./media/image-004.png)
 
