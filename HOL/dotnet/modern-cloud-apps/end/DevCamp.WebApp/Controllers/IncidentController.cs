@@ -1,9 +1,16 @@
-﻿using DevCamp.WebApp.Mappers;
+﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+//See LICENSE in the project root for license information.
+
+using DevCamp.WebApp.Mappers;
+using DevCamp.WebApp.Models;
 using DevCamp.WebApp.Utils;
 using DevCamp.WebApp.ViewModels;
 using IncidentAPI;
 using IncidentAPI.Models;
 using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -34,8 +41,40 @@ namespace DevCamp.WebApp.Controllers
         public async Task<ActionResult> Create()
         {
             //####### FILL IN THE DETAILS FOR THE NEW INCIDENT BASED ON THE USER
-            UserProfileViewModel userProfile = await ProfileHelper.GetCurrentUserProfile(Url.Action("Index", "Profile", null, Request.Url.Scheme));
             IncidentViewModel incident = new IncidentViewModel();
+
+            string userObjId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+            SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
+
+            string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
+            string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
+            AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_CLIENTID, Settings.AAD_APP_SECRET, tokenCache);
+            string accessToken = await authHelper.GetUserAccessToken(Url.Action("Index", "Home", null, Request.Url.Scheme));
+
+            UserProfileViewModel userProfile = new UserProfileViewModel();
+            try
+            {
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    // New code:
+                    HttpResponseMessage response = await client.GetAsync(Settings.GRAPH_CURRENT_USER_URL);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string resultString = await response.Content.ReadAsStringAsync();
+
+                        userProfile = JsonConvert.DeserializeObject<UserProfileViewModel>(resultString);
+                    }
+                }
+            }
+            catch (Exception eee)
+            {
+                ViewBag.Error = "An error has occurred. Details: " + eee.Message;
+            }
 
             incident.FirstName = userProfile.GivenName;
             incident.LastName = userProfile.Surname;
@@ -45,7 +84,7 @@ namespace DevCamp.WebApp.Controllers
 
         [Authorize]
         [HttpPost]
-       public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
+        public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
         {
             try
             {
@@ -83,7 +122,7 @@ namespace DevCamp.WebApp.Controllers
                     //##### CLEAR CACHE ####
 
                     //##### SEND EMAIL #####
-                    await EmailHelper.SendIncidentEmail(incidentToSave, Url.Action("Index", "Profile", null, Request.Url.Scheme));
+                    await SendIncidentEmail(incidentToSave, Url.Action("Index", "Profile", null, Request.Url.Scheme));
                     //##### SEND EMAIL  #####
 
                     return RedirectToAction("Index", "Dashboard");
@@ -95,6 +134,49 @@ namespace DevCamp.WebApp.Controllers
             }
 
             return View(incident);
+        }
+
+        async Task SendIncidentEmail(Incident incidentData, string AuthRedirectUrl)
+        {
+            string userObjId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+            SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
+
+            string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
+            string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
+            AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_CLIENTID, Settings.AAD_APP_SECRET, tokenCache);
+            string accessToken = await authHelper.GetUserAccessToken(Url.Action("Index", "Home", null, Request.Url.Scheme));
+
+            EmailMessage msg = getEmailBodyContent(incidentData, userObjId);
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // New code:
+                StringContent msgContent = new StringContent(JsonConvert.SerializeObject(msg), System.Text.Encoding.UTF8, "application/json");
+                msgContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+                HttpResponseMessage response = await client.PostAsync(Settings.GRAPH_SENDMESSAGE_URL, msgContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    string resultString = await response.Content.ReadAsStringAsync();
+                }
+            }
+        }
+
+        private static EmailMessage getEmailBodyContent(Incident incidentData, string EmailFromAddress)
+        {
+            EmailMessage msg = new EmailMessage();
+            msg.Message.body.contentType = Settings.EMAIL_MESSAGE_TYPE;
+            msg.Message.body.content = string.Format(Settings.EMAIL_MESSAGE_BODY, incidentData.FirstName);
+            msg.Message.subject = Settings.EMAIL_MESSAGE_SUBJECT;
+            Models.EmailAddress emailTo = new Models.EmailAddress() { name = EmailFromAddress, address = EmailFromAddress };
+            ToRecipient sendTo = new ToRecipient();
+            sendTo.emailAddress = emailTo;
+            msg.Message.toRecipients.Add(sendTo);
+            msg.SaveToSentItems = true;
+            return msg;
         }
     }
 }

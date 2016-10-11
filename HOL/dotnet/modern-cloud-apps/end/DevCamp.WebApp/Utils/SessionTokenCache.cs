@@ -1,5 +1,9 @@
-﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+﻿//Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+//See LICENSE in the project root for license information.
+
 using System.Web;
+using Newtonsoft.Json;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace DevCamp.WebApp.Utils
 {
