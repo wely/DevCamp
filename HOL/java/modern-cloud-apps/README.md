@@ -140,59 +140,59 @@ This hands-on-lab has the following exercises:
    following code:
 
     ```java
-package devCamp.WebApp.IncidentAPIClient;
+    package devCamp.WebApp.IncidentAPIClient;
 
-import java.util.List;
+    import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+    import org.apache.commons.logging.Log;
+    import org.apache.commons.logging.LogFactory;
+    import org.springframework.cache.annotation.CacheEvict;
+    import org.springframework.core.ParameterizedTypeReference;
+    import org.springframework.http.HttpMethod;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.http.converter.StringHttpMessageConverter;
+    import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+    import org.springframework.web.client.RestTemplate;
 
-import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
+    import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
 
-public class IncidentAPIClient {
-	private Log log = LogFactory.getLog(IncidentAPIClient.class);
-	private String baseURI;
+    public class IncidentAPIClient {
+        private Log log = LogFactory.getLog(IncidentAPIClient.class);
+        private String baseURI;
 
-	public String getBaseURI() {
-		return baseURI;
-	}
+        public String getBaseURI() {
+            return baseURI;
+        }
 
-	public void setBaseURI(String baseURI) {
-		this.baseURI = baseURI;
-	}
+        public void setBaseURI(String baseURI) {
+            this.baseURI = baseURI;
+        }
 
-	public List<IncidentBean> GetAllIncidents() {
-		log.info("Performing get /incidents web service");
-		final String uri = baseURI+"/incidents";
-        RestTemplate restTemplate = new RestTemplate();
+        public List<IncidentBean> GetAllIncidents() {
+            log.info("Performing get /incidents web service");
+            final String uri = baseURI+"/incidents";
+            RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<List<IncidentBean>> IncidentResponse =
-		        restTemplate.exchange(uri,
-		                    HttpMethod.GET, null, new ParameterizedTypeReference<List<IncidentBean>>() {
-		            });
+            ResponseEntity<List<IncidentBean>> IncidentResponse =
+                    restTemplate.exchange(uri,
+                                HttpMethod.GET, null, new ParameterizedTypeReference<List<IncidentBean>>() {
+                        });
 
-		return IncidentResponse.getBody();
-	}
+            return IncidentResponse.getBody();
+        }
 
-	public IncidentAPIClient(String baseURI) {
-		if (baseURI == null){
-			//throw argument null exception
-		}
-		this.baseURI = baseURI;
+        public IncidentAPIClient(String baseURI) {
+            if (baseURI == null){
+                //throw argument null exception
+            }
+            this.baseURI = baseURI;
 
-	}
-}
+        }
+    }
 
     ```
 
-    This class uses the popular
+    This class uses the
     [RestTemplate](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) library
     to generate a HTTP GET to the API endpoint, and to convert the
     return javascript into a java object.  In this case, we've
@@ -202,18 +202,17 @@ public class IncidentAPIClient {
     proper URI. Create the class devCamp.WebApp.Utils.IncidentAPIClient:
 
     ```java
-package devCamp.WebApp.Utils;
+    package devCamp.WebApp.Utils;
 
-import devCamp.WebApp.IncidentAPIClient.IncidentAPIClient;
+    import devCamp.WebApp.IncidentAPIClient.IncidentAPIClient;
 
-public class IncidentAPIHelper {
-	public static IncidentAPIClient getIncidentAPIClient() {
+    public class IncidentAPIHelper {
+        public static IncidentAPIClient getIncidentAPIClient() {
 
-		String apiurl= System.getenv("INCIDENT_API_URL");
-		return new IncidentAPIClient(apiurl);
-	}
-}
-
+            String apiurl= System.getenv("INCIDENT_API_URL");
+            return new IncidentAPIClient(apiurl);
+        }
+    }
     ```
 
 1. Open DevCamp.WebApp.Controllers.java. In the dashboard function,
@@ -221,25 +220,25 @@ public class IncidentAPIHelper {
     dashboard data:
 
     ```java
-		ArrayList<IncidentBean> theList = new ArrayList<>();
-		for (int i = 1;i<=3;++i){
-			IncidentBean bean = new IncidentBean();
-			bean.setId("12345");
-			bean.setStreet("123 Main St.");
-			bean.setFirstName("Jane");
-			bean.setLastName("Doe");
-			bean.setCreated("1/01/2016");
-			theList.add(bean);
-		}
+    ArrayList<IncidentBean> theList = new ArrayList<>();
+    for (int i = 1;i<=3;++i){
+        IncidentBean bean = new IncidentBean();
+        bean.setId("12345");
+        bean.setStreet("123 Main St.");
+        bean.setFirstName("Jane");
+        bean.setLastName("Doe");
+        bean.setCreated("1/01/2016");
+        theList.add(bean);
+    }
     ```
 
     Insert this code to call the GetAllIncidents API and put the
     resulting list of IncidentBean in the model.
 
     ```java
-		IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
-		ArrayList<IncidentBean> theList = client.GetAllIncidents();
-        model.addAttribute("allIncidents",theList);
+    IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
+    ArrayList<IncidentBean> theList = client.GetAllIncidents();
+    model.addAttribute("allIncidents",theList);
     ```
 
     Before we test this code, open the HTML template for the dashboard
@@ -248,38 +247,34 @@ public class IncidentAPIHelper {
     section loops through all of the incidents in the allIncidents
     object in the model, and formats them nicely for the display.
 
+    ```HTML
+    <div th:each="incident : ${allIncidents}">
+        <div class="col-sm-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Outage <span th:text="${incident.Id}"></span>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>Address</th>
+                        <td><span th:text="${incident.Street}"></span></td>
+                    </tr>
+                    <tr>
+                        <th>Contact</th>
+                        <td><a href="tel:14174444444"><span
+                                th:text="${incident.FirstName}"></span> <span
+                                th:text="${incident.LastName}"></span></a></td>
+                    </tr>
+                    <tr>
+                        <th>Reported</th>
+                        <td><span th:text="${incident.Created}"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
     ```
-			<div th:each="incident : ${allIncidents}">
-				<div class="col-sm-4">
-
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							Outage <span th:text="${incident.Id}"></span>
-						</div>
-						<table class="table">
-							<tr>
-								<th>Address</th>
-								<td><span th:text="${incident.Street}"></span></td>
-							</tr>
-							<tr>
-								<th>Contact</th>
-								<td><a href="tel:14174444444"><span
-										th:text="${incident.FirstName}"></span> <span
-										th:text="${incident.LastName}"></span></a></td>
-							</tr>
-							<tr>
-								<th>Reported</th>
-								<td><span th:text="${incident.Created}"></span></td>
-							</tr>
-						</table>
-					</div>
-
-				</div>
-
-			</div>
-
-    ```
-
 
 1. Run the application via the Debug Tab in Eclipse and check the
    dashboard page at http://localhost:8080/dashboard.
@@ -289,7 +284,9 @@ public class IncidentAPIHelper {
 The cards now represent data returned from our API, replacing the static mockup code.
 
 ## Exercise 2: Add a caching layer
-Querying our API is a big step forward, but querying a cache would increase performance and limit the load on our API.  Azure offers a managed (PaaS) service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
+Querying our API is a big step forward, but querying a cache would increase 
+performance and limit the load on our API.  Azure offers a managed (PaaS) 
+service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
 
 We deployed an instance of Azure Redis Cache in the ARM Template, but
 need to add application logic. Spring has great support for caching,
@@ -315,57 +312,57 @@ and can easily use Azure Redis Cache to hold the data.
 
     We will use these variables to configure a Redis client.
 
-1. To add support to your Spring environment, open the build.gradle
+1. To add caching support to your Spring application, open the build.gradle
    file and add the following entries under dependencies:
    ```java
-	compile("javax.cache:cache-api")
-  	compile('org.springframework.data:spring-data-redis')
-	compile('redis.clients:jedis')
+    compile("javax.cache:cache-api")
+    compile('org.springframework.data:spring-data-redis')
+    compile('redis.clients:jedis')
     compile('org.springframework.boot:spring-boot-starter-cache')
     ```
 
-    to make sure that Eclipse knows about the new packages we added to
+    To make sure that Eclipse knows about the new packages we added to
     the buld, run the `ide/eclipse` gradle task in the `gradle tasks`
     window. Then right-click on the project in the project explorer,
-    close the project, and then re-open it.
+    close the project, and then open it again.
 
     In Spring, you can apply caching to a Spring
-   [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html). We
-   need to create a class `devCamp.WebApp.IncidentAPIClient.IncidentService.java` with this
+   [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html). 
+   We need to create a Java class for this service, so create a new Java class named 
+   `devCamp.WebApp.IncidentAPIClient.IncidentService.java` with this
    code:
 
    ```java
 
-package devCamp.WebApp.IncidentAPIClient;
+    package devCamp.WebApp.IncidentAPIClient;
 
-import java.util.List;
+    import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
+    import org.apache.commons.logging.Log;
+    import org.apache.commons.logging.LogFactory;
+    import org.springframework.cache.annotation.CacheEvict;
+    import org.springframework.cache.annotation.Cacheable;
+    import org.springframework.stereotype.Service;
 
-import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
-import devCamp.WebApp.Utils.IncidentApiHelper;
+    import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
+    import devCamp.WebApp.Utils.IncidentApiHelper;
 
-@Service
-public class IncidentService {
+    @Service
+    public class IncidentService {
 
-	private Log log = LogFactory.getLog(IncidentService.class);
+        private Log log = LogFactory.getLog(IncidentService.class);
 
-	@Cacheable("incidents")
-	public List<IncidentBean> GetAllIncidents() {
-		IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
-		return client.GetAllIncidents();
-	}
-}
+        @Cacheable("incidents")
+        public List<IncidentBean> GetAllIncidents() {
+            IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
+            return client.GetAllIncidents();
+        }
+    }
    ```
-
 
     The `@Service` annotation tells Spring that this is a service
     class, and the `@Cacheable` annotation tells spring that the
-    result of the GetAllIncidents is cachable, and will automatically
+    result of the GetAllIncidents is cachable and will automatically
     use the cached version if available.
 
     We still have to configure Spring caching to use Azure Redis
@@ -373,83 +370,80 @@ public class IncidentService {
     devCamp.WebApp.CacheConfig.java with this code:
 
     ```java
-package devCamp.WebApp;
+    package devCamp.WebApp;
 
-import java.util.Arrays;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
+    import java.util.Arrays;
+    import org.apache.commons.logging.Log;
+    import org.apache.commons.logging.LogFactory;
+    import org.springframework.cache.CacheManager;
+    import org.springframework.cache.annotation.CachingConfigurerSupport;
+    import org.springframework.cache.annotation.EnableCaching;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.data.redis.cache.RedisCacheManager;
+    import org.springframework.data.redis.connection.RedisConnection;
+    import org.springframework.data.redis.connection.RedisConnectionFactory;
+    import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+    import org.springframework.data.redis.core.RedisTemplate;
 
-import redis.clients.jedis.JedisPoolConfig;
+    import redis.clients.jedis.JedisPoolConfig;
 
-@Configuration
-@EnableCaching
-public class CacheConfig extends CachingConfigurerSupport {
-	private Log log = LogFactory.getLog(CacheConfig.class);
+    @Configuration
+    @EnableCaching
+    public class CacheConfig extends CachingConfigurerSupport {
+        private Log log = LogFactory.getLog(CacheConfig.class);
 
-    @Bean
-    public JedisConnectionFactory redisConnectionFactory() {
-    		JedisPoolConfig poolConfig = new JedisPoolConfig();
-    		poolConfig.setMaxTotal(5);
-    		poolConfig.setTestOnBorrow(true);
-    		poolConfig.setTestOnReturn(true);
-    		JedisConnectionFactory ob = new JedisConnectionFactory(poolConfig);
-    		ob.setUsePool(true);
-    		String redishost = System.getenv("REDISCACHE_HOSTNAME");
-    		log.info("REDISCACHE_HOSTNAME="+redishost);
-    		ob.setHostName(redishost);
-    		String redisport = System.getenv("REDISCACHE_PORT");
-    		log.info("REDISCACHE_PORT="+redisport);
-    		try {
-				ob.setPort(Integer.parseInt(  redisport));
-			} catch (NumberFormatException e1) {
-				// if the port is not in the ENV, use the default
-				ob.setPort(6379);
-			}
-    		String rediskey = System.getenv("REDISCACHE_PRIMARY_KEY");
-    		log.info("REDISCACHE_PRIMARY_KEY="+rediskey);
-    		ob.setPassword(rediskey);
-    		ob.afterPropertiesSet();
-			RedisTemplate<Object,Object> tmp = new RedisTemplate<>();
-			tmp.setConnectionFactory(ob);
+        @Bean
+        public JedisConnectionFactory redisConnectionFactory() {
+                JedisPoolConfig poolConfig = new JedisPoolConfig();
+                poolConfig.setMaxTotal(5);
+                poolConfig.setTestOnBorrow(true);
+                poolConfig.setTestOnReturn(true);
+                JedisConnectionFactory ob = new JedisConnectionFactory(poolConfig);
+                ob.setUsePool(true);
+                String redishost = System.getenv("REDISCACHE_HOSTNAME");
+                log.info("REDISCACHE_HOSTNAME="+redishost);
+                ob.setHostName(redishost);
+                String redisport = System.getenv("REDISCACHE_PORT");
+                log.info("REDISCACHE_PORT="+redisport);
+                try {
+                    ob.setPort(Integer.parseInt(  redisport));
+                } catch (NumberFormatException e1) {
+                    // if the port is not in the ENV, use the default
+                    ob.setPort(6379);
+                }
+                String rediskey = System.getenv("REDISCACHE_PRIMARY_KEY");
+                log.info("REDISCACHE_PRIMARY_KEY="+rediskey);
+                ob.setPassword(rediskey);
+                ob.afterPropertiesSet();
+                RedisTemplate<Object,Object> tmp = new RedisTemplate<>();
+                tmp.setConnectionFactory(ob);
 
-    		//make sure redis connection is working
-    		try {
-    			String msg = tmp.getConnectionFactory().getConnection().ping();
-        		log.info("redis ping response="+msg);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    		return ob;
-    	}
+                //make sure redis connection is working
+                try {
+                    String msg = tmp.getConnectionFactory().getConnection().ping();
+                    log.info("redis ping response="+msg);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                return ob;
+            }
 
-    @Bean(name="redisTemplate")
-    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory cf) {
-        RedisTemplate<String, String> redisTemplate = new RedisTemplate<String, String>();
-        redisTemplate.setConnectionFactory(cf);
-        return redisTemplate;
+        @Bean(name="redisTemplate")
+        public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory cf) {
+            RedisTemplate<String, String> redisTemplate = new RedisTemplate<String, String>();
+            redisTemplate.setConnectionFactory(cf);
+            return redisTemplate;
+        }
+
+        @Bean
+        public CacheManager cacheManager() {
+            RedisCacheManager manager =new RedisCacheManager(redisTemplate(redisConnectionFactory()));
+            manager.setDefaultExpiration(300);
+            return manager;
+        }
     }
-
-    @Bean
-    public CacheManager cacheManager() {
-    	RedisCacheManager manager =new RedisCacheManager(redisTemplate(redisConnectionFactory()));
-    	manager.setDefaultExpiration(300);
-        return manager;
-    }
-
-}
-
-
     ```
 
     There is a lot going on in this class.  The `@Configuration`
