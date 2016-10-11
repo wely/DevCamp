@@ -323,6 +323,12 @@ and can easily use Azure Redis Cache to hold the data.
 	compile('redis.clients:jedis')
     compile('org.springframework.boot:spring-boot-starter-cache')
     ```
+
+    to make sure that Eclipse knows about the new packages we added to
+    the buld, run the `ide/eclipse` gradle task in the `gradle tasks`
+    window. Then right-click on the project in the project explorer,
+    close the project, and then re-open it.
+
     In Spring, you can apply caching to a Spring
    [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html). We
    need to create a class `devCamp.WebApp.IncidentAPIClient.IncidentService.java` with this
@@ -355,6 +361,7 @@ public class IncidentService {
 	}
 }
    ```
+
 
     The `@Service` annotation tells Spring that this is a service
     class, and the `@Cacheable` annotation tells spring that the
@@ -458,11 +465,54 @@ public class CacheConfig extends CachingConfigurerSupport {
     sure it is properly communicating with the cache.
 
     The `cacheManager` function configures Spring to use the
-    redisConnectionFactory function to connect to the cache.
+    redisConnectionFactory function to connect to the cache.  It also
+    configures the default cache expiration time to 300 seconds.
 
     All application requests for the dashboard will now first try to
     use Azure Redis Cache. Under high traffic, this will improve page
     performance and decrease the API's scaling needs.
+
+
+1. Change the devCamp.WebApp.Controllers.DashboardController.java
+class to use the IncidentService rather than the IncidentAPIClient
+directly.  To do this add these lines inside the DachboardController
+class:
+
+    ```java
+	@Autowired
+	IncidentService service;
+    ```
+
+    Also, change these two lines:
+```java
+		IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
+		ArrayList<IncidentBean> theList = client.GetAllIncidents();
+    ```
+    to this:
+    ```java
+		List<IncidentBean> theList = service.GetAllIncidents();
+    ```
+
+    You will also have to make sure the IncidentService is imported
+    for the class.
+
+1. To test the application using the Azure Redis Cache, note that in
+   the IncidentAPIClient class, the `GetAllincidents` function has
+   this code at the top:
+   ```java
+		log.info("Performing get /incidents web service");
+   ```
+
+   This will print a log message every time the API is called. Start
+   the application and in your browser go to
+   `http://localhost:8080/dashboard`. Look at your console out window
+   in Eclipse, it should end with a line that says
+   ```
+   Performing get /incidents web service
+   ```
+   If you refresh your page in the browser, you should not get another
+   log message, since the actual API code will not be called for 300 seconds.
+
 
 ## Exercise 3: Write images to Azure Blob Storage
 
