@@ -2,8 +2,10 @@ var fs = require('fs');
 var mime = require('mime');
 var azure = require('azure-storage');
 
-// Instantiage Blob Storage service
+// Instantiage Blob Storage services
 var blobService = azure.createBlobService();
+var queueService = azure.createQueueService();
+queueService.messageEncoder = new azure.QueueMessageEncoder.TextBase64QueueMessageEncoder();
 
 module.exports.uploadBlob = function (input) {
 
@@ -25,6 +27,34 @@ module.exports.uploadBlob = function (input) {
                 // Successfully uploaded the image
                 console.log('Uploaded image');
                 resolve(blob);
+
+            });
+
+        });
+
+    });
+
+}
+
+module.exports.createQueueMessage = function (blob) {
+
+    return new Promise(function (resolve, reject) {
+
+        // Create message object
+        var message = {
+            BlobContainerName: blob.container,
+            BlobName: blob.name
+        };
+
+        // Confirm queue
+        queueService.createQueueIfNotExists(process.env.AZURE_STORAGE_QUEUE, function (error, result, response) {
+
+            // Insert new queue message
+            queueService.createMessage(process.env.AZURE_STORAGE_QUEUE, JSON.stringify(message), function (error, result, response) {
+
+                // Successfully created queue message
+                console.log('Added message to queue');
+                resolve();
 
             });
 
