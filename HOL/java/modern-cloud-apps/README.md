@@ -136,7 +136,8 @@ This hands-on-lab has the following exercises:
    in devCamp.WebApp.IncidentAPIClient.Models.IncedentBean.Java.  Open
    that file and look at the properties and methods.
 
-1. Create
+1. Create the class devCamp.WebApp.IncidentAPIClient.IncidentAPIClient.java with the
+   following code:
 
     ```java
 package devCamp.WebApp.IncidentAPIClient;
@@ -191,12 +192,11 @@ public class IncidentAPIClient {
 
     ```
 
-    This function uses the
-    popular
+    This class uses the popular
     [RestTemplate](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) library
     to generate a HTTP GET to the API endpoint, and to convert the
     return javascript into a java object.  In this case, we've
-    specified that it should return a List<IncidentBean>.
+    specified that it should return a `List<IncidentBean>`.
 
 1.  Next, create an object to create an IncidentAPIClient with the
     proper URI. Create the class devCamp.WebApp.Utils.IncidentAPIClient:
@@ -206,7 +206,7 @@ package devCamp.WebApp.Utils;
 
 import devCamp.WebApp.IncidentAPIClient.IncidentAPIClient;
 
-public class IncidentApiHelper {
+public class IncidentAPIHelper {
 	public static IncidentAPIClient getIncidentAPIClient() {
 
 		String apiurl= System.getenv("INCIDENT_API_URL");
@@ -216,67 +216,73 @@ public class IncidentApiHelper {
 
     ```
 
+1. Open DevCamp.WebApp.Controllers.java. In the dashboard function,
+    comment out this section of code that generated the dummy
+    dashboard data:
 
-    Next, adjust the response rendering to first use our function:
-
-    ```javascript
-    // Query the API for incident data
-    getIncidents().then(function (incidents) {
-
-        // Render view
-        res.render('dashboard', {
-            title: 'Outage Dashboard',
-            incidents: incidents
-        });
-
-    });
+    ```java
+		ArrayList<IncidentBean> theList = new ArrayList<>();
+		for (int i = 1;i<=3;++i){
+			IncidentBean bean = new IncidentBean();
+			bean.setId("12345");
+			bean.setStreet("123 Main St.");
+			bean.setFirstName("Jane");
+			bean.setLastName("Doe");
+			bean.setCreated("1/01/2016");
+			theList.add(bean);
+		}
     ```
 
-    At the top of the file, add `var request = require('request');` below the other require statements to load the library.
+    Insert this code to call the GetAllIncidents API and put the
+    resulting list of IncidentBean in the model.
 
-1.  On the command line, execute `npm install request --save` to download the request library and save it to `package.json`.
+    ```java
+		IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
+		ArrayList<IncidentBean> theList = client.GetAllIncidents();
+        model.addAttribute("allIncidents",theList);
+    ```
 
-1. To test if the API returns data, set a breakpoint by clicking in the gap left of the line number containing `resolve(body)`.  Then start the VSCode debugger and open your browser to `http://localhost:3000/dashboard`.
+    Before we test this code, open the HTML template for the dashboard
+    page, located in
+    src/main/resources/templates/Dashboard/index.html. The following
+    section loops through all of the incidents in the allIncidents
+    object in the model, and formats them nicely for the display.
 
-    ![image](./media/image-014.png)
+    ```
+			<div th:each="incident : ${allIncidents}">
+				<div class="col-sm-4">
 
-    The breakpoint should be hit as the page loads.  Hover over the `body` parameter to examine the array of returned inicdents from the API.  This is the array that will be passed to the view for rendering. Next we need to update our view to accomodate the data.
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Outage <span th:text="${incident.Id}"></span>
+						</div>
+						<table class="table">
+							<tr>
+								<th>Address</th>
+								<td><span th:text="${incident.Street}"></span></td>
+							</tr>
+							<tr>
+								<th>Contact</th>
+								<td><a href="tel:14174444444"><span
+										th:text="${incident.FirstName}"></span> <span
+										th:text="${incident.LastName}"></span></a></td>
+							</tr>
+							<tr>
+								<th>Reported</th>
+								<td><span th:text="${incident.Created}"></span></td>
+							</tr>
+						</table>
+					</div>
 
-1. Open `views/dashboard.pug` and adjust the template to include incident data:
+				</div>
 
-    ```pug
-    extends layout
-
-    block content
-
-        .container
-
-            h1 #{title}
-
-            .row
-                if incidents
-                    each incident in incidents
-                        .col-sm-4
-                            .panel.panel-default
-                                .panel-heading Incident #{incident.id.split('-').pop()}
-                                    i.glyphicon.glyphicon-flash.pull-rights
-                                table.table
-                                    tr
-                                        th Address
-                                        td #{incident.Street}
-                                    tr
-                                        th Contact
-                                        td
-                                            a(href=`tel:${incident.PhoneNumber}`) #{incident.FirstName} #{incident.LastName}
-                                    tr
-                                        th Reported
-                                        td #{moment(incident.Created).format('MM/DD/YYYY')}
+			</div>
 
     ```
 
-    > Pug is the same library as Jade, [which underwent a rename](https://github.com/pugjs/pug/issues/2184)
 
-1. With the dashboard route code and the view template updated, run the application via the Debug Tab in VSCode and check the dashboard page.
+1. Run the application via the Debug Tab in Eclipse and check the
+   dashboard page at http://localhost:8080/dashboard.
 
     ![image](./media/image-015.png)
 
@@ -285,11 +291,10 @@ The cards now represent data returned from our API, replacing the static mockup 
 ## Exercise 2: Add a caching layer
 Querying our API is a big step forward, but querying a cache would increase performance and limit the load on our API.  Azure offers a managed (PaaS) service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
 
-We deployed an instance of Azure Redis Cache in the ARM Template, but need to add application logic
-* First, check the cache to see if a set of incidents is available
-* If not, query the API
-* Cache response from API
-* Set cached response to expire after 60 seconds
+We deployed an instance of Azure Redis Cache in the ARM Template, but
+need to add application logic. Spring has great support for caching,
+and can easily use Azure Redis Cache to hold the data.
+
 
 1. First, let's add our Redis information to local environment variables. In the [Azure Portal](https://portal.azure.com) navigate to the Resource Group and select the Redis instance.
 
