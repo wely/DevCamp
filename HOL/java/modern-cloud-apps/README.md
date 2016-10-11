@@ -466,24 +466,24 @@ and can easily use Azure Redis Cache to hold the data.
     use Azure Redis Cache. Under high traffic, this will improve page
     performance and decrease the API's scaling needs.
 
-1. Change the devCamp.WebApp.Controllers.DashboardController.java
+1. Change the `devCamp.WebApp.Controllers.DashboardController.java`
 class to use the IncidentService rather than the IncidentAPIClient
 directly. To do this add these lines inside the DashboardController class:
 
     ```java
-	@Autowired
-	IncidentService service;
+    @Autowired
+    IncidentService service;
     ```
 
     Also, change these two lines:
     ```java
-		IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
-		ArrayList<IncidentBean> theList = client.GetAllIncidents();
+    IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
+    ArrayList<IncidentBean> theList = client.GetAllIncidents();
     ```
     to this:
 
     ```java
-		List<IncidentBean> theList = service.GetAllIncidents();
+    List<IncidentBean> theList = service.GetAllIncidents();
     ```
 
     You will also have to make sure the IncidentService is imported
@@ -494,7 +494,7 @@ directly. To do this add these lines inside the DashboardController class:
    this code at the top:
 
    ```java
-        log.info("Performing get /incidents web service");
+    log.info("Performing get /incidents web service");
    ```
 
    This will print a log message every time the API is called. Start
@@ -514,7 +514,10 @@ If you refresh your page in the browser, you should not get another
 
 When a new incident is reported, the user can attach a photo.  In this exercise we will process that image and upload it into an Azure Blob Storage Container.
 
-1. The [Azure Storage SDK](https://github.com/Azure/azure-storage-node) looks at environment variables for configuration.  To get the necessary values, open the [Azure Portal](https://portal.azrue.com) and open the Resource Group.  Select the Storage Account beginning with `incidentblobstg`.
+1. The [Azure Storage SDK](https://github.com/Azure/azure-storage-java) 
+    makes it easy to access Azure storage from within Azure applicatons.
+    First, lets establish environment variables that we can use in the applicaiton
+    for configuration.  To get the necessary values, open the [Azure Portal](https://portal.azrue.com) and open the Resource Group.  Select the Storage Account beginning with `incidentblobstg`.
 
     > The other storage accounts are used for diagnostics data and virtual machine disks
 
@@ -524,66 +527,134 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
     ![image](./media/image-020.png)
 
-    In VSCode, open `.vscode/launch.json` and add variables.
+     In Eclipse open the run configuration, click the environment tab
+    and add the following environment variables:
     * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource
     * `AZURE_STORAGE_ACCESS_KEY` is **key1** from the Access Keys blade
     * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containres to group sets of blobs together.  For this demo let's use `images` as the Container name
 
-    ```json
-     "env": {
-        "NODE_ENV": "development",
-        "INCIDENT_API_URL": "http://incidentapimm6lqhplzxjp2.azurewebsites.net",
-        "REDISCACHE_HOSTNAME": "incidentcachemm6lqhplzxjp2.redis.cache.windows.net",
-        "REDISCACHE_PRIMARY_KEY": "bZcVx7XSRICO+RlKrh2eqvIAFMv0y3i5LQbk91LILSY=",
-        "REDISCACHE_PORT": "6379",
-        "REDISCACHE_SSLPORT": "6380",
-        "AZURE_STORAGE_ACCOUNT": "incidentblobstgmm6lqhplz",
-        "AZURE_STORAGE_ACCESS_KEY": "JP+YcOPBfI58bkmugEHPKKPaM5NLIrq18IBfUfC+0sCsX3V6pSV2a+GU34mD68OoMsiGf79Axu1lHf5pB98Zkw==",
-        "AZURE_STORAGE_BLOB_CONTAINER": "images"
-    }
+    Add the following lines to the dependencies in build.gradle:
+    ```java
+    compile('com.microsoft.azure:azure-storage:4.4.0')
+    compile('com.microsoft.azure:azure-svc-mgmt-storage:0.9.5')
     ```
 
-    Now when the SDK fires up it will configure itself with these settings.
+    Run the `ide/eclipse` gradle task in the `gradle tasks`
+    window. Then right-click on the project in the project explorer,
+    close the project, and then open it again.
 
-1. Today we are working with Azure Storage Blobs, but in the future we may decide to extend our application use Azure Stage Tables or Azure Storage Queues.  To better organize our code, let's create a utility file to handle interactiosn with Azure Storage.  Create `utilities/storage.js` and paste in the following:
+1. Today we are working with Azure Storage Blobs, but in the future we may 
+decide to extend our application use Azure Stage Tables or Azure Storage 
+Queues.  To better organize our code, let's create a storage interaction 
+class.  Create `devCamp.WebApp.StorageAPIClient.StorageAPIClient.java` and 
+paste in the following code: 
 
-    ```javascript
-    var fs = require('fs');
-    var mime = require('mime');
-    var azure = require('azure-storage');
+    ```java
+    package devCamp.WebApp.StorageAPIClient;
 
-    // Instantiage Blob Storage service
-    var blobService = azure.createBlobService();
+    import org.apache.commons.io.FilenameUtils;
+    import org.codehaus.jettison.json.JSONException;
+    import org.codehaus.jettison.json.JSONObject;
+    import org.springframework.web.multipart.MultipartFile;
+    import com.microsoft.azure.storage.*;
+    import com.microsoft.azure.storage.blob.*;
+    import com.microsoft.azure.storage.queue.CloudQueue;
+    import com.microsoft.azure.storage.queue.CloudQueueClient;
+    import com.microsoft.azure.storage.queue.CloudQueueMessage;
 
-    module.exports.uploadBlob = function (input) {
+    import java.io.*;
+    import java.net.URISyntaxException;
+    import java.security.InvalidKeyException;
 
-        return new Promise(function (resolve, reject) {
+    import javax.ws.rs.core.UriBuilder;
 
-            // Define variables to use with the Blob Service
-            var stream = fs.createReadStream(input[1].image.path);
-            var streamLength = input[1].image.size;
-            var options = { contentSettings: { contentType: input[1].image.type } };
-            var blobName = input[0] + '.' + mime.extension(input[1].image.type);
-            var blobContainerName = process.env.AZURE_STORAGE_BLOB_CONTAINER;
+    public class StorageAPIClient {
 
-            // Confirm blob container
-            blobService.createContainerIfNotExists(blobContainerName, function (containerError) {
+        //configuration values from the system Environment
+        private String account;
+        private String key;
+        private String azureStorageContainer;
+        private String azureStorageQueue;
+        private String blobStorageConnectionString;
+        
+        public StorageAPIClient(String account, String key, String azureStorageContainer, String azureStorageQueue) {
+            this.account = account;
+            this.key = key;
+            this.azureStorageContainer = azureStorageContainer;
+            this.azureStorageQueue = azureStorageQueue;
+            blobStorageConnectionString = String.format("DefaultEndpointsProtocol=http;AccountName=%s;AccountKey=%s", account,key);
+        }
 
-                // Upload new blob
-                blobService.createBlockBlobFromStream(blobContainerName, blobName, stream, streamLength, options, function (blobError, blob) {
+        public  String UploadFileToBlobStorage(String IncidentId, MultipartFile imageFile){
+            CloudStorageAccount account;
+            try {
+                account = CloudStorageAccount.parse(blobStorageConnectionString);
+                CloudBlobClient serviceClient = account.createCloudBlobClient();
 
-                    // Successfully uploaded the image
-                    console.log('Uploaded image');
-                    resolve(blob);
+                // Container name must be lower case.
+                CloudBlobContainer container = serviceClient.getContainerReference(azureStorageContainer);
+                container.createIfNotExists();
 
-                });
+                // Set anonymous access on the container.
+                BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
+                containerPermissions.setPublicAccess(BlobContainerPublicAccessType.CONTAINER);
+                container.uploadPermissions(containerPermissions);
 
-            });
+                // 
+                CloudBlockBlob imgBlob = container.getBlockBlobReference(getIncidentBlobFilename(IncidentId,imageFile.getOriginalFilename()));
+                imgBlob.getProperties().setContentType(imageFile.getContentType());
+                imgBlob.upload(imageFile.getInputStream(),imageFile.getSize());
+                UriBuilder builder = UriBuilder.fromUri(imgBlob.getUri());
+                builder.scheme("https");
+                return builder.toString();
+            } catch (InvalidKeyException | URISyntaxException | StorageException | IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } 
+            return null;
+        }
 
-        });
-
+        private String getIncidentBlobFilename(String IncidentId,String FileName) {
+            String fileExt = FilenameUtils.getExtension(FileName);
+            // TODO check this against the .NET code - 
+            //	with this code in, we're generating filenames that don't have a period between the incident id and the extension 
+    //		if (fileExt.startsWith(".")){
+    //			fileExt = fileExt.substring(1);
+    //		}
+            return String.format("%s%s", IncidentId,fileExt);
+        }
     }
+
+
     ```
+
+1. Next lets create a configuration class to handle retrieving the 
+environment variables and creating a StorageAPIClient. Create 
+`devCamp.WebApp.Utils.StorageAPIHelper.java` and paste in the following code:
+    ```java
+    package devCamp.WebApp.Utils;
+
+    import devCamp.WebApp.StorageAPIClient.StorageAPIClient;
+
+    public class StorageAPIHelper {
+
+    public static StorageAPIClient getIncidentAPIClient() {
+
+        String account = System.getenv("AZURE_STORAGE_ACCOUNT");;
+        String key = System.getenv("AZURE_STORAGE_ACCESS_KEY");;
+        String queue = System.getenv("AZURE_STORAGE_QUEUE");
+        String container = System.getenv("AZURE_STORAGE_BLOB_CONTAINER");
+        
+        return new StorageAPIClient(account, key,queue,container);	
+    }
+    }
+
+    ```
+
+1. Now lets arrange for the controller that manages new incidents to call the Storage API.  Open up 
+`devCamp.WebApp.ControllersIncidentController.java. :
+
+
 
 1. With the utility created, let's update `routes/new.js` to handle new incidents:
 
