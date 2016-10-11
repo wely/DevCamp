@@ -308,93 +308,161 @@ and can easily use Azure Redis Cache to hold the data.
 
     ![image](./media/image-018.png)
 
-    In VSCode, open `.vscode/launch.json` and add four variables for `REDISCACHE_HOSTNAME`, `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and `REDISCACHE_SSLPORT`
-
-    ```json
-    "env": {
-            "NODE_ENV": "development",
-            "INCIDENT_API_URL": "http://incidentapimm6lqhplzxjp2.azurewebsites.net",
-            "REDISCACHE_HOSTNAME": "incidentcachemm6lqhplzxjp2.redis.cache.windows.net",
-            "REDISCACHE_PRIMARY_KEY": "bZcVx7XSRICO+RlKrh2eqvIAFMv0y3i5LQbk91LILSY=",
-            "REDISCACHE_PORT": "6379",
-            "REDISCACHE_SSLPORT": "6380"
-        },
-    ```
+    In Eclipse open the run configuration, click the environment tab
+    and add four variables for `REDISCACHE_HOSTNAME`,
+    `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and
+    `REDISCACHE_SSLPORT`.  Click apply and close.
 
     We will use these variables to configure a Redis client.
 
-1. From the command line, run `npm install redis --save` to install the Redis library.
-
-1. To create a Redis client, open `routes/dashboard.js` and extend the require statements to include the Redis library:
-
-    ```javascript
-    var express = require('express');
-    var router = express.Router();
-    var request = require('request');
-
-    // Setup Redis Client
-    var redis = require("redis");
-    var client = redis.createClient(process.env.REDISCACHE_SSLPORT, process.env.REDISCACHE_HOSTNAME, { auth_pass: process.env.REDISCACHE_PRIMARY_KEY, tls: { servername: process.env.REDISCACHE_HOSTNAME } });
+1. To add support to your Spring environment, open the build.gradle
+   file and add the following entries under dependencies:
+   ```java
+	compile("javax.cache:cache-api")
+  	compile('org.springframework.data:spring-data-redis')
+	compile('redis.clients:jedis')
+    compile('org.springframework.boot:spring-boot-starter-cache')
     ```
+    In Spring, you can apply caching to a Spring
+   [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html). We
+   need to create a class `devCamp.WebApp.IncidentAPIClient.IncidentService.java` with this
+   code:
 
-1. Our `getIncidents()` function needs to be enhanced.  The following will use the Redis client to implement the cache logic bullet points from above.
+   ```java
 
-    ```javascript
-    function getIncidents() {
+package devCamp.WebApp.IncidentAPIClient;
 
-        return new Promise(function (resolve, reject) {
+import java.util.List;
 
-            // Check cache for incidentData key
-            client.get('incidentData', function (error, reply) {
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
-                if (reply) {
-                    // Cached key exists
-                    console.log('Cached key found');
+import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
+import devCamp.WebApp.Utils.IncidentApiHelper;
 
-                    // Parse results
-                    var incidents;
-                    if (reply === 'undefined') {
-                        // No results, return null
-                        incidents = null;
-                    }
-                    else {
-                        incidents = JSON.parse(reply);
-                    }
+@Service
+public class IncidentService {
 
-                    // Resolve Promise with incident data
-                    resolve(incidents);
+	private Log log = LogFactory.getLog(IncidentService.class);
 
-                }
-                else {
-                    // Cached key does not exist
-                    console.log('Cached key not found');
+	@Cacheable("incidents")
+	public List<IncidentBean> GetAllIncidents() {
+		IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
+		return client.GetAllIncidents();
+	}
+}
+   ```
 
-                    // Define URL to use for the API
-                    var apiUrl = `${process.env.INCIDENT_API_URL}/incidents`;
+    The `@Service` annotation tells Spring that this is a service
+    class, and the `@Cacheable` annotation tells spring that the
+    result of the GetAllIncidents is cachable, and will automatically
+    use the cached version if available.
 
-                    // Make a GET request with the Request libary
-                    request(apiUrl, { json: true }, function (error, results, body) {
+    We still have to configure Spring caching to use Azure Redis
+    Cache. To do this, create a new class
+    devCamp.WebApp.CacheConfig.java with this code:
 
-                        // Store results in cache
-                        client.set("incidentData", JSON.stringify(body), 'EX', 60, function (error, reply) {
-                            console.log('Stored results in cache');
-                        });
+    ```java
+package devCamp.WebApp;
 
-                        // Resolve Promise with incident data
-                        resolve(body);
+import java.util.Arrays;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 
-                    });
+import redis.clients.jedis.JedisPoolConfig;
 
-                }
+@Configuration
+@EnableCaching
+public class CacheConfig extends CachingConfigurerSupport {
+	private Log log = LogFactory.getLog(CacheConfig.class);
 
-            });
+    @Bean
+    public JedisConnectionFactory redisConnectionFactory() {
+    		JedisPoolConfig poolConfig = new JedisPoolConfig();
+    		poolConfig.setMaxTotal(5);
+    		poolConfig.setTestOnBorrow(true);
+    		poolConfig.setTestOnReturn(true);
+    		JedisConnectionFactory ob = new JedisConnectionFactory(poolConfig);
+    		ob.setUsePool(true);
+    		String redishost = System.getenv("REDISCACHE_HOSTNAME");
+    		log.info("REDISCACHE_HOSTNAME="+redishost);
+    		ob.setHostName(redishost);
+    		String redisport = System.getenv("REDISCACHE_PORT");
+    		log.info("REDISCACHE_PORT="+redisport);
+    		try {
+				ob.setPort(Integer.parseInt(  redisport));
+			} catch (NumberFormatException e1) {
+				// if the port is not in the ENV, use the default
+				ob.setPort(6379);
+			}
+    		String rediskey = System.getenv("REDISCACHE_PRIMARY_KEY");
+    		log.info("REDISCACHE_PRIMARY_KEY="+rediskey);
+    		ob.setPassword(rediskey);
+    		ob.afterPropertiesSet();
+			RedisTemplate<Object,Object> tmp = new RedisTemplate<>();
+			tmp.setConnectionFactory(ob);
 
-        });
+    		//make sure redis connection is working
+    		try {
+    			String msg = tmp.getConnectionFactory().getConnection().ping();
+        		log.info("redis ping response="+msg);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		return ob;
+    	}
 
+    @Bean(name="redisTemplate")
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory cf) {
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<String, String>();
+        redisTemplate.setConnectionFactory(cf);
+        return redisTemplate;
     }
+
+    @Bean
+    public CacheManager cacheManager() {
+    	RedisCacheManager manager =new RedisCacheManager(redisTemplate(redisConnectionFactory()));
+    	manager.setDefaultExpiration(300);
+        return manager;
+    }
+
+}
+
+
     ```
 
-All application requests for the dashboard will now first try to use Azure Redis Cache.  Under high traffic, this will improve page performance and decrease the API's scaling needs.
+    There is a lot going on in this class.  The `@Configuration`
+    annotation tells Spring that this class declares one or more beans
+    that will generate bean and service definitions.  The
+    `@EnableCaching` annotation enables Spring's annotation driving
+    caching mechanism for the application.
+
+    The `CacheConfig` class contains beans that will configure the
+    annotation driven caching. The `redisConnectionFactory` function
+    creates a new `JedisConnectionFactory` with the appropriate
+    connection to the Azure Redis cache. It also does a test to make
+    sure it is properly communicating with the cache.
+
+    The `cacheManager` function configures Spring to use the
+    redisConnectionFactory function to connect to the cache.
+
+    All application requests for the dashboard will now first try to
+    use Azure Redis Cache. Under high traffic, this will improve page
+    performance and decrease the API's scaling needs.
 
 ## Exercise 3: Write images to Azure Blob Storage
 
