@@ -473,10 +473,9 @@ public class CacheConfig extends CachingConfigurerSupport {
     performance and decrease the API's scaling needs.
 
 
-1. Change the devCamp.WebApp.Controllers.DashboardController.java
+    1.Change the devCamp.WebApp.Controllers.DashboardController.java
 class to use the IncidentService rather than the IncidentAPIClient
-directly.  To do this add these lines inside the DachboardController
-class:
+directly.  To do this add these lines inside the DachboardController class:
 
     ```java
 	@Autowired
@@ -499,18 +498,21 @@ class:
 1. To test the application using the Azure Redis Cache, note that in
    the IncidentAPIClient class, the `GetAllincidents` function has
    this code at the top:
+
    ```java
-		log.info("Performing get /incidents web service");
+        log.info("Performing get /incidents web service");
    ```
 
    This will print a log message every time the API is called. Start
    the application and in your browser go to
    `http://localhost:8080/dashboard`. Look at your console out window
    in Eclipse, it should end with a line that says
+
    ```
    Performing get /incidents web service
    ```
-   If you refresh your page in the browser, you should not get another
+
+If you refresh your page in the browser, you should not get another
    log message, since the actual API code will not be called for 300 seconds.
 
 
