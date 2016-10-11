@@ -11,13 +11,14 @@ var app = express();
 var env = process.env.NODE_ENV || 'development';
 app.locals.moment = require('moment');
 
-// Configure Express 
+// Configure Express    
 experssHelper.setup(app);
 
 // Configure Routes
 app.use('/', require('./routes/index'));
 app.use('/dashboard', require('./routes/dashboard'));
 app.use('/new', require('./routes/new'));
+app.use('/profile', require('./routes/profile'));
 
 // Configure Authentication
 authHelper.setup(app);
