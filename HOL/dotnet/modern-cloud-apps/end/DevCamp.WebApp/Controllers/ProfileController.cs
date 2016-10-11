@@ -30,7 +30,7 @@ namespace DevCamp.WebApp.Controllers
             {
                 // Signal OWIN to send an authorization request to Azure
                 HttpContext.GetOwinContext().Authentication.Challenge(
-                  new AuthenticationProperties { RedirectUri = loginRedirectUri.ToString() },
+                  new AuthenticationProperties { RedirectUri = "/" },
                   OpenIdConnectAuthenticationDefaults.AuthenticationType);
             }
         }
@@ -46,7 +46,6 @@ namespace DevCamp.WebApp.Controllers
                 SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
                 tokenCache.Clear();
             }
-
             // Send an OpenID Connect sign-out request. 
             HttpContext.GetOwinContext().Authentication.SignOut(
               CookieAuthenticationDefaults.AuthenticationType);
@@ -58,31 +57,39 @@ namespace DevCamp.WebApp.Controllers
         // GET: /UserProfile/
         public async Task<ActionResult> Index()
         {
-            string userObjId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
-
-            SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
-            string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
-            string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
-            AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
-
-            string accessToken = await authHelper.GetUserAccessToken(loginRedirectUri.ToString());
             UserProfileViewModel userProfile = new UserProfileViewModel();
-
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                string userObjId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+                SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
 
-                // New code:
-                HttpResponseMessage response = await client.GetAsync(Settings.GRAPH_CURRENT_USER_URL);
-                if (response.IsSuccessStatusCode)
+                string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
+                string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
+                AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_CLIENTID, Settings.AAD_APP_SECRET, tokenCache);
+                string accessToken = await authHelper.GetUserAccessToken(Url.Action("Index", "Home", null, Request.Url.Scheme));
+
+                using (var client = new HttpClient())
                 {
-                    string resultString = await response.Content.ReadAsStringAsync();
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    userProfile = JsonConvert.DeserializeObject<UserProfileViewModel>(resultString);
+                    // New code:
+                    HttpResponseMessage response = await client.GetAsync(Settings.GRAPH_CURRENT_USER_URL);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string resultString = await response.Content.ReadAsStringAsync();
+
+                        userProfile = JsonConvert.DeserializeObject<UserProfileViewModel>(resultString);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "An error has occurred. Details: " + ex.Message;
+                return View();
+            }
+
 
             return View(userProfile);
         }

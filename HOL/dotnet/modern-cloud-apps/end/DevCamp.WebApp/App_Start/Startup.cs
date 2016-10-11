@@ -1,5 +1,6 @@
 ﻿using DevCamp.WebApp.App_Start;
 using DevCamp.WebApp.Utils;
+using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Protocols;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
@@ -8,8 +9,8 @@ using Microsoft.Owin.Security.Notifications;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Owin;
 using System;
-using System.Configuration;
 using System.Globalization;
+using System.IdentityModel.Claims;
 using System.IdentityModel.Tokens;
 using System.Threading.Tasks;
 using System.Web;
@@ -27,33 +28,34 @@ namespace DevCamp.WebApp.App_Start
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
 
             app.UseOpenIdConnectAuthentication(
-                new OpenIdConnectAuthenticationOptions
-                {
-                    // The `Authority` represents the v2.0 endpoint - https://login.microsoftonline.com/common/v2.0
-                    // The `Scope` describes the permissions that your app will need.  See https://azure.microsoft.com/documentation/articles/active-directory-v2-scopes/
-                    // In a real application you could use issuer validation for additional checks, like making sure the user's organization has signed up for your app, for instance.
+            new OpenIdConnectAuthenticationOptions
+            {
+                // The `Authority` represents the auth endpoint - https://login.microsoftonline.com/common/
+                // The 'ResponseType' indicates that we want an authorization code and an ID token 
+                // In a real application you could use issuer validation for additional checks, like making 
+                // sure the user's organization has signed up for your app, for instance.
 
-                    ClientId = Settings.AAD_APP_CLIENTID,
-                    Authority = Settings.AAD_AUTHORITY,
-                    RedirectUri = Settings.AAD_APP_REDIRECTURI,
-                    Scope = Settings.AAD_GRAPH_SCOPES,
-                    ResponseType = "code id_token",
-                    PostLogoutRedirectUri = "/",
-                    TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = false
-                    },
-                    Notifications = new OpenIdConnectAuthenticationNotifications
-                    {
-                        AuthorizationCodeReceived = OnAuthorizationCodeReceived,
-                        AuthenticationFailed = OnAuthenticationFailed
-                    }
-                });
+                ClientId = Settings.AAD_APP_CLIENTID,
+                Authority = string.Format(CultureInfo.InvariantCulture, Settings.AAD_INSTANCE, "common", ""),
+                ResponseType = "code id_token",
+                PostLogoutRedirectUri = "/",
+                TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                },
+                Notifications = new OpenIdConnectAuthenticationNotifications
+                {
+                    AuthenticationFailed = OnAuthenticationFailed,
+                    AuthorizationCodeReceived = OnAuthorizationCodeReceived
+                }
+            }
+            );
         }
 
         private async Task OnAuthorizationCodeReceived(AuthorizationCodeReceivedNotification notification)
         {// Get the user's object id (used to name the token cache)
 
+            // Get the user's object id (used to name the token cache)
             string userObjId = notification.AuthenticationTicket.Identity
               .FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
 
@@ -62,13 +64,15 @@ namespace DevCamp.WebApp.App_Start
             SessionTokenCache tokenCache = new SessionTokenCache(userObjId, httpContext);
 
             // Exchange the auth code for a token
-            ADAL.ClientCredential clientCred = new ADAL.ClientCredential(Settings.AAD_APP_ID, Settings.AAD_APP_SECRET);
+            ADAL.ClientCredential clientCred = new ADAL.ClientCredential(Settings.AAD_APP_CLIENTID, Settings.AAD_APP_SECRET);
 
             // Create the auth context
-            ADAL.AuthenticationContext authContext = new ADAL.AuthenticationContext(Settings.AAD_AUTHORITY, false, tokenCache);
+            ADAL.AuthenticationContext authContext = new ADAL.AuthenticationContext(
+              string.Format(CultureInfo.InvariantCulture, Settings.AAD_INSTANCE, "common", ""),
+              false, tokenCache);
 
             ADAL.AuthenticationResult authResult = await authContext.AcquireTokenByAuthorizationCodeAsync(
-              notification.Code, notification.Request.Uri, clientCred, Settings.GRAPH_API_URL);
+              notification.Code, notification.Request.Uri, clientCred, "https://graph.microsoft.com");
         }
 
         private Task OnAuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
@@ -77,6 +81,5 @@ namespace DevCamp.WebApp.App_Start
             notification.Response.Redirect("/Error?message=" + notification.Exception.Message);
             return Task.FromResult(0);
         }
-
     }
 }

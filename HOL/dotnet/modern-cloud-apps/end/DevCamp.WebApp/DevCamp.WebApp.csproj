@@ -127,6 +127,14 @@
       <HintPath>..\packages\Microsoft.Extensions.Primitives.1.0.0\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Graph, Version=1.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Graph.1.1.1\lib\portable45-net45+win8+wpa81\Microsoft.Graph.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Graph.Core, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Graph.Core.1.2.1\lib\portable45-net45+win8+wpa81\Microsoft.Graph.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Identity.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Identity.Client.1.0.304142221-alpha\lib\net45\Microsoft.Identity.Client.dll</HintPath>
       <Private>True</Private>
@@ -272,6 +280,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\IncidentController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -290,14 +299,12 @@
     <Compile Include="Mappers\IncidentMappers.cs" />
     <Compile Include="Models\MailMessage.cs" />
     <Compile Include="Utils\AuthHelper.cs" />
-    <Compile Include="Utils\EmailHelper.cs" />
+    <Compile Include="Utils\SessionTokenCache.cs" />
     <Compile Include="Utils\Settings.cs" />
-    <Compile Include="Utils\TokenCacheHelper.cs" />
     <Compile Include="ViewModels\UserProfileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\RedisCacheHelper.cs" />
     <Compile Include="Utils\IncidentApiHelper.cs" />
-    <Compile Include="Utils\ProfileHelper.cs" />
     <Compile Include="Utils\StorageHelper.cs" />
     <Compile Include="ViewModels\IncidentViewModel.cs" />
   </ItemGroup>
@@ -309,10 +316,14 @@
     <Content Include="Global.asax" />
     <Content Include="Content\main.css" />
     <Content Include="packages.config" />
+    <Content Include="ApplicationInsights.config" />
+    <Content Include="ApplicationInsights.User.Config" />
     <None Include="Properties\PublishProfiles\citypowernet - Web Deploy.pubxml" />
     <Content Include="scripts\ai.0.22.19-build00125.js" />
     <Content Include="scripts\ai.0.22.19-build00125.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -335,6 +346,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />
