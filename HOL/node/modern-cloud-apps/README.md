@@ -23,8 +23,8 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-* The source for the starter app is located in the HOL\node\modern-cloud-apps\start folder. 
-* The finished project is located in the HOL\node\modern-cloud-apps\end folder. 
+* The source for the starter app is located in the `HOL\node\modern-cloud-apps\start` folder. 
+* The finished project is located in the `HOL\node\modern-cloud-apps\end` folder. 
 * Deployed the starter ARM Template
 
 ## Exercises
@@ -340,7 +340,8 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
         "REDISCACHE_SSLPORT": "6380",
         "AZURE_STORAGE_ACCOUNT": "incidentblobstgmm6lqhplz",
         "AZURE_STORAGE_ACCESS_KEY": "JP+YcOPBfI58bkmugEHPKKPaM5NLIrq18IBfUfC+0sCsX3V6pSV2a+GU34mD68OoMsiGf79Axu1lHf5pB98Zkw==",
-        "AZURE_STORAGE_BLOB_CONTAINER": "images"
+        "AZURE_STORAGE_BLOB_CONTAINER": "images",
+        "AZURE_STORAGE_QUEUE": "thumbnails",
     }
     ```
 
@@ -353,8 +354,10 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     var mime = require('mime');
     var azure = require('azure-storage');
 
-    // Instantiage Blob Storage service
+    // Instantiage Blob Storage services
     var blobService = azure.createBlobService();
+    var queueService = azure.createQueueService();
+    queueService.messageEncoder = new azure.QueueMessageEncoder.TextBase64QueueMessageEncoder();
 
     module.exports.uploadBlob = function (input) {
 
@@ -376,6 +379,34 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
                     // Successfully uploaded the image
                     console.log('Uploaded image');
                     resolve(blob);
+
+                });
+
+            });
+
+        });
+
+    }
+
+    module.exports.createQueueMessage = function (blob) {
+
+        return new Promise(function (resolve, reject) {
+
+            // Create message object
+            var message = {
+                BlobContainerName: blob.container,
+                BlobName: blob.name
+            };
+
+            // Confirm queue
+            queueService.createQueueIfNotExists(process.env.AZURE_STORAGE_QUEUE, function (error, result, response) {
+
+                // Insert new queue message
+                queueService.createMessage(process.env.AZURE_STORAGE_QUEUE, JSON.stringify(message), function (error, result, response) {
+
+                    // Successfully created queue message
+                    console.log('Added message to queue');
+                    resolve();
 
                 });
 
@@ -413,6 +444,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
             // Process the fields into a new incident, upload image, and add thumbnail queue message
             createIncident(fields, files)
                 .then(uploadImage)
+                .then(addQueueMessage)
                 .then(() => {
 
                     // Successfully processed form upload
@@ -484,10 +516,30 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
     }
 
+    function addQueueMessage(blob) {
+
+        return new Promise(function (resolve, reject) {
+
+            if (blob) {
+
+                storageUtility.createQueueMessage(blob).then(function() {
+                    resolve();
+                });            
+
+            }
+            else {
+                console.log('No message to add to the queue');
+                resolve();
+            }
+
+        });
+
+    }
+
     module.exports = router;
     ```
 
-    When a new incident comes in, the Formidable library parses the data fields and image. Fields get POSTed to our Incidents API, while the image is uploaded to Blob Storage.
+    When a new incident comes in, the Formidable library parses the data fields and image. Fields get POSTed to our Incidents API, while the image is uploaded to Blob Storage and a new message is added to our queue.
 
 1. Open a browser window and navigate to `http://localhost:3000/new`.  Fill out the form and hit the **Submit** button.
 
@@ -501,4 +553,5 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
     ![image](./media/image-022.png)
 
-Our application can now create new incidents and upload related images to Azure Blob Storage.
+## Summary
+Our application started as a prototype on our local machine, but now uses a variety of Azure services.  We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 

@@ -22,6 +22,7 @@ router.post('/', function (req, res) {
         // Process the fields into a new incident, upload image, and add thumbnail queue message
         createIncident(fields, files)
             .then(uploadImage)
+            .then(addQueueMessage)
             .then(() => {
 
                 // Successfully processed form upload
@@ -87,6 +88,26 @@ function uploadImage(input) {
                 resolve(blob);
             });
 
+        }
+
+    });
+
+}
+
+function addQueueMessage(blob) {
+
+    return new Promise(function (resolve, reject) {
+
+        if (blob) {
+
+            storageUtility.createQueueMessage(blob).then(function() {
+                resolve();
+            });            
+
+        }
+        else {
+            console.log('No message to add to the queue');
+            resolve();
         }
 
     });
