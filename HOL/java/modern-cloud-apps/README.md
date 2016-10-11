@@ -130,32 +130,92 @@ This hands-on-lab has the following exercises:
 
     > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application
 
-1. The dashboard page is handled by the `/routes/dashboard.js` file. Open the file and paste this function at the bottom:
+1. Several components will work together to call and display the
+   incidents in the database.  First we will need an object to hold
+   the data associated with each incident.  We've supplied that object
+   in devCamp.WebApp.IncidentAPIClient.Models.IncedentBean.Java.  Open
+   that file and look at the properties and methods.
 
-    ```javascript
-    function getIncidents() {
+1. Create
 
-        return new Promise(function (resolve, reject) {
+    ```java
+package devCamp.WebApp.IncidentAPIClient;
 
-            // Define URL to use for the API
-            var apiUrl = `${process.env.INCIDENT_API_URL}/incidents`;
+import java.util.List;
 
-            // Make a GET request with the Request libary
-            request(apiUrl, { json: true }, function (error, results, body) {
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
-                // Resolve the Promise with incident data
-                resolve(body);
+import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
 
-            });
+public class IncidentAPIClient {
+	private Log log = LogFactory.getLog(IncidentAPIClient.class);
+	private String baseURI;
 
-        });
+	public String getBaseURI() {
+		return baseURI;
+	}
 
-    }
+	public void setBaseURI(String baseURI) {
+		this.baseURI = baseURI;
+	}
+
+	public List<IncidentBean> GetAllIncidents() {
+		log.info("Performing get /incidents web service");
+		final String uri = baseURI+"/incidents";
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<List<IncidentBean>> IncidentResponse =
+		        restTemplate.exchange(uri,
+		                    HttpMethod.GET, null, new ParameterizedTypeReference<List<IncidentBean>>() {
+		            });
+
+		return IncidentResponse.getBody();
+	}
+
+	public IncidentAPIClient(String baseURI) {
+		if (baseURI == null){
+			//throw argument null exception
+		}
+		this.baseURI = baseURI;
+
+	}
+}
+
     ```
 
-    This function uses the popular [request](https://github.com/request/request) library to generate a HTTP GET to the API endpoint. It is also wrapping the call in [JavaScript Promise syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) to avoid nested callbacks when consuming the function.
+    This function uses the
+    popular
+    [RestTemplate](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) library
+    to generate a HTTP GET to the API endpoint, and to convert the
+    return javascript into a java object.  In this case, we've
+    specified that it should return a List<IncidentBean>.
 
-    > Ensure that the version you have locally of Node is recent enough to support Promises. To be safe it is advised to [upgrade](https://nodejs.org/en/) to Node v6
+1.  Next, create an object to create an IncidentAPIClient with the
+    proper URI. Create the class devCamp.WebApp.Utils.IncidentAPIClient:
+
+    ```java
+package devCamp.WebApp.Utils;
+
+import devCamp.WebApp.IncidentAPIClient.IncidentAPIClient;
+
+public class IncidentApiHelper {
+	public static IncidentAPIClient getIncidentAPIClient() {
+
+		String apiurl= System.getenv("INCIDENT_API_URL");
+		return new IncidentAPIClient(apiurl);
+	}
+}
+
+    ```
+
 
     Next, adjust the response rendering to first use our function:
 

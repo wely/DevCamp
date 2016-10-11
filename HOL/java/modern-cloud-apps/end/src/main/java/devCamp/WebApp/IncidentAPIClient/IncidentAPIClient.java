@@ -1,6 +1,5 @@
 package devCamp.WebApp.IncidentAPIClient;
 
-
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -15,8 +14,6 @@ import org.springframework.web.client.RestTemplate;
 
 import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
 
-
-
 public class IncidentAPIClient {
 	private Log log = LogFactory.getLog(IncidentAPIClient.class);
 	private String baseURI;	
@@ -29,16 +26,6 @@ public class IncidentAPIClient {
 		this.baseURI = baseURI;
 	}
 
-	private String credentials;
-	
-	public String getCredentials() {
-		return credentials;
-	}
-
-	public void setCredentials(String credentials) {
-		this.credentials = credentials;
-	}
-
 	@CacheEvict("incidents")
 	public IncidentBean CreateIncident(IncidentBean incident) {
 		//call REST API to create the incident
@@ -47,18 +34,8 @@ public class IncidentAPIClient {
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
         
-        IncidentBean retval = restTemplate.postForObject(uri, incident, IncidentBean.class);
-        
-        // set headers
-        //HttpHeaders headers = new HttpHeaders();
-        //headers.setContentType(MediaType.APPLICATION_JSON);
-        //headers.set("Authorization", "Basic " + "xxxxxxxxxxxx");
-        //HttpEntity<String> entity = new HttpEntity<String>(input, headers);
-
-        // send request and parse result
-        //ResponseEntity<String> response = restTemplate
-        //        .exchange(uri, HttpMethod.POST, entity, String.class);
-        return retval;
+        IncidentBean createdBean = restTemplate.postForObject(uri, incident, IncidentBean.class);
+        return createdBean;
 	}
  
 	
@@ -96,28 +73,14 @@ public class IncidentAPIClient {
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
         
         IncidentBean retval = null;
-        //restTemplate.postForObject(uri, incident, IncidentBean.class);
-        
-        // set headers
-        //HttpHeaders headers = new HttpHeaders();
-        //headers.setContentType(MediaType.APPLICATION_JSON);
-        //headers.set("Authorization", "Basic " + "xxxxxxxxxxxx");
-        //HttpEntity<String> entity = new HttpEntity<String>(input, headers);
-
-        // send request and parse result
-        //ResponseEntity<String> response = restTemplate
-        //        .exchange(uri, HttpMethod.POST, entity, String.class);
         return retval;		
 	}
 	
-	public IncidentAPIClient(String baseURI, String credentials) {
+	public IncidentAPIClient(String baseURI) {
 		if (baseURI == null){
 			//throw argument null exception
 		}
-		if (credentials == null) {
-			//throw argument null exception
-		}
 		this.baseURI = baseURI;
-		this.credentials = credentials;
+
 	}
 }
