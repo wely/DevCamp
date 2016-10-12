@@ -767,4 +767,7 @@ environment variables and creating a StorageAPIClient. Create
 
     ![image](./media/image-022.png)
 
-Our application can now create new incidents and upload related images to Azure Blob Storage.
+Our application can now create new incidents and upload related images to Azure Blob Storage.  It will also put an 
+entry into an Azure queue, to invoke an image resizing process, for example.  In a later demo, we'll show how 
+an [Azure Function](https://azure.microsoft.com/en-us/services/functions/) can be invoked via a queue entry to 
+do tasks such as this.
