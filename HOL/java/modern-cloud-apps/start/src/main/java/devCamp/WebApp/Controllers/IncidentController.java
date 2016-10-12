@@ -85,7 +85,7 @@ public class IncidentController {
 			/*
 			service.ClearCache();
 			*/
-			return "Incident/details";
+			return "redirect:/dashboard";
 		} else {
 			return "/error";
 		}
