@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -43,13 +44,13 @@ namespace DevCamp.WebApp.Controllers
             //####### FILL IN THE DETAILS FOR THE NEW INCIDENT BASED ON THE USER
             IncidentViewModel incident = new IncidentViewModel();
 
-            string userObjId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+            string userObjId = ClaimsPrincipal.Current.FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
             SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
 
-            string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
+            string tenantId = ClaimsPrincipal.Current.FindFirst(Settings.AAD_TENANTID_CLAIMTYPE).Value;
             string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
-            AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_CLIENTID, Settings.AAD_APP_SECRET, tokenCache);
-            string accessToken = await authHelper.GetUserAccessToken(Url.Action("Index", "Home", null, Request.Url.Scheme));
+            AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
+            string accessToken = await authHelper.GetUserAccessToken(Url.Action("Create", "Incident", null, Request.Url.Scheme));
 
             UserProfileViewModel userProfile = new UserProfileViewModel();
             try
@@ -122,7 +123,7 @@ namespace DevCamp.WebApp.Controllers
                     //##### CLEAR CACHE ####
 
                     //##### SEND EMAIL #####
-                    await SendIncidentEmail(incidentToSave, Url.Action("Index", "Profile", null, Request.Url.Scheme));
+                    await SendIncidentEmail(incidentToSave, Url.Action("Index", "Dashboard", null, Request.Url.Scheme));
                     //##### SEND EMAIL  #####
 
                     return RedirectToAction("Index", "Dashboard");
@@ -136,17 +137,20 @@ namespace DevCamp.WebApp.Controllers
             return View(incident);
         }
 
-        async Task SendIncidentEmail(Incident incidentData, string AuthRedirectUrl)
+        private async Task SendIncidentEmail(Incident incidentData, string AuthRedirectUrl)
         {
-            string userObjId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+            string userObjId = ClaimsPrincipal.Current.FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
+            //The email is the UPN of the user from the claim
+            string emailAddress = ClaimsPrincipal.Current.FindFirst(ClaimTypes.Upn).Value;
+
             SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
 
-            string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
+            string tenantId = ClaimsPrincipal.Current.FindFirst(Settings.AAD_TENANTID_CLAIMTYPE).Value;
             string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
-            AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_CLIENTID, Settings.AAD_APP_SECRET, tokenCache);
-            string accessToken = await authHelper.GetUserAccessToken(Url.Action("Index", "Home", null, Request.Url.Scheme));
+            AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
+            string accessToken = await authHelper.GetUserAccessToken(Url.Action("Create", "Incident", null, Request.Url.Scheme));
 
-            EmailMessage msg = getEmailBodyContent(incidentData, userObjId);
+            EmailMessage msg = getEmailBodyContent(incidentData, emailAddress);
 
             using (var client = new HttpClient())
             {
@@ -169,7 +173,7 @@ namespace DevCamp.WebApp.Controllers
         {
             EmailMessage msg = new EmailMessage();
             msg.Message.body.contentType = Settings.EMAIL_MESSAGE_TYPE;
-            msg.Message.body.content = string.Format(Settings.EMAIL_MESSAGE_BODY, incidentData.FirstName);
+            msg.Message.body.content = string.Format(Settings.EMAIL_MESSAGE_BODY, incidentData.FirstName, incidentData.LastName);
             msg.Message.subject = Settings.EMAIL_MESSAGE_SUBJECT;
             Models.EmailAddress emailTo = new Models.EmailAddress() { name = EmailFromAddress, address = EmailFromAddress };
             ToRecipient sendTo = new ToRecipient();

@@ -1,10 +1,13 @@
 ﻿using DevCamp.WebApp.Utils;
 using DevCamp.WebApp.ViewModels;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Channel;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -19,6 +22,9 @@ namespace DevCamp.WebApp.Controllers
 
     public class ProfileController : Controller
     {
+        //Add telemetry
+        private TelemetryClient telemetryClient = new TelemetryClient();
+
         // The URL that auth should redirect to after a successful login.
         Uri loginRedirectUri => new Uri(Url.Action(nameof(Index), "Profile", null, Request.Url.Scheme));
         // The URL to redirect to after a logout.
@@ -26,6 +32,8 @@ namespace DevCamp.WebApp.Controllers
 
         public void SignIn()
         {
+            telemetryClient.TrackEvent("Sign in");
+
             if (!Request.IsAuthenticated)
             {
                 // Signal OWIN to send an authorization request to Azure
@@ -37,11 +45,13 @@ namespace DevCamp.WebApp.Controllers
 
         public void SignOut()
         {
+            telemetryClient.TrackEvent("Sign out");
+
             if (Request.IsAuthenticated)
             {
                 // Get the user's token cache and clear it
                 string userObjId = System.Security.Claims.ClaimsPrincipal.Current
-                  .FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+                  .FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
 
                 SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
                 tokenCache.Clear();
@@ -60,13 +70,18 @@ namespace DevCamp.WebApp.Controllers
             UserProfileViewModel userProfile = new UserProfileViewModel();
             try
             {
-                string userObjId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+                string userObjId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
                 SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
 
-                string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
+                string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst(Settings.AAD_TENANTID_CLAIMTYPE).Value;
                 string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
-                AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_CLIENTID, Settings.AAD_APP_SECRET, tokenCache);
+                AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
                 string accessToken = await authHelper.GetUserAccessToken(Url.Action("Index", "Home", null, Request.Url.Scheme));
+
+                //#### TRACK A CUSTOM EVENT ####
+                var profileProperties = new Dictionary<string, string> {{"userid", userObjId}, {"tenantid", tenantId}};
+                telemetryClient.TrackEvent("View Profile", profileProperties);
+                //#### TRACK A CUSTOM EVENT ####
 
                 using (var client = new HttpClient())
                 {
