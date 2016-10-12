@@ -757,13 +757,11 @@ environment variables and creating a StorageAPIClient. Create
         StorageAPIHelper.getStorageAPIClient().AddMessageToQueue(IncidentID, fileName);
     ```
 
-1. Open a browser window and navigate to `http://localhost:3000/new`.  Fill out the form and hit the **Submit** button.
+1. Open a browser window and navigate to `http://localhost:8080/new`.  Fill out the form and hit the **Submit** button.
 
     ![image](./media/image-021.png)
 
-    You should be redirected to the Dashboard screen.
-
-    > It may take up to 60 seconds to see your new entry due to the cache
+    You should be redirected to the Dashboard screen. 
 
 2. In the Microsoft Azure Storage Explorer, navigate to your Storage Account and ensure that the blob was created.
 
