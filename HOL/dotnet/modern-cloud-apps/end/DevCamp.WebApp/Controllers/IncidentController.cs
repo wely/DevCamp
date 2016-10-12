@@ -140,8 +140,9 @@ namespace DevCamp.WebApp.Controllers
         private async Task SendIncidentEmail(Incident incidentData, string AuthRedirectUrl)
         {
             string userObjId = ClaimsPrincipal.Current.FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
+
             //The email is the UPN of the user from the claim
-            string emailAddress = ClaimsPrincipal.Current.FindFirst(ClaimTypes.Upn).Value;
+            string emailAddress = getUserEmailAddressFromClaims(ClaimsPrincipal.Current);
 
             SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
 
@@ -167,6 +168,30 @@ namespace DevCamp.WebApp.Controllers
                     string resultString = await response.Content.ReadAsStringAsync();
                 }
             }
+        }
+
+        private string getUserEmailAddressFromClaims(ClaimsPrincipal CurrentIdentity)
+        {
+            string email = string.Empty;
+            //see of the name claim looks like an email address
+            //Another option is to access the graph again to get the email addresss
+            if (CurrentIdentity.Identity.Name.Contains("@"))
+            {
+                email = CurrentIdentity.Identity.Name;
+            }
+            else
+            {
+                foreach (Claim c in CurrentIdentity.Claims)
+                {
+                    if (c.Value.Contains("@"))
+                    {
+                        //Might be an email address, use it
+                        email = c.Value;
+                        break;
+                    }
+                }
+            }
+            return email;
         }
 
         private static EmailMessage getEmailBodyContent(Incident incidentData, string EmailFromAddress)
