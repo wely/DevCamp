@@ -10,7 +10,7 @@ In this session, we will provide a brief history of Azure, a quick overview of t
 [View PowerPoint](Presentation/Module00-Overview.pptx?raw=true)
 
 ---
-## [Hands on Lab overview](HOL/README.md) ####
+## [Hands on Labs overview](HOL/README.md) ####
 This provides and overview of each hands on lab exercise.
 
 [View PowerPoint](Presentation/Module00-Hols.pptx?raw=true)
@@ -23,7 +23,7 @@ We will provide an overview of the developer tools available for developing on y
 [View PowerPoint](Presentation/Module01-DevTools.pptx?raw=true)
 
 ### HOL 1 - Tools and Developer Environment Setup ####
-In this lab you will setup Azure access, create your O365 developer Tenant, download and configure tools (Azure CLI, VScode, SDKs, PowerShell, Storage Explorer, docker tools) specific for your platform (Windows, Linux, Mac OSX).
+In this lab you will setup Azure access, create your O365 developer Tenant, download and configure tools (Azure CLI, VSCode, SDKs, PowerShell, Storage Explorer, Docker tools) specific for your platform (Windows, Linux, Mac OSX).
 #### View instructions for [.NET](#) | [Node.JS](#) | [Java](#)
 
 ---
@@ -34,7 +34,7 @@ We will provide an overview of some common cloud technologies, patterns and Azur
 [View PowerPoint](Presentation/Module02-ModernCloudApps.pptx?raw=true)
 
 ####  HOL 2 - Modern Cloud Apps ####
-In this lab, you will add Azure capabiltiies to the sample application
+In this lab, you will add Azure capabilities to the sample application
 
 #### View instructions for [.NET](#) | [Node.JS](#) | [Java](#)
 
@@ -51,12 +51,12 @@ In this lab, you will enable Azure AD authentication, access the Office 365 APIs
 
 ---
 ## Module 4 - DevOps Overview ####
-We will provide an overview of Visual Studio Team Serices (VSTS), DevOps concepts, build tasks, release environments, integration with Azure and Git/GitHub and Azure to create a cross-platform build, integration and release pipleline.
+We will provide an overview of Visual Studio Team Services (VSTS), DevOps concepts, build tasks, release environments, integration with Azure and Git/GitHub and Azure to create a cross-platform build, integration and release piplelines.
 
 [View PowerPoint](Presentation/Module04-DevOps.pptx?raw=true)
 
 #### HOL 4 - Continuous integration ####
-In this lab, you will create a continous integration (CI) Pipeline.
+In this lab, you will create a continuous integration (CI) Pipeline.
 
 #### View instructions for [.NET](#) | [Node.JS](#) | [Java](#)
 
