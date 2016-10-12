@@ -23,7 +23,11 @@ This hands-on-lab has the following exercises:
 
 ### Exercise 1: Create VSTS online account
 
-Instructions and screenshots here
+1. In your browser, browser to `https://www.visualstudio.com/team-services/`
+
+    ![image](./media/image-000.png)
+
+1. Log in with your account 
 
 ### Exercise 2: Create VSTS Git repository
 
