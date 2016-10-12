@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "Outage Dashboard";
+}
+
+<div class="container">
+
+    <h1>@ViewBag.Title</h1>
+
+    <!--VIEW CODE-->
+    <div class="row">
+        @if (Model.Count > 0)
+            {
+                foreach (IncidentAPI.Models.Incident item in Model)
+                {
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Outage: @Html.ActionLink(string.Format("{0}", item.ID), "Details", "Incident", new { ID = item.ID }, new { })</div>
+                        <table class="table">
+                            <tr>
+                                <th>Type</th>
+                                <td>@item.OutageType</td>
+                            </tr>
+                            <tr>
+                                <th>Address</th>
+                                <td>@item.Street</td>
+                            </tr>
+                            <tr>
+                                <th>Contact</th>
+                                <td><a href="tel:@item.PhoneNumber">@string.Format("{0} {1}", item.FirstName, item.LastName)</a></td>
+                            </tr>
+                            <tr>
+                                <th>Reported</th>
+                                <td>
+                                    @if (item.Created != null)
+                                    {
+                                        @item.Created.Value.ToString("MM/dd/yyyy, hh:mm");
+                                    }
+                            </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div><h2>No incidents reported</h2></div>
+        }
+    </div>
+    <!--VIEW CODE-->
+    <!--TEMPLATE CODE -->
+    <!--
+    <div class="row">
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Outage 153</div>
+                <table class="table">
+                    <tr>
+                        <th>Address</th>
+                        <td>200 W. Elm St.</td>
+                    </tr>B
+                    <tr>
+                        <th>Contact</th>
+                        <td><a href="tel:14174444444">Jane Doe</a></td>B
+                    </tr>
+                    <tr>
+                        <th>Reported</th>
+                        <td>9/8/2016</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Outage 153</div>
+                <table class="table">
+                    <tr>
+                        <th>Address</th>
+                        <td>200 W. Elm St.</td>
+                    </tr>
+                    <tr>
+                        <th>Contact</th>
+                        <td><a href="tel:14174444444">Jane Doe</a></td>
+                    </tr>
+                    <tr>
+                        <th>Reported</th>
+                        <td>9/8/2016</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Outage 153</div>
+                <table class="table">
+                    <tr>
+                        <th>Address</th>
+                        <td>200 W. Elm St.</td>
+                    </tr>
+                    <tr>
+                        <th>Contact</th>
+                        <td><a href="tel:14174444444">Jane Doe</a></td>
+                    </tr>
+                    <tr>
+                        <th>Reported</th>
+                        <td>9/8/2016</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    -->
+    <!--TEMPLATE CODE -->
+
+</div>
