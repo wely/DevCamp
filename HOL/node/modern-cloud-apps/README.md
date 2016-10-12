@@ -35,7 +35,7 @@ This hands-on-lab has the following exercises:
 * Exercise 2: Add a caching layer
 * Exercise 3: Write images to Azure Blob storage
 
-## Exercise 1: Integrate the API
+### Exercise 1: Integrate the API
 
 1. Download or `git clone` the source files to your local machine
 
@@ -202,7 +202,7 @@ This hands-on-lab has the following exercises:
 
 The cards now represent data returned from our API, replacing the static mockup code.
 
-## Exercise 2: Add a caching layer
+### Exercise 2: Add a caching layer
 Querying our API is a big step forward, but querying a cache would increase performance and limit the load on our API.  Azure offers a managed (PaaS) service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
 
 We deployed an instance of Azure Redis Cache in the ARM Template, but need to add application logic
@@ -311,7 +311,7 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
 All application requests for the dashboard will now first try to use Azure Redis Cache.  Under high traffic, this will improve page performance and decrease the API's scaling needs.   
 
-## Exercise 3: Write images to Azure Blob Storage
+### Exercise 3: Write images to Azure Blob Storage
 
 When a new incident is reported, the user can attach a photo.  In this exercise we will process that image and upload it into an Azure Blob Storage Container.
 
