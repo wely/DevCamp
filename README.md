@@ -3,6 +3,9 @@ Contains content for the Azure partner DevCamp 2016-2017
 
 These labs and content will kickstart your Azure knowledge with a combination of lectures and hands on labs. It is intended to be delivered in a classroom environment but feel free to reuse this content.
 
+### [Module 0 - [Hands on Lab overview](#) ####
+This provides and overview of each HOL.
+
 ### [Module 1 - Introduction, roadmap and course overview](#) ####
 In this session, we will provide a brief history of Azure, a quick overview of the capabilities available and introduction to the 2-day interactive workshop.
 
