@@ -1,4 +1,4 @@
-# Hands on Lab - Identity with Azure AD and Office 365 APIs (NodeJS)
+# Hands on Lab - Identity with Azure AD and Office 365 APIs (Java)
 
 ## Overview
 
