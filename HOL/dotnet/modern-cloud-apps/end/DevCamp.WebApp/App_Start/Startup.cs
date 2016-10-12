@@ -1,6 +1,5 @@
 ﻿using DevCamp.WebApp.App_Start;
 using DevCamp.WebApp.Utils;
-using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Protocols;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
@@ -34,8 +33,7 @@ namespace DevCamp.WebApp.App_Start
                 // The 'ResponseType' indicates that we want an authorization code and an ID token 
                 // In a real application you could use issuer validation for additional checks, like making 
                 // sure the user's organization has signed up for your app, for instance.
-
-                ClientId = Settings.AAD_APP_CLIENTID,
+                ClientId = Settings.AAD_APP_ID,
                 Authority = string.Format(CultureInfo.InvariantCulture, Settings.AAD_INSTANCE, "common", ""),
                 ResponseType = "code id_token",
                 PostLogoutRedirectUri = "/",
@@ -45,34 +43,38 @@ namespace DevCamp.WebApp.App_Start
                 },
                 Notifications = new OpenIdConnectAuthenticationNotifications
                 {
-                    AuthenticationFailed = OnAuthenticationFailed,
-                    AuthorizationCodeReceived = OnAuthorizationCodeReceived
+                    //Set up handlers for the events
+                    AuthorizationCodeReceived = OnAuthorizationCodeReceived,
+                    AuthenticationFailed = OnAuthenticationFailed
                 }
             }
             );
         }
 
-        private async Task OnAuthorizationCodeReceived(AuthorizationCodeReceivedNotification notification)
-        {// Get the user's object id (used to name the token cache)
 
+        /// <summary>
+        /// Fired when the user authenticates
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <returns></returns>
+        private async Task OnAuthorizationCodeReceived(AuthorizationCodeReceivedNotification notification)
+        {
             // Get the user's object id (used to name the token cache)
-            string userObjId = notification.AuthenticationTicket.Identity
-              .FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+            string userObjId = notification.AuthenticationTicket.Identity.FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
 
             // Create a token cache
             HttpContextBase httpContext = notification.OwinContext.Get<HttpContextBase>(typeof(HttpContextBase).FullName);
             SessionTokenCache tokenCache = new SessionTokenCache(userObjId, httpContext);
 
             // Exchange the auth code for a token
-            ADAL.ClientCredential clientCred = new ADAL.ClientCredential(Settings.AAD_APP_CLIENTID, Settings.AAD_APP_SECRET);
+            ADAL.ClientCredential clientCred = new ADAL.ClientCredential(Settings.AAD_APP_ID, Settings.AAD_APP_SECRET);
 
             // Create the auth context
             ADAL.AuthenticationContext authContext = new ADAL.AuthenticationContext(
-              string.Format(CultureInfo.InvariantCulture, Settings.AAD_INSTANCE, "common", ""),
-              false, tokenCache);
+              string.Format(CultureInfo.InvariantCulture, Settings.AAD_INSTANCE, "common", ""), false, tokenCache);
 
             ADAL.AuthenticationResult authResult = await authContext.AcquireTokenByAuthorizationCodeAsync(
-              notification.Code, notification.Request.Uri, clientCred, "https://graph.microsoft.com");
+              notification.Code, notification.Request.Uri, clientCred, Settings.GRAPH_API_URL);
         }
 
         private Task OnAuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
