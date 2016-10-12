@@ -8,9 +8,9 @@ City Power & Light is a sample application that allows citizens to to report "in
 * WebAPI is shared across the front ends and exposes the backend DocumentDB
 * DocumentDB is used as the data persistence layer
 
-In this lab, you will work with an existing API to connect to the web application front end. This will allow you perform CRUD operations for incidents. You will also configure additional Azure features for Redis Cache, Azure Storage Queues, and Azure Blob Storage.
+In this lab, you will work with an existing API to connect to the web application front end. This will allow you perform CRUD operations for incidents. You will also configure additional Azure features for Redis Cache, Azure Storage Queues, and Azure Blob Storage. 
 
-> This guide uses [Eclipse STS](https://spring.io/tools) for editing, however please feel free to use your editor of choice.
+This guide uses [Eclipse STS](https://spring.io/tools) for editing, however please feel free to use your editor of choice.
 
 ## Objectives
 
@@ -136,7 +136,7 @@ This hands-on-lab has the following exercises:
    in devCamp.WebApp.IncidentAPIClient.Models.IncedentBean.Java.  Open
    that file and look at the properties and methods.
 
-1. Create the class devCamp.WebApp.IncidentAPIClient.IncidentAPIClient.java with the
+1. Create the class `devCamp.WebApp.IncidentAPIClient.IncidentAPIClient.java` with the
    following code:
 
     ```java
@@ -232,6 +232,9 @@ This hands-on-lab has the following exercises:
     return javascript into a java object.  In this case, we've
     specified that it should return a `List<IncidentBean>`.
 
+    The class also contains functions to create a new incident, update an incident, and get a single incident by ID.  These 
+    invoke the appropriate REST api call.
+
 1.  Next, create an object to create an IncidentAPIClient with the
     proper URI. Create the class devCamp.WebApp.Utils.IncidentAPIClient:
 
@@ -273,6 +276,18 @@ This hands-on-lab has the following exercises:
     IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
     ArrayList<IncidentBean> theList = client.GetAllIncidents();
     model.addAttribute("allIncidents",theList);
+    ```
+
+1. The application provides a form to enter in new Incidents.  
+The POST from the form is handled by the `IncidentController.java` class.  
+Scroll to the Create function and locate the line of code:
+    ```java
+    IncidentBean result = null;
+    ```
+
+    Change this to call the function in the IncidentAPIClient:
+    ```java
+    IncidentBean result = IncidentAPIHelper.getIncidentAPIClient().CreateIncident(incident);
     ```
 
     Before we test this code, open the HTML template for the dashboard
@@ -363,8 +378,7 @@ and can easily use Azure Redis Cache to hold the data.
     In Spring, you can apply caching to a Spring
    [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html). 
    We need to create a Java class for this service, so create a new Java class named 
-   `devCamp.WebApp.IncidentAPIClient.IncidentService.java` with this
-   code:
+   `devCamp.WebApp.IncidentAPIClient.IncidentService.java` with this code:
 
    ```java
 
@@ -394,16 +408,16 @@ and can easily use Azure Redis Cache to hold the data.
 
         @CacheEvict(cacheNames="incidents", allEntries=true)
         public IncidentBean CreateIncident(IncidentBean incident) {
-            return IncidentApiHelper.getIncidentAPIClient().CreateIncident(incident);		
+            return IncidentAPIHelper.getIncidentAPIClient().CreateIncident(incident);		
         }
         
         @CacheEvict(cacheNames="incidents", allEntries=true)
         public IncidentBean UpdateIncident(String incidentId,IncidentBean newIncident){
-            return IncidentApiHelper.getIncidentAPIClient().UpdateIncident(incidentId,newIncident);
+            return IncidentAPIHelper.getIncidentAPIClient().UpdateIncident(incidentId,newIncident);
         }
         
         public IncidentBean GetById(String incidentId) {
-            return IncidentApiHelper.getIncidentAPIClient().GetById(incidentId);		
+            return IncidentAPIHelper.getIncidentAPIClient().GetById(incidentId);		
         }
 
         @CacheEvict(cacheNames="incidents", allEntries=true)
@@ -426,6 +440,7 @@ and can easily use Azure Redis Cache to hold the data.
     devCamp.WebApp.CacheConfig.java with this code:
 
     ```java
+
     package devCamp.WebApp;
 
     import java.util.Arrays;
@@ -545,6 +560,23 @@ directly. To do this add these lines inside the DashboardController class:
     You will also have to make sure the IncidentService is imported
     for the class.
 
+1. We need to change the `IncidentController.java` class to use the IncidentService 
+   object also.  Add these lines inside the class definition:
+
+    ```java
+    @Autowired
+    IncidentService service;
+    ```
+
+    ```java
+    IncidentBean result = IncidentAPIHelper.getIncidentAPIClient().CreateIncident(incident);
+    ```
+
+    Change this line to:
+    ```java
+    IncidentBean result = service.CreateIncident(incident);
+    ```
+    
 1. To test the application using the Azure Redis Cache, note that in
    the IncidentAPIClient class, the `GetAllincidents` function has
    this code at the top:
@@ -587,7 +619,9 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     and add the following environment variables:
     * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource
     * `AZURE_STORAGE_ACCESS_KEY` is **key1** from the Access Keys blade
-    * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containres to group sets of blobs together.  For this demo let's use `images` as the Container name
+    * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containres to group 
+    sets of blobs together.  For this demo let's use `images` as the Container name
+    * `AZURE_STORAGE_QUEUE` is the name of the Azure Storage Queue resource.  For this demo we will use `thumbnails`.
 
     Add the following lines to the dependencies in build.gradle:
     ```java
@@ -677,7 +711,7 @@ paste in the following code:
     //		if (fileExt.startsWith(".")){
     //			fileExt = fileExt.substring(1);
     //		}
-            return String.format("%s%s", IncidentId,fileExt);
+            return String.format("%s.%s", IncidentId,fileExt);
         }
     }
 
@@ -694,134 +728,40 @@ environment variables and creating a StorageAPIClient. Create
 
     public class StorageAPIHelper {
 
-    public static StorageAPIClient getIncidentAPIClient() {
+    public static StorageAPIClient getStorageAPIClient() {
 
         String account = System.getenv("AZURE_STORAGE_ACCOUNT");;
         String key = System.getenv("AZURE_STORAGE_ACCESS_KEY");;
         String queue = System.getenv("AZURE_STORAGE_QUEUE");
         String container = System.getenv("AZURE_STORAGE_BLOB_CONTAINER");
         
-        return new StorageAPIClient(account, key,queue,container);	
+        return new StorageAPIClient(account, key,container,queue);	
     }
     }
 
     ```
 
 1. Now lets arrange for the controller that manages new incidents to call the Storage API.  Open up 
-`devCamp.WebApp.ControllersIncidentController.java. :
-
-
-
-1. With the utility created, let's update `routes/new.js` to handle new incidents:
-
-    ```javascript
-    var fs = require('fs');
-    var express = require('express');
-    var router = express.Router();
-    var request = require('request');
-    var formidable = require('formidable');
-    var storageUtility = require('../utilities/storage');
-
-    /* GET new outage */
-    router.get('/', function (req, res) {
-        res.render('new', {
-            title: 'Report an Outage'
-        });
-    });
-
-    /* POST new outage */
-    router.post('/', function (req, res) {
-
-        // Parse a form submission with formidable
-        var form = new formidable.IncomingForm();
-        form.parse(req, (err, fields, files) => {
-
-            // Process the fields into a new incident, upload image, and add thumbnail queue message
-            createIncident(fields, files)
-                .then(uploadImage)
-                .then(() => {
-
-                    // Successfully processed form upload
-                    // Redirect to dashboard
-                    res.redirect('/dashboard');
-
-                });
-
-        });
-
-    });
-
-    function createIncident(fields, files) {
-
-        return new Promise(function (resolve, reject) {
-
-            // Build request object
-            var incident = {
-                "Description": fields.description,
-                "Street": fields.addressStreet,
-                "City": fields.addressCity,
-                "State": fields.addressState,
-                "ZipCode": fields.addressZip,
-                "FirstName": fields.firstName,
-                "LastName": fields.lastName,
-                "PhoneNumber": fields.phone,
-                "OutageType": "Outage",
-                "IsEmergency": (fields.emergency === "on") ? true : false
-            };
-
-            // Get API URL from environment variable
-            var apiUrl = `${process.env.INCIDENT_API_URL}/incidents`;
-
-            // POST new incident to API
-            request.post(apiUrl, { form: incident, json: true }, function (error, results) {
-
-                // Successfully created a new incident
-                console.log('Created incident');
-
-                var incidentId = results.body.id;
-                resolve([incidentId, files]);
-
-            });
-
-        });
-
-    }
-
-    function uploadImage(input) {
-
-        return new Promise(function (resolve, reject) {
-
-            // Check if no image was uploaded
-            if (input[1].image.size === 0) {
-                console.log('No image uploaded');
-                resolve();
-            }
-            else {
-
-                // Use the storage utility to upload a blob to Azure Storage
-                storageUtility.uploadBlob(input).then(function (blob) {
-                    console.log('Image uploaded');
-                    resolve(blob);
-                });
-
-            }
-
-        });
-
-    }
-
-    module.exports = router;
+`devCamp.WebApp.Controllers.IncidentController.java`.  Find the code inside the Create function:
+    ```java
+        if (fileName != null) {
     ```
 
-    When a new incident comes in, the Formidable library parses the data fields and image. Fields get POSTed to our Incidents API, while the image is uploaded to Blob Storage.
+    Add this code after the above if statement:
+    ```java
+        //now upload the file to blob storage 
+        log.info("uploading to blob");
+        StorageAPIHelper.getStorageAPIClient().UploadFileToBlobStorage(IncidentID, imageFile);
+        //add a event into the queue to resize and attach to incident
+        log.info("adding to queue");
+        StorageAPIHelper.getStorageAPIClient().AddMessageToQueue(IncidentID, fileName);
+    ```
 
-1. Open a browser window and navigate to `http://localhost:3000/new`.  Fill out the form and hit the **Submit** button.
+1. Open a browser window and navigate to `http://localhost:8080/new`.  Fill out the form and hit the **Submit** button.
 
     ![image](./media/image-021.png)
 
-    You should be redirected to the Dashboard screen.
-
-    > It may take up to 60 seconds to see your new entry due to the cache
+    You should be redirected to the Dashboard screen. 
 
 2. In the Microsoft Azure Storage Explorer, navigate to your Storage Account and ensure that the blob was created.
 

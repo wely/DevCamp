@@ -72,10 +72,10 @@ public class IncidentController {
 					    /*
 						//now upload the file to blob storage 
 						log.info("uploading to blob");
-						StorageHelper.UploadFileToBlobStorage(IncidentID, imageFile);
+						StorageAPIHelper.getStorageAPIClien().UploadFileToBlobStorage(IncidentID, imageFile);
 						//add a event into the queue to resize and attach to incident
 						log.info("adding to queue");
-						StorageHelper.AddMessageToQueue(IncidentID, fileName);
+						StorageAPIHelper.getStorageAPIClien()..AddMessageToQueue(IncidentID, fileName);
 					    */
 					}
 				} catch (Exception e) {
@@ -85,7 +85,7 @@ public class IncidentController {
 			/*
 			service.ClearCache();
 			*/
-			return "Incident/details";
+			return "redirect:/dashboard";
 		} else {
 			return "/error";
 		}
