@@ -7,7 +7,7 @@ var config = {
         identityMetadata: 'https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration', // For using Microsoft you should never need to change this.
         validateIssuer: false,
         clientID: process.env.AAD_CLIENT_ID,
-        clientSecret: process.env.AAD_CLIENT_SECRET, // if you are doing code or id_token code
+        clientSecret: process.env.AAD_CLIENT_SECRET, // if you are doing a responseType of code or id_token code
         skipUserProfile: true, // for AzureAD should be set to true.
         responseType: 'id_token code', // for login only flows use id_token. For accessing resources use `id_token code`
         responseMode: 'form_post', // For login only flows we should have token passed back to us in a POST
@@ -17,7 +17,7 @@ var config = {
 
 module.exports.setup = function (app) {
 
-    // Passport session setup.
+    //   Passport session setup.
 
     //   To support persistent login sessions, Passport needs to be able to
     //   serialize users into and deserialize users out of the session.  Typically,
@@ -47,7 +47,7 @@ module.exports.setup = function (app) {
         return fn(null, null);
     };
 
-    // Use the OIDCStrategy within Passport. (Section 2) 
+    //  Use the OIDCStrategy within Passport. 
     // 
     //   Strategies in passport require a `validate` function, which accept
     //   credentials (in this case, an OpenID identifier), and invoke a callback
@@ -104,9 +104,9 @@ module.exports.setup = function (app) {
             res.redirect('/');
         });
 
-    // Our POST routes
+    //   Our POST routes
 
-    // POST /auth/openid
+    //   POST /auth/openid
     //   Use passport.authenticate() as route middleware to authenticate the
     //   request.  The first step in OpenID authentication will involve redirecting
     //   the user to their OpenID provider.  After authenticating, the OpenID
