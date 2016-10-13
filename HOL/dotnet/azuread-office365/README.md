@@ -2,13 +2,13 @@
 
 ## Overview
 
-City Power & Light is a sample application that allows citizens to to report "incidents" that have occured in their community.  It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
+City Power & Light is a sample application that allows citizens to to report "incidents" that have occurred in their community.  It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
 
 * Front end web application contains the user interface and business logic.  This component has been implemented three times in .NET, NodeJS, and Java.
 * WebAPI is shared across the front ends and exposes the backend DocumentDB
 * DocumentDB is used as the data persistence layer 
 
-In this lab, you will continue enhancing the City Power & Light application by adding authentication for users powered by [Azure Active Direcotry](https://azure.microsoft.com/en-us/services/active-directory/).  Once authenticated, you may then query the [Microsoft Office Graph](https://graph.microsoft.io) to retrieve information pertinent to the aplication.
+In this lab, you will continue enhancing the City Power & Light application by adding authentication for users powered by [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/).  Once authenticated, you may then query the [Microsoft Office Graph](https://graph.microsoft.io) to retrieve information pertinent to the application.
 
 > This guide use Visual Studio on Windows as the IDE. You can use [Visual Studio community Edition](https://www.visualstudio.com/post-download-vs/?sku=community&clcid=0x409&downloadrename=true).
 
@@ -23,10 +23,10 @@ In this hands-on lab, you will learn how to:
 
 * The source for the starter app is located in the [start](start) folder. 
 * The finished project is located in the [end](end) folder. 
-* Deployed the starter ARM Template
-* Completion of the first modern-apps lab 
+* Deployed the starter ARM Template [HOL 1](../developer-environment)
+* Completion of the first [modern-cloud-apps lab](../modern-cloud-apps) 
 
-> Note: If you did not complete the modern-app lab, the starter project is cumulative and contains the completed modern-app lab.
+> Note: If you did not complete the previous labs, the project in the start folder is cumulative.
 
 ## Exercises
 
@@ -40,19 +40,19 @@ This hands-on-lab has the following exercises:
 
 AzureAD can handle authentication for web applications. First we will create a new application in our AzureAD directory, and then we will extend our application code to work with an authentication flow. 
 
-1. Navigate in a browser to `https://apps.dev.microsoft.com`, click the button to **Register your app**, and login with your Azure credentials (Organization Account).
+1. Navigate in a browser to [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com), click the button to **Register your app**, and login with your Azure credentials (Work or school Account).
 
     ![image](./media/image-001.png)
 
-1. There are several types of applications that can be registered. For the registration of the .NET app, we will skip the quickstart.
+1. There are several types of applications that can be registered. The registration of the .NET app is not listed here so skip the quickstart.
 
     ![image](./media/image-002.png)
 
-1. Click Add an app from the top menu
+1. Click **Add an app** from the top menu
     
     ![image](./media/image-003.png)
 
-1. Provide an application name and click Create Application
+1. Provide an application name and click **Create Application**
 
     ![image](./media/image-004.png)
 
@@ -74,29 +74,33 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/image-009.png)
 
-1. After AzureAD handles the authentication, it needs a location to redirect the user. For testing locally, we'll use `http://localhost:8443` as the **Redirect URI** and as an environment variable named `AAD_RETURN_URL`.  Click the **Create** button. This will need to be updated to the IISExpress dynamic port that is generated. 
+1. After AzureAD handles the authentication, it needs a location to redirect the user. For testing locally, we'll use the local IISExpress web site `http://localhost:8443` as the **Redirect URI** and set the URL as an app setting variable named `AAD_RETURN_URL`.This URL may need to be updated to the IISExpress dynamic port that is generated while debugging. Steps to update this are provided later in the lab.  
 
     ![image](./media/image-010.png)
+
+1. Click the **Save** button on the bottom of the screen.
+
+    ![image](./media/image-017.png)  
 
 1. Open the Visual Studio project file from the `start` folder
 
     ![image](./media/image-011.png)
 
-1. Build the project and press F5 to restore the nuget packages and start IISExpress. This will create the web applicaiton with the dynamic port.
+1. Build the project and press F5 to restore the nuget packages and start IISExpress. This will create the web application with the dynamic port.
 
-1. Stop debugging. Right-click on the project and select `propertites`
+1. Stop debugging. Right-click on the project and select `properties`
 
     ![image](./media/image-012.png)
-
+    
 1. Go to the Web tab and take note of the IISExpress dynamic port. Update the URL to HTTPS and click save.
 
     ![image](./media/image-013.png)
 
-1. You should recieve 2 prompts conifirming the update.
+1. You should receive 2 prompts confirming the update.
 
-![image](./media/image-014.png)
+    ![image](./media/image-014.png)
 
-![image](./media/image-015.png)
+    ![image](./media/image-015.png)
 
 1. Open the web.config and update the settings with the values from the app registration screen:
 
@@ -109,26 +113,52 @@ AzureAD can handle authentication for web applications. First we will create a n
 
 1. Go back to the app registration screen and update the return URL with the new port and click save.
 
-![image](./media/image-016.png)
-![image](./media/image-017.png)
+    ![image](./media/image-016.png)
+
+    ![image](./media/image-017.png)
 
 1. In Visual Studio, Add the following packages from nuget:
 
-> `Microsoft.IdentityModel.Clients.ActiveDirectory`
->
-> `Microsoft.IdentityModel.Protocol.Extensions`
->
-> `Microsoft.IdentityModel.Tokens`
->
-> `Microsoft.Owin.Security.OpenIdConnect`
->
-> `Microsoft.Owin.Security.Cookies`
->
-> `Microsoft.Owin.Host.SystemWeb`
+    > `Microsoft.IdentityModel.Clients.ActiveDirectory`
+    >
+    > `Microsoft.IdentityModel.Protocol.Extensions`
+    >
+    > `Microsoft.IdentityModel.Tokens`
+    >
+    > `Microsoft.Owin.Security.OpenIdConnect`
+    >
+    > `Microsoft.Owin.Security.Cookies`
+    >
+    > `Microsoft.Owin.Host.SystemWeb`
 
-1. navigate to the Utils folder and create a 2 new helper classes. Create `AuthHelper.cs` and `SessionTokeCache.cs`
+1. We need add code to handle the authentication and and cache the sessions tokens so we don't have to get them all time. Navigate to the Utils folder and create a 2 new helper class files. Create `AuthHelper.cs` and `SessionTokeCache.cs`
 
-1. Open `AuthHelper.cs` and paste the following code:
+1. First let's update the Setting.cs class with the additional constants. Paste these values below the existing entries from HOL2.
+
+    ```csharp
+        // --- OMITTED ---
+
+        //####    HOL 2    ######
+
+        //####    HOL 3    ######
+        public static string AAD_APP_ID = ConfigurationManager.AppSettings["AAD_APP_ID"];
+        public static string AAD_INSTANCE = ConfigurationManager.AppSettings["AAD_INSTANCE"];
+        public static string AAD_APP_REDIRECTURI = ConfigurationManager.AppSettings["AAD_APP_REDIRECTURI"];
+        public static string AAD_TENANTID_CLAIMTYPE = "http://schemas.microsoft.com/identity/claims/tenantid";
+        public static string AAD_OBJECTID_CLAIMTYPE = "http://schemas.microsoft.com/identity/claims/objectidentifier";
+        public static string AAD_AUTHORITY = ConfigurationManager.AppSettings["AAD_AUTHORITY"];
+        public static string AAD_LOGOUT_AUTHORITY = ConfigurationManager.AppSettings["AAD_LOGOUT_AUTHORITY"];
+        public static string GRAPH_API_URL = ConfigurationManager.AppSettings["GRAPH_API_URL"];
+        public static string AAD_APP_SECRET = ConfigurationManager.AppSettings["AAD_APP_SECRET"];
+        public static string AAD_GRAPH_SCOPES = ConfigurationManager.AppSettings["AAD_GRAPH_SCOPES"];
+        public static string GRAPH_CURRENT_USER_URL = GRAPH_API_URL + "/v1.0/me";
+        public static string GRAPH_SENDMESSAGE_URL = GRAPH_CURRENT_USER_URL + "/sendMail";
+        public static string SESSIONKEY_ACCESSTOKEN = "accesstoken";
+        public static string SESSIONKEY_USERINFO = "userinfo";
+        //####    HOL 3    ######
+    ```
+
+1. Open `AuthHelper.cs` and paste the following code. This code will obtain a token from Azure AD for users:
 
     ```csharp
     using System.Threading.Tasks;
@@ -187,7 +217,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     }
     ```
 
-1. Open` SessionTokenCache.cs` and paste the following code:
+1. Open `SessionTokenCache.cs` and paste the following code. This code will handle the custom caching of tokens:
 
     ```csharp
     //Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
@@ -271,103 +301,11 @@ AzureAD can handle authentication for web applications. First we will create a n
     }
     ```
 
-1. Right click on the App_Start folder and select New > OWIN Startup Class
+1. Right click on the App_Start folder and select **New > OWIN Startup Class**
 
-![image](./media/image-018.png)
+    ![image](./media/image-018.png)
 
-1. Name it Startup. Once it is created and open, paste the following:
-
-    ```csharp
-    using DevCamp.WebApp.App_Start;
-    using DevCamp.WebApp.Utils;
-    using Microsoft.IdentityModel.Protocols;
-    using Microsoft.Owin;
-    using Microsoft.Owin.Security;
-    using Microsoft.Owin.Security.Cookies;
-    using Microsoft.Owin.Security.Notifications;
-    using Microsoft.Owin.Security.OpenIdConnect;
-    using Owin;
-    using System;
-    using System.Globalization;
-    using System.IdentityModel.Claims;
-    using System.IdentityModel.Tokens;
-    using System.Threading.Tasks;
-    using System.Web;
-    using ADAL = Microsoft.IdentityModel.Clients.ActiveDirectory;
-
-    [assembly: OwinStartup(typeof(Startup))]
-    namespace DevCamp.WebApp.App_Start
-    {
-        public partial class Startup
-        {
-            public void Configuration(IAppBuilder app)
-            {
-                app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
-
-                app.UseCookieAuthentication(new CookieAuthenticationOptions());
-
-                app.UseOpenIdConnectAuthentication(
-                new OpenIdConnectAuthenticationOptions
-                {
-                    // The `Authority` represents the auth endpoint - https://login.microsoftonline.com/common/
-                    // The 'ResponseType' indicates that we want an authorization code and an ID token 
-                    // In a real application you could use issuer validation for additional checks, like making 
-                    // sure the user's organization has signed up for your app, for instance.
-                    ClientId = Settings.AAD_APP_ID,
-                    Authority = string.Format(CultureInfo.InvariantCulture, Settings.AAD_INSTANCE, "common", ""),
-                    ResponseType = "code id_token",
-                    PostLogoutRedirectUri = "/",
-                    TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = false,
-                    },
-                    Notifications = new OpenIdConnectAuthenticationNotifications
-                    {
-                        //Set up handlers for the events
-                        AuthorizationCodeReceived = OnAuthorizationCodeReceived,
-                        AuthenticationFailed = OnAuthenticationFailed
-                    }
-                }
-                );
-            }
-
-
-            /// <summary>
-            /// Fired when the user authenticates
-            /// </summary>
-            /// <param name="notification"></param>
-            /// <returns></returns>
-            private async Task OnAuthorizationCodeReceived(AuthorizationCodeReceivedNotification notification)
-            {
-                // Get the user's object id (used to name the token cache)
-                string userObjId = notification.AuthenticationTicket.Identity.FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
-
-                // Create a token cache
-                HttpContextBase httpContext = notification.OwinContext.Get<HttpContextBase>(typeof(HttpContextBase).FullName);
-                SessionTokenCache tokenCache = new SessionTokenCache(userObjId, httpContext);
-
-                // Exchange the auth code for a token
-                ADAL.ClientCredential clientCred = new ADAL.ClientCredential(Settings.AAD_APP_ID, Settings.AAD_APP_SECRET);
-
-                // Create the auth context
-                ADAL.AuthenticationContext authContext = new ADAL.AuthenticationContext(
-                string.Format(CultureInfo.InvariantCulture, Settings.AAD_INSTANCE, "common", ""), false, tokenCache);
-
-                ADAL.AuthenticationResult authResult = await authContext.AcquireTokenByAuthorizationCodeAsync(
-                notification.Code, notification.Request.Uri, clientCred, Settings.GRAPH_API_URL);
-            }
-
-            private Task OnAuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
-            {
-                notification.HandleResponse();
-                notification.Response.Redirect("/Error?message=" + notification.Exception.Message);
-                return Task.FromResult(0);
-            }
-        }
-    }
-    ```
-
-1. Open Startup.cs from the App_Start folder and paste the following:
+1. Name it `Startup`. Once it is created, open the file, paste the following code. This will handle the initial authentication flow and cache the tokens:
 
     ```csharp
     using DevCamp.WebApp.App_Start;
@@ -459,28 +397,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     }
     ```
 
-1. Update the Setting.cs class with the additional constants. Paste these values below the existing ones from HOL2.
-
-    ```csharp
-        //####    HOL 3    ######
-        public static string AAD_APP_ID = ConfigurationManager.AppSettings["AAD_APP_ID"];
-        public static string AAD_INSTANCE = ConfigurationManager.AppSettings["AAD_INSTANCE"];
-        public static string AAD_APP_REDIRECTURI = ConfigurationManager.AppSettings["AAD_APP_REDIRECTURI"];
-        public static string AAD_TENANTID_CLAIMTYPE = "http://schemas.microsoft.com/identity/claims/tenantid";
-        public static string AAD_OBJECTID_CLAIMTYPE = "http://schemas.microsoft.com/identity/claims/objectidentifier";
-        public static string AAD_AUTHORITY = ConfigurationManager.AppSettings["AAD_AUTHORITY"];
-        public static string AAD_LOGOUT_AUTHORITY = ConfigurationManager.AppSettings["AAD_LOGOUT_AUTHORITY"];
-        public static string GRAPH_API_URL = ConfigurationManager.AppSettings["GRAPH_API_URL"];
-        public static string AAD_APP_SECRET = ConfigurationManager.AppSettings["AAD_APP_SECRET"];
-        public static string AAD_GRAPH_SCOPES = ConfigurationManager.AppSettings["AAD_GRAPH_SCOPES"];
-        public static string GRAPH_CURRENT_USER_URL = GRAPH_API_URL + "/v1.0/me";
-        public static string GRAPH_SENDMESSAGE_URL = GRAPH_CURRENT_USER_URL + "/sendMail";
-        public static string SESSIONKEY_ACCESSTOKEN = "accesstoken";
-        public static string SESSIONKEY_USERINFO = "userinfo";
-        //####    HOL 3    ######
-    ```
-1. Create a new partial that will handle our login navigation. In the shared folder, create a new parital page named `_LoginPartial`
-1. Paste the following:
+1. Add links that will handle Signing in/out and profile pages. Create a new partial that will handle our login navigation. In the `shared` folder, create a new partial page named `_LoginPartial` and paste the following:
 
     ```html
     @if (Request.IsAuthenticated)
@@ -511,7 +428,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ```
 
-1. Open the `_Layout.cshtml` page and paste the following to replace the exiting navigation:
+1. Open the `_Layout.cshtml` page and paste the following to replace the existing navigation links with the new `_LoginPartial.cshtml`:
 
     ```html
          <div class="navbar-collapse collapse">
@@ -526,12 +443,13 @@ AzureAD can handle authentication for web applications. First we will create a n
                 </ul>
             </div>
     ```
-#### Before:
-![image](./media/image-019.png)
-    
-#### After:
+#### Before ###:
 
-![image](./media/image-020.png)
+    ![image](./media/image-019.png)
+    
+#### After ###:
+
+    ![image](./media/image-020.png)
 
 1. Add a new controller called `ProfileController` to handle signins
 1. Paste the following:
@@ -637,9 +555,7 @@ AzureAD can handle authentication for web applications. First we will create a n
         }    
     ```
 
-1. Add the Authorize attribute to the IncidentConroller classes. This will block any access to these 
-
-The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
+1. Add the Authorize attribute to the IncidentConroller classes. This will block any access to these routes until they authenticate. The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
 
 ### Exercise 2: Create a user profile page
 Next, we are going to create a page to display information about the logged in user.  While AzureAD returns a name and email address, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a route, and then query the Graph for user information.
@@ -753,7 +669,7 @@ In the previous exercise you read data from the Microsoft Graph, but other endpo
     }    
     ```
 
-1. Create a new model to prepresent the MailMessage structure. Add the following to the
+1. Create a new model to represent the MailMessage structure. Add the following to the
 
     ```csharp
     using System;

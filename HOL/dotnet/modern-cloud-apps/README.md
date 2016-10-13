@@ -93,7 +93,7 @@ This hands-on-lab has the following exercises:
 
     As part of the original ARM template we deployed an ASP.NET WebAPI that queries a DocumentDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
 1. In Visual Studio, select the code between the `<!--TEMPLATE CODE -->` comment block and delete it.
-1. Between the `<!--INSERT VIEW CODE -->` comment block paste the following. This block handles the display of the indcident dashboard:
+1. Between the `<!--INSERT VIEW CODE -->` comment block paste the following. This block handles the display of the incident dashboard:
 
     ```csharp
    <!--VIEW CODE-->
@@ -162,7 +162,7 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-13.png)
 
-1. In the Utils folder, create a class called Settings.cs. This will hold our static variables and constants for the applicaiton.
+1. In the Utils folder, create a class called Settings.cs. This will hold our static variables and constants for the application.
 1. Open the Settings.cs file and paste the following:
 
     ```csharp
@@ -457,7 +457,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     ``` 
 1. Hit F5 to start debugging Select the dashboard page. You should hit the breakpoint. Hit F10 to step over the call. The cache is empty so it fall to the else condition
 1. Hit F5 to continue stepping. The data should be added to the cache
-1. Hit refresh in the browser and hit the breakpint again. This time when you hit F10, you should be getting the data from cache.
+1. Hit refresh in the browser and hit the breakpoint again. This time when you hit F10, you should be getting the data from cache.
 1. Create a new incident from the Report Outage page. Enter some details and click `Create`
 1. Your new incident should be first in the dashboard.
 1. Close the browser and stop debugging
@@ -504,7 +504,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
 ![image](./media/image-23.png)
 
-1. Open the `Utils\StorageHelper.cs` file and paste the follwing:
+1. Open the `Utils\StorageHelper.cs` file and paste the following:
 
     ```csharp
     using Microsoft.WindowsAzure.Storage;
@@ -620,7 +620,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
    public async Task<ActionResult> Create( ...
    ```
 1. Save the files and hit F5 to debug.
-1. Add a new incidient with a picuture and watch it get uploaded to Azure storage.
+1. Add a new incident with a picture and watch it get uploaded to Azure storage.
 1. Close the browser and stop debugging.
 
 END
