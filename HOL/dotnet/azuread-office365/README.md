@@ -21,12 +21,12 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-* The source for the starter app is located in the [start]((start) folder. 
+* The source for the starter app is located in the [start](start) folder. 
 * The finished project is located in the [end](end) folder. 
 * Deployed the starter ARM Template
 * Completion of the first modern-apps lab 
 
-> Note: If you did not complete the modern-app lab, the starter project is cumulative.
+> Note: If you did not complete the modern-app lab, the starter project is cumulative and contains the completed modern-app lab.
 
 ## Exercises
 
@@ -112,9 +112,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 ![image](./media/image-016.png)
 ![image](./media/image-017.png)
 
-1. In Visual Studio, navigate to the Utils folder and create a 2 new helper classes. Create `AuthHelper.cs` and `SessionTokeCache.cs`
-
-1. Add the following packages from nuget:
+1. In Visual Studio, Add the following packages from nuget:
 
 > `Microsoft.IdentityModel.Clients.ActiveDirectory`
 >
@@ -127,6 +125,8 @@ AzureAD can handle authentication for web applications. First we will create a n
 > `Microsoft.Owin.Security.Cookies`
 >
 > `Microsoft.Owin.Host.SystemWeb`
+
+1. navigate to the Utils folder and create a 2 new helper classes. Create `AuthHelper.cs` and `SessionTokeCache.cs`
 
 1. Open `AuthHelper.cs` and paste the following code:
 
@@ -187,7 +187,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     }
     ```
 
-1. Open` SessionTokenCache.cs` and paste the follwing code:
+1. Open` SessionTokenCache.cs` and paste the following code:
 
     ```csharp
     //Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
@@ -271,7 +271,9 @@ AzureAD can handle authentication for web applications. First we will create a n
     }
     ```
 
-1. Right click on the App_Start folder and select New > OwinStartupClass
+1. Right click on the App_Start folder and select New > OWIN Startup Class
+
+![image](./media/image-018.png)
 
 1. Name it Startup. Once it is created and open, paste the following:
 
@@ -457,7 +459,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     }
     ```
 
-1. Update the Setting.cs class with the additional constants. Paste these values below the existing ones.
+1. Update the Setting.cs class with the additional constants. Paste these values below the existing ones from HOL2.
 
     ```csharp
         //####    HOL 3    ######
@@ -524,10 +526,12 @@ AzureAD can handle authentication for web applications. First we will create a n
                 </ul>
             </div>
     ```
-    Before:
-![image](./media/image-016.png)
-    After:
-![image](./media/image-016.png)
+#### Before:
+![image](./media/image-019.png)
+    
+#### After:
+
+![image](./media/image-020.png)
 
 1. Add a new controller called `ProfileController` to handle signins
 1. Paste the following:
