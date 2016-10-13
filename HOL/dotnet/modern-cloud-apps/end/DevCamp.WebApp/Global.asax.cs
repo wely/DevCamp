@@ -1,6 +1,4 @@
-﻿using DevCamp.WebApp.Utils;
-using Microsoft.ApplicationInsights.Extensibility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,10 +16,6 @@ namespace DevCamp.WebApp
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            //Add the telemetry key from config
-            TelemetryConfiguration.Active.InstrumentationKey = Settings.APPINSIGHTS_KEY;
-
         }
     }
 }

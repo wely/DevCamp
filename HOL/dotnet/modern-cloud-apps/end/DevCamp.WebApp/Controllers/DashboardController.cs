@@ -10,8 +10,7 @@ namespace DevCamp.WebApp.Controllers
 {
     public class DashboardController : Controller
     {
-        [AllowAnonymous]
-        public async Task<ViewResult> Index()
+        public async Task<ActionResult> Index()
         {
             //##### API DATA HERE #####
             List<Incident> incidents;
@@ -35,8 +34,8 @@ namespace DevCamp.WebApp.Controllers
                 }
                 //##### Add caching here #####
             }
-            return View(incidents);
             //##### API DATA HERE #####
+            return View(incidents);
         }
     }
 }
