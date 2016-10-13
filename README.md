@@ -1,6 +1,12 @@
 # DevCamp
 Contains content for the Azure EDU partner DevCamp world tour 2016-2017
 
+> The current status is:
+
+>   **WORK IN PROGRESS**
+
+> Scheduled for release in November 2016
+
 These labs and content will kickstart your Azure knowledge with a combination of lectures and hands on labs. It is intended to be delivered in a classroom environment but feel free to reuse this content.
 
 ---
@@ -29,7 +35,7 @@ In this lab you will setup Azure access, create your O365 developer Tenant, down
 ---
 
 ##  Module 2 - Modern Cloud Apps Overview ####
-We will provide an overview of some common cloud technologies, patterns and Azure features (Polyglot, scalability, app insights, Redis, patterns, traffic manager, global scale, blob, CDNs) and introduce you to the sample application. It is written 3-ways (.NET, Node.js and Java) so you can pick you platform of choice.
+We will provide an overview of some common cloud technologies, patterns and Azure features (Polyglot, scalability, app insights, Redis, patterns, traffic manager, global scale, blob, CDNs) and introduce you to the sample application. It is written 3-ways (.NET, Node.js and Java) so you can pick your platform of choice.
 
 [View PowerPoint](Presentation/Module02-ModernCloudApps.pptx?raw=true)
 
@@ -51,7 +57,7 @@ In this lab, you will enable Azure AD authentication, access the Office 365 APIs
 
 ---
 ## Module 4 - DevOps Overview ####
-We will provide an overview of Visual Studio Team Services (VSTS), DevOps concepts, build tasks, release environments, integration with Azure and Git/GitHub and Azure to create a cross-platform build, integration and release piplelines.
+We will provide an overview of Visual Studio Team Services (VSTS), DevOps concepts, build tasks, release environments, integration with Azure and Git/GitHub and Azure to create a cross-platform build, integration and release pipelines.
 
 [View PowerPoint](Presentation/Module04-DevOps.pptx?raw=true)
 
@@ -89,6 +95,6 @@ In this module, we will provide an overview of Docker and introduce you to the A
 
 ---
 ## Module 8 - Azure features and APIs ####
-We will provide a quick lap around the various apis, features and services available for developers.
+We will provide a quick lap around the various APIs, features and services available for developers.
 
 [View PowerPoint](Presentation/Module08-Azure Features.pptx?raw=true)
