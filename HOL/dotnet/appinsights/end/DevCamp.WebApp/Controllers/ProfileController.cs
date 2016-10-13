@@ -1,5 +1,6 @@
 ﻿using DevCamp.WebApp.Utils;
 using DevCamp.WebApp.ViewModels;
+using Microsoft.ApplicationInsights;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -20,6 +21,9 @@ namespace DevCamp.WebApp.Controllers
 
     public class ProfileController : Controller
     {
+        //Add telemetry
+        private TelemetryClient telemetryClient = new TelemetryClient();
+
         // The URL that auth should redirect to after a successful login.
         Uri loginRedirectUri => new Uri(Url.Action(nameof(Index), "Profile", null, Request.Url.Scheme));
         // The URL to redirect to after a logout.
@@ -27,6 +31,8 @@ namespace DevCamp.WebApp.Controllers
 
         public void SignIn()
         {
+            telemetryClient.TrackEvent("Sign in");
+
             if (!Request.IsAuthenticated)
             {
                 // Signal OWIN to send an authorization request to Azure
@@ -38,6 +44,8 @@ namespace DevCamp.WebApp.Controllers
 
         public void SignOut()
         {
+            telemetryClient.TrackEvent("Sign out");
+
             if (Request.IsAuthenticated)
             {
                 // Get the user's token cache and clear it
@@ -69,13 +77,17 @@ namespace DevCamp.WebApp.Controllers
                 AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
                 string accessToken = await authHelper.GetUserAccessToken(Url.Action("Index", "Home", null, Request.Url.Scheme));
 
+                //#### TRACK A CUSTOM EVENT ####
+                var profileProperties = new Dictionary<string, string> { { "userid", userObjId }, { "tenantid", tenantId } };
+                telemetryClient.TrackEvent("View Profile", profileProperties);
+                //#### TRACK A CUSTOM EVENT ####
+
                 using (var client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    // New code:
                     HttpResponseMessage response = await client.GetAsync(Settings.GRAPH_CURRENT_USER_URL);
                     if (response.IsSuccessStatusCode)
                     {
