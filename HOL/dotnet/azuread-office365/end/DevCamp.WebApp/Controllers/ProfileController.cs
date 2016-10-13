@@ -75,7 +75,6 @@ namespace DevCamp.WebApp.Controllers
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    // New code:
                     HttpResponseMessage response = await client.GetAsync(Settings.GRAPH_CURRENT_USER_URL);
                     if (response.IsSuccessStatusCode)
                     {
