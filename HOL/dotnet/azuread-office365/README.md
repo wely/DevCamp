@@ -443,11 +443,11 @@ AzureAD can handle authentication for web applications. First we will create a n
                 </ul>
             </div>
     ```
-#### Before ###:
+    #### Before:
 
     ![image](./media/image-019.png)
-    
-#### After ###:
+        
+    #### After:
 
     ![image](./media/image-020.png)
 
@@ -509,58 +509,34 @@ AzureAD can handle authentication for web applications. First we will create a n
                     CookieAuthenticationDefaults.AuthenticationType);
                     Response.Redirect("/");
                 }
-
-                [Authorize]
-                //
-                // GET: /UserProfile/
-                public async Task<ActionResult> Index()
-                {
-                    UserProfileViewModel userProfile = new UserProfileViewModel();
-                    try
-                    {
-                        string userObjId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
-                        SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
-
-                        string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst(Settings.AAD_TENANTID_CLAIMTYPE).Value;
-                        string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
-                        AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
-                        string accessToken = await authHelper.GetUserAccessToken(Url.Action("Index", "Home", null, Request.Url.Scheme));
-
-                        using (var client = new HttpClient())
-                        {
-                            client.DefaultRequestHeaders.Accept.Clear();
-                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                            // New code:
-                            HttpResponseMessage response = await client.GetAsync(Settings.GRAPH_CURRENT_USER_URL);
-                            if (response.IsSuccessStatusCode)
-                            {
-                                string resultString = await response.Content.ReadAsStringAsync();
-
-                                userProfile = JsonConvert.DeserializeObject<UserProfileViewModel>(resultString);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        ViewBag.Error = "An error has occurred. Details: " + ex.Message;
-                        return View();
-                    }
-
-
-                    return View(userProfile);
-                }
             }
         }    
     ```
 
-1. Add the Authorize attribute to the IncidentConroller classes. This will block any access to these routes until they authenticate. The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
+1. Add the Authorize attribute to the `IncidentConroller` methods to block any access to these routes until the user authenticates. 
 
-### Exercise 2: Create a user profile page
-Next, we are going to create a page to display information about the logged in user.  While AzureAD returns a name and email address, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a route, and then query the Graph for user information.
+    ```csharp
+    [Authorize]
+    public ActionResult Details(string Id)
+        ... OMITTED
 
-1. In the profile folder, create a new file named `Index.cshtml`. Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
+        ... OMITTED
+
+    ```
+1. Compile and hit F5 to start debuggging. 
+1. When you login for the first time, you will be prompted to allow permission for the app to access your data. Click Accept
+
+    ![image](./media/image-022.png)
+
+1. Click on the `Report Outage` button. The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
+
+### Exercise 2: Create a user profile page with Graph Data
+Next, we are going to create a page to display information about the logged in user.  While AzureAD returns a name and email address, we can query the Microsoft Graph for extended details about a given user.  We will query the Graph for user information.
+
+1. In the `profile` folder, create a new View named `Index.cshtml`. This view will display a set of attributes in a simple table where each row corresponds to an attribute. Paste the following code in the view:
 
     ```csharp
     @model DevCamp.WebApp.ViewModels.UserProfileViewModel
@@ -632,22 +608,178 @@ Next, we are going to create a page to display information about the logged in u
 
     ```
 
-1. Add code to the profile controller
-1. Add code to the 
-
-We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
-
-### Exercise 3: Interact with the Microsoft Graph
-In the previous exercise you read data from the Microsoft Graph, but other endpoints can be used for more sophisticated tasks.  In this exercise we will use the Graph to send an email message whenever a new incident is reported.
-
-1. Add the constants to `setting.cs`
+1. We will use a ViewModel to represent the data we display in the UI. In the `ViewModels` folder, create a new class called `UserProfileViewModel.cs`.
+1. Paste the following code in the file:
 
     ```csharp
-    public static string EMAIL_MESSAGE_BODY = getEmailMessageBody();
-    public static string EMAIL_MESSAGE_SUBJECT = "New Incident Reported";
-    public static string EMAIL_MESSAGE_TYPE = "HTML"; 
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+
+    namespace DevCamp.WebApp.ViewModels
+    {
+        public class UserProfileViewModel
+        {
+            public string Id { get; set; }
+            public List<string> BusinessPhones { get; set; }
+            public string DisplayName { get; set; }
+            public string GivenName { get; set; }
+            public string JobTitle { get; set; }
+            public string Mail { get; set; }
+            public string MobilePhone { get; set; }
+            public string OfficeLocation { get; set; }
+            public string PreferredLanguage { get; set; }
+            public string Surname { get; set; }
+            public string UserPrincipalName { get; set; }
+        }
+
+        public enum SendMessageStatusEnum
+        {
+            NotSent,
+            Sent,
+            Fail
+        }
+
+        // Data / schema contracts between this app and the Office 365 unified API server.
+        public class SendMessageResponse
+        {
+            public SendMessageStatusEnum Status { get; set; }
+            public string StatusMessage { get; set; }
+        }
+
+        public class SendMessageRequest
+        {
+            public Message Message { get; set; }
+
+            public bool SaveToSentItems { get; set; }
+        }
+
+        public class Message
+        {
+            public string Subject { get; set; }
+            public MessageBody Body { get; set; }
+            public List<Recipient> ToRecipients { get; set; }
+        }
+        public class Recipient
+        {
+            public UserProfileViewModel EmailAddress { get; set; }
+        }
+
+        public class MessageBody
+        {
+            public string ContentType { get; set; }
+            public string Content { get; set; }
+        }
+    }
     ```
-1. Add a method to `setting.cs` generate the HTML body content for the email
+
+1. Add code to the profile controller ***Index*** method to bind data from the Graph to the ViewModel. We are also adding the authorize attribute to ensure that the user is signed in before viewing this page.
+
+    ```csharp
+    [Authorize]
+    //
+    // GET: /UserProfile/
+    public async Task<ActionResult> Index()
+    {
+        UserProfileViewModel userProfile = new UserProfileViewModel();
+        try
+        {
+            string userObjId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
+            SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
+
+            string tenantId = System.Security.Claims.ClaimsPrincipal.Current.FindFirst(Settings.AAD_TENANTID_CLAIMTYPE).Value;
+            string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
+            AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
+            string accessToken = await authHelper.GetUserAccessToken(Url.Action("Index", "Home", null, Request.Url.Scheme));
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(Settings.GRAPH_CURRENT_USER_URL);
+                if (response.IsSuccessStatusCode)
+                {
+                    string resultString = await response.Content.ReadAsStringAsync();
+
+                    userProfile = JsonConvert.DeserializeObject<UserProfileViewModel>(resultString);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ViewBag.Error = "An error has occurred. Details: " + ex.Message;
+            return View();
+        }
+
+
+        return View(userProfile);
+    }
+
+    ```
+
+1. Let's also fill in some information on the Create new incident form from the logged in user. Open the IncidentController.cs file.
+1. Replace the existing ***Create*** method with the following code:
+
+    ```csharp
+    [Authorize]
+    public async Task<ActionResult> Create()
+    {
+        //####### FILL IN THE DETAILS FOR THE NEW INCIDENT BASED ON THE USER
+        IncidentViewModel incident = new IncidentViewModel();
+
+        string userObjId = ClaimsPrincipal.Current.FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
+        SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
+
+        string tenantId = ClaimsPrincipal.Current.FindFirst(Settings.AAD_TENANTID_CLAIMTYPE).Value;
+        string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
+        AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
+        string accessToken = await authHelper.GetUserAccessToken(Url.Action("Create", "Incident", null, Request.Url.Scheme));
+
+        UserProfileViewModel userProfile = new UserProfileViewModel();
+        try
+        {
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // New code:
+                HttpResponseMessage response = await client.GetAsync(Settings.GRAPH_CURRENT_USER_URL);
+                if (response.IsSuccessStatusCode)
+                {
+                    string resultString = await response.Content.ReadAsStringAsync();
+
+                    userProfile = JsonConvert.DeserializeObject<UserProfileViewModel>(resultString);
+                }
+            }
+        }
+        catch (Exception eee)
+        {
+            ViewBag.Error = "An error has occurred. Details: " + eee.Message;
+        }
+
+        incident.FirstName = userProfile.GivenName;
+        incident.LastName = userProfile.Surname;
+        //####### 
+        return View(incident);
+    }
+
+    ```
+
+1. Click Save ALL, resolve any missing references and hit F5 to see the resulting profie page. We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
+
+    ![image](./media/image-021.png)
+
+
+### Exercise 3: Interact with the Microsoft Graph
+In the previous exercise you read data from the Microsoft Graph, but there are other endpoints can be used for more sophisticated tasks.  In this exercise we will use the Graph to send an email message whenever a new incident is reported.
+
+1. Add a method to `setting.cs` generate the HTML body content for the email. We will be setting 2 placeholders `{0} and {1}` for the first name and last name of the person reporting the incident.
 
     ```csharp
     static string getEmailMessageBody()
@@ -669,7 +801,16 @@ In the previous exercise you read data from the Microsoft Graph, but other endpo
     }    
     ```
 
-1. Create a new model to represent the MailMessage structure. Add the following to the
+1. Add some new constants to `Settings.cs` file. These handle standard text for the emails.
+
+    ```csharp
+    public static string EMAIL_MESSAGE_BODY = getEmailMessageBody();
+    public static string EMAIL_MESSAGE_SUBJECT = "New Incident Reported";
+    public static string EMAIL_MESSAGE_TYPE = "HTML"; 
+    ```
+1. Create a new model names to represent the MailMessage in the ***Models*** folder. This represents a subset of the [message](https://graph.microsoft.io/en-us/docs/api-reference/v1.0/resources/message) resource. 
+
+1. Add the following to the class. 
 
     ```csharp
     using System;
@@ -741,9 +882,99 @@ In the previous exercise you read data from the Microsoft Graph, but other endpo
             public bool SaveToSentItems { get; set; }
         }
     }
-    
     ```
 
+1. Add some helper methods to the `IncidentController` that will handle the email interaction. Paste the following methods in the class:
+
+    ```csharp
+    private async Task SendIncidentEmail(Incident incidentData, string AuthRedirectUrl)
+    {
+        string userObjId = ClaimsPrincipal.Current.FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
+
+        //The email is the UPN of the user from the claim
+        string emailAddress = getUserEmailAddressFromClaims(ClaimsPrincipal.Current);
+
+        SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
+
+        string tenantId = ClaimsPrincipal.Current.FindFirst(Settings.AAD_TENANTID_CLAIMTYPE).Value;
+        string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
+        AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
+        string accessToken = await authHelper.GetUserAccessToken(Url.Action("Create", "Incident", null, Request.Url.Scheme));
+
+        EmailMessage msg = getEmailBodyContent(incidentData, emailAddress);
+
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            // New code:
+            StringContent msgContent = new StringContent(JsonConvert.SerializeObject(msg), System.Text.Encoding.UTF8, "application/json");
+            msgContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+            HttpResponseMessage response = await client.PostAsync(Settings.GRAPH_SENDMESSAGE_URL, msgContent);
+            if (response.IsSuccessStatusCode)
+            {
+                string resultString = await response.Content.ReadAsStringAsync();
+            }
+        }
+    }
+
+    private string getUserEmailAddressFromClaims(ClaimsPrincipal CurrentIdentity)
+    {
+        string email = string.Empty;
+        //see of the name claim looks like an email address
+        //Another option is to access the graph again to get the email addresss
+        if (CurrentIdentity.Identity.Name.Contains("@"))
+        {
+            email = CurrentIdentity.Identity.Name;
+        }
+        else
+        {
+            foreach (Claim c in CurrentIdentity.Claims)
+            {
+                if (c.Value.Contains("@"))
+                {
+                    //Might be an email address, use it
+                    email = c.Value;
+                    break;
+                }
+            }
+        }
+        return email;
+    }
+
+    private static EmailMessage getEmailBodyContent(Incident incidentData, string EmailFromAddress)
+    {
+        EmailMessage msg = new EmailMessage();
+        msg.Message.body.contentType = Settings.EMAIL_MESSAGE_TYPE;
+        msg.Message.body.content = string.Format(Settings.EMAIL_MESSAGE_BODY, incidentData.FirstName, incidentData.LastName);
+        msg.Message.subject = Settings.EMAIL_MESSAGE_SUBJECT;
+        Models.EmailAddress emailTo = new Models.EmailAddress() { name = EmailFromAddress, address = EmailFromAddress };
+        ToRecipient sendTo = new ToRecipient();
+        sendTo.emailAddress = emailTo;
+        msg.Message.toRecipients.Add(sendTo);
+        msg.SaveToSentItems = true;
+        return msg;
+    }
+    ```
+1. In the ***Create Method***, add code to send the email. After we clear the cache, let's send the email. Paste the following code *AFTER* the ***Clear Cache*** code:
+
+    ```csharp
+    //clear cache code above
+
+    //##### SEND EMAIL #####
+    await SendIncidentEmail(incidentToSave, Url.Action("Index", "Dashboard", null, Request.Url.Scheme));
+    //##### SEND EMAIL  #####
+
+    // Redirect code below
+    ```
+
+1. Click save > build and F5 to start debugging. Now when you add a new incident, you should recieve an email.
+    
+    ![image](./media/image-023.png)
+
+> Note that the reciever is HARD CODED in the `getEmailBodyContent` method. In production, you may have a mailbox account that is common.
 
 Sending this email did not require the setting up of a dedicated email server, but instead leveraged capabilities within the Microsoft Graph.  We could have also created a calendar event, or a task related to the incident for a given user, all via the API.
 
