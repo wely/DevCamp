@@ -122,7 +122,7 @@ exercise.
 1. After the empty Build Definition is created, we need to create a series of Build Steps.
 
     * Perform a gradle build of the application
-    * Copy the ROOT.war file into a `/website` directory, so that when we do a web deploy, 
+    * Copy the ROOT.war file into a `/webapps` directory, so that when we do a web deploy, 
     the WAR gets placed in the right location
     * Package the code assets into a deployable zip file
     * Publish the zip file as a Publish Artifact that can be consumed by the VSTS Release System
@@ -151,7 +151,7 @@ exercise.
 
     Configure **Source Folder** for `$(build.sourcesdirectory)/build/libs`, 
     **Contents** for `**/*.war`,
-    **Target Folder** for `$(build.artifactstagingdirectory)/website` 
+    **Target Folder** for `$(build.artifactstagingdirectory)/webapps` 
     and name the step **Copy WAR file**
 
     ![image](./media/image-019.png)
@@ -218,7 +218,7 @@ toolbar, and **Download** the **drop** artifact.
 
     ![image](./media/image-027.png)
 
-1. Unzip `drop.zip` to see our files (including the restored `website` folder).  This 
+1. Unzip `drop.zip` to see our files (including the restored `webapps` folder).  This 
 artifact will be deployed to an Azure Web App in a later lab.
 
     ![image](./media/image-028.png)
@@ -306,41 +306,108 @@ to deploy our built application. Back in our VSTS Build Definition, click on
 
     ![image](./media/image-036c.png)
 
-    [TODO ross complete to here]
-1. VSTS needs a connection to a target Azure Subscription. Click **Manage** to open a new tab holding configuration options.
-
-
-    > Make sure to select the step with **RM** in the title, as it uses the newer Azure Resource Manager deployment system
-
-1. VSTS needs a connection to a target Azure Subscription. Click **Manage** to open a new tab holding configuration options.
+1. In the release definition screen, click the pencil and rename the release definition 
+to **Cloud Test Realease** and change the environment name to **Test Environment**
 
     ![image](./media/image-037.png)
 
-    In the new tab, select **New Service Endpoint** and from the dropdown choose **Azure Resource Manager**
+    Next, click on **Add tasks**
 
     ![image](./media/image-038.png)
 
-    The modal window should automatically determinine your subscription information.  Provide a name such as **Azure**, select **OK*, and a close the tab.
+    In the task catalog, find **AzureRM App Service Deployment** and click **Add**, and then **Close**
 
     ![image](./media/image-039.png)
+
+    > Make sure to select the step with **RM** in the title, as it uses the newer Azure Resource Manager deployment system
+
+1. Click on the task name **Deploy AzureRM App Service:** to open the attributes for that task. VSTS will 
+need a connection to the Azure subscription that you are deploying the application to.  Click **Manage** 
+to open a new browser tab holding configuration options.
+
+    ![image](./media/image-040.png)
+    
+    In the new tab, select **New Service Endpoint** and from the dropdown choose **Azure Resource Manager**
+
+    ![image](./media/image-041.png)
+
+    The modal window should automatically determinine your subscription information. 
+    Provide a name such as **Azure**, select **OK**, and a close the browser tab.
+
+    ![image](./media/image-042.png)
+
+    If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
+    format will chage to allow you to enter connection information on your subscription:    
+
+    ![image](./media/image-043.png)
+
+    If you have not created a service principal for the subscription, you will have to follow the 
+    [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so.  This process will 
+    provide the information to enter in this dialog:
+    1. open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
+    in your browser. Select all the content from the window and copy to the clipboard.
+    1. open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
+
+    ![image](./media/image-044.png)
+
+    3. Click the green arrow to run the PowerShell script
+
+    ![image](./media/image-045.png)
+
+    4. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
+    for the service principal only, not the password for your subscription.  So you can use whatever password 
+    you would like, just remember it.    
+
+    ![image](./media/image-046.png)
+
+    5. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
+    The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
+    window.  Copy and paste these values from the PowerShell window:
+        Subscription ID
+        Subscription Name
+        Service Principal Client ID
+        Service Principal Key
+        Tenant ID
+    Also, enter a user-friendly name to use when referring to this service endpoint connection.
+
+    ![image](./media/image-047.png)
+
+    Click **Verifiy connection*, and ensure that the window indicates that the connection was verified. 
+    Then Click **OK** and **Close**.
+
+    ![image](./media/image-048.png)
 
     > This pattern is used to connect to a variety of services beyond Azure such as Jenkins, Chef, and Docker
 
 1. Back on the VSTS Build window, in the Build Step we started earlier, click the **Refresh** icon. The **Azure** connection that we setup should now appear.  Select it. 
 
-    ![image](./media/image-040.png)
+    ![image](./media/image-049.png)
 
-    Next, for **App Service Name** choose the name of the Node Azure Web App. It may take a moment to populate.
+    Next, for **App Service Name** click the **Refresh** icon, choose the name of the Java Azure Web App. 
+    It may take a moment to populate.
 
-    ![image](./media/image-041.png)
+    ![image](./media/image-050.png)
 
-1. **Save** the Build Definition, and **Queue a new Build**
+1. **Save** the Build Definition, supplying a comment if you'd like.  Next, click **Release** and **Create Release**
 
-    ![image](./media/image-042.png)
+    ![image](./media/image-051.png)
 
-    After a successful build you should see the application deployed to your web app
+    In the following window, type a description for the release, choose the build that you created earlier, and click **Create**
 
-    ![image](./media/image-043.png)
+    ![image](./media/image-052.png)
+
+    You should see a message that your release has been created.  Click on the link for **Release-1**
+
+    ![image](./media/image-053.png)
+    
+    You will see the status for the release:
+
+    ![image](./media/image-054.png)
+    
+    When the release is complete, browse to the deployment website.  You should see the same application 
+    you tested in the modern-apps lab:
+
+    ![image](./media/image-055.png)
 
 ## Summary
 
