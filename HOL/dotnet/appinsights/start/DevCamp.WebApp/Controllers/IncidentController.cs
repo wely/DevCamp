@@ -5,6 +5,7 @@ using DevCamp.WebApp.ViewModels;
 using IncidentAPI;
 using IncidentAPI.Models;
 using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -34,10 +35,48 @@ namespace DevCamp.WebApp.Controllers
         }
 
         [Authorize]
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            //### TO BE REPLACED WITH API CALLS ###
-            return View();
+            //####### FILL IN THE DETAILS FOR THE NEW INCIDENT BASED ON THE USER
+            IncidentViewModel incident = new IncidentViewModel();
+
+            string userObjId = ClaimsPrincipal.Current.FindFirst(Settings.AAD_OBJECTID_CLAIMTYPE).Value;
+            SessionTokenCache tokenCache = new SessionTokenCache(userObjId, HttpContext);
+
+            string tenantId = ClaimsPrincipal.Current.FindFirst(Settings.AAD_TENANTID_CLAIMTYPE).Value;
+            string authority = string.Format(Settings.AAD_INSTANCE, tenantId, "");
+            AuthHelper authHelper = new AuthHelper(authority, Settings.AAD_APP_ID, Settings.AAD_APP_SECRET, tokenCache);
+            string accessToken = await authHelper.GetUserAccessToken(Url.Action("Create", "Incident", null, Request.Url.Scheme));
+
+            UserProfileViewModel userProfile = new UserProfileViewModel();
+            try
+            {
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    // New code:
+                    HttpResponseMessage response = await client.GetAsync(Settings.GRAPH_CURRENT_USER_URL);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string resultString = await response.Content.ReadAsStringAsync();
+
+                        userProfile = JsonConvert.DeserializeObject<UserProfileViewModel>(resultString);
+                    }
+                }
+            }
+            catch (Exception eee)
+            {
+                ViewBag.Error = "An error has occurred. Details: " + eee.Message;
+            }
+
+            incident.FirstName = userProfile.GivenName;
+            incident.LastName = userProfile.Surname;
+            //####### 
+            return View(incident);
         }
 
         [Authorize]
@@ -78,6 +117,10 @@ namespace DevCamp.WebApp.Controllers
                     //##### CLEAR CACHE ####
                     RedisCacheHelper.ClearCache(Settings.REDISCCACHE_KEY_INCIDENTDATA);
                     //##### CLEAR CACHE ####
+
+                    //##### SEND EMAIL #####
+                    await SendIncidentEmail(incidentToSave, Url.Action("Index", "Dashboard", null, Request.Url.Scheme));
+                    //##### SEND EMAIL  #####
 
                     return RedirectToAction("Index", "Dashboard");
                 }

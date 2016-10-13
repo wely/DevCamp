@@ -45,6 +45,10 @@ namespace DevCamp.WebApp.Utils
         public static string EMAIL_MESSAGE_TYPE = "HTML";
         //####    HOL 3    ######
 
+        //####    HOL 5   ######
+        public static string APPINSIGHTS_KEY = ConfigurationManager.AppSettings["APPINSIGHTS_KEY"];
+        //####    HOL 5   ######
+
         static string getEmailMessageBody()
         {
             StringBuilder emailContent = new StringBuilder();
