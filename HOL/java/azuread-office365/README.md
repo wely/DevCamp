@@ -10,7 +10,7 @@ City Power & Light is a sample application that allows citizens to to report "in
 
 In this lab, you will continue enhancing the City Power & Light application by adding authentication for users powered by [Azure Active Direcotry](https://azure.microsoft.com/en-us/services/active-directory/).  Once authenticated, you may then query the [Microsoft Office Graph](https://graph.microsoft.io) to retrieve information pertinent to the aplication.
 
-> This guide use [Visual Studio Code](https://code.visualstudio.com/) for editing, however please feel free to use your editor of choice.  If you are interested in using full Visual Studio + [Node.js Tools for Visual Studio Extension (NTVS)](https://www.visualstudio.com/vs/node-js/), please see [here](https://github.com/Microsoft/nodejstools/wiki/Projects#create-project-from-existing-files) for instructions on wrapping existing code into a VS Project.
+This guide uses [Eclipse STS](https://spring.io/tools) for editing, however please feel free to use your editor of choice.
 
 ## Objectives
 In this hands-on lab, you will learn how to:
@@ -50,7 +50,9 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/image-003.png)
 
-1. After AzureAD handles the authentication, it needs a route in our application to redirect the user.  For testing locally, we'll use `http://localhost:3000/auth/openid/return` as the **Redirect URI** and as an environment variable named `AAD_RETURN_URL`.  Click the **Create** button. 
+1. After AzureAD handles the authentication, it needs a route in our application to redirect the user.  
+For testing locally, we'll use `http://localhost:8080/auth/openid/return` as the **Redirect URI** and 
+as an environment variable named `AAD_RETURN_URL`.  Click the **Create** button. 
 
     ![image](./media/image-004.png)
 
@@ -68,225 +70,40 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/image-007.png)
 
-1. In VSCode, let's add those environment variables into `.vscode/launch.json`:
+1. In Eclipse, let's add those environment variables by opening the run environment, click on the environment tab, and clicking `new` (using the values you captured above):
 
-    ```json
+    ```
     "AAD_RETURN_URL": "http://localhost:3000/auth/openid/return",
     "AAD_CLIENT_ID": "2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6",
     "AAD_CLIENT_SECRET": "JjrKfgDyo5peQ4xJa786e8z"
-    ```
-1. Next, We have two choices of libraries to handle authentication between our Node application and AzureAD. The first is the [Azure Active Directory Library for NodeJS](https://github.com/AzureAD/azure-activedirectory-library-for-nodejs) (ADAL), and the second leverages [Passport.js](http://passportjs.org/) with the [Azure Active Directory Passport.js Plugin](https://github.com/AzureAD/passport-azure-ad).  For this example, we will use the Passport plugin in a utility file.    
-
-    Create `utility/auth.js` and paste in the following:
-
-    ```javascript
-    var passport = require('passport');
-    var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
-
-    var config = {
-        creds: {
-            returnURL: process.env.AAD_RETURN_URL,
-            identityMetadata: 'https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration', // For using Microsoft you should never need to change this.
-            validateIssuer: false,
-            clientID: process.env.AAD_CLIENT_ID,
-            clientSecret: process.env.AAD_CLIENT_SECRET, // if you are doing a responseType of code or id_token code
-            skipUserProfile: true, // for AzureAD should be set to true.
-            responseType: 'id_token code', // for login only flows use id_token. For accessing resources use `id_token code`
-            responseMode: 'form_post', // For login only flows we should have token passed back to us in a POST
-            scope: ['User.Read', 'Mail.Send', 'Calendars.ReadWrite'] // additional scopes you may wish to pass
-        }
-    };
-
-    module.exports.setup = function (app) {
-
-        //   Passport session setup.
-
-        //   To support persistent login sessions, Passport needs to be able to
-        //   serialize users into and deserialize users out of the session.  Typically,
-        //   this will be as simple as storing the user ID when serializing, and finding
-        //   the user by ID when deserializing.
-        passport.serializeUser(function (user, done) {
-            done(null, user.email);
-        });
-
-        passport.deserializeUser(function (id, done) {
-            findByEmail(id, function (err, user) {
-                done(err, user);
-            });
-        });
-
-        // array to hold logged in users
-        var users = [];
-
-        var findByEmail = function (email, fn) {
-            for (var i = 0, len = users.length; i < len; i++) {
-                var user = users[i];
-                console.log('we are using user: ', user);
-                if (user.email === email) {
-                    return fn(null, user);
-                }
-            }
-            return fn(null, null);
-        };
-
-        //  Use the OIDCStrategy within Passport. 
-        // 
-        //   Strategies in passport require a `validate` function, which accept
-        //   credentials (in this case, an OpenID identifier), and invoke a callback
-        //   with a user object.
-        passport.use(new OIDCStrategy({
-            callbackURL: config.creds.returnURL,
-            realm: config.creds.realm,
-            clientID: config.creds.clientID,
-            clientSecret: config.creds.clientSecret,
-            oidcIssuer: config.creds.issuer,
-            identityMetadata: config.creds.identityMetadata,
-            responseType: config.creds.responseType,
-            responseMode: config.creds.responseMode,
-            skipUserProfile: config.creds.skipUserProfile,
-            scope: config.creds.scope,
-            validateIssuer: config.creds.validateIssuer
-        },
-            function (iss, sub, profile, accessToken, refreshToken, done) {
-
-                console.log(`Email address we received was: ${profile.email}`);
-                
-                // Add the token to the profile
-                // TODO: Add logic for token refreshment
-                profile.token = accessToken;
-                
-                // Asynchronous verification for effect...
-                process.nextTick(function () {
-                    findByEmail(profile.email, function (err, user) {
-                        if (err) {
-                            return done(err);
-                        }
-                        if (!user) {
-                            // "Auto-registration"
-                            users.push(profile);
-                            return done(null, profile);
-                        }
-                        return done(null, user);
-                    });
-                });
-            
-        }
-
-        ));
-
-        //Routes
-        app.get('/', function (req, res) {
-            res.render('index', { user: req.user });
-        });
-
-        app.get('/login',
-            passport.authenticate('azuread-openidconnect', { failureRedirect: '/login' }),
-            function (req, res) {
-                console.log('Login was called in the Sample');
-                res.redirect('/');
-            });
-
-        //   Our POST routes
-
-        //   POST /auth/openid
-        //   Use passport.authenticate() as route middleware to authenticate the
-        //   request.  The first step in OpenID authentication will involve redirecting
-        //   the user to their OpenID provider.  After authenticating, the OpenID
-        //   provider will redirect the user back to this application at
-        //   /auth/openid/return
-        app.post('/auth/openid',
-            passport.authenticate('azuread-openidconnect', { failureRedirect: '/login' }),
-            function (req, res) {
-                console.log('Authentication was called');
-                res.redirect('/');
-            });
-
-        // GET /auth/openid/return
-        //   Use passport.authenticate() as route middleware to authenticate the
-        //   request.  If authentication fails, the user will be redirected back to the
-        //   login page.  Otherwise, the primary route function function will be called,
-        //   which, in this example, will redirect the user to the home page.
-        app.get('/auth/openid/return',
-            passport.authenticate('azuread-openidconnect', { failureRedirect: '/login' }),
-            function (req, res) {
-                res.redirect('/');
-            });
-
-        // POST /auth/openid/return
-        //   Use passport.authenticate() as route middleware to authenticate the
-        //   request.  If authentication fails, the user will be redirected back to the
-        //   login page.  Otherwise, the primary route function function will be called,
-        //   which, in this example, will redirect the user to the home page.
-        app.post('/auth/openid/return',
-            passport.authenticate('azuread-openidconnect', { failureRedirect: '/login' }),
-            function (req, res) {
-                res.redirect('/');
-            });
-
-        app.get('/logout', function (req, res) {
-            req.logout();
-            res.redirect('/');
-        });
-
-
-        // Simple route middleware to ensure user is authenticated.
-
-        //   Use this route middleware on any resource that needs to be protected.  If
-        //   the request is authenticated (typically via a persistent login session),
-        //   the request will proceed.  Otherwise, the user will be redirected to the
-        //   login page.
-        function ensureAuthenticated(req, res, next) {
-            if (req.isAuthenticated()) { return next(); }
-            res.redirect('/login');
-        }
-
-    };
-
-    module.exports.ensureAuthenticated = function (req, res, next) {
-        if (req.isAuthenticated()) {
-            return next();
-        }
-        res.redirect('/login');
-    };
+    "AAD_TENANT_ID": "JjrKfgDyo5peQ4xJa786e8z"
     ```
 
-1. With our authentication utility prepared, open `app.js` and add a require statement for `authHelper` and then call its setup with `authHelper.setup(app)`.  
+1. To add AAD identity support libraries to your Spring application, open the build.gradle
+   file and add the following entries under dependencies:
+   ```java
+	compile('com.microsoft.azure:adal4j:1.1.1')
+	compile('com.nimbusds:oauth2-oidc-sdk:4.5')
+	compile('org.springframework.security:spring-security-core')
+	compile('org.springframework.security:spring-security-web')
+	compile('org.springframework.security:spring-security-config')
+    ```
 
-    > Ensure this call comes after the route declarations, yet before the errors configuration.
+    To make sure that Eclipse knows about the new packages we added to
+    the buld, run the `ide/eclipse` gradle task in the `gradle tasks`
+    window. When that is done, right-click on the project in the project explorer,
+    close the project, and then open it again.
 
-    ```javascript
-    // Modules
-    var express = require('express');
-    var experssHelper = require('./utilities/express');
-    var errorHelper = require('./utilities/errors');
-    var authHelper = require('./utilities/auth');
 
-    // Create Express Application
-    var app = express();
 
-    // Configure Locals
-    var env = process.env.NODE_ENV || 'development';
-    app.locals.moment = require('moment');
+1. The Spring security features can be rather complex, however we are going to take a simplistic 
+route with this example.  We are going to create two security filters, one for requesting Azure 
+AD Authentication, and the other to process the Azure AD response.  These filters work in conjunction 
+with Spring security to allow flexible security requirements for pages in the application.
 
-    // Configure Express 
-    experssHelper.setup(app);
+First, create a class `devCamp.WebApp.AzureADAuthenticationFilter.java`, and paste this code into it:
 
-    // Configure Routes
-    app.use('/', require('./routes/index'));
-    app.use('/dashboard', require('./routes/dashboard'));
-    app.use('/new', require('./routes/new'));
-
-    // Configure Authentication
-    authHelper.setup(app);
-
-    // Configure Errors
-    errorHelper.setup(app);
-
-    // Start Server
-    app.set('port', process.env.PORT || 3000);
-    var server = app.listen(app.get('port'), function () {
-        console.log('Express server listening on port ' + server.address().port);
-    });
+    ```java
     ```
 
 1. The Passport middleware adds a `user` object to the `req` object. In order to use this object in our views to display user data, we need to update how we call `res.render()` in each of our routes. 

@@ -34,7 +34,7 @@ This hands-on-lab has the following exercises:
 * Exercise 2: Create a user profile page
 * Exercise 3: Send a confirmation email to the user on incident creation
 
-## Exercise 1: Integrate the API
+### Exercise 1: Integrate the API
 
 AzureAD can handle authentication for web applications. First we will create a new application in our AzureAD directory, and then we will extend our application code to work with an authentication flow. 
 
@@ -342,7 +342,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
 The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
 
-## Exercise 2: Create a user profile page
+### Exercise 2: Create a user profile page
 Next, we are goign to create a page to display information about the logged in user.  While AzureAD returns a name and email address, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a route, and then query the Graph for user information.
 
 1. Create a new file named `views/profile.pug`. Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
@@ -407,7 +407,7 @@ Next, we are goign to create a page to display information about the logged in u
 
 We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
 
-## Exercise 3: Interact with the Microsoft Graph
+### Exercise 3: Interact with the Microsoft Graph
 In the previous exercise you read data from the Microsoft Graph, but other endpoints can be used for more sophisticated tasks.  In this exercise we will use the Graph to send an email message whenever a new incident is reported.
 
 1. Create a new file in `utilities/mail.js` that will take a recipient and generate a JSON message body for passing into the Graph API. 
@@ -548,3 +548,5 @@ Sending this email did not require the setting up of a dedicated email server, b
 
 ## Summary
 Our application can now bifurcate anonymous and authenticated users to ensure flexibility between public and private data.  We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
+
+Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
