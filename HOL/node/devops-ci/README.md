@@ -215,7 +215,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-032.png)
 
-    In the section for **Platforms**, click **Add Url** to add the URL of your Azure Web App from Step 1.  Remember to append the `/auth/openid/return` route at the end, since that is the route that will process the return data from AzureAD.
+    In the section for **Platforms**, click **Add Url** to add the URL of your Azure Web App from Step 1.  Remember to append the `/auth/openid/return` route at the end, since that is the route that will process the return data from AzureAD. Ensure this address is using **https**.
 
     ![image](./media/image-033.png)
 
@@ -227,7 +227,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     Find the **App Settings** section containing a table of settings.  In the ARM Template we auto-generated the majority of these settings, however we need to add a few additional environment variables to match the `.vscode/launch.json` file that we have been using locally.
 
-    * **AAD_RETURN_URL** should be set to the same URL that we just configured for our AzureAD application. Should be similar to `http://nodejsappmm6lqhplzxjp2.azurewebsites.net/auth/openid/return`
+    * **AAD_RETURN_URL** should be set to the same URL that we just configured for our AzureAD application. Should be similar to `https://nodejsappmm6lqhplzxjp2.azurewebsites.net/auth/openid/return`. Ensure this is using **https**.
 
     * **AAD_CLIENT_ID** should match launch.json and similar to `2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6`
 
