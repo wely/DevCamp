@@ -121,8 +121,9 @@ exercise.
 
 1. After the empty Build Definition is created, we need to create a series of Build Steps.
 
-    * Verify NodeJS version installed on the build agent by echoing it to the console
-    * Restore all package dependencies with `npm install`
+    * Perform a gradle build of the application
+    * Copy the ROOT.war file into a `/website` directory, so that when we do a web deploy, 
+    the WAR gets placed in the right location
     * Package the code assets into a deployable zip file
     * Publish the zip file as a Publish Artifact that can be consumed by the VSTS Release System
 
@@ -148,7 +149,7 @@ exercise.
     In configuration boxes, we can use variables in addition to string 
     literals.   
 
-    Configure **Source Folder** for `$(build.sourcedirectory)`, 
+    Configure **Source Folder** for `$(build.sourcesdirectory)/build/libs`, 
     **Contents** for `**/*.war`,
     **Target Folder** for `$(build.artifactstagingdirectory)/website` 
     and name the step **Copy WAR file**
@@ -156,14 +157,14 @@ exercise.
     ![image](./media/image-019.png)
  
 
-1. Add a Build Step for **Archive**
+1. Add a Build Step for **Archive**, found under the left-hand filter for **Utility**
 
     ![image](./media/image-020.png)
 
-    For **Root Folder* insert `$(build.artifactstagingdirectory)`.
+    For **Root Folder** insert `$(build.artifactstagingdirectory)`
 
     For **Archive file to create** insert 
-    `$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip`. 
+    `$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip`
     This will dynamically name our zip file of code with the build number.
 
     Uncheck the box for **Prefix root folder name to archive paths** to 
@@ -171,14 +172,20 @@ exercise.
 
     ![image](./media/image-021.png)
 
-    > You can define your own variables to use throughout the Build and Release pipelines by clicking **Variables** in the Build Definition's sub-navigation. Also see [here](https://www.visualstudio.com/docs/build/define/variables) for all pre-defined variables available 
+    > You can define your own variables to use throughout the Build and Release pipelines by 
+    clicking **Variables** in the Build Definition's sub-navigation. Also see 
+    [here](https://www.visualstudio.com/docs/build/define/variables) for all pre-defined 
+    variables available 
 
 [TODO: RWS finish from here on down]
-1. Finally, create a Build Step for **Publish Build Artifacts**.  This step outputs a file(s) from our Build Definition as a special "artifact" that can be used in VSTS' Release Definitions.
+1. Finally, create a Build Step for **Publish Build Artifacts**, found under the left-hand filter 
+for **Utility**.  This step outputs a file(s) from our Build Definition as a special "artifact" 
+that can be used in VSTS' Release Definitions.
 
     ![image](./media/image-022.png)
 
-    Configure **Path to Publish** as `$(Build.SourcesDirectory)/archive/$(Build.BuildId).zip` to target the zip file created in the previous Build Step.
+    Configure **Path to Publish** as `$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip` to target 
+    the zip file created in the previous Build Step.
 
     For **Artifact Name** enter `drop`
 
@@ -190,7 +197,8 @@ exercise.
 
     ![image](./media/image-016.png)
 
-1. Our saved Build Definition is ready to be processed by the Hosted Build Agent.  Click **Queue New Build** to start the build process. 
+1. Our saved Build Definition is ready to be processed by the Hosted Build Agent.  
+Click **Queue New Build** to start the build process. 
 
     ![image](./media/image-024.png)
 
@@ -198,21 +206,23 @@ exercise.
 
     ![image](./media/image-025.png)
 
-    Your Build will then be queued until the Hosted Build Agent can pick it up for processing.  This typically lasts less than 60 seconds to begin.
+    Your Build will then be queued until the Hosted Build Agent can pick it up for processing.  
+    This typically takes less than 60 seconds to begin.
 
-1. Once your Build completes, click each step on the left navigation bar and inspect the output.  For **Echo Node Version** we can see the agent's version in the right **Logs** pane
+1. Once your Build completes, click each step on the left navigation bar and inspect the output.  
 
     ![image](./media/image-026.png)
 
-1. Let's inspect the output artifacts that were published.  Click the **Build 213** header in the left pane to view the build's landing page.  Then select **Artifacts** from the horizontal toolbar, and **Download** the **drop** artifact.
+1. Let's inspect the output artifacts that were published.  Click the **Build 13** header 
+in the left pane to view the build's landing page.  Then select **Artifacts** from the horizontal 
+toolbar, and **Download** the **drop** artifact.
 
     ![image](./media/image-027.png)
 
-1. Unzip `drop.zip` to see our files (including the restored `node_modules` folder).  This artifact will be deployed to an Azure Web App in a later lab.
+1. Unzip `drop.zip` to see our files (including the restored `website` folder).  This 
+artifact will be deployed to an Azure Web App in a later lab.
 
     ![image](./media/image-028.png)
-
-We not have a Build Definition that will construct our NodeJS application and package it for deployment anytime code is checked into the repository, or a manual build is queued. 
 
 ## Summary
 
