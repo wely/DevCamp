@@ -2,7 +2,7 @@
 
 namespace DevCamp.WebApp.Utils
 {
-    public class CacheHelper
+    public class RedisCacheHelper
     {
     }
 }
