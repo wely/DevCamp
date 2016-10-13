@@ -48,7 +48,6 @@ namespace DevCamp.WebApp.Utils
 
         //####    HOL 5   ######
         public static string APPINSIGHTS_KEY = ConfigurationManager.AppSettings["APPINSIGHTS_KEY"];
-
         //####    HOL 5   ######
 
         static string getEmailMessageBody()
