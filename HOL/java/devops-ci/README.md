@@ -177,7 +177,6 @@ exercise.
     [here](https://www.visualstudio.com/docs/build/define/variables) for all pre-defined 
     variables available 
 
-[TODO: RWS finish from here on down]
 1. Finally, create a Build Step for **Publish Build Artifacts**, found under the left-hand filter 
 for **Utility**.  This step outputs a file(s) from our Build Definition as a special "artifact" 
 that can be used in VSTS' Release Definitions.
@@ -224,6 +223,125 @@ artifact will be deployed to an Azure Web App in a later lab.
 
     ![image](./media/image-028.png)
 
+### Exercise 5: Deploy code to an Azure Web App
+
+In the ARM Template that was originally deployed, a web app was created as a development 
+environment to hold a deployed Java application. We will use this web app as a deployment 
+target from VSTS. First, we need to prepare this web app for our application code.
+
+1. Visit the Azure Web App by browsing to the [Azure Portal](http://portal.azure.com), 
+opening the Resource Group, and select the Azure Web App resource that contains 
+**javaapp** before the random string. 
+
+    ![image](./media/image-029.png)
+
+    Once the blade expands, select **Browse** from the top toolbar
+
+    ![image](./media/image-030.png)
+
+    A new browser tab will open with a splash screen visible
+
+    ![image](./media/image-031.png)
+
+1. We can deploy our code to this Azure Web App, however it was not configured with our 
+AzureAD details. When trying to authenticate, AzureAD would refuse since it does not 
+know about this domain. 
+
+    To fix this, return to `https://apps.dev.microsoft.com`, login, and open your 
+    application settings. 
+
+    ![image](./media/image-032.png)
+
+    In the section for **Platforms**, click **Add Url** to add the URL of your Azure Web 
+    App from Step 1.  Remember to append the `/auth/openid/return` route at the end, since 
+    that is the route that will process the return data from AzureAD. Ensure this address 
+    is using **https**.
+
+    ![image](./media/image-033.png)
+
+    Make sure you click **Save** at the bottom of the screen to add the URL to your 
+    AzureAD app.
+
+1. Now that AzureAD is configured, we need to add our AzureAD related environment 
+variables to the Azure Web App.  Back in the 
+**javaapp***** blade where you hit **Browse** earlier, open **Application Settings** from 
+the left navigation.
+
+    ![image](./media/image-034.png)
+
+    Find the **App Settings** section containing a table of settings.  In the ARM Template 
+    we auto-generated the majority of these settings, however we need to add a few 
+    additional environment variables to match the `.vscode/launch.json` file that we have 
+    been using locally.
+
+    * **AAD_RETURN_URL** should be set to the same URL that we just configured for our 
+    AzureAD application. Should be similar to 
+    `https://javaappmm6lqhplzxjp2.azurewebsites.net/auth/openid/return`. Ensure this 
+    is using **https**.
+
+    * **AAD_CLIENT_ID** should match the Application ID in the apps.dev.microsoft.com 
+    portal and similar to `2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6`
+
+    * **AAD_CLIENT_SECRET** should be the Application Secret generated in the apps 
+    portal, and be similar to `JjrKfgDyo5peQ4xJa786e8z`
+
+    ![image](./media/image-035.png)
+
+1. Now that the AzureAD application and the Azure Web App are ready, let's configure VSTS 
+to deploy our built application. Back in our VSTS Build Definition, click on 
+**Releases**. 
+
+    ![image](./media/image-036.png)
+
+    Create a new release definition by selecting **New Definition**
+
+    ![image](./media/image-036a.png)
+
+    Choose **Empty** to start with an empty release definition, and choose **Next**
+
+    ![image](./media/image-036b.png)
+
+    Next, check the box next to "Continuous deployment" to make sure a new release will
+    be executed whenever a build completes.  Click **Create** to complete the process.
+
+    ![image](./media/image-036c.png)
+
+    [TODO ross complete to here]
+1. VSTS needs a connection to a target Azure Subscription. Click **Manage** to open a new tab holding configuration options.
+
+
+    > Make sure to select the step with **RM** in the title, as it uses the newer Azure Resource Manager deployment system
+
+1. VSTS needs a connection to a target Azure Subscription. Click **Manage** to open a new tab holding configuration options.
+
+    ![image](./media/image-037.png)
+
+    In the new tab, select **New Service Endpoint** and from the dropdown choose **Azure Resource Manager**
+
+    ![image](./media/image-038.png)
+
+    The modal window should automatically determinine your subscription information.  Provide a name such as **Azure**, select **OK*, and a close the tab.
+
+    ![image](./media/image-039.png)
+
+    > This pattern is used to connect to a variety of services beyond Azure such as Jenkins, Chef, and Docker
+
+1. Back on the VSTS Build window, in the Build Step we started earlier, click the **Refresh** icon. The **Azure** connection that we setup should now appear.  Select it. 
+
+    ![image](./media/image-040.png)
+
+    Next, for **App Service Name** choose the name of the Node Azure Web App. It may take a moment to populate.
+
+    ![image](./media/image-041.png)
+
+1. **Save** the Build Definition, and **Queue a new Build**
+
+    ![image](./media/image-042.png)
+
+    After a successful build you should see the application deployed to your web app
+
+    ![image](./media/image-043.png)
+
 ## Summary
 
 In this hands-on lab, you learned how to:
@@ -231,5 +349,6 @@ In this hands-on lab, you learned how to:
 * Create a VSTS Git repository
 * Add your code to the VSTS Git repository
 * Create a Continuous Integration pipeline
+* Deploy a built application to an Azure Web App from VSTS
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
