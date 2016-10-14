@@ -27,6 +27,7 @@ This hands-on-lab has the following exercises:
 * Exercise 4: Create a Continuous Integration pipeline
 * Exercise 5: Deploy code to an Azure Web App
 
+----
 ### Exercise 1: Create VSTS online account
 
 1. In your browser, navigate to `https://www.visualstudio.com/`
@@ -35,6 +36,7 @@ This hands-on-lab has the following exercises:
 
 1. Log in with your Azure AD account 
 
+----
 ### Exercise 2: Create VSTS Git repository
 
 VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us/docs/tfvc/overview) as our project's repository.  For this exercise we will use Git, and then clone the repository to our dev machine. 
@@ -59,6 +61,7 @@ VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us
 
 You have now created a project in VSTS with a Git repository, and cloned the repository locally to your developer machine.  Next we'll upload code from our machine to VSTS.
 
+----
 ## Exercise 3: Add application to VSTS Git ##
 
 1. Click **Code** on the top toolbar to navigate to the Code screen.  Then click the **Clone in Visual Studio** button.
@@ -128,6 +131,7 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
      ![image](./media/image-054.png)
 
+----
 ## Exercise 4: Create Continuous Integration pipeline ##
 
 With application code now uploaded to VSTS, we can begin to create builds via a Build Definition.  Navigate to the **Build** tab from he top navigation.  We will use the hosted agent within VSTS to process our builds in this exercise.
@@ -150,11 +154,11 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
     
     ![image](./media/image-036.png)
 
-1. Navigate to the Build Solution step.
+1. Navigate to the ***Build Solution*** step.
 
-    ![image](./media/image-025.png)
+    ![image](./media/image-036.png)
 
-1. Add the following in the MSBuild Arguments text box to create a web deployment package as part of the build:
+1. Add the following in the ***MSBuild Arguments*** text box to create a web deployment package as part of the build:
 
     ```xml
     /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="bin\deploymentpackage"    
@@ -163,9 +167,13 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
 1. In the build step `Copy Files to: $(build.artifactstagingdirectory)`, the default setting uses build definition folders. We are not using custom build configurations so we need to update the contents value.
 
+    ### Previous setting ###
+    ![image](./media/image-023.png)
+
      ```xml
      **\bin\**
      ```
+     ### New setting ###
      ![image](./media/image-017.png)
 
 1. Save your Build Definition named **DotNet Build**
@@ -186,45 +194,81 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
 1. Let's inspect the output artifacts that were published.  Click the **Build XXX** header in the left pane to view the build's landing page.  Then select **Artifacts** from the horizontal toolbar, and **Download** the **drop** artifact.
 
+    ![image](./media/image-055.png)
+
     ![image](./media/image-022.png)
+
 
 1. Unzip `drop.zip` to see our files.  This artifact will be deployed to an Azure Web App in a later exercise.
 
 We now have a Build Definition that will compile the application and package it for deployment anytime code is checked into the repository, or a manual build is queued. 
 
+----
 ### Exercise 5: Deploy code to an Azure Web App
 
-In the ARM Template that was originally deployed, a web app was created as a development environment to hold a deployed NodeJS application. We will use this web app as a deployment target from VSTS. First, we need to prepare this web app for our application code.
+In the ARM Template that was originally deployed, a web app was created as a development environment to hold a deployed .NET application. We will use this web app as a deployment target from VSTS. First, we need to prepare this web app for our application code.
 
-1. Visit the Azure Web App by browsing to the [Azure Portal](http://portal.azure.com), opening the Resource Group, and select the Azure Web App resource that beings **dotnetsapp** before the random string. 
+1. Visit the Azure Web App by browsing to the [Azure Portal](http://portal.azure.com), opening the Resource Group, and select the Azure Web App resource that beings **dotnetapp** before the random string. 
 
-    ![image](./media/image-029.png)
+    ![image](./media/image-056.png)
 
     Once the blade expands, select **Browse** from the top toolbar
 
-    ![image](./media/image-030.png)
+    ![image](./media/image-024.png)
 
     A new browser tab will open with a splash screen visible
 
     ![image](./media/image-031.png)
 
-1. TBD
+1.  Now that we have a build being created and a website to deploy into, let's connect them. In VSTS, navigate to the release tab.
 
-1. Back on the VSTS Build window, in the Build Step we started earlier, click the **Refresh** icon. The **Azure** connection that we setup should now appear.  Select it. 
+    ![image](./media/image-037.png)
 
-    ![image](./media/image-040.png)
+1. Click the `+` sign and Create a new ***Release Definition***
 
-    Next, for **App Service Name** choose the name of the Node Azure Web App. It may take a moment to populate.
+    ![image](./media/image-038.png)
+
+1. Select ***Azure Website Deployment*** and click next.
+
+    ![image](./media/image-039.png)
+
+1.  We need to connect your VS agent with your Azure subscription so it can deploy resources. Cick on ***Manage***
 
     ![image](./media/image-041.png)
 
-1. **Save** the Build Definition, and **Queue a new Build**
+1. This will open a screen where you can connect to the ARM service endpoint. Select ***New Service Endpoint > Azure Resource Manager***
 
     ![image](./media/image-042.png)
 
-    After a successful build you should see the application deployed to your web app
+1. Provide a connection name and select you subscription then click OK
 
-    ![image](./media/image-043.png)
+    ![image](./media/image-056.png)
+
+1. Navigate back to the VSTS build tab in the browser and click the click the **Refresh** icon to refresh the connections. The **Azure** connection that we setup should now appear.  Select it.
+
+    ![image](./media/image-058.png)
+
+1. Next, for **App Service Name** choose the name of the .NET Azure Web App. It may take a moment to populate.
+
+    ![image](./media/image-062.png)
+
+1. **Save** the Release Definition, and select **Release > Create Release**
+
+    ![image](./media/image-061.png)
+
+1. Enter the release information and select the build to deploy. Click Create
+
+    ![image](./media/image-063.png)
+
+1. Click on the release number in navigation header. This will allow you view the current release information.
+    
+    ![image](./media/image-064.png)
+
+After a successful build you should see the application deployed to your web app
+
+![image](./media/image-065.png)
+
+![image](./media/image-066.png)
 
 ## Summary
 
