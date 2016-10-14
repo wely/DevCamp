@@ -61,7 +61,7 @@ We will add both components to our application and enable the sending of telemen
 
 1. Open the application in Eclipse STS. Feel free to use the folder you've been using throughout the hands on labs, or feel free to use the `start` folder. 
 
-1. Microsoft publishes an SDK for AppInsights on Java on [GitHub](https://github.com/Microsoft/ApplicationInsights-Java).  This SDK can be configured via environment variable, so for consistency let's set a variable for `APPLICATION_INSIGHTS_IKEY` equal to the key we noted in Exercise 1.
+1. Microsoft publishes an SDK for AppInsights on Java on [GitHub](https://github.com/Microsoft/ApplicationInsights-Java).  This SDK can be configured via environment variable, so for consistency let's set an environment variable for `APPLICATION_INSIGHTS_IKEY` equal to the key we noted in Exercise 1.
 
 1. Next, open the build.gradle file for your project and add these two lines to the dependencies section: 
     ```Java
@@ -70,52 +70,89 @@ We will add both components to our application and enable the sending of telemen
     ```
     gradle will automatically retrieve and include these libraries when the application is built or run. 
     
-1. With the SDK installed we need a utility file to handle its setup. Create a new file in `utilities/appInsights.js` and paste in the following code:
+    To make sure that Eclipse knows about the new packages we added to
+    the buld, run the `ide/eclipse` gradle task in the `gradle tasks`
+    window. Then right-click on the project in the project explorer,
+    close the project, and then open it again.
 
-    ```javascript
-    var appInsights = require("applicationinsights");
-    var client = appInsights.getClient();
+1. With the SDK installed we need a class file to handle its setup. Create a new file in `devCamp.WebApp.AppInsightsConfig` and paste in the following code:
 
-    module.export.setup = function (app) {
+    ```Java
+    package devCamp.WebApp;
 
-        console.log('App Insights Key Found. Starting AI');
+    import javax.servlet.Filter;
 
-        // Check if an instrumentation key is configured
-        if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
+    import org.springframework.boot.context.embedded.FilterRegistrationBean;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.Configuration;
 
-            // Setup the Application Insights client
-            // .setup() can be called without an instrumentation key
-            // when an environment variable is set
-            appInsights.setup().start();
+    import com.microsoft.applicationinsights.web.internal.WebRequestTrackingFilter;
 
-        }
 
-    }
+    @Configuration
+    public class AppInsightsConfig {
 
-    module.exports.customEvent = function (userid, tenantid) {
+        @Bean
+        public FilterRegistrationBean aiFilterRegistration() {
+            FilterRegistrationBean registration = new FilterRegistrationBean();
+            registration.setFilter(new WebRequestTrackingFilter());
+            registration.addUrlPatterns("/**");
+            registration.setOrder(1);
+            return registration;
+        } 
 
-        // Use SDK Client to pass custom event    
-        client.trackEvent("profileview", { userid: userid, tenantid: tenantid });
-
+        @Bean(name = "WebRequestTrackingFilter")
+        public Filter WebRequestTrackingFilter() {
+            return new WebRequestTrackingFilter();
+        }	
     }
     ```
 
-1. Extend `app.js` to use the helper on application initialization by adding a require() statement and by calling `appInsightsHelper.setup()`:
+    This class will configure the `WebRequestTrackingFilter` to be the first filter on the http filter chain. 
 
-    ```javascript
-    // Modules
-    var express = require('express');
-    var experssHelper = require('./utilities/express');
-    var errorHelper = require('./utilities/errors');
-    var authHelper = require('./utilities/auth');
-    var appInsightsHelper = require('./utilities/appInsights.js');
+    > We are using the web http filter configuration rather than the Spring MFC configuration [described here](https://azure.microsoft.com/en-us/documentation/articles/app-insights-java-get-started/) because this is a Spring Boot application, and it has it's own spring MVC configuration. 
 
-    // Create Express Application
-    var app = express();
+1. Create an `ApplicationInsights.xml` file in the `src/main/resources` directory, and paste in the following code:
 
-    // Configure Application Insights
-    appInsightsHelper.setup(app);
+    ```XML
+    <?xml version="1.0" encoding="utf-8"?>
+    <ApplicationInsights xmlns="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" schemaVersion="2014-05-30">
+
+
+    <!-- The key from the portal: -->
+
+    <InstrumentationKey>your key here</InstrumentationKey>
+
+
+    <!-- HTTP request component (not required for bare API) -->
+
+    <TelemetryModules>
+        <Add type="com.microsoft.applicationinsights.web.extensibility.modules.WebRequestTrackingTelemetryModule"/>
+        <Add type="com.microsoft.applicationinsights.web.extensibility.modules.WebSessionTrackingTelemetryModule"/>
+        <Add type="com.microsoft.applicationinsights.web.extensibility.modules.WebUserTrackingTelemetryModule"/>
+    </TelemetryModules>
+
+    <!-- Events correlation (not required for bare API) -->
+    <!-- These initializers add context data to each event -->
+
+    <TelemetryInitializers>
+        <Add   type="com.microsoft.applicationinsights.web.extensibility.initializers.WebOperationIdTelemetryInitializer"/>
+        <Add type="com.microsoft.applicationinsights.web.extensibility.initializers.WebOperationNameTelemetryInitializer"/>
+        <Add type="com.microsoft.applicationinsights.web.extensibility.initializers.WebSessionTelemetryInitializer"/>
+        <Add type="com.microsoft.applicationinsights.web.extensibility.initializers.WebUserTelemetryInitializer"/>
+        <Add type="com.microsoft.applicationinsights.web.extensibility.initializers.WebUserAgentTelemetryInitializer"/>
+
+    </TelemetryInitializers>
+    </ApplicationInsights>    
     ``` 
+
+    Edit this line to contain your instrumentation key you saved earlier:
+    ```XML
+    <InstrumentationKey>your key here</InstrumentationKey>
+    ```
+    >
+    > This file allows you to configure what is tracked by ApplicationInsights and how it is communicated to Azure.  There is documentation on [the .NET version](https://azure.microsoft.com/en-us/documentation/articles/app-insights-configuration-with-applicationinsights-config/), but this should be checked against the [Java SDK repository](https://github.com/Microsoft/ApplicationInsights-Java)
+    >
 
 1. Run your application and in the navigate around several pages to generate sample telementry.  
 
@@ -135,7 +172,7 @@ We will add both components to our application and enable the sending of telemen
 
     ![image](./media/image-008.png)
 
-1. Let's integrate the snippet into our views. Create a new file at `views/appInsights.html` and paste in the snippet.
+1. Let's integrate the snippet into our web pages. Create a new file at `src/main/resources/templates/appinsights.html` and paste in the snippet.
 
     ```html
     <!-- 
@@ -156,46 +193,42 @@ We will add both components to our application and enable the sending of telemen
         appInsights.trackPageView();
     </script>
     ```
+1. We need to make two small changes to the appinsights.html file.  Since Spring Boot and Thymeleaf will process all pages through an SGML validator, we need to make sure that the Javascript snippet doesn't cause it problems.  So paste in ` // <![CDATA[` on the line after `<script type="text/javascript">` and add `    // ]]>` on the line before the final `</script>`.  Your file should look like this when you are done: 
 
-1. Now update `views/layout.pug` with an `include` for the new .html file before the end of the `head` block
-
-    ```pug
-    doctype html
-    html(lang='en', class={home: home})
-    head
-        meta(charset='UTF-8')
-        meta(http-equiv='X-UA-Compatible', content='IE=edge')
-        meta(name='viewport', content='width=device-width, initial-scale=1')
-
-        title= title
+    ```html
+    <!-- 
+    To collect end-user usage analytics about your application, 
+    insert the following script into each page you want to track.
+    Place this code immediately before the closing </head> tag,
+    and before any other scripts. Your first data will appear 
+    automatically in just a few seconds.
+    -->
+    <script type="text/javascript">
+    // <![CDATA[
+    var appInsights=window.appInsights||function(config){
+        function i(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s="AuthenticatedUserContext",h="start",c="stop",l="Track",a=l+"Event",v=l+"Page",y=u.createElement(o),r,f;y.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(y);try{t.cookie=u.cookie}catch(p){}for(t.queue=[],t.version="1.0",r=["Event","Exception","Metric","PageView","Trace","Dependency"];r.length;)i("track"+r.pop());return i("set"+s),i("clear"+s),i(h+a),i(c+a),i(h+v),i(c+v),i("flush"),config.disableExceptionTracking||(r="onerror",i("_"+r),f=e[r],e[r]=function(config,i,u,e,o){var s=f&&f(config,i,u,e,o);return s!==!0&&t["_"+r](config,i,u,e,o),s}),t
+        }({
+            instrumentationKey:"2fd01fb1-d6cb-4c2f-9244-171989d2ac67"
+        });
         
-        // CSS
-        block css
-        link(rel='stylesheet', href='//ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.css')
-        link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css')
-        link(rel='stylesheet', href='/css/main.css')
-
-        // Application Insights
-        include appInsights.html
-
-    body
-
-        // Top Navigation
-        include navigation.pug
-
-        // Body
-        block content
-
-        // JavaScript
-        block js
-        script(src='//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.js')
-        script(src='//ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.js')
-
+        window.appInsights=appInsights;
+        appInsights.trackPageView();
+    // ]]>    
+    </script>
     ```
-
-    > In a real world scenario we may not wish to mix `.html` and `.pug` files in our views, however for a lab it can be difficult to copy/paste/troubleshoot pug snippets
-
-1. Redeploy the application and load several pages to generate more sample telementry. The Azure Portal should now light up data for **Page View Load Time** 
+1. Now update all of the html templates to include appinsights .html.   
+    * templates/Dashboard/index.html
+    * templates/Home/index.html
+    * templates/Incident/new.html
+    * templates/Details/details.html
+    
+    with `<div th:include="appinsights"></div> ` right after the `<body>` tag in each file, for example:
+    ```HTML
+    <body>
+ 	<div th:include="appinsights"></div>   
+     ...
+    ```
+1. Re-run the application and load several pages to generate more sample telementry. The Azure Portal should now light up data for **Page View Load Time** 
 
     ![image](./media/image-009.png)
 
@@ -204,7 +237,7 @@ Our application is now providing the Application Insights service telementry dat
 ### Exercise 3: Monitor custom events
 
 Up until this point the telemetry provided has been an automatic, out-of-the-box experience.  For custom events we need to use the SDK. Let's create an event where any time a user views their Profile page, we record their name and AzureAD tenant ID.
-
+[TODO RWS complete after AAD portion is completed]
 1. Open `routes/profile.js` and adjust it to use our `appInsightsUtility`
 
     ```javascript
