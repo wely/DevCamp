@@ -98,13 +98,13 @@ We will add both components to our application and enable the sending of telemen
 
     ![image](./media/image-020.png)
 
-1. Open the Web.config file and add the following key, below the other keys. Replace the key with your AppInisghts key:
+1. Open the Web.config file and add the following entry, below the other keys. Replace the value with your AppInisghts key:
 
     ```xml
     <!--HOL 5-->
     <add key="APPINSIGHTS_KEY" value="TELEMETRYKEY" />
     ```
-1. Open the Setting.cs file and add the following keys below the existing entry:
+1. Open the Setting.cs file and add the following keys below the existing entries:
     
     ```csharp
     //####    HOL 5   ######
