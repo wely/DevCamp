@@ -15,7 +15,7 @@ In this hands-on lab, you will learn how to:
 * The source for the starter app is located in the [start](start) folder. 
 * There will be no code changes required so the the [end](end) folder will remain empty. 
 * Deployed the starter ARM Template [HOL 1](../developer-environment)
-* Completion of the [azuread-ofice365](../azuread-ofice365),  
+* Completion of the [azuread-ofice365](../azuread-ofice365)  
 
 > Note: If you did not complete the previous labs, the project in the start folder is cumulative.
 
@@ -63,7 +63,7 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
 1. Click **Code** on the top toolbar to navigate to the Code screen.  Then click the **Clone in Visual Studio** button.
 
-1. **Note** if you are using Chrome, you may recieve a pop-up message. The Clone in Visual Studio option uses a custom protocol handler to open in the client. Select `Launch Application`.
+1. **Note** if you are using Chrome, you may receive a pop-up message. The Clone in Visual Studio option uses a custom protocol handler to open in the client. Select `Launch Application`.
 
     ![image](./media/image-044.png)
 
@@ -142,22 +142,11 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
 1. Confirm the Repository Source is set to your VSTS Project, that the repository is set the repo that was earlier created, and that the Agent Queue is set to **Hosted**.  
 
-    Check the box next to **Contiuous Integration** to automatically run this build anytime code is checked into the repository.
+    Check the box next to **Continuous Integration** to automatically run this build anytime code is checked into the repository.
 
     ![image](./media/image-013.png)
 
-1. After the Build Definition is created, we need to create a series of Build Steps.
-
-    * Restore all package dependencies with `nuget`
-    * Build the source code
-    * Run any unit tests defined
-    * Run any automated performance tests
-    * Package the code assets into a deployable zip file
-    * Publish the zip file as a Publish Artifact that can be consumed by the VSTS Release System
-
-    ![image](./media/image-014.png)
-
-1. These build steps are created for us as part of the VSTS integration.
+1. The build steps are created for us as part of the VSTS integration.
     
     ![image](./media/image-036.png)
 
