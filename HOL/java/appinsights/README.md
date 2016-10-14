@@ -234,6 +234,7 @@ We will add both components to our application and enable the sending of telemen
 
 Our application is now providing the Application Insights service telementry data from both the server and client.
 
+
 ### Exercise 3: Monitor custom events
 
 Up until this point the telemetry provided has been an automatic, out-of-the-box experience.  For custom events we need to use the SDK. Let's create an event where any time a user views their Profile page, we record their name and AzureAD tenant ID.
@@ -294,6 +295,44 @@ These custom events (and the related concept of constom metrics) are a powerful 
 ### Exercise 4: Create a global web test
 
 ### Exercise 5: Interact with your telemetry data
+
+### Exercise 6: Monitor logging events
+
+Application Insights can also integrate with the Java logging frameworks such as Log4J and 
+Logback.  To acomplish this, we need to add the proper Application Insights logging library 
+project, and configure the logging implementation to send logs to AI.  
+
+1. Open the build.gradle file for your project and add this line to the dependencies section: 
+    ```Java
+    compile('com.microsoft.azure:applicationinsights-logging-logback:1.0.6')
+    ```
+    gradle will automatically retrieve and include the library when the application is 
+    built or run. 
+    
+    To make sure that Eclipse knows about the new packages we added to
+    the buld, run the `ide/eclipse` gradle task in the `gradle tasks`
+    window. Then right-click on the project in the project explorer,
+    close the project, and then open it again.
+
+1. Create a `src/main/resources/logback.xml` file, and paste in this xml code:
+    ```XML
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration>
+        <appender name="aiAppender" 
+            class="com.microsoft.applicationinsights.logback.ApplicationInsightsAppender">
+        </appender>
+        <root level="trace">
+            <appender-ref ref="aiAppender" />
+        </root>
+
+        <include resource="org/springframework/boot/logging/logback/base.xml"/>
+        <logger name="org.springframework.web" level="DEBUG"/>
+    </configuration>
+    ```
+    This sets up `ApplicationInsightsAppender` as the logback appender for all trace level messages.
+
+    >The include and logger lines at the bottom are examples of other logging tasks you can
+    do within the logback environment.  Please refer to the [logback documentation](http://logback.qos.ch/) for more information. 
 
 ## Summary
 

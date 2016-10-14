@@ -21,7 +21,7 @@ In this session, we will provide a brief history of Azure, a quick overview of t
 [View PowerPoint](../../Presentation/Module00-Overview.pptx?raw=true)
 
 ---
-## [Hands on Labs overview](../HOL/README.md) ####
+## [Hands on Labs overview](../../HOL/README.md) ####
 This provides and overview of each hands on lab exercise.
 
 [View PowerPoint](../../Presentation/Module00-Hols.pptx?raw=true)
