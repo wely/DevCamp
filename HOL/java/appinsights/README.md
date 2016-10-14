@@ -35,7 +35,7 @@ An instance of Application Insights can be created in a variety of ways, includi
 
     ![image](./media/image-002.png)
 
-1. In the overview blade that opens, click **Create** to open the creation settings blade. Select a name, configure **Application Type** to `ASP.NET Web Application` and then click the **Create** button. 
+1. In the overview blade that opens, click **Create** to open the creation settings blade. Select a name, configure **Application Type** to `Java web Application` and then click the **Create** button. 
 
     Creation typically takes less than a minute.
 
@@ -45,7 +45,7 @@ An instance of Application Insights can be created in a variety of ways, includi
 
     ![image](./media/image-004.png)
 
-1.  In the **Essentials** section, take not of the **Instrumentation Key**.  We will need that in future exercises.
+1.  In the **Essentials** section, take note of the **Instrumentation Key**.  We will need that in future exercises.
 
     ![image](./media/image-005.png)
 
@@ -59,12 +59,17 @@ App Insights works with 2 components:
 
 We will add both components to our application and enable the sending of telementry into the AppInsights service.
 
-1. Open the application in VSCode. Feel free to use the folder you've been using throughout the hands on labs, or feel free to use the `start` folder. 
+1. Open the application in Eclipse STS. Feel free to use the folder you've been using throughout the hands on labs, or feel free to use the `start` folder. 
 
-1. Microsoft publishes an SDK for AppInsights on NodeJS on [GitHub](https://github.com/Microsoft/ApplicationInsights-node.js).  This SDK can be configured via environment variable, so for consistency let's set a variable for `APPINSIGHTS_INSTRUMENTATIONKEY` equal to the key we noted in Exercise 1.
+1. Microsoft publishes an SDK for AppInsights on Java on [GitHub](https://github.com/Microsoft/ApplicationInsights-Java).  This SDK can be configured via environment variable, so for consistency let's set a variable for `APPLICATION_INSIGHTS_IKEY` equal to the key we noted in Exercise 1.
 
-1. Next, grab the SDK from npm by executing `npm install applicationinsights --save` from the command line. 
-
+1. Next, open the build.gradle file for your project and add these two lines to the dependencies section: 
+    ```Java
+    compile('com.microsoft.azure:applicationinsights-core:1.0.6')
+    compile('com.microsoft.azure:applicationinsights-web:1.0.6')
+    ```
+    gradle will automatically retrieve and include these libraries when the application is built or run. 
+    
 1. With the SDK installed we need a utility file to handle its setup. Create a new file in `utilities/appInsights.js` and paste in the following code:
 
     ```javascript
