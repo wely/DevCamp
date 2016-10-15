@@ -275,6 +275,7 @@
     <Content Include="Views\Incident\Edit.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\dotnetapp32csxy6h3sbku - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
