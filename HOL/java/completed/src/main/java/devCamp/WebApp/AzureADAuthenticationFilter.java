@@ -1,25 +1,5 @@
 package devCamp.WebApp;
 
-/*******************************************************************************
- * Copyright © Microsoft Open Technologies, Inc.
- *
- * All Rights Reserved
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
- * OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
- * ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
- * PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
- *
- * See the Apache License, Version 2.0 for the specific language
- * governing permissions and limitations under the License.
- ******************************************************************************/
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -55,16 +35,24 @@ public class AzureADAuthenticationFilter extends OncePerRequestFilter {
 
     private static Logger log = LoggerFactory.getLogger(AzureADAuthenticationFilter.class);
 
-    public static final String clientId = "9f9967cf-2f4c-4413-9075-3b5b6bbd90dd";
-    public static final String clientSecret = "cS8aIzFM3XgsCEAmE0ctVio6ySjOwmQp25q9RXBYtr4=";
-    public static final String tenant = "86bea8f4-503f-46f2-ba4e-befba8ae383a";
-    public static final String authority = "https://login.microsoftonline.com/";
+    private String clientId = "9f9967cf-2f4c-4413-9075-3b5b6bbd90dd";
+    private String clientSecret = "cS8aIzFM3XgsCEAmE0ctVio6ySjOwmQp25q9RXBYtr4=";
+    private String tenant = "86bea8f4-503f-46f2-ba4e-befba8ae383a";
+    private String authority = "https://login.microsoftonline.com/";
+    private String returnURL = "";
 
-    public static final RequestMatcher DEFAULT_AAD_MATCHER = new DefaultAADAuthenticationMatcher();
+    public AzureADAuthenticationFilter() {
+		super();
+		this.clientId = System.getenv("AAD_CLIENT_ID");
+		this.clientSecret = System.getenv("AAD_CLIENT_SECRET");
+		this.tenant = System.getenv("AAD_TENANT_ID");
+		this.authority = "https://login.microsoftonline.com/";
+		this.returnURL = System.getenv("AAD_RETURN_URL");
+	}
+
+	public static final RequestMatcher DEFAULT_AAD_MATCHER = new DefaultAADAuthenticationMatcher();
     private RequestMatcher requireAADAuthenticationMatcher = DEFAULT_AAD_MATCHER;
-    
-    
-    
+        
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -223,16 +211,12 @@ public class AzureADAuthenticationFilter extends OncePerRequestFilter {
     }
     
     private static final class DefaultAADAuthenticationMatcher implements RequestMatcher  {
-
     	private final HashSet<String> allowedMethods = new HashSet<String> (
     			Arrays.asList("GET","HEAD","TRACE","OPTIONS"));
-
     	@Override
 		public boolean matches(HttpServletRequest request) {
 			return !this.allowedMethods.contains(request.getMethod());
-		}
-    	
+		}	
     }
-
 }
 
