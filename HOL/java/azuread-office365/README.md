@@ -96,8 +96,7 @@ as an environment variable named `AAD_RETURN_URL`.  Click the **Create** button.
 
 
 
-1. The Spring security features can be rather complex, however we are going to take a simplistic 
-route with this example.  We are going to create two security filters, one for requesting Azure 
+1. We are going to take a simplistic route for the security features for this example. We are going to create two security filters, one for requesting Azure 
 AD Authentication, and the other to process the Azure AD response.  These filters work in conjunction 
 with Spring security to allow flexible security requirements for pages in the application.
 
@@ -164,11 +163,7 @@ Next, we are going to create a page to display information about the logged in u
             <h1>User Profile</h1>
         
             <table class="table table-striped table-bordered">
-                <tbody>
-                    <tr>
-                        <th>@odata.context</th>
-                        <td th:text="${userProfileBean.Entity}"></td>
-                    </tr>	        
+                <tbody>       
                     <tr>
                         <th>id</th>
                         <td th:text="${userProfileBean.Id}"></td>
@@ -222,52 +217,62 @@ Next, we are going to create a page to display information about the logged in u
     </body>
     </html>    
     ```
-[TODO rws complete to here]
-1. With the view prepped, create a controller at `Controllers/ProfileController.java`.  When the route is loaded, it will query the Microsoft Graph "Me" endpoint.  This query requires a token to be passed in an `authorization` request header, which we grab from the `user` object provided by the adal4j library.
+
+1. With the view prepped, create a controller at `Controllers/ProfileController.java`.  When the `/profile` url is loaded, it will query the Microsoft Graph "Me" endpoint.  This query requires a token to be passed in an `authorization` request header, which we grab from the `user` object provided by the adal4j library.
 
     ```Java
     package devCamp.WebApp.Controllers;
 
-    import java.util.ArrayList;
+    import javax.servlet.http.HttpServletRequest;
+    import javax.servlet.http.HttpSession;
 
+    import org.springframework.context.annotation.Scope;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.RequestMapping;
 
+    import devCamp.WebApp.Utils.GraphAPIClient;
     import devCamp.WebApp.ViewModels.UserProfileBean;
-    import groovyjarjarantlr.collections.List;
 
     @Controller
+    @Scope("session")
     public class ProfileController {
 
-        UserProfileBean createDummyUserProfile() {
-            UserProfileBean userProfile = new UserProfileBean();
-            userProfile.setEntity("https://graph.microsoft.com/v1.0");
-            userProfile.setId("id1");
-            ArrayList<String> bizphones = new ArrayList<String>();
-            bizphones.add("555-1212");
-            bizphones.add("123-4567");		
-            userProfile.setBusinessPhones(bizphones);
-            userProfile.setDisplayName("Ross Devcamp");
-            userProfile.setGivenName("Ross");
-            userProfile.setJobTitle("Java Coder");
-            userProfile.setMail("rossdevcamp@hotmail.com");
-            userProfile.setMobilePhone("314-555-1212");
-            userProfile.setOfficeLocation("123 main street");
-            userProfile.setPreferredLanguage("US English");
-            userProfile.setSurname("Devcamp");
-            userProfile.setUserPrincipalName("rossdevcamp@hotmail.com");
-            return userProfile;
-        }
-        
+        private UserProfileBean getUserProfile(HttpSession session) {
+            
+            //call REST API to create the incident
+            final String uri = "https://graph.windows.net/devcampross.onmicrosoft.com/me?api-version=1.6";
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            HttpHeaders headers = new HttpHeaders();
+            
+            AuthenticationResult result = AuthHelper.getAuthSessionObject(session);
+            String token = result.getAccessToken();
+            
+            headers.set("api-version", "2013-04-05");
+            headers.set("Authorization", token);
+            headers.set("Accept", "application/json;odata=minimalmetadata");
+            HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+
+            ResponseEntity<UserProfileBean>  response = restTemplate.exchange(uri, HttpMethod.GET, entity, UserProfileBean.class);
+
+            UserProfileBean createdBean =response.getBody();
+            return createdBean;		
+        }	
+
         @RequestMapping("/profile")
-        public String index(Model model) {
-            UserProfileBean userProfile = createDummyUserProfile();
+        public String index(Model model,HttpServletRequest request) {
+            HttpSession session = request.getSession();
+            UserProfileBean userProfile = GraphAPIClient.getUserProfile(session);
             model.addAttribute("userProfileBean",userProfile);
             return "Profile/index";
         }
     }
     ```
+1. We will have to create the `devCamp.WebApp.ViewModels.UserProfileBean.java` class to contain the user profile information that is retrieved from the Graph API web service.  The file should already be there, but commented out.  Remove the block comments around the code in this file.
+
+1. The `ProfileController` will display data via the `templates/Profile/index.html` template.  Open this file up and see that it's displaying data from the UserProfileBean.
 
 1. With the view and route created, we can now load `http://localhost:8080/profile` in the browser.
 
@@ -275,6 +280,7 @@ Next, we are going to create a page to display information about the logged in u
 
 We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
 
+[TODO RWS finish up mail scenario]
 ## Exercise 3: Interact with the Microsoft Graph
 In the previous exercise you read data from the Microsoft Graph, but other endpoints can be used for more sophisticated tasks.  In this exercise we will use the Graph to send an email message whenever a new incident is reported.
 
@@ -412,7 +418,7 @@ In the previous exercise you read data from the Microsoft Graph, but other endpo
 
     ![image](./media/image-012.png)       
 
-Sending this email did not require the setting up of a dedicated email server, but instead leveraged capabilities within the Microsfot Graph.  We could have also created a calendar event, or a task related to the incident for a given user, all via the API.
+Sending this email did not require the setting up of a dedicated email server, but instead leveraged capabilities within the Microsoft Graph.  We could have also created a calendar event, or a task related to the incident for a given user, all via the API.
 
 ## Summary
 Our application can now bifurcate anonymous and authenticated users to ensure flexibility between public and private data.  We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
