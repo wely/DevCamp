@@ -132,7 +132,7 @@ named  `devCamp.WebApp.Utils.AuthHelper.java`, which has been commented
     ![image](./media/image-010.png)
 
 The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
-[TODO rws complete to here]
+
 ## Exercise 2: Create a user profile page
 Next, we are going to create a page to display information about the logged in user.  While AzureAD returns a name and email address, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a route, and then query the Graph for user information.
 
@@ -222,7 +222,7 @@ Next, we are going to create a page to display information about the logged in u
     </body>
     </html>    
     ```
-
+[TODO rws complete to here]
 1. With the view prepped, create a controller at `Controllers/ProfileController.java`.  When the route is loaded, it will query the Microsoft Graph "Me" endpoint.  This query requires a token to be passed in an `authorization` request header, which we grab from the `user` object provided by the adal4j library.
 
     ```Java
