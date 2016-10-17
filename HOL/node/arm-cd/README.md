@@ -72,18 +72,22 @@ Instructions and screenshots here
 
 Ensure you have [installed](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/#option-1-install-an-npm-package) the Azure XPlat CLI package from NPM and let's deploy a new resource group.
 
-1. From the command line, navigate to the `start` directory containing our ARM Template
+1. From the command line, `cd` to the `start` directory containing our ARM Template
 
-    ```
-    azure group create -n ExampleResourceGroup -l "West US"
-    azure group deployment create -f <PathToTemplate> -e <PathToParameterFile> -g ExampleResourceGroup -n ExampleDeployment
+    ```bash
+    azure group create -n DevCampTest -l "West US"
+    azure group deployment create -f .\azuredeploy.json -g DevCampTest
     ```
 
-### Exercise 3: XXX
+1. Open the [Azure Portal](https://portal.azure.com) and verify that the Resource Group was created with the defined resources.
+
+    ![image](./media/image-010.png)
+
+### Exercise 3: Integrate new Web App into VSTS
 
 Instructions and screenshots here
 
-### Exercise 4: XXX
+### Exercise 4: Deploy City Power & Light to new Web App
 
 Instructions and screenshots here
 
