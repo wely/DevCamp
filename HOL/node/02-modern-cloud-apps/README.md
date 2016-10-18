@@ -86,11 +86,11 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-010.png)
 
-    Select the one database, and then select the **incidents** collection.
-    
+    In the left hand navigation, select **Document Explorer**
+
     ![image](./media/image-011.png)
 
-    In the Collection blade, select **Document Explorer** from the top toolbar.
+    After the documents load, select the first entry
 
     ![image](./media/image-012.png)
 
@@ -137,7 +137,7 @@ This hands-on-lab has the following exercises:
 
     > Ensure that the version you have locally of Node is recent enough to support Promises. To be safe it is advised to [upgrade](https://nodejs.org/en/) to Node v6
 
-    Next, adjust the response rendering to first use our function:
+    Next, wrap `res.render()` in our new `getIncidents()` function:
 
     ```javascript
     // Query the API for incident data
@@ -162,7 +162,7 @@ This hands-on-lab has the following exercises:
 
     The breakpoint should be hit as the page loads.  Hover over the `body` parameter to examine the array of returned inicdents from the API.  This is the array that will be passed to the view for rendering. Next we need to update our view to accomodate the data.
 
-1. Open `views/dashboard.pug` and adjust the template to include incident data:
+1. Open `views/dashboard.pug` and replace the template to include incident data:
 
     ```pug
     extends layout
@@ -179,7 +179,7 @@ This hands-on-lab has the following exercises:
                         .col-sm-4
                             .panel.panel-default
                                 .panel-heading Incident #{incident.id.split('-').pop()}
-                                    i.glyphicon.glyphicon-flash.pull-rights                            
+                                    i.glyphicon.glyphicon-flash.pull-right                            
                                 table.table
                                     tr
                                         th Address
@@ -194,7 +194,7 @@ This hands-on-lab has the following exercises:
 
     ```
     
-    > Pug is the same library as Jade, [which underwent a rename](https://github.com/pugjs/pug/issues/2184) 
+    > **Pug** is the same library as **Jade**, [which underwent a rename](https://github.com/pugjs/pug/issues/2184) 
 
 1. With the dashboard route code and the view template updated, run the application via the Debug Tab in VSCode and check the dashboard page.
 
@@ -219,11 +219,11 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
     ![image](./media/image-017.png)
 
-    On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port of 6380.
+    On the Redis blade, expand **Ports** by clicking on **Non-SSL port (6379) disabled** and note the Non-SSL port of **6379** and SSL Port of **6380**.
 
     ![image](./media/image-018.png)
 
-    In VSCode, open `.vscode/launch.json` and add four variables for `REDISCACHE_HOSTNAME`, `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and `REDISCACHE_SSLPORT`
+    In VSCode, open `.vscode/launch.json` and add four variables for `REDISCACHE_HOSTNAME`, `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and `REDISCACHE_SSLPORT`. The values of each were noted previously, and should look similar to:
 
     ```json
     "env": {
@@ -252,7 +252,7 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
     var client = redis.createClient(process.env.REDISCACHE_SSLPORT, process.env.REDISCACHE_HOSTNAME, { auth_pass: process.env.REDISCACHE_PRIMARY_KEY, tls: { servername: process.env.REDISCACHE_HOSTNAME } });
     ```
     
-1. Our `getIncidents()` function needs to be enhanced.  The following will use the Redis client to implement the cache logic bullet points from above.
+1. Our `getIncidents()` function needs to be enhanced.  Replace the existing function with the following, which uses the Redis client to implement the cache logic bullet points from above.
 
     ```javascript
     function getIncidents() {
@@ -309,6 +309,10 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
     }
     ```
 
+1. Back in VSCode, the Debug Console should be emitting information about whether the cache was used, or the API was hit directly.
+
+    ![image](./media/image-023.png)
+
 All application requests for the dashboard will now first try to use Azure Redis Cache.  Under high traffic, this will improve page performance and decrease the API's scaling needs.   
 
 ### Exercise 3: Write images to Azure Blob Storage
@@ -329,6 +333,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource 
     * `AZURE_STORAGE_ACCESS_KEY` is **key1** from the Access Keys blade
     * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containres to group sets of blobs together.  For this demo let's use `images` as the Container name
+    * `AZURE_STORAGE_QUEUE` is the name of the queue that will be used to store new messages
 
     ```json
      "env": {
@@ -347,7 +352,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
     Now when the SDK fires up it will configure itself with these settings.
 
-1. Today we are working with Azure Storage Blobs, but in the future we may decide to extend our application use Azure Stage Tables or Azure Storage Queues.  To better organize our code, let's create a utility file to handle interactiosn with Azure Storage.  Create `utilities/storage.js` and paste in the following:
+1. To better organize our code, let's create a utility file to handle interactions with Azure Storage.  Create `utilities/storage.js` and paste in the following:
 
     ```javascript
     var fs = require('fs');
@@ -417,7 +422,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     }
     ```
 
-1. With the utility created, let's update `routes/new.js` to handle new incidents:
+1. With the utility created, let's update `routes/new.js` to handle new incidents. Replace the contents with:
 
     ```javascript
     var fs = require('fs');
@@ -540,6 +545,8 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     ```
 
     When a new incident comes in, the Formidable library parses the data fields and image. Fields get POSTed to our Incidents API, while the image is uploaded to Blob Storage and a new message is added to our queue.
+
+1. In the terminal, execute a `npm install formidable azure-storage --save` to install the dependencies.
 
 1. Open a browser window and navigate to `http://localhost:3000/new`.  Fill out the form and hit the **Submit** button.
 
