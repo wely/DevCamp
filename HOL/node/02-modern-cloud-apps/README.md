@@ -137,7 +137,7 @@ This hands-on-lab has the following exercises:
 
     > Ensure that the version you have locally of Node is recent enough to support Promises. To be safe it is advised to [upgrade](https://nodejs.org/en/) to Node v6
 
-    Next, adjust the response rendering to first use our function:
+    Next, wrap `res.render()` in our new `getIncidents()` function:
 
     ```javascript
     // Query the API for incident data
@@ -162,7 +162,7 @@ This hands-on-lab has the following exercises:
 
     The breakpoint should be hit as the page loads.  Hover over the `body` parameter to examine the array of returned inicdents from the API.  This is the array that will be passed to the view for rendering. Next we need to update our view to accomodate the data.
 
-1. Open `views/dashboard.pug` and adjust the template to include incident data:
+1. Open `views/dashboard.pug` and replace the template to include incident data:
 
     ```pug
     extends layout
@@ -194,7 +194,7 @@ This hands-on-lab has the following exercises:
 
     ```
     
-    > Pug is the same library as Jade, [which underwent a rename](https://github.com/pugjs/pug/issues/2184) 
+    > **Pug** is the same library as **Jade**, [which underwent a rename](https://github.com/pugjs/pug/issues/2184) 
 
 1. With the dashboard route code and the view template updated, run the application via the Debug Tab in VSCode and check the dashboard page.
 
@@ -219,11 +219,11 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
     ![image](./media/image-017.png)
 
-    On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port of 6380.
+    On the Redis blade, expand **Ports** by clicking on **Non-SSL port (6379) disabled** and note the Non-SSL port of **6379** and SSL Port of **6380**.
 
     ![image](./media/image-018.png)
 
-    In VSCode, open `.vscode/launch.json` and add four variables for `REDISCACHE_HOSTNAME`, `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and `REDISCACHE_SSLPORT`
+    In VSCode, open `.vscode/launch.json` and add four variables for `REDISCACHE_HOSTNAME`, `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and `REDISCACHE_SSLPORT`. The values of each were noted previously, and should look similar to:
 
     ```json
     "env": {
@@ -252,7 +252,7 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
     var client = redis.createClient(process.env.REDISCACHE_SSLPORT, process.env.REDISCACHE_HOSTNAME, { auth_pass: process.env.REDISCACHE_PRIMARY_KEY, tls: { servername: process.env.REDISCACHE_HOSTNAME } });
     ```
     
-1. Our `getIncidents()` function needs to be enhanced.  The following will use the Redis client to implement the cache logic bullet points from above.
+1. Our `getIncidents()` function needs to be enhanced.  Replace the existing function with the following, which uses the Redis client to implement the cache logic bullet points from above.
 
     ```javascript
     function getIncidents() {
