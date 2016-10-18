@@ -38,7 +38,7 @@ This hands-on-lab has the following exercises:
 
 AzureAD can handle authentication for web applications. First we will create a new application in our AzureAD directory, and then we will extend our application code to work with an authentication flow. 
 
-1. Navigate in a browser to `https://apps.dev.microsoft.com`, click the button to **Register your app**, and login with your Azure credentials.
+1. Navigate in a browser to [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com), click the button to **Register your app**, and login with your Azure credentials.
 
     ![image](./media/image-001.png)
 
@@ -64,7 +64,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/image-006.png)
 
-1. A key is generated for you. Save this, as you will not be able to retrieve it in the future. This key will become the `AAD_CLIENT_SECRET` environment variable.
+1. A key is generated for you. Save this, as you will not be able to retrieve it in the future. This key will become the `AAD_CLIENT_SECRET` environment variable. Click the **Save** button at the bottom of the page.
 
     ![image](./media/image-007.png)
 
@@ -75,7 +75,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     "AAD_CLIENT_ID": "2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6",
     "AAD_CLIENT_SECRET": "JjrKfgDyo5peQ4xJa786e8z"
     ```
-1. Next, We have two choices of libraries to handle authentication between our Node application and AzureAD. The first is the [Azure Active Directory Library for NodeJS](https://github.com/AzureAD/azure-activedirectory-library-for-nodejs) (ADAL), and the second leverages [Passport.js](http://passportjs.org/) with the [Azure Active Directory Passport.js Plugin](https://github.com/AzureAD/passport-azure-ad).  For this example, we will use the Passport plugin in a utility file.    
+1. We have two choices of libraries to handle authentication between our Node application and AzureAD. The first is the [Azure Active Directory Library for NodeJS](https://github.com/AzureAD/azure-activedirectory-library-for-nodejs) (ADAL), and the second leverages [Passport.js](http://passportjs.org/) with the [Azure Active Directory Passport.js Plugin](https://github.com/AzureAD/passport-azure-ad).  For this example, we will use the Passport plugin in a utility file.    
 
     Create `utility/auth.js` and paste in the following:
 
@@ -330,7 +330,42 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     With these edits, each page will receive a `user` object if a user is authenticated, and when the **Report an Outage** page is loaded it will ensure the user is authenticated.  
 
-1. To install dependencies, run an `npm install passport passport-azure-ad --save` from the command line.
+1. Express needs to use passport for this middleware.  Open `utilities/express.js` and add the following after the Setup View engines block
+
+    Also add a `var passport = require('passport');` to the top of the page
+
+    ```javascript
+    var express = require('express');
+    var expressSession = require('express-session');
+    var bodyParser = require('body-parser');
+    var cookieParser = require('cookie-parser');
+    var path = require('path');
+    var pug = require('pug');
+    var passport = require('passport');
+
+    module.exports.setup = function (app) {
+
+        // Setup Express Middleware
+        app.use(expressSession({ secret: 'citypower', resave: true, saveUninitialized: false }));
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: true }));
+        app.use(cookieParser());
+        app.use(express.static(path.join(__dirname, '../public')));
+
+        // Setup View Engine
+        app.set('views', path.join(__dirname, '../views'));
+        app.set('view engine', 'pug');
+
+        // Configure Passport authentication
+        app.use(passport.initialize());
+        app.use(passport.session());
+        
+    };
+    ```
+
+1. To install dependencies, run `npm install passport-azure-ad@2.0.3 --save` from the command line.
+
+    > Please ensure you declare the `2.0.3` version, as `3.0.0` has breaking changes with this code
 
 1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `views/navigation.pug` and remove the commented out blocks of code by deleting the `//-` characters. Now load the application in the browser and you should see the **Login** button on the top navigation.
 
@@ -343,7 +378,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
 
 ### Exercise 2: Create a user profile page
-Next, we are goign to create a page to display information about the logged in user.  While AzureAD returns a name and email address, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a route, and then query the Graph for user information.
+Next, we are going to create a page to display information about the logged in user.  While AzureAD returns a name and email address, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a route, and then query the Graph for user information.
 
 1. Create a new file named `views/profile.pug`. Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
 
@@ -401,6 +436,16 @@ Next, we are goign to create a page to display information about the logged in u
     module.exports = router;
     ```
 
+1. To add the profile route into Express. open `app.js` and add a route entry below the existing `app.use()` statements 
+
+    ```javascript
+    // Configure Routes
+    app.use('/', require('./routes/index'));
+    app.use('/dashboard', require('./routes/dashboard'));
+    app.use('/new', require('./routes/new'));
+    app.use('/profile', require('./routes/profile'));
+    ```
+
 1. With the view and route created, we can now load `http://localhost:3000/profile` in the browser.
 
     ![image](./media/image-011.png)
@@ -410,7 +455,7 @@ We now have a simple visualization of the current user's profile information as 
 ### Exercise 3: Interact with the Microsoft Graph
 In the previous exercise you read data from the Microsoft Graph, but other endpoints can be used for more sophisticated tasks.  In this exercise we will use the Graph to send an email message whenever a new incident is reported.
 
-1. Create a new file in `utilities/mail.js` that will take a recipient and generate a JSON message body for passing into the Graph API. 
+1. Create a new file in `utilities/email.js` that will take a recipient and generate a JSON message body for passing into the Graph API. 
 
     ```javascript
     // https://graph.microsoft.io/en-us/docs/api-reference/v1.0/api/user_post_messages
