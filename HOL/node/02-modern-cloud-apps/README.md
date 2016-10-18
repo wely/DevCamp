@@ -333,6 +333,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource 
     * `AZURE_STORAGE_ACCESS_KEY` is **key1** from the Access Keys blade
     * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containres to group sets of blobs together.  For this demo let's use `images` as the Container name
+    * `AZURE_STORAGE_QUEUE` is the name of the queue that will be used to store new messages
 
     ```json
      "env": {
