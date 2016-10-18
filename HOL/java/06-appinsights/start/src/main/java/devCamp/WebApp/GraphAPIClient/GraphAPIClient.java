@@ -28,7 +28,7 @@ public class GraphAPIClient {
 	public static UserProfileBean getUserProfile(HttpSession session) {
 		
         //call REST API to create the incident
-        final String uri = "https://graph.windows.net/devcampross.onmicrosoft.com/me?api-version=1.6";
+        final String uri = "https://graph.windows.net/me?api-version=1.6";
 		//final String uri = "https://graph.windows.net/v1.0/me";
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());

@@ -32,7 +32,6 @@ This hands-on-lab has the following exercises:
 
 * Exercise 1: Setup authentication 
 * Exercise 2: Create a user profile page
-* Exercise 3: Send a confirmation email to the user on incident creation
 
 ## Exercise 1: Integrate the API
 
@@ -241,7 +240,7 @@ Next, we are going to create a page to display information about the logged in u
         private UserProfileBean getUserProfile(HttpSession session) {
             
             //call REST API to create the incident
-            final String uri = "https://graph.windows.net/devcampross.onmicrosoft.com/me?api-version=1.6";
+            final String uri = "https://graph.windows.net/me?api-version=1.6";
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
@@ -279,146 +278,6 @@ Next, we are going to create a page to display information about the logged in u
     ![image](./media/image-011.png)
 
 We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
-
-[TODO RWS finish up mail scenario]
-## Exercise 3: Interact with the Microsoft Graph
-In the previous exercise you read data from the Microsoft Graph, but other endpoints can be used for more sophisticated tasks.  In this exercise we will use the Graph to send an email message whenever a new incident is reported.
-
-1. Create a new file in `utilities/mail.js` that will take a recipient and generate a JSON message body for passing into the Graph API. 
-
-    ```javascript
-    // https://graph.microsoft.io/en-us/docs/api-reference/v1.0/api/user_post_messages
-
-    // The contents of the outbound email message that will be sent to the user
-    var emailContent = `
-    <html>
-
-    <head>
-    <meta http-equiv='Content-Type' content='text/html; charset=us-ascii\'>
-    <title></title>
-    </head>
-
-    <body style="font-family:Calibri">
-    <div style="width:50%;background-color:#CCC;padding:10px;margin:0 auto;text-align:center;">
-        <h1>City Power &amp; Light</h1>
-        <h2>New Incident Reported by {{name}}</h2>
-        <p>A new incident has been reported to the City Power &amp; Light outage system.</p>   
-        <br />
-    </div>
-    </body>
-
-    </html>
-    `;
-
-    /**
-    * Returns the outbound email message content with the supplied name populated in the text
-    * @param {string} name The proper noun to use when addressing the email
-    * @return {string} the formatted email body
-    */
-    function getEmailContent(name) {
-        return emailContent.replace('{{name}}', name);
-    }
-
-    /**
-    * Wraps the email's message content in the expected [soon-to-deserialized JSON] format
-    * @param {string} content the message body of the email message
-    * @param {string} recipient the email address to whom this message will be sent
-    * @return the message object to send over the wire
-    */
-    function wrapEmail(content, recipient) {
-        var emailAsPayload = {
-            Message: {
-                Subject: 'New Incident Reported',
-                Body: {
-                    ContentType: 'HTML',
-                    Content: content
-                },
-                ToRecipients: [
-                    {
-                        EmailAddress: {
-                            Address: recipient
-                        }
-                    }
-                ]
-            },
-            SaveToSentItems: true
-        };
-        return emailAsPayload;
-    }
-
-    /**
-    * Delegating method to wrap the formatted email message into a POST-able object
-    * @param {string} name the name used to address the recipient
-    * @param {string} recipient the email address to which the connect email will be sent
-    */
-    function generateMailBody(name, recipient) {
-        return wrapEmail(getEmailContent(name), recipient);
-    }
-
-    module.exports.generateMailBody = generateMailBody; 
-    ```
-
-    > There are [numerous settings](https://graph.microsoft.io/en-us/docs/api-reference/v1.0/api/user_post_messages) you can include in a mail message
-
-1. Extend `routes/new.js` to call our helper by adding a new function after the end of `function uploadImage()` and before the module export statement.
-
-    ```javascript
-    function emailConfirmation(user) {
-
-        return new Promise(function (resolve, reject) {
-
-            // Generate email markup
-            var mailBody = emailUtility.generateMailBody(user.displayName, user.email);
-
-            // Set configuration options
-            var options = {
-                url: 'https://graph.microsoft.com/v1.0/me/sendMail',
-                json: true,
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + user.token
-                },
-                body: mailBody
-            };
-
-            // POST new message to Graph API
-            request(options, function (error, response) {
-
-                console.log('Email confirmation message sent.');
-                resolve();
-
-            });
-
-        });
-
-    }
-
-    ```
-
-    Also update the series of chained promises in the original `.post` to include a reference to the new `emailConfirmation` function
-
-    ```javascript
-    // Process the fields into a new incident, upload image, and add thumbnail queue message
-    createIncident(fields, files)
-        .then(uploadImage)
-        .then(addQueueMessage)
-        .then(emailConfirmation(req.user))
-        .then(() => {
-
-            // Successfully processed form upload
-            // Redirect to dashboard
-            res.redirect('/dashboard');
-
-        });
-    ```
-
-    Finally, add a reference at the top of the page for `var emailUtility = require('../utilities/email');`
-
- 1. Load the application in the browser, and create a new incident.  You should soon receive an email in the current user's inbox.
-
-    ![image](./media/image-012.png)       
-
-Sending this email did not require the setting up of a dedicated email server, but instead leveraged capabilities within the Microsoft Graph.  We could have also created a calendar event, or a task related to the incident for a given user, all via the API.
 
 ## Summary
 Our application can now bifurcate anonymous and authenticated users to ensure flexibility between public and private data.  We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
