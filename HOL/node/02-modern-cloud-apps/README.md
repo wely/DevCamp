@@ -200,6 +200,10 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-015.png)
 
+1. Back in VSCode, the Debug Console should be emitting information about whether the cache was used, or the API was hit directly.
+
+    ![image](./media/image-023.png)
+
 The cards now represent data returned from our API, replacing the static mockup code.
 
 ### Exercise 2: Add a caching layer
