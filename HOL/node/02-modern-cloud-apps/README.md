@@ -86,11 +86,11 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-010.png)
 
-    Select the one database, and then select the **incidents** collection.
-    
+    In the left hand navigation, select **Document Explorer**
+
     ![image](./media/image-011.png)
 
-    In the Collection blade, select **Document Explorer** from the top toolbar.
+    After the documents load, select the first entry
 
     ![image](./media/image-012.png)
 
@@ -179,7 +179,7 @@ This hands-on-lab has the following exercises:
                         .col-sm-4
                             .panel.panel-default
                                 .panel-heading Incident #{incident.id.split('-').pop()}
-                                    i.glyphicon.glyphicon-flash.pull-rights                            
+                                    i.glyphicon.glyphicon-flash.pull-right                            
                                 table.table
                                     tr
                                         th Address
@@ -333,6 +333,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource 
     * `AZURE_STORAGE_ACCESS_KEY` is **key1** from the Access Keys blade
     * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containres to group sets of blobs together.  For this demo let's use `images` as the Container name
+    * `AZURE_STORAGE_QUEUE` is the name of the queue that will be used to store new messages
 
     ```json
      "env": {
@@ -351,7 +352,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
     Now when the SDK fires up it will configure itself with these settings.
 
-1. Today we are working with Azure Storage Blobs, but in the future we may decide to extend our application use Azure Stage Tables or Azure Storage Queues.  To better organize our code, let's create a utility file to handle interactiosn with Azure Storage.  Create `utilities/storage.js` and paste in the following:
+1. To better organize our code, let's create a utility file to handle interactions with Azure Storage.  Create `utilities/storage.js` and paste in the following:
 
     ```javascript
     var fs = require('fs');
@@ -421,7 +422,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     }
     ```
 
-1. With the utility created, let's update `routes/new.js` to handle new incidents:
+1. With the utility created, let's update `routes/new.js` to handle new incidents. Replace the contents with:
 
     ```javascript
     var fs = require('fs');
@@ -544,6 +545,8 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     ```
 
     When a new incident comes in, the Formidable library parses the data fields and image. Fields get POSTed to our Incidents API, while the image is uploaded to Blob Storage and a new message is added to our queue.
+
+1. In the terminal, execute a `npm install formidable azure-storage --save` to install the dependencies.
 
 1. Open a browser window and navigate to `http://localhost:3000/new`.  Fill out the form and hit the **Submit** button.
 
