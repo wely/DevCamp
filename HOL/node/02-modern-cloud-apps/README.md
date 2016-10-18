@@ -86,11 +86,11 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-010.png)
 
-    Select the one database, and then select the **incidents** collection.
-    
+    In the left hand navigation, select **Document Explorer**
+
     ![image](./media/image-011.png)
 
-    In the Collection blade, select **Document Explorer** from the top toolbar.
+    After the documents load, select the first entry
 
     ![image](./media/image-012.png)
 
