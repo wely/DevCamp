@@ -115,14 +115,16 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
                     "REDISCACHE_PORT": "6379",
                     "REDISCACHE_SSLPORT": "6380",
                     "REDISCACHE_PRIMARY_KEY": "ofiGLn8mowbVJ9/egFQ2+opdel4FQw7yWMFhxZclfPo=",
-                    "AAD_RETURN_URL": "http://localhost:3000/auth/openid/return",
                     "AAD_CLIENT_ID": "2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6",
-                    "AAD_CLIENT_SECRET": "JjrKfgDyo5peQ4xJa786e8z"
+                    "AAD_CLIENT_SECRET": "JjrKfgDyo5peQ4xJa786e8z",
+                    "AAD_RETURN_URL": "[concat('https://', reference('citypowertest581951', '2015-08-01').defaultHostName, '/auth/openid/return')]"
                 }
             }
         ]
     }
     ```
+
+    > For the `AAD_RETURN_URL` we are dynamically resolving the value by using a `reference()` lookup for a given app name. Ensure that `citypowertest581951`   matches whatever name you choose for your web app
 
 We are now ready to deploy our ARM Template containing an App Service Plan, and a Web App with environment variables to Azure. 
 
