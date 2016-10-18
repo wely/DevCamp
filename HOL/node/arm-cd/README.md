@@ -50,7 +50,7 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
 
     Save and close the file. You will now be able to use snippets in the creation of ARM files.
 
-1. Now that we have our tooling setup, open `start/armdeploy.json`. This is a skeleton ARM Template, including the four sections Parameters, Variables, Resources, and Outputs. Click into the brackets next to Resources and create a linebreak.  In the new line, type `arm-p` and select **arm-plan**.  This will create a new App Service Plan, which controls the features and performance of assoicated Azure Web Apps.
+1. Now that we have our tooling setup, open `start/armdeploy.json`. This is a skeleton ARM Template, including the four sections Parameters, Variables, Resources, and Outputs. Click into the brackets next to Resources and create a linebreak.  In the new line, type `arm-p` and hit enter to select **arm-plan**.  This will create a new App Service Plan, which controls the features and performance of assoicated Azure Web Apps.
 
     ![image](./media/image-006.png)
 
@@ -63,6 +63,8 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
     ![image](./media/image-008.png) 
 
     This web app name needs to be globally unique, as it will be used for the https://***.azurewebsites.net DNS entry and cannot be the same as an existing webapp.  Use `nodejsapptest` plus 4-5 random characters.
+
+    The webapp resource has stubbed in 3 instances of `APP_SERVICE_PLAN_NAME`. Replace this value with the `AppServicePlan` name value that you gave the App Service Plan earlier.
 
     ![image](./media/image-009.png)
 
