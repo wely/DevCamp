@@ -1,11 +1,12 @@
 # Developer Environment (Java)
 
 ## Overview
-In this lab, you will XXX.
+In this lab, you will set up an Office365 trial subscription, an Azure trial subscription, configure your Azure subscription for the DevCamp, and provision 
+a virtual machine in the subscription to use for development of further labs.
 
 ## Objectives
 In this hands-on lab, you will set up an Office365 developer subscription, and Azure trial subscription, and an Azure-based virutal machine for the development environment for subsequent labs in the DevCamp.  To expedite the process, we've prepared Windows and Linux images that you will copy into your own environment, start the virtual machine and connect to it.  You will then configure the components for Azure development.
-* Set up an Office365 developer subscription
+* Set up an Office365 trial subscription
 * Set up an Azure trial subscription
 * Configure your Azure subscription for DevCamp
 * Create an Azure Virtual Machine for development
@@ -17,13 +18,13 @@ The source for the starter app is located in the [TODO:ADD REF](#) folder.
 
 ## Exercises
 This hands-on-lab has the following exercises:
-* Exercise 1: Set up Office 365 Developer subscription
+* Exercise 1: Set up Office 365 trial subscription
 * Exercise 2: Set up Azure trial subscription
 * Exercise 3: Configure your Azure subscription for DevCamp
 * Exercise 4: Create an Azure Virtual Machine for development
 * Exercise 5: Connect to the Azure Virtual Machine and configure it for development
 
-### Exercise 1: Set up Office 365 Developer subscription
+### Exercise 1: Set up Office 365 trial subscription
 
 1. In your browser, go to `https://products.office.com/en-us/business/office-365-enterprise-e3-business-software` 
 and click the link that says "Free Trial", which will take you to this page:
@@ -42,13 +43,21 @@ and click the link that says "Free Trial", which will take you to this page:
 
     ![image](./media/2016-10-14_19-07-30.png)
 
-1. After this process is complete, your O365 trial will be set up.  Once that is done, 
-    log on to `http://portal.office.com` with the credentials you created earlier. You 
-    should see the following screen.  If you'd like to see the welcome tour click `Next`, 
-    or simply close the dialog box.   
+1. After this process is complete, your O365 trial will be set up, and you'll see this page:
+    ![image](./media/2016-10-18_12-39-13.png)
+
+    Make note of your user id, which will be used to sign onto the Azure portal later.
+    Click `You're ready to go`, which will take you to the following screen:
+    ![image](./media/2016-10-18_12-42-47.png)
+
+    Click on the `admin` app icon, which will open the Office365 admin center page
+    in your broser.  It will look like this:
 
     ![image](./media/2016-10-14_18-38-17.png)
 
+     If you'd like to see the welcome tour click `Next`, 
+    or simply close the dialog box.   
+    
     >Stay on this page until the next exercise.
 
 
@@ -63,12 +72,15 @@ and click the link that says "Free Trial", which will take you to this page:
 
 1. Click on `Azure subscription`, that will take you to the page for creating a new 
     trial subscription:
+    ![image](./media/2016-10-18_12-48-52.png)
 
-    ![image](./media/2016-10-14_21-42-46.png)
+    Enter the requested information and click `next`.
 
 1. Enter the information about you, and verify your identity by phone.  Also you'll 
     need to verify via credit card.  Your credit card will not be charged unless you
     remove the spending cap from your subscription.
+    
+    ![image](./media/2016-10-14_21-42-46.png)
 
 1. Finally after the verification process, you'll have to agree to the terms of the trial
     subscription: 
