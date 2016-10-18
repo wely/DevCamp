@@ -195,7 +195,7 @@ We now have a Build Definition that will construct our NodeJS application and pa
 
 ### Exercise 5: Deploy code to an Azure Web App
 
-In the ARM Template that was originally deployed, a web app was created as a development environment to hold a deployed NodeJS application. We will use this web app as a deployment target from VSTS. First, we need to prepare this web app for our application code.
+In the ARM Template that was originally deployed in the lab setup, a web app was created as a development environment to hold a NodeJS application. We will use this web app as a deployment target from VSTS. First, we need to prepare this web app for our application code and then create a Release Definition.
 
 1. Visit the Azure Web App by browsing to the [Azure Portal](http://portal.azure.com), opening the Resource Group, and select the Azure Web App resource that beings **nodejsapp** before the random string. 
 
@@ -221,7 +221,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     Make sure you click **Save** at the bottom of the screen to add the URL to your AzureAD app.
 
-1. Now that AzureAD is configured, we need to add our AzureAD related environment variables to the Azure Web App.  Back in the **nodejsapp***** blade where you hit **Browse** earlier, open **Application Settings** from the left navigation.
+1. Now that AzureAD is configured, we need to add our AzureAD related environment variables to the Azure Web App.  Back in the **nodejsapp** blade where you hit **Browse** earlier, open **Application Settings** from the left navigation.
 
     ![image](./media/image-034.png)
 
@@ -235,7 +235,27 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-035.png)
 
-1. Now that the AzureAD application and the Azure Web App are ready, let's configure VSTS to deploy our built application. Back in our VSTS Build Definition, add a Build Step for **AzureRM App Service Deployment**. 
+1. Now that the AzureAD application and the Azure Web App are ready, let's configure VSTS to deploy our built application with a Release Definition. Back in  VSTS, select the **Build & Release** from the top navigation, and click **Releases**. 
+
+    ![image](./media/image-044.png)
+
+1. Click the **New definition** button
+
+    ![image](./media/image-045.png)
+
+    Then select the **Empty** template 
+
+    ![image](./media/image-046.png)
+
+    Ensure the **Source** is set to the Build Definition name used in the earlier exercise and that **Queue** is set to the **Hosted** option. Then click **Create** to finish creating the Release Definition
+
+    ![image](./media/image-047.png)
+
+1. Click on the Pencil icon next to the Release Definition name and rename it to **ReleaseApp**.  Then click into **Environment 1** and name it **Dev**
+
+    ![image](./media/image-048.png)
+
+1. For the newly renamed Dev environment, click **Add tasks** then from the **Deploy** tab on the left navigation choose **AzureRM App Service Deployment**.
 
     ![image](./media/image-036.png)
 
@@ -263,11 +283,23 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-041.png)
 
-1. **Save** the Build Definition, and **Queue a new Build**
+1. **Save** the Release Definition, and **Queue a new Build**
 
     ![image](./media/image-042.png)
 
-    After a successful build you should see the application deployed to your web app
+    Select the latest completed Build, and then click **Create**
+
+    ![image](./media/image-049.png)
+
+    Click on the **Release 1** link to view details of the release
+   
+    ![image](./media/image-050.png)
+
+    On the release details screen, click **Logs** from the top toolbar to get details about each release step and following the release progress
+
+    ![image](./media/image-051.png)
+
+    After a successful release you should see the application deployed to your web app
 
     ![image](./media/image-043.png)
 

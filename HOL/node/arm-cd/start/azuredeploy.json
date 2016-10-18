@@ -3,40 +3,6 @@
     "contentVersion": "1.0.0.0",
     "parameters": {},
     "variables": {},
-    "resources": [
-        {
-            "apiVersion": "2014-06-01",
-            "name": "AppServicePlan",
-            "type": "Microsoft.Web/serverfarms",
-            "location": "[resourceGroup().location]",
-            "sku": {
-                "name": "F1",
-                "capacity": 1
-            },
-            "tags": {
-                "displayName": "AppServicePlan"
-            },
-            "properties": {
-                "name": "AppServicePlan"
-            }
-        },
-        {
-            "apiVersion": "2015-08-01",
-            "name": "citypowertest581951",
-            "type": "Microsoft.Web/sites",
-            "location": "[resourceGroup().location]",
-            "tags": {
-                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/AppServicePlan')]": "Resource",
-                "displayName": "citypowertest581951"
-            },
-            "dependsOn": [
-                "Microsoft.Web/serverfarms/AppServicePlan"
-            ],
-            "properties": {
-                "name": "citypowertest581951",
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', 'AppServicePlan')]"
-            }
-        }
-    ],
+    "resources": [],
     "outputs": {}
 }
