@@ -238,59 +238,47 @@ Our application is now providing the Application Insights service telementry dat
 ### Exercise 3: Monitor custom events
 
 Up until this point the telemetry provided has been an automatic, out-of-the-box experience.  For custom events we need to use the SDK. Let's create an event where any time a user views their Profile page, we record their name and AzureAD tenant ID.
-[TODO RWS complete after AAD portion is completed]
-1. Open `routes/profile.js` and adjust it to use our `appInsightsUtility`
 
-    ```javascript
-    var express = require('express');
-    var router = express.Router();
-    var request = require('request');
-    var authUtility = require('../utilities/auth');
-    var appInsightsUtility = require('../utilities/appInsights');
+1. Open `devCamp.WebApp.Controllers.ProfileController` add the following code to the index method before the `return` statement:
 
-    /* GET profile page. */
-    router.get('/', authUtility.ensureAuthenticated, function (req, res) {
+    ```java
+    TelemetryClient telemetry = new TelemetryClient();
 
-        // Record User Details with Custom Event
-        // Generates the tenant ID and a user ID to send to AppInsights
-        appInsightsUtility.customEvent(req.user._json.preferred_username, req.user._json.tid);
+    Map<String, String> properties = new HashMap<String, String>();
+    properties.put("User", userProfile.getUserPrincipalName());
+    properties.put("displayname", userProfile.getDisplayName());
 
-        // Create options object configuring the HTTP call
-        var options = {
-            url: 'https://graph.microsoft.com/v1.0/me',
-            method: 'GET',
-            json: true,
-            headers: {
-                authorization: 'Bearer ' + req.user.token
-            }
-        };
+    telemetry.trackEvent("Profile", properties, null);    	
 
-        // Query Graph API
-        request(options, function (error, results, body) {
+    model.addAttribute("userProfileBean",userProfile);
 
-            // Render page with returned attributes
-            res.render('profile', {
-                title: 'Profile',
-                user: req.user,
-                attributes: body
-            });
+    try { 
+        throw new Exception("This is only a test!"); 
+    } catch (Exception exc) { 
+        telemetry.trackException(exc); 
+        System.out.println("[6] Exception             -- message=\"This is only a test!\""); 
+    } 
+    	    ```
 
-        });
+    This code will send the users `UserPrincipalName` and `DisplayName` to AppInsights.  
+    It also demonstrates how to send exceptions to AppInsights.
 
-    });
-
-    module.exports = router;
-    ```
-
-1. Save the file, restart the application, and generate sample telemetry by visitng the profile page, leaving, and returning to the profile page.  In the Azure Portal we can see the data in the **Usage** pane from the left navigation.
+1. Save the file, restart the application, and generate sample telemetry by visitng the profile page, leaving, 
+    and returning to the profile page.  In the Azure Portal we can see the data by pressing the **Search** 
+    button:
 
     ![image](./media/image-010.png) 
 
-    Drilling into the metrics explorer we can see our custom data:
+    Clicking on one of the custom events gives us this:
 
     ![image](./media/image-011.png)
 
-These custom events (and the related concept of constom metrics) are a powerful way to integrate telemetry into our application and centralize monitoring across multiple application instances.
+    For exceptions, we get the call stack and more information associated with the event:
+
+    ![image](./media/image-012.png)
+
+These custom events (and the related concept of constom metrics) are a powerful way to integrate telemetry into our 
+application and centralize monitoring across multiple application instances.
 
 ### Exercise 4: Create a global web test
 
@@ -337,9 +325,11 @@ project, and configure the logging implementation to send logs to AI.
 ## Summary
 
 In this hands-on lab, you learned how to:
-* Create a Visual Studio Team Services online account
-* Create a VSTS Git repository
-* Add your code to the VSTS Git repository
-* Create a Continuous Integration pipeline
+* Exercise 1: Create an Application Insights resource
+* Exercise 2: Add server and client side SDK's 
+* Exercise 3: Monitor custom events
+* Exercise 4: Create a global web test
+* Exercise 5: Interact with your telemetry data
+* Exercise 6: Monitor logging events
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
