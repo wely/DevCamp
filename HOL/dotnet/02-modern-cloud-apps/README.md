@@ -385,7 +385,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
 
 1. Add the Microsoft.Extensions.Caching.Redis package by highlighting the name and selecting install
 
-    ![image](./media/image-0021.png)
+    ![image](./media/image-20.png)
 
 1. Accept the License to complete the install
 1. In Azure. navigate to the application settings for the IncidentAPI application
