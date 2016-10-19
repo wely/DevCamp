@@ -38,8 +38,6 @@ This hands-on-lab has the following exercises:
 
 ## Exercise 1: Integrate the API
 
-1. Download or `git clone` the source files to your local machine
-
 1. Navigate to the `HOL\java\modern-cloud-apps\start` folder in a terminal window
 
 1. Run `gradle eclipse` in the terminal window to restore all dependencies and configure the
