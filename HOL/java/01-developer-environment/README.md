@@ -222,9 +222,8 @@ Remote Desktop:
     ![image](./media/2016-10-18_19-05-52.png)
     
      
-
- npm install azure-cli -g
-
+1. Install the azure command line interface.  Go to a terminal window and do this command:
+    `npm install azure-cli -g`
 
 ## Summary
 
