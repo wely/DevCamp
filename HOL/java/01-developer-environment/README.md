@@ -16,7 +16,7 @@ In this hands-on lab, you will set up an Office365 developer subscription, and A
 
 ## Prerequisites
 
-There are no Prerequisites for this lab.
+The source for the starter app is located in the [TODO:ADD REF](#) folder. 
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -115,7 +115,7 @@ to open the Azure portal, which will look like this:
 1. We have created an Azure Resource Group template that will configure the resources you need in Azure for the DevCamp.  To deploy 
 these resources in your Azure subscription, do `control-click` on this button:
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzureCAT-GSI%2FDevCampSharedDotNetAPI%2Fmaster%2Fsrc%2FDevCamp.API.ARM%2FTemplates%2FWebSite.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzureCAT-GSI%2FDevCamp%2Fmaster%2FShared%2FARMTemplate%2FAzureDeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
