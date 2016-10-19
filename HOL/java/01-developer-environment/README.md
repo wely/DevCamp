@@ -22,9 +22,11 @@ There are no Prerequisites for this lab.
 This hands-on-lab has the following exercises:
 * Exercise 1: Set up Office 365 trial subscription
 * Exercise 2: Set up Azure trial subscription
-* Exercise 3: Configure your Azure subscription for DevCamp
-* Exercise 4: Create an Azure Virtual Machine for development
-* Exercise 5: Connect to the Azure Virtual Machine and configure it for development
+* Exercise 3: Start your VSTS trial subscription
+* Exercise 4: Configure your Azure subscription for DevCamp
+* Exercise 5: Create an Azure Virtual Machine for development
+* Exercise 6: Connect to the Azure Virtual Machine and configure it for development
+* Exercise 7: View the resources you deployed
 
 ### Exercise 1: Set up Office 365 trial subscription
 
@@ -110,7 +112,7 @@ to open the Azure portal, which will look like this:
 
     Click Accept to access your Visual Studio Dev Essentials benefits.
 
-### Exercise 3: Configure your Azure subscription for DevCamp
+### Exercise 4: Configure your Azure subscription for DevCamp
 
 1. We have created an Azure Resource Group template that will configure the resources you need in Azure for the DevCamp.  To deploy 
 these resources in your Azure subscription, do `control-click` on this button:
@@ -137,7 +139,7 @@ these resources in your Azure subscription, do `control-click` on this button:
 
     ![image](./media/2016-10-18_13-39-10.png)
 
-### Exercise 4: Create an Azure Virtual Machine for development
+### Exercise 5: Create an Azure Virtual Machine for development
 
 1. The Azure resource group template will have created two virtual machines - one for 
 Windows development, and the other for Linux development.  In these instructions, we
@@ -150,18 +152,23 @@ or to stop or delete it.
 
 
 
-### Exercise 5: Connect to the Azure Virtual Machine and configure it for development
+### Exercise 6 Connect to the Azure Virtual Machine and configure it for development
 
 1. click the virtual machine, and then click `Connect` to connect to the machine using 
 Remote Desktop:
 
     ![image](./media/2016-10-18_16-37-57.png)
 
+    This will download a remote desktop connection file, and when you open it, remote desktop 
+    on your local machine will attempt to attach to your virtual machine.   When the windows security dialog pops up, click on the `more choices link, then choose `use a different account`
+    
+    ![image](./media/2016-10-19_14-42-16.png)
+
     Use the credentials l-admin with password Devc@mp2016! to log onto the machine.  It
     would be wise to change the password in the virtual machine.
 
     When remote desktop is connected, you will see server manager initally.  We will
-    want to turn of IE enhanced security.  First click local server;
+    want to turn of IE enhanced security, to make accessing the web within the virtual machine easier.  First click local server;
 
     ![image](./media/2016-10-18_16-46-33.png)
 
@@ -283,6 +290,84 @@ and click on the `Other Downloads` link under v6.9.0:
     Choose both of the packages in the list, and complete the package installation:
 
     ![image](./media/2016-10-19_11-28-28.png)
+
+### Exercise 7: View the resources you deployed
+
+1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, http://portal.azure.com.  Log in with the credentials you supplied in the subscription signup exersize.  You should see the Azure portal, similar to this:
+    ![image](./media/2016-10-19_15-08-26.png)
+
+    There is a lot to notice on this screen.  At the upper left corner, the icon under the `Microsoft Azure` banner allows you to shrink and expand the left bar:
+
+    ![image](./media/2016-10-19_15-15-50.png)
+
+    Under that, clicking on the `+ New` item will allow you to create new deployments, virtual machines, databases, etc:
+
+    ![image](./media/2016-10-19_15-15-50.png)
+    
+    On the left you will see a list of the Azure services that you can use on the left hand side.  Notice that this list will scroll up and down to reveal more services, and finally an item that says `More Services >`:
+
+    ![image](./media/2016-10-19_15-10-45.png)
+
+    You can click on any of these and see what items are deployed, and easily create new deployments.
+
+    At the top of the window you have a search box where you can search for any resources:
+
+    ![image](./media/2016-10-19_15-22-14.png)
+
+    The bell icon is for notifications, and in this screenshot, it indicates that there are two notifications pending: 
+
+    ![image](./media/2016-10-19_15-22-14a.png)
+
+    Clicking on the bell will show you the notifications:
+
+    ![image](./media/2016-10-19_15-49-23.png)
+
+    If you click on one of the notifications, you can go to the list of 
+    all current notifications:
+
+    ![images](./media/2016-10-19_15-51-02.png)
+
+    The gear at the top of the screen lets you set the color palate for the portal, whether or not there will be animations, and other options for the portal itself:
+
+    ![image](./media/2016-10-19_15-22-14b.png)
+
+    The "smiley face" button allows you to send feedback to Microsoft:
+
+    ![image](./media/2016-10-19_15-22-14b.png)
+
+    Clicking on the icon will give you a form to let us know about your experience:
+
+    ![image](./media/2016-10-19_15-54-02.png)
+
+    The Question icon will give you the ability to enter a support case, manage support requests, or get further information on Azure.
+    ![image](./media/2016-10-19_15-22-14d.png)
+
+    Your login name and company name on the upper left hand corner has two functions: 
+
+    ![image](./media/2016-10-19_15-22-14e.png)
+    
+    If you hover the mouse over your name, you'll get information about your login, the directory and subscription:
+
+    ![image](./media/2016-10-19_16-25-54.png)
+
+    If you click on your name, you can sign oudt, change your password, view your permissions, and view your bill:
+
+    ![image](./media/2016-10-19_16-28-33.png)
+
+1. Next we will look at the resource group we set up with the template.  Click on `Resource Groups` on the left hand side:
+
+    ![image](./media/2016-10-19_16-30-19.png)
+
+    then, click on the resource group that you created:
+
+    ![image](./media/2016-10-19_16-32-12.png)
+
+    A new blade will open with the overview of all of the contents of the resource group listed:
+
+    ![image](./media/2016-10-19_16-33-39.png)
+
+    You can click on any of the items on the left hand side which will view or manipulate settings for the resource group as a whole.  If you click on any of the individual resources in the center, you will get more information on that resource.
+
 
 ## Summary
 
