@@ -368,6 +368,17 @@ and click on the `Other Downloads` link under v6.9.0:
 
     You can click on any of the items on the left hand side which will view or manipulate settings for the resource group as a whole.  If you click on any of the individual resources in the center, you will get more information on that resource.
 
+    Azure automatically logs changes to resource group and who made those changes.  Clicking `Activity log` on the left of the blade will allow you to query the log, and clicking on any logged items will give you additional information on that entry:
+
+    ![image](./media/2016-10-19_16-40-00.png)
+
+    Clicking on `Automation script` will allow you to view, edit or download the resource group template that would create this resource group.
+
+    ![image](./media/2016-10-19_16-44-51.png)
+
+    >it is particularly useful to create resources in the Azure portal, then save or edit the resource group template.  Resource group templates will be explained further in a later lab.
+     
+
 
 ## Summary
 
