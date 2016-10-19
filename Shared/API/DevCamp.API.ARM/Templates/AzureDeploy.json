@@ -11,7 +11,7 @@
     "hostingPlanName": "[concat('incidentappplan', uniqueString(resourceGroup().id))]",
     "skuCapacity": "1",
     "skuName": "F1",
-    "repoURL": "https://github.com/GSIAzureCOE/DevCampSharedDotNetAPI.git",
+    "repoURL": "https://github.com/GSIAzureCOE/DevCampSharedDotNetAPI.git", 
     "repoBranch": "master",
     "storageName": "[substring(toLower(concat('incidentblobstg', uniqueString(resourceGroup().id))), 0, 24)]",
     "storageType": "Standard_LRS",

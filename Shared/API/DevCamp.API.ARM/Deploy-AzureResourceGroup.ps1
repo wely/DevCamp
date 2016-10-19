@@ -4,12 +4,12 @@
 
 Param(
     [string] [Parameter(Mandatory=$true)] $ResourceGroupLocation,
-    [string] $ResourceGroupName = 'ModernAppAPI',
+    [string] $ResourceGroupName = 'DevCamp-Shared',
     [switch] $UploadArtifacts,
     [string] $StorageAccountName,
     [string] $StorageContainerName = $ResourceGroupName.ToLowerInvariant() + '-stageartifacts',
-    [string] $TemplateFile = 'Templates\WebSite.json',
-    [string] $TemplateParametersFile = 'Templates\WebSite.parameters.json',
+    [string] $TemplateFile = 'Templates\AzureDeploy.json',
+    [string] $TemplateParametersFile = '',
     [string] $ArtifactStagingDirectory = '.',
     [string] $DSCSourceFolder = 'DSC'
 )
