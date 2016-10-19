@@ -221,9 +221,53 @@ Remote Desktop:
 
     ![image](./media/2016-10-18_19-05-52.png)
     
-     
+1. In a browser windows inside your development Virtual Machine, open a browser window and go to `http://nodejs.org`, 
+and click on the `Other Downloads` link under v6.9.0:
+
+    ![image](./media/2016-10-19_10-15-22.png)
+
+    In the next page, click on `32 bit` next to `Windows Installer (.msi)`, download the MSI and run the installation.
+
+    ![image](./media/2016-10-19_10-20-21.png)
+
 1. Install the azure command line interface.  Go to a terminal window and do this command:
+    `node -v` 
+    Verify that the version is v6 or greater.
+
     `npm install azure-cli -g`
+
+1. For Java developers, we have already installed the Java JDK.  Also Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.  
+If you would like to download a newer version (eg. Neon), Eclipse is available here:
+
+    `http://www.eclipse.org/downloads/`
+
+    and Spring Tool Suite is available here:
+
+    `http://spring.io/tools/sts`
+
+    For example, after downloading the Eclise install, run it and you'll get this screen:
+
+    ![image](./media/2016-10-19_10-44-11.png)
+
+    choose `Eclipse IDE for Java EE developers`.  In the next screen, 
+    leave the defaults and choose `Install`:
+
+    ![image](./media/2016-10-19_10-46-30.png)
+
+    When that is done, click `Launch` to start the IDE and choose a directory
+    for your workspace. You will end up with the initial Eclipse screen:
+
+    ![image](./media/2016-10-19_10-53-32.png)
+
+    Click `Help` in the menu bar, and choose `install new software`:
+
+    ![image](./media/2016-10-19_10-55-30.png)
+
+    In the window that pops up, choose `All Available Sites` for the `Work with` dropdown,
+    type `gradle` in the search box, and when the search is complete, 
+    choose `Buildshop: Eclipse Plug-ins for Gradle`
+
+    ![image](./media/2016-10-19_10-58-48.png)
 
 ## Summary
 
