@@ -23,9 +23,10 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-* The source for the starter app is located in the HOL\node\modern-cloud-apps\start folder.
-* The finished project is located in the HOL\node\modern-cloud-apps\end folder.
+* The source for the starter app is located in the HOL\java\modern-cloud-apps\start folder.
+* The finished project is located in the HOL\java\modern-cloud-apps\end folder.
 * Deployed the starter ARM Template
+* Established a development machine either on-premises or in Azure
 
 ## Exercises
 
@@ -39,9 +40,9 @@ This hands-on-lab has the following exercises:
 
 1. Download or `git clone` the source files to your local machine
 
-1. Navigate to the `HOL\node\modern-cloud-apps\start` folder in a terminal window
+1. Navigate to the `HOL\java\modern-cloud-apps\start` folder in a terminal window
 
-1. Run `gradle eclipse` to restore all dependencies and configure the
+1. Run `gradle eclipse` in the terminal window to restore all dependencies and configure the
    project paths for Eclipse
 
     ![image](./media/image-001.png)
