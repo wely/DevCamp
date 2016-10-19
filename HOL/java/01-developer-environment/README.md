@@ -16,7 +16,7 @@ In this hands-on lab, you will set up an Office365 developer subscription, and A
 
 ## Prerequisites
 
-The source for the starter app is located in the [TODO:ADD REF](#) folder. 
+There are no Prerequisites for this lab.
 
 ## Exercises
 This hands-on-lab has the following exercises:

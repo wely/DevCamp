@@ -12,7 +12,7 @@ In this lab you will create the environment that is needed for your language pre
 * Take prepared image, walk through the tools that are available for your platform (.NET, Node.JS, Java | Windows, Linux)
 * Run a custom ARM Template to scaffold out resources used during the training
 
-#### View instructions for [.NET](../HOL/dotnet/01-developer-environment) | [Node.JS](../HOL/node/01-developer-environment/) | [Java](../HOL/java/01-developer-environment/)
+#### View instructions for [.NET](../HOL/java/01-developer-environment) | [Node.JS](../HOL/java/01-developer-environment/) | [Java](../HOL/java/01-developer-environment/)
 
 ----
 ## HOL 2: Building modern cloud apps
