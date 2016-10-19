@@ -382,11 +382,11 @@ and click on the `Other Downloads` link under v6.9.0:
 
     >it is particularly useful to create resources in the Azure portal, then save or edit the resource group template.  Resource group templates will be explained further in a later lab.
 
-### Exersize 8: View the resources you created
+### Exercise 8: View the resources you created
 
 Going back to the list of resources in the resource group, we'll go through the list of each resource, with a description.  Feel free to click on the resource and view it's detail blade.
 
-    ![image](./media/2016-10-19_17-13-01.png)
+![image](./media/2016-10-19_17-13-01.png)
 
 Also, our resource group template has added a random string to the end of many of the resources.  In this description, we'll replace that string with ....
 
