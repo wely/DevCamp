@@ -13,10 +13,12 @@ In this hands-on lab, you will set up an Office365 developer subscription, and A
 * Configure your Azure subscription for DevCamp
 * Create an Azure Virtual Machine for development
 * Connect to the Azure Virtual Machine and configure it for development.
+* Review the features of the Azure Portal
+* Review the Resource group that we created in Exercise 3
 
 ## Prerequisites
 
-The source for the starter app is located in the [TODO:ADD REF](#) folder. 
+You will need a cell phone and credit card for identity verification.  The credit card will not be charged unless you remove the spending cap on the subscription you will create.
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -26,7 +28,8 @@ This hands-on-lab has the following exercises:
 * Exercise 4: Configure your Azure subscription for DevCamp
 * Exercise 5: Create an Azure Virtual Machine for development
 * Exercise 6: Connect to the Azure Virtual Machine and configure it for development
-* Exercise 7: View the resources you deployed
+* Exercise 7: Azure Portal walkthrough
+* Exersize 8: View the resources you created
 
 ### Exercise 1: Set up Office 365 trial subscription
 
@@ -291,9 +294,10 @@ and click on the `Other Downloads` link under v6.9.0:
 
     ![image](./media/2016-10-19_11-28-28.png)
 
-### Exercise 7: View the resources you deployed
+### Exercise 7: Azure Portal walkthrough
 
 1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, http://portal.azure.com.  Log in with the credentials you supplied in the subscription signup exersize.  You should see the Azure portal, similar to this:
+
     ![image](./media/2016-10-19_15-08-26.png)
 
     There is a lot to notice on this screen.  At the upper left corner, the icon under the `Microsoft Azure` banner allows you to shrink and expand the left bar:
@@ -304,7 +308,7 @@ and click on the `Other Downloads` link under v6.9.0:
 
     ![image](./media/2016-10-19_15-15-50.png)
     
-    On the left you will see a list of the Azure services that you can use on the left hand side.  Notice that this list will scroll up and down to reveal more services, and finally an item that says `More Services >`:
+1. On the left you will see a list of the Azure services that you can use on the left hand side.  Notice that this list will scroll up and down to reveal more services, and finally an item that says `More Services >`:
 
     ![image](./media/2016-10-19_15-10-45.png)
 
@@ -314,7 +318,7 @@ and click on the `Other Downloads` link under v6.9.0:
 
     ![image](./media/2016-10-19_15-22-14.png)
 
-    The bell icon is for notifications, and in this screenshot, it indicates that there are two notifications pending: 
+1. The bell icon is for notifications, and in this screenshot, it indicates that there are two notifications pending: 
 
     ![image](./media/2016-10-19_15-22-14a.png)
 
@@ -327,11 +331,11 @@ and click on the `Other Downloads` link under v6.9.0:
 
     ![images](./media/2016-10-19_15-51-02.png)
 
-    The gear at the top of the screen lets you set the color palate for the portal, whether or not there will be animations, and other options for the portal itself:
+1. The gear at the top of the screen lets you set the color palate for the portal, whether or not there will be animations, and other options for the portal itself:
 
     ![image](./media/2016-10-19_15-22-14b.png)
 
-    The "smiley face" button allows you to send feedback to Microsoft:
+1. The "smiley face" button allows you to send feedback to Microsoft:
 
     ![image](./media/2016-10-19_15-22-14b.png)
 
@@ -339,10 +343,10 @@ and click on the `Other Downloads` link under v6.9.0:
 
     ![image](./media/2016-10-19_15-54-02.png)
 
-    The Question icon will give you the ability to enter a support case, manage support requests, or get further information on Azure.
+1. The Question icon will give you the ability to enter a support case, manage support requests, or get further information on Azure.
     ![image](./media/2016-10-19_15-22-14d.png)
 
-    Your login name and company name on the upper left hand corner has two functions: 
+1. Your login name and company name on the upper left hand corner has two functions: 
 
     ![image](./media/2016-10-19_15-22-14e.png)
     
@@ -368,18 +372,57 @@ and click on the `Other Downloads` link under v6.9.0:
 
     You can click on any of the items on the left hand side which will view or manipulate settings for the resource group as a whole.  If you click on any of the individual resources in the center, you will get more information on that resource.
 
-    Azure automatically logs changes to resource group and who made those changes.  Clicking `Activity log` on the left of the blade will allow you to query the log, and clicking on any logged items will give you additional information on that entry:
+1. Azure automatically logs changes to resource group and who made those changes.  Clicking `Activity log` on the left of the blade will allow you to query the log, and clicking on any logged items will give you additional information on that entry:
 
     ![image](./media/2016-10-19_16-40-00.png)
 
-    Clicking on `Automation script` will allow you to view, edit or download the resource group template that would create this resource group.
+1. Clicking on `Automation script` will allow you to view, edit or download the resource group template that would create this resource group.
 
     ![image](./media/2016-10-19_16-44-51.png)
 
     >it is particularly useful to create resources in the Azure portal, then save or edit the resource group template.  Resource group templates will be explained further in a later lab.
-     
 
+### Exersize 8: View the resources you created
 
+Going back to the list of resources in the resource group, we'll go through the list of each resource, with a description.  Feel free to click on the resource and view it's detail blade.
+
+    ![image](./media/2016-10-19_17-13-01.png)
+
+Also, our resource group template has added a random string to the end of many of the resources.  In this description, we'll replace that string with ....
+
+1. `incidentcache....:`  This is the Redis cache that we use from the application to make data access faster.  The modern-cloud-apps hands on lab adds support to the application to be able to leverage the cache.
+
+1. `ubudev....:` This is an Ubuntu linux virtual machine, meant to be for development in a non Windows server environment.  If you are doing development in Windows only or in an on-premesis machine, you can safely delete this virtual machine.
+
+1. `windev....:` This is the Windows server virtual machine that we are using as a development machine for these hands-on-labs.  You can delete this machine after the developer-environment lab if you are using Linux or an on-premesis machine for development. 
+
+1. `incidentdb....:` This is the documentDB database that will hold the JSON incident documents stored by the application.
+
+1. `ubdev....NetworkInterface:`  This is a network interface that will allow the Ubuntu linux virtual machine to communicate on the network.  If you delete the Ubuntu virtual machine, you can safely delete this.
+
+1. `windev...NetworkInterface:`  This is a public network interface that will allow the Windows development virtual machine to communicate on the network.  If you delete the Windows virtual machine, you can safely delete this.
+
+1. `UbuntuDevPip:`  This is a public IP that will allow the Ubuntu linux virtual machine to communicate with the Internet (eg. via Putty).  If you delete the Ubuntu virtual machine, you can safely delete this.
+
+1. `WindowsDevPip:`  This is a public IP that will allow the Windows development virtual machine to communicate with the Internet (eg. via Remote Desktop).  If you delete the Windows virtual machine, you can safely delete this.
+
+1. `DevCampVnet:`  This is an Azure Virtual Network, which will allow components of the resource group to communicate as they were on the same physical network.
+
+1. `incidentblobstg....:` Storage account for storing the uploaded images and the Azure Queue, from the modern-cloud-apps lab.
+
+1. `incidentdiagstg....:` Storage account for storing diagnostics from the services in the resource group.
+
+1. `vmstorage....:` Storage account for storing the virtual hard disk images for the virtual machines in the resource group.
+
+1. `incidentappplan....:` App Service Plan, which defines how the app services in the resource group will be configured.
+
+1. `dotnetapp....:` App service for running the .NET application when deployed to the cloud.  If you are not using .NET in the labs, you can safely delete this.
+
+1. `incidentapi.....:` App service for running the API service that provides a REST API to the web applications.
+
+1. `javaapp....:` App service for running the Java appliation when deployed to the cloud.  If you are not using Java in the labs, you can safely delete this.
+
+1. `nodejsapp....:` App service for running the Node.js appliation when deployed to the cloud.  If you are not using Node in the labs, you can safely delete this.
 ## Summary
 
 In this hands-on lab, you learned how to:
