@@ -236,8 +236,12 @@ and click on the `Other Downloads` link under v6.9.0:
 
     `npm install azure-cli -g`
 
-1. For Java developers, we have already installed the Java JDK.  Also Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.  
-If you would like to download a newer version (eg. Neon), Eclipse is available here:
+1. For Java developers, we have already installed the Java JDK.  We will be using the gradle build manager - to install that, go to a command window and type:
+
+    `choco install gradle`
+
+    Also Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.  
+    If you would like to download a newer version (eg. Neon), Eclipse is available here:
 
     `http://www.eclipse.org/downloads/`
 
@@ -268,6 +272,17 @@ If you would like to download a newer version (eg. Neon), Eclipse is available h
     choose `Buildshop: Eclipse Plug-ins for Gradle`
 
     ![image](./media/2016-10-19_10-58-48.png)
+    
+    click through the dialog and install the package.
+    Go back to `help/install new software`, and click the `Add..` button
+    next to the `work with` dropdown.  In the Add Repository dialog box, git the
+    repository a name, and type `http://dl.microsoft.com/eclipse` for the Location, and click `OK`:
+
+    ![image](./media/2016-10-19_11-26-29.png)
+
+    Choose both of the packages in the list, and complete the package installation:
+
+    ![image](./media/2016-10-19_11-28-28.png)
 
 ## Summary
 
