@@ -48,7 +48,7 @@ This hands-on-lab has the following exercises:
 
 1. In the [Azure Portal](https://portal.azure.com) navigate to the resource group that you created with the original ARM template.  Resource Groups can be found on the left hand toolbar -> More Services -> Resource Groups.
 
-    Select the API app that begins with the name **incidentsapi** followed by a random string of characters.
+    Select the API app that begins with the name **incidentapi** followed by a random string of characters.
 
     ![image](./media/image-03.png)
 
@@ -68,11 +68,11 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-06.png)
 
-    Select the one database, and then select the **incidents** collection.
+    Select the DocumentDB database. This will open the DocumentDB blade. Scroll to the Collections section.
     
     ![image](./media/image-07.png)
 
-    In the Collection blade, select **Document Explorer** from the top toolbar.
+    In the Collections section, select **Document Explorer**.
 
     ![image](./media/image-08.png)
 
@@ -162,8 +162,8 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-13.png)
 
-1. In the Utils folder, create a class called Settings.cs. This will hold our static variables and constants for the application.
-1. Open the Settings.cs file and paste the following:
+1. In the Utils folder, open the file called Settings.cs. This will hold our static variables and constants for the application.
+1. In the Settings.cs file, paste the following:
 
     ```csharp
     //####    HOL 2    ######
@@ -217,60 +217,102 @@ This hands-on-lab has the following exercises:
 1. Resolve the references for `Newtonsoft.Json, IncidentAPI, IncidentAPI.Models and System.Collections.Generic`
 1. Change the method to async. The code should look like the following:
 
-```csharp
-    using DevCamp.WebApp.Utils;
-    using IncidentAPI;
-    using IncidentAPI.Models;
-    using Newtonsoft.Json;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
+    ```csharp
+        using DevCamp.WebApp.Utils;
+        using IncidentAPI;
+        using IncidentAPI.Models;
+        using Newtonsoft.Json;
+        using System.Collections.Generic;
+        using System.Threading.Tasks;
+        using System.Web.Mvc;
 
-    namespace DevCamp.WebApp.Controllers
-    {
-        public class DashboardController : Controller
+        namespace DevCamp.WebApp.Controllers
         {
-            public async Task<ActionResult> Index()
+            public class DashboardController : Controller
             {
-                //##### API DATA HERE #####
-                List<Incident> incidents;
-                using (var client = IncidentApiHelper.GetIncidentAPIClient())
+                public async Task<ActionResult> Index()
                 {
-                    var results = await client.Incident.GetAllIncidentsAsync();
-                    incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
+                    //##### API DATA HERE #####
+                    List<Incident> incidents;
+                    using (var client = IncidentApiHelper.GetIncidentAPIClient())
+                    {
+                        var results = await client.Incident.GetAllIncidentsAsync();
+                        incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
+                    }
+                    return View(incidents);
                 }
-                return View(incidents);
             }
         }
-    }
-```
+    ```
 
 1. Let's add code to view Incidents. Navigate to the IncidentController.cs file and open it
 1. In between the comment block in the Details method, select the body of this method and delete it.
 1. Paste the following:
 
-```csharp
-            IncidentViewModel incidentView = null;
+    ```csharp
+        IncidentViewModel incidentView = null;
 
-            using (IncidentAPIClient client = IncidentApiHelper.GetIncidentAPIClient())
+        using (IncidentAPIClient client = IncidentApiHelper.GetIncidentAPIClient())
+        {
+            var result = client.Incident.GetById(Id);
+            if (!string.IsNullOrEmpty(result))
             {
-                var result = client.Incident.GetById(Id);
-                if (!string.IsNullOrEmpty(result))
-                {
-                    Incident incident = JsonConvert.DeserializeObject<Incident>(result);
-                    incidentView = IncidentMappers.MapIncidentModelToView(incident);
-                }
+                Incident incident = JsonConvert.DeserializeObject<Incident>(result);
+                incidentView = IncidentMappers.MapIncidentModelToView(incident);
             }
+        }
 
-            return View(incidentView);
-```
+        return View(incidentView);
+    ```
+1. In the Mappers Folder, locate the IncidentMapper.cs file. This file will handle the mapping from the data that is returned from the API.
+1. Open it and paste the following:
+    
+    ```csharp
+    public class IncidentMappers
+    {
+        public static Incident MapIncidentViewModel(IncidentViewModel incident)
+        {
+            Incident newIncident = new Incident();
+            newIncident.FirstName = incident.FirstName;
+            newIncident.LastName = incident.LastName;
+            newIncident.Street = incident.Street;
+            newIncident.City = incident.City;
+            newIncident.State = incident.State;
+            newIncident.ZipCode = incident.ZipCode;
+            newIncident.PhoneNumber = incident.PhoneNumber;
+            newIncident.Description = incident.Description;
+            newIncident.OutageType = incident.OutageType;
+            newIncident.IsEmergency = incident.IsEmergency;
+            return newIncident;
+        }
+
+        public static IncidentViewModel MapIncidentModelToView(Incident incident)
+        {
+            IncidentViewModel newIncidentView = new IncidentViewModel();
+            newIncidentView.Id = incident.ID;
+            newIncidentView.FirstName = incident.FirstName;
+            newIncidentView.LastName = incident.LastName;
+            newIncidentView.Street = incident.Street;
+            newIncidentView.City = incident.City;
+            newIncidentView.State = incident.State;
+            newIncidentView.ZipCode = incident.ZipCode;
+            newIncidentView.PhoneNumber = incident.PhoneNumber;
+            newIncidentView.Description = incident.Description;
+            newIncidentView.OutageType = incident.OutageType;
+            newIncidentView.IsEmergency = incident.IsEmergency.Value;
+            newIncidentView.Created = incident.Created.Value.UtcDateTime;
+            newIncidentView.LastModified = incident.LastModified.Value.UtcDateTime;
+            return newIncidentView;
+        }
+    }
+    ```
 
 1. Resolve the references for `DevCamp.WebApp.Mappers, DevCamp.WebApp.Utils, DevCamp.WebApp.ViewModelsIncidentAPI, IncidentAPI.Models and Newtonsoft.Json`.
 1. Now let's add code to create an incident. Add a new method to this class that will handle the Create HTTP post method. Paste the following:
 
     ```csharp
     [HttpPost]
-    public Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
+    public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
     {
         try
         {
@@ -326,7 +368,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
 
 ![image](./media/image-18.png)
 
-1. In Visual Studio, open `web.config` and add four variables for `REDISCACHE_HOSTNAME`, `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and `REDISCACHE_SSLPORT`
+1. In Visual Studio, open `web.config` and locate the four variables for `REDISCACHE_HOSTNAME`, `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and `REDISCACHE_SSLPORT`
 
     ```xml
     <add key="REDISCACHE_HOSTNAME" value="YOUR VALUE HERE"/>
@@ -343,7 +385,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
 
 1. Add the Microsoft.Extensions.Caching.Redis package by highlighting the name and selecting install
 
-    ![image](./media/image-0021.png)
+    ![image](./media/image-20.png)
 
 1. Accept the License to complete the install
 1. In Azure. navigate to the application settings for the IncidentAPI application
@@ -423,7 +465,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     ````
 
 1. We will now add code to the dashboardcontroller. Open the `dashboardcontroller.cs` file
-1. In between the using statement that contains the API call to the client, replace the lines with the following:
+1. Inside the using statement that contains the API call to the client, replace the lines with the following:
 
     ```csharp
     //##### Add caching here #####
@@ -445,8 +487,8 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     //##### Add caching here #####
     ```
  
-1. Set a breakpoint in this class
-1. Add code to invalidate the cache when a new incident is reported. Open the IncidentController and update the Create method with the following:
+1. Set a breakpoint on the declaration of the ***CACHE_EXPIRATION_SECONDS*** variable.
+1. Add code to invalidate the cache when a new incident is reported. Open the IncidentController and update the Create method that handles the creation (the method decorated with [HTTPPost]) with the following:
 
     ```csharp
     //##### CLEAR CACHE ####
@@ -614,13 +656,8 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     }
     ```
 
-1. The call is Async so add `async` to the return Type
-   
-   ```csharp
-   public async Task<ActionResult> Create( ...
-   ```
 1. Save the files and hit F5 to debug.
-1. Add a new incident with a picture and watch it get uploaded to Azure storage.
+1. Add a new incident with a picture and it will get uploaded to Azure storage.
 1. Close the browser and stop debugging.
 
 END
