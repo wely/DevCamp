@@ -98,36 +98,134 @@ to open the Azure portal, which will look like this:
 
     ![image](./media/2016-10-14_18-00-54.png)
 
+### Exersize 3: Start your VSTS trial subscription
+
+1. In your browser, go to `http://www.visualstudio.com/team-services`, and click on `sign in` in the upper right corner.  This should take you to a screen that looks like this:
+
+    ![image](./media/2016-10-18_17-30-18.png)
+
+    click on `Use your benefits`, and this window will pop up:
+
+    ![image](./media/2016-10-18_17-42-01.png)
+
+    Click Accept to access your Visual Studio Dev Essentials benefits.
 
 ### Exercise 3: Configure your Azure subscription for DevCamp
 
-We have created an Azure Resource Group template that will configure the resources you need in Azure for the DevCamp.  To deploy 
+1. We have created an Azure Resource Group template that will configure the resources you need in Azure for the DevCamp.  To deploy 
 these resources in your Azure subscription, do `control-click` on this button:
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzureCAT-GSI%2FDevCamp%2Fmaster%2FShared%2FARMTemplate%2FAzureDeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-You should see a new tab open in your browser and open the Azure portal, with a blade that looks like this:
+1. You should see a new tab open in your browser and open the Azure portal, with a blade that looks like this:
 
-![image](./media/2016-10-18_13-13-25.png)
+    ![image](./media/2016-10-18_13-13-25.png)
 
-Enter a name for your resource group, choose a location for your deployment, check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
+    Name your resource group `DevCamp`, choose a location for your deployment, check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
 
-The Resource Group template will start deploying, and the portal will pin a tile to the dashbord showing the status:
+    The Resource Group template will start deploying, and the portal will pin a tile to the dashbord showing the status:
 
-![image](./media/2016-10-18_13-19-01.png)
+    ![image](./media/2016-10-18_13-19-01.png)
 
-This will take approximately 20 minutes, and when done  
+1. This will take approximately 20 minutes, and when done, go visit the resource group by clicking `resource groups on the left:
+
+    ![image](./media/2016-10-18_13-36-29.png) 
+
+    Then click your Resource group
+
+    ![image](./media/2016-10-18_13-39-10.png)
 
 ### Exercise 4: Create an Azure Virtual Machine for development
 
-Instructions and screenshots here
+1. The Azure resource group template will have created two virtual machines - one for 
+Windows development, and the other for Linux development.  In these instructions, we
+will focus on the Windows machine setup.  Feel free to use the Linux machine instead,
+or to stop or delete it.
+
+    Find the Windows virtual machine in your resource group, it's name will start with `windev`:
+
+    ![image](./media/2016-10-18_15-32-30.png)
+
+
 
 ### Exercise 5: Connect to the Azure Virtual Machine and configure it for development
-instructions here
- 
-Instructions and screenshots here
+
+1. click the virtual machine, and then click `Connect` to connect to the machine using 
+Remote Desktop:
+
+    ![image](./media/2016-10-18_16-37-57.png)
+
+    Use the credentials l-admin with password Devc@mp2016! to log onto the machine.  It
+    would be wise to change the password in the virtual machine.
+
+    When remote desktop is connected, you will see server manager initally.  We will
+    want to turn of IE enhanced security.  First click local server;
+
+    ![image](./media/2016-10-18_16-46-33.png)
+
+    then click the `on` next to 
+
+    ![image](./media/2016-10-18_16-50-50.png)
+
+    A dialog box pops up, turn enhanced security off for administrators.
+
+1. We are going to use git to clone the DevCamp github repository to this development machine.  Open `cmd`, change directory to the root, and do `git clone https://github.com/AzureCAT-GSI/DevCamp.git` :
+
+    ![image](./media/2016-10-18_17-03-51.png)
+
+    All of the content for this DevCamp will now be located in `c:\DevCamp\`.
+
+    Start `visual studio 2015`, and in the sign in screen, click `sign in` and use the credentials you used earlier for Office 365.
+
+    ![image](./media/2016-10-18_17-59-21.png)
+    
+    You can create a VSTS repository now, choose an appropriate repository name and click continue:
+
+    ![image](./media/2016-10-18_18-07-34.png)
+
+    Create your first team project, and name it `DevCamp`:
+
+    ![image](./media/2016-10-18_18-10-39.png)
+
+    Finally click close, and you are done with the Visual Studio setup.
+
+1. We are now going to deploy our .NET API to an Azure App Service.  In the command window change the directory too the root with `cd \`, and clone the github repository for the API with `git clone https://github.com/AzureCAT-GSI/DevCampSharedDotNetAPI.git`.  
+
+1. Switch back to Visual Studio and open the API solution with File/Open/Project/Solution:
+
+    ![image](./media/2016-10-18_18-34-01.png)
+
+    and open the API solution located at `C:\DevCampSharedDotNetAPI\src>`.  
+
+    ![image](./media/2016-10-18_18-44-50.png)
+
+    right click on the DevCamp API project, and choose `publish`:
+
+    ![image](./media/2016-10-18_18-47-26.png)
+
+    In the publish wizard, click `Microsoft Azure App Service` for the publish target:
+
+    ![image](./media/2016-10-18_18-49-13.png)
+
+    Next select `DevCamp` and then the `incidentapi...` app service, and click `OK`
+
+    ![image](./media/2016-10-18_18-55-41.png)
+
+    In the next step, leave all the defaults and click `Publish`:
+
+    ![image](./media/2016-10-18_19-03-10.png)
+
+    After a short time, you should see the `publish succeeded` message in the output window:
+
+    ![image](./media/2016-10-18_19-05-52.png)
+    
+     
+
+ npm install azure-cli -g
+
+
 ## Summary
 
 In this hands-on lab, you learned how to:
