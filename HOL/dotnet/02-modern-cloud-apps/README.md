@@ -656,13 +656,8 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     }
     ```
 
-1. The call is Async so add `async` to the return Type
-   
-   ```csharp
-   public async Task<ActionResult> Create( ...
-   ```
 1. Save the files and hit F5 to debug.
-1. Add a new incident with a picture and watch it get uploaded to Azure storage.
+1. Add a new incident with a picture and it will get uploaded to Azure storage.
 1. Close the browser and stop debugging.
 
 END
