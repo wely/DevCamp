@@ -37,37 +37,44 @@ This hands-on-lab has the following exercises:
 
 AzureAD can handle authentication for web applications. First we will create a new application in our AzureAD directory, and then we will extend our application code to work with an authentication flow. 
 
-1. Navigate in a browser to `https://apps.dev.microsoft.com`, click the button to **Register your app**, and login with your Azure credentials.
+1. Navigate in a browser to `https://apps.dev.microsoft.com`, click the link to **Sign in**, and login with your Azure credentials.
 
     ![image](./media/image-001.png)
 
-1. There are several types of application that can be registered.  For City Power & Light, select **Web Application**
+1. Click `Add an app` to being the process of adding your application
 
-    ![image](./media/image-002.png)
+    ![image](./media/image-001a.png)
 
-1. Provide an application name and contact email address.
+    Next, give the application a name (eg. `City Power and Light` ) and press `create application`
 
-    ![image](./media/image-003.png)
+    ![image](./media/image-001b.png)
 
-1. After AzureAD handles the authentication, it needs a route in our application to redirect the user.  
-For testing locally, we'll use `http://localhost:8080/auth/openid/return` as the **Redirect URI** and 
-as an environment variable named `AAD_RETURN_URL`.  Click the **Create** button. 
+1. On the next screen, make note of the application Id:
 
-    ![image](./media/image-004.png)
+    ![image](./media/image-001c.png)
 
-1. The page then shows some sample code. Scroll down to the bottom and select **Go to settings**
+1. Under `Application Secrets`, click `Generate New Password`:
 
-    ![image](./media/image-005.png)
+    ![image](./media/image-001d.png)
 
-1. On the Registration page, take note of the **Application ID**. This will be used as an environment variable named `AAD_CLIENT_ID` and is used to configure the authentication library.  
+    Make note of the application secret that was generated - this is the only
+    time that you will see it.
 
-    We also need to generate a client secret. Select the **Generate New Password** button.
+    ![image](./media/image-001e.png)
 
-    ![image](./media/image-006.png)
+    In the Platforms section, click on `Add Platform`:
 
-1. A key is generated for you. Save this, as you will not be able to retrieve it in the future. This key will become the `AAD_CLIENT_SECRET` environment variable.
+    ![image](./media/image-001f.png)
 
-    ![image](./media/image-007.png)
+    After AzureAD handles the authentication, it needs a 
+    route in our application to redirect the user.  For 
+    testing locally, we'll use `http://localhost:8080/auth/openid/return` as the **Redirect URI** and 
+    as an environment variable named `AAD_RETURN_URL`.  Click the **Create** button. 
+    paste that URI in the redirect URI box.
+
+    Finally click `Save` to save your configurations.
+
+    ![image](./media/image-001h.png)
 
 1. In Eclipse, let's add those environment variables by opening the run environment, click on the environment tab, and clicking `new` (using the values you captured above):
 
