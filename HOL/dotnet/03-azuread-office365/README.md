@@ -509,6 +509,12 @@ AzureAD can handle authentication for web applications. First we will create a n
                     CookieAuthenticationDefaults.AuthenticationType);
                     Response.Redirect("/");
                 }
+           
+                public async Task<ActionResult> Index()
+                {
+        
+                    return View();
+                }
             }
         }    
     ```
@@ -674,7 +680,7 @@ Next, we are going to create a page to display information about the logged in u
     }
     ```
 
-1. Add code to the profile controller ***Index*** method to bind data from the Graph to the ViewModel. We are also adding the authorize attribute to ensure that the user is signed in before viewing this page.
+1. Replace the code in the profile controller ***Index*** method to bind data from the Graph to the ViewModel. We are also adding the authorize attribute to ensure that the user is signed in before viewing this page.
 
     ```csharp
     [Authorize]
