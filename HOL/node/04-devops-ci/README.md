@@ -78,7 +78,7 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
     ![image](./media/image-008.png)
 
-1. Execute `git add *` to track the files, then a `git commit -m "initial upload` to commit the files to the repository. Finally, execute `git push origin master` to push the files up to VSTS.
+1. Execute `git add *` to track the files, then a `git commit -m "initial upload"` to commit the files to the repository. Finally, execute `git push origin master` to push the files up to VSTS.
 
     ![image](./media/image-009.png)
 
