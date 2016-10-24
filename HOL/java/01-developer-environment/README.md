@@ -134,7 +134,18 @@ these resources in your Azure subscription, do `control-click` on this button:
 
     ![image](./media/2016-10-18_13-19-01.png)
 
-1. This will take approximately 20 minutes, and when done, go visit the resource group by clicking `resource groups on the left:
+1. This will take approximately 20 minutes to complete. While it is working, it is useful to understand what this process is doing.
+    In a later session, we will take a look at Azure Resource Group templates, and how to manage your infrastructure the same way 
+    you manage your code.  As a short introduction, a template is a JSON file that contains definitions for the resources you want in your
+    resource group.  When you apply the resource group template, Azure will apply the template to your Azure resource group, and create 
+    the resources you have specified in the template.  This makes it easy to maintain the infrastructure definition in the JSON text file.
+    
+    In the resource group tempate we have created for DevCamp, there are several types of resources including Web Apps and Virtual Machines.  The 
+    whole list of resources deployed is detailed in Exersize 8 of this Hands-On-Lab.  Resource Group Templates are usually fairly quick to
+    apply - the reason this one takes so long is that we are creating a Windows Virtual machine and installing all the tools you will
+    need for the DevCamp.
+
+    When the Resource Group creation is done, go visit the resource group by clicking `resource groups on the left:
 
     ![image](./media/2016-10-18_13-36-29.png) 
 
@@ -179,9 +190,9 @@ Remote Desktop:
 
     ![image](./media/2016-10-18_16-50-50.png)
 
-    A dialog box pops up, turn enhanced security off for administrators.
+    A dialog box pops up - choose to turn enhanced security off for administrators.
 
-1. We are going to use git to clone the DevCamp github repository to this development machine.  Open `cmd`, change directory to the root, and do `git clone https://github.com/AzureCAT-GSI/DevCamp.git` :
+1. We are going to use git to clone the DevCamp github repository to this development machine.  Open `cmd`, change directory to the root using `cd c:\`, and do `git clone https://github.com/AzureCAT-GSI/DevCamp.git` :
 
     ![image](./media/2016-10-18_17-03-51.png)
 
@@ -246,7 +257,7 @@ and click on the `Other Downloads` link under v6.9.0:
 
     `npm install azure-cli -g`
 
-1. For Java developers, we have already installed the Java JDK.  We will be using the gradle build manager - to install that, go to a command window and type:
+1. For Java developers, we have already installed the Java JDK.  We will be using the gradle build manager - to install that using the [chocolatey package manager](http://www.chocolatey.org), go to a command window and type:
 
     `choco install gradle`
 
@@ -384,7 +395,7 @@ and click on the `Other Downloads` link under v6.9.0:
 
 ### Exercise 8: View the resources you created
 
-Going back to the list of resources in the resource group, we'll go through the list of each resource, with a description.  Feel free to click on the resource and view it's detail blade.
+Going back to the list of resources in the resource group, we'll go through the list of each resource, with a description.  Feel free to click on the resource and view its detail blade.
 
 ![image](./media/2016-10-19_17-13-01.png)
 
@@ -422,7 +433,7 @@ Also, our resource group template has added a random string to the end of many o
 
 1. `javaapp....:` App service for running the Java appliation when deployed to the cloud.  If you are not using Java in the labs, you can safely delete this.
 
-1. `nodejsapp....:` App service for running the Node.js appliation when deployed to the cloud.  If you are not using Node in the labs, you can safely delete this.
+1. `nodejsapp....:` App service for running the Node.js appliation when deployed to the cloud.  If you are not using Node.js in the labs, you can safely delete this.
 ## Summary
 
 In this hands-on lab, you learned how to:
@@ -430,6 +441,7 @@ In this hands-on lab, you learned how to:
 * Set up an Azure trial subscription
 * Configure your Azure subscription for DevCamp
 * Create an Azure Virtual Machine for development
-* Connect to the Azure Virtual Machine and configure it for development.
+* Connect to the Azure Virtual Machine and configure it for development
+* Use the Azure portal to view the resources that you created
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
