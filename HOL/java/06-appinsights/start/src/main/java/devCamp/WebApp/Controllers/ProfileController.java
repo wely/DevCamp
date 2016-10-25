@@ -17,21 +17,19 @@ import org.springframework.web.client.RestTemplate;
 
 import com.microsoft.aad.adal4j.AuthenticationResult;
 
-import devCamp.WebApp.GraphAPIClient.GraphAPIClient;
 import devCamp.WebApp.Utils.AuthHelper;
+import devCamp.WebApp.Utils.GraphAPIClient;
 import devCamp.WebApp.ViewModels.UserProfileBean;
 
 @Controller
 @Scope("session")
 public class ProfileController {
 
-
-	
-	@RequestMapping("/profile")
+    @RequestMapping("/profile")
     public String index(Model model,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-    	UserProfileBean userProfile = GraphAPIClient.getUserProfile(session);
-    	model.addAttribute("userProfileBean",userProfile);
+        HttpSession session = request.getSession();
+        UserProfileBean userProfile = GraphAPIClient.getUserProfile(session);
+        model.addAttribute("userProfileBean",userProfile);
         return "Profile/index";
     }
 }

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.microsoft.aad.adal4j.AuthenticationResult;
 import com.nimbusds.openid.connect.sdk.AuthenticationResponse;
 import com.nimbusds.openid.connect.sdk.AuthenticationSuccessResponse;
+import javax.servlet.http.HttpSession;
 
 public final class AuthHelper {
 
@@ -18,6 +19,10 @@ public final class AuthHelper {
         return (AuthenticationResult) request.getSession().getAttribute(PRINCIPAL_SESSION_NAME);
     }
 
+    public static AuthenticationResult getAuthSessionObject(HttpSession session) {
+        return (AuthenticationResult)session.getAttribute(PRINCIPAL_SESSION_NAME); 
+    }
+    
     public static boolean containsAuthenticationData(HttpServletRequest httpRequest) {
         return httpRequest.getMethod().equalsIgnoreCase("POST")
                 && (httpRequest.getParameterMap().containsKey(AuthParameterNames.ERROR)

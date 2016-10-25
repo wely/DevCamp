@@ -1,18 +1,10 @@
-/*
-package devCamp.WebApp.GraphAPIClient;
-
-import java.io.OutputStream;
+package devCamp.WebApp.Utils;
 
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jettison.json.JSONObject;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpOutputMessage;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -20,8 +12,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.microsoft.aad.adal4j.AuthenticationResult;
 
-import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
-import devCamp.WebApp.Utils.AuthHelper;
 import devCamp.WebApp.ViewModels.UserProfileBean;
 
 public class GraphAPIClient {
@@ -52,4 +42,3 @@ public class GraphAPIClient {
         return createdBean;		
 	}	
 }
-*/

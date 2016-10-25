@@ -32,7 +32,7 @@ public class IncidentAPIClient {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
+        
         IncidentBean createdBean = restTemplate.postForObject(uri, incident, IncidentBean.class);
         return createdBean;
     }
@@ -56,23 +56,23 @@ public class IncidentAPIClient {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
+            
             IncidentBean retval = restTemplate.getForObject(uri, IncidentBean.class);
-
-            return retval;      
+            
+            return retval;		
         }
-
+    
         public IncidentBean UpdateIncident(String incidentId,IncidentBean newIncident){
             //call REST API to create the incident
             final String uri = baseURI+"/incidents";
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
+            
             IncidentBean retval = null;
-            return retval;      
+            return retval;		
         }
-
+        
     public IncidentAPIClient(String baseURI) {
         if (baseURI == null){
             //throw argument null exception
