@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import devCamp.WebApp.IncidentAPIClient.IncidentService;
 import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
+import devCamp.WebApp.Utils.IncidentAPIHelper;
 /*
 import devCamp.WebApp.IncidentAPIClient.IncidentAPIClient;
 import devCamp.WebApp.IncidentAPIClient.IncidentService;
@@ -33,19 +34,20 @@ import devCamp.WebApp.Utils.StorageAPIHelper;
 public class IncidentController {
 	
 	//the Autowired annotation makes sure Spring can manage/cache the incident service
- 	@Autowired
+    
+	@Autowired
 	IncidentService service;
- 
- 	private Log log = LogFactory.getLog(IncidentController.class);
+    
+	private Log log = LogFactory.getLog(IncidentController.class);
 
 	@GetMapping("/details")
 	public String Details( @RequestParam(value="Id", required=false, defaultValue="") String id,Model model) {
 		//get the incident from the REST service
-	    
-//		IncidentBean incident = service.GetById(id);    	
+	    /*
+		IncidentBean incident = service.GetById(id);    	
 		//plug incident into the Model
-//		model.addAttribute("incident", incident);
-	    
+		model.addAttribute("incident", incident);
+	    */
 		return "Incident/details";
 	}
 
@@ -62,7 +64,9 @@ public class IncidentController {
 		
 		IncidentBean result = service.CreateIncident(incident);
 		
-		//IncidentBean result = null;
+		/*
+		IncidentBean result = null;
+		*/
 		if (result != null){
 			String IncidentID = result.getId();
 
@@ -77,6 +81,7 @@ public class IncidentController {
 						//add a event into the queue to resize and attach to incident
 						log.info("adding to queue");
 						StorageAPIHelper.getStorageAPIClient().AddMessageToQueue(IncidentID, fileName);
+					    
 					}
 				} catch (Exception e) {
 					return "Incident/details";

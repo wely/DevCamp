@@ -1,4 +1,3 @@
-
 package devCamp.WebApp.Utils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,19 +14,15 @@ public final class AuthHelper {
     public static boolean isAuthenticated(HttpServletRequest request) {
         return request.getSession().getAttribute(PRINCIPAL_SESSION_NAME) != null;
     }
-    
-    public static boolean isAuthenticated(HttpSession session) {
-    	return session.getAttribute(PRINCIPAL_SESSION_NAME) != null;
-    	
-    }
 
     public static AuthenticationResult getAuthSessionObject(HttpServletRequest request) {
         return (AuthenticationResult) request.getSession().getAttribute(PRINCIPAL_SESSION_NAME);
     }
-    public static AuthenticationResult getAuthSessionObject(HttpSession session) {
-        return (AuthenticationResult)session.getAttribute(PRINCIPAL_SESSION_NAME);
-    }
 
+    public static AuthenticationResult getAuthSessionObject(HttpSession session) {
+        return (AuthenticationResult)session.getAttribute(PRINCIPAL_SESSION_NAME); 
+    }
+    
     public static boolean containsAuthenticationData(HttpServletRequest httpRequest) {
         return httpRequest.getMethod().equalsIgnoreCase("POST")
                 && (httpRequest.getParameterMap().containsKey(AuthParameterNames.ERROR)
@@ -39,5 +34,4 @@ public final class AuthHelper {
         return authResponse instanceof AuthenticationSuccessResponse;
     }
 }
-
 
