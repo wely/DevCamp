@@ -49,7 +49,7 @@ public class AzureADResponseFilter extends OncePerRequestFilter {
 		super();
 		this.clientId = System.getenv("AAD_CLIENT_ID");
 		this.clientSecret = System.getenv("AAD_CLIENT_SECRET");
-		this.tenant = System.getenv("AAD_TENANT_ID");
+		this.tenant = "common";
 		this.authority = "https://login.microsoftonline.com/";
 		this.returnURL = System.getenv("AAD_RETURN_URL");
 		log.debug("configuring AAD_CLIENT_ID="+clientId);
