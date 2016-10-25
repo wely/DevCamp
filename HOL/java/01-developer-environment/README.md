@@ -261,6 +261,17 @@ and click on the `Other Downloads` link under v6.9.0:
 
     `choco install gradle`
 
+    Also install maven with:
+
+    `choco install maven`
+
+    Go to the root directory using `cd \`, and perform
+    ```CMD
+    git clone https://github.com/swagger-api/swagger-codegen.git
+    cd swagger-codegen
+    mvn clean package
+    ```
+
     Also Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.  
     If you would like to download a newer version (eg. Neon), Eclipse is available here:
 
@@ -304,6 +315,11 @@ and click on the `Other Downloads` link under v6.9.0:
     Choose both of the packages in the list, and complete the package installation:
 
     ![image](./media/2016-10-19_11-28-28.png)
+
+    Also, install the spring tool suite package by using the menu item `Help/Eclipse Marketplace...`, type `sping` in the Find: box and choose `Go`.
+    in the list of packages, scroll down to `Spring Tool Suite (STS) for Eclipse 3.8.2.RELEASE` and click `Install`.
+
+    ![image](./media/2016-10-24_14-29-53.png)
 
 ### Exercise 7: Azure Portal walkthrough
 

@@ -38,29 +38,43 @@ This hands-on-lab has the following exercises:
 
 ## Exercise 1: Integrate the API
 
-1. Navigate to the `HOL\java\modern-cloud-apps\start` folder in a terminal window
-
+1. In your development virtual machine, open a command prompt window and navigate to the `c:\DevCamp\HOL\java\02-modern-cloud-apps\start` folder 
 1. Run `gradle eclipse` in the terminal window to restore all dependencies and configure the
    project paths for Eclipse
 
     ![image](./media/image-001.png)
 
-1. Once package restoration completes, open Eclipse STS and Import the  **start** folder
+1. Once package restoration completes, open Eclipse 
 
     ![image](./media/image-002.png)
+
+    Import the HOL Start folder using the menu item `File/import`, and choose the Gradle project wizard and click `Next`:
+
+    ![image](./media/2016-10-24_14-35-05.png)
+
+    On the gradle welcome page click next, and on the `Import Gradle Project` page, choose the `c:\DevCamp\HOL\java\02-modern-cloud-apps\start` directory.  Click 'Finish`:
+
+    ![image](./media/2016-10-24_14-38-30.png)
+
+    You will be asked whether to use the existing project descriptor, or to create a new one.  Keep the existing one:
+
+    ![image](./media/2016-10-24_14-41-33.png)
+  
 
 1. Let's run the application in Debug Mode.  Click the Debug icon on
    the top toolbar, then select "Debug Configurations...".
 
     ![image](./media/image-003.png)
 
-   Click on "Spring Boot App" and click the + icon in the top left to create a
-   new run configuration.  Choose the Start project,
-   devCamp.WebApp.DevcampApplication for the main type.
+   Click on "Spring Boot App" and click the + icon in the top left to create a new run configuration.  
+   
+   ![image](./media/2016-10-24_14-46-43.png)
+   
+   Give the run configuration a name, such as `Run DevCamp App`, choose the Start project, click `Search` and choose devCamp.WebApp.DevcampApplication for the main type.
 
-    ![image](./media/image-003a.png)
+    ![image](./media/2016-10-24_14-51-00.png)
 
-   Click "Apply" and "Run".  In the console pane you should see
+   Click "Apply" and "Debug".  In the console pane you should see
    something like this:
 
     ![image](./media/image-003b.png)
@@ -91,7 +105,10 @@ This hands-on-lab has the following exercises:
     the URL in notepad or other text editor.
     ![image](./media/image-008.png)
 
-1. Since we provisioned a new instance of DocumentDB, there are not any records to use as sample data.  To generate sample data, our API has a route that can be hit at any time to reset the documents in our collection.  In the browser, add `/incidents/sampledata` to your API's URL to generate sample documents.
+1. Since we provisioned a new instance of DocumentDB, there are not any records to use as sample data.  To generate sample data, our API has a route that can be hit at any time to reset the documents in our collection.  In the browser, add `/incidents/sampledata` to your API's URL to generate sample documents.  The API will respond with a block of JSON that looks like this:
+    ```JSON
+    {"Version":{"_Major":1,"_Minor":1,"_Build":-1,"_Revision":-1},"Content":{"Message":"Initialized sample data","Id":"187a8c66-dae6-406a-9d6e-7654459689c4","Timestamp":"2016-10-24T19:55:02.9495008Z","Headers":[{"Key":"Content-Type","Value":["application/json; charset=utf-8"]}]},"StatusCode":200,"ReasonPhrase":"OK","Headers":[],"RequestMessage":null,"IsSuccessStatusCode":true}
+    ```
 
 1. After navigating to the sampledata route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade and select the DocumentDB resource.
 
@@ -119,13 +136,13 @@ This hands-on-lab has the following exercises:
     into enviromment variables whenever the debugger is launched. Add
     an entry for `INCIDENT_API_URL` and set the value to the ASP.NET
     WebAPI that we earlier loaded into the browser (and captured in
-    notepad). Do not add a trailing slash. Click OK to save the
+    notepad). It should look like this: `http://incidentapib6prykosg3fjk.azurewebsites.net/`, but with your own website name.  Click OK to save the
     environment variable, then apply and close.
 
     ![image](./media/image-009.png)
 
     Now that the URL is loaded as an environment variable, we can
-    access it from our application by calling System.getenv("INCIDENT_API_URL")`.  We will repeat this process several times to configure our application with Azure services.
+    access it from our application by calling `System.getenv("INCIDENT_API_URL")`.  We will repeat this process several times to configure our application with Azure services.
 
     > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application
 
@@ -235,7 +252,7 @@ This hands-on-lab has the following exercises:
     invoke the appropriate REST api call.
 
 1.  Next, create an object to create an IncidentAPIClient with the
-    proper URI. Create the class devCamp.WebApp.Utils.IncidentAPIClient:
+    proper URI. Create the class `devCamp.WebApp.Utils.IncidentAPIHelper`:
 
     ```java
     package devCamp.WebApp.Utils;
@@ -251,7 +268,11 @@ This hands-on-lab has the following exercises:
     }
     ```
 
-1. Open DevCamp.WebApp.Controllers.java. In the dashboard function,
+    >this class will create an incident of the IncidentAPIClient, configured so that it will pull the configuration from the OS environment variable.
+
+1. Open `DevCamp.WebApp.Controllers.DashboardController.java`. The dashboard function in this class is called when the user hits the `/dashboard` url.  In the function we are currently populating some dummy data to display on the dashboard.  We are going to change this to call the API, and display the retrieved data in the dashboard.
+
+    In the dashboard function,
     comment out this section of code that generated the dummy
     dashboard data:
 
@@ -272,14 +293,18 @@ This hands-on-lab has the following exercises:
     resulting list of IncidentBean in the model.
 
     ```java
-    IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
-    ArrayList<IncidentBean> theList = client.GetAllIncidents();
+    IncidentAPIClient client = IncidentAPIHelper.getIncidentAPIClient();
+    List<IncidentBean> theList = client.GetAllIncidents();
     model.addAttribute("allIncidents",theList);
     ```
 
-1. The application provides a form to enter in new Incidents.  
+    > You will notice that IncidentAPIClient and IncidentAPIHelper will be underlined in red, indicating that they are currently undefined in this class.  Either click on the red icon with the X on the left side of the code, or hover over the code to get the error correction menu.  For each, choose the appropriate import to add to this class:
+
+    ![image](./media/2016-10-24_21-03-58.png)
+
+1. In addition to displaying incidents, the application also provides a form to enter in new Incidents.  
 The POST from the form is handled by the `IncidentController.java` class.  
-Scroll to the Create function and locate the line of code:
+Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.java` and locate this line of code:
     ```java
     IncidentBean result = null;
     ```
@@ -289,9 +314,9 @@ Scroll to the Create function and locate the line of code:
     IncidentBean result = IncidentAPIHelper.getIncidentAPIClient().CreateIncident(incident);
     ```
 
-    Before we test this code, open the HTML template for the dashboard
+    Before we test this code, lets take a look at the HTML template for the dashboard
     page, located in
-    src/main/resources/templates/Dashboard/index.html. The following
+    `src/main/resources/templates/Dashboard/index.html`. The following
     section loops through all of the incidents in the allIncidents
     object in the model, and formats them nicely for the display.
 
@@ -324,16 +349,18 @@ Scroll to the Create function and locate the line of code:
     </div>
     ```
 
+    >We aren't making any changes to this file at this point, we are just verifying that the dashboard display simply pulls all the incidents in the model object, and formats them for HTML display.
+
 1. Run the application via the Debug Tab in Eclipse and check the
    dashboard page at http://localhost:8080/dashboard.
 
     ![image](./media/image-015.png)
 
-The cards now represent data returned from our API, replacing the static mockup code.
+The cards now represent data returned from our API, replacing the static mockup code.  You can also click on `Report Outage`, enter the information requested, then come back to the dashboard display to verify that your outage was saved.
 
 ## Exercise 2: Add a caching layer
-Querying our API is a big step forward, but querying a cache would increase 
-performance and limit the load on our API.  Azure offers a managed (PaaS) 
+Querying our API is a big step forward, but caching the data in memory would increase 
+performance and reduce the load on our API.  Azure offers a managed (PaaS) 
 service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
 
 We deployed an instance of Azure Redis Cache in the ARM Template, but
@@ -356,7 +383,9 @@ and can easily use Azure Redis Cache to hold the data.
     In Eclipse open the run configuration, click the environment tab
     and add four variables for `REDISCACHE_HOSTNAME`,
     `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and
-    `REDISCACHE_SSLPORT`.  Click apply and close.
+    `REDISCACHE_SSLPORT`.  Click apply and close.  Your environment variables should look like this:
+
+    ![image](./media/2016-10-24_21-33-35.png)
 
     We will use these variables to configure a Redis client.
 
@@ -376,7 +405,7 @@ and can easily use Azure Redis Cache to hold the data.
 
     In Spring, you can apply caching to a Spring
    [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html). 
-   We need to create a Java class for this service, so create a new Java class named 
+   We need to create a Java class to represent this service, so create a new Java class named 
    `devCamp.WebApp.IncidentAPIClient.IncidentService.java` with this code:
 
    ```java
@@ -392,7 +421,7 @@ and can easily use Azure Redis Cache to hold the data.
     import org.springframework.stereotype.Service;
 
     import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
-    import devCamp.WebApp.Utils.IncidentApiHelper;
+    import devCamp.WebApp.Utils.IncidentAPIHelper;
 
     @Service
     public class IncidentService {
@@ -401,7 +430,7 @@ and can easily use Azure Redis Cache to hold the data.
 
         @Cacheable("incidents")
         public List<IncidentBean> GetAllIncidents() {
-            IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
+            IncidentAPIClient client = IncidentAPIHelper.getIncidentAPIClient();
             return client.GetAllIncidents();
         }
 
@@ -544,6 +573,7 @@ directly. To do this add these lines inside the DashboardController class:
     @Autowired
     IncidentService service;
     ```
+    >you will also have to resolve the import for devCamp.WebApp.IncidentAPIClient.IncidentService
 
     Also, change these two lines:
     ```java
@@ -556,8 +586,7 @@ directly. To do this add these lines inside the DashboardController class:
     List<IncidentBean> theList = service.GetAllIncidents();
     ```
 
-    You will also have to make sure the IncidentService is imported
-    for the class.
+    These changes will ensure that the IncidentAPI is called via the service, rather than directly.  This is required to make Spring caching annotations work properly.
 
 1. We need to change the `IncidentController.java` class to use the IncidentService 
    object also.  Add these lines inside the class definition:
@@ -567,15 +596,21 @@ directly. To do this add these lines inside the DashboardController class:
     IncidentService service;
     ```
 
-    ```java
+    Find this line inside of the create function:
+
+      ```java
     IncidentBean result = IncidentAPIHelper.getIncidentAPIClient().CreateIncident(incident);
     ```
 
-    Change this line to:
+    Change it to this:
     ```java
     IncidentBean result = service.CreateIncident(incident);
     ```
-    
+
+   >Again, you will have to resolve the import for devCamp.WebApp.IncidentAPIClient.IncidentService
+
+   These changes ensure that we call the IncidentAPI via the service, rather than directly.
+
 1. To test the application using the Azure Redis Cache, note that in
    the IncidentAPIClient class, the `GetAllincidents` function has
    this code at the top:
@@ -593,9 +628,9 @@ directly. To do this add these lines inside the DashboardController class:
    Performing get /incidents web service
    ```
 
-If you refresh your page in the browser, you should not get another
-   log message, since the actual API code will not be called for 300 seconds.
+If you refresh your page in the browser, you should not get another log message, since the actual API code will not be called for 300 seconds.
 
+> if you refresh or click `Dashboard` before the previous request has completed, you may get two log messages indicating the web service has been called.  This is expected behavior, since the write to cache will happen when the request has completed.
 
 ## Exercise 3: Write images to Azure Blob Storage
 
@@ -621,6 +656,10 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containres to group 
     sets of blobs together.  For this demo let's use `images` as the Container name
     * `AZURE_STORAGE_QUEUE` is the name of the Azure Storage Queue resource.  For this demo we will use `thumbnails`.
+
+    Your `Run configurations` window in Eclipse should contain these environment variables:
+
+    ![image](./media/2016-10-24_22-02-32.png)
 
     Add the following lines to the dependencies in build.gradle:
     ```java
@@ -674,6 +713,31 @@ paste in the following code:
             blobStorageConnectionString = String.format("DefaultEndpointsProtocol=http;AccountName=%s;AccountKey=%s", account,key);
         }
 
+	
+        public void AddMessageToQueue(String IncidentId, String ImageFileName)
+        {
+            CloudStorageAccount storageAccount;
+            try {
+                storageAccount = CloudStorageAccount.parse(blobStorageConnectionString);
+                CloudQueueClient queueClient = storageAccount.createCloudQueueClient();
+
+                CloudQueue msgQ = queueClient.getQueueReference(azureStorageQueue);
+                msgQ.createIfNotExists();
+        
+                JSONObject json = new JSONObject()
+                .put("IncidentId", IncidentId)
+                .put("BlobContainerName", azureStorageContainer)
+                .put("BlobName",getIncidentBlobFilename(IncidentId,ImageFileName));
+        
+                String msgPayload = json.toString();
+                CloudQueueMessage qMsg = new CloudQueueMessage(msgPayload);
+                msgQ.addMessage(qMsg);
+            } catch (InvalidKeyException | URISyntaxException | StorageException | JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+	
         public  String UploadFileToBlobStorage(String IncidentId, MultipartFile imageFile){
             CloudStorageAccount account;
             try {
@@ -727,15 +791,15 @@ environment variables and creating a StorageAPIClient. Create
 
     public class StorageAPIHelper {
 
-    public static StorageAPIClient getStorageAPIClient() {
+        public static StorageAPIClient getStorageAPIClient() {
 
-        String account = System.getenv("AZURE_STORAGE_ACCOUNT");;
-        String key = System.getenv("AZURE_STORAGE_ACCESS_KEY");;
-        String queue = System.getenv("AZURE_STORAGE_QUEUE");
-        String container = System.getenv("AZURE_STORAGE_BLOB_CONTAINER");
-        
-        return new StorageAPIClient(account, key,container,queue);	
-    }
+            String account = System.getenv("AZURE_STORAGE_ACCOUNT");;
+            String key = System.getenv("AZURE_STORAGE_ACCESS_KEY");;
+            String queue = System.getenv("AZURE_STORAGE_QUEUE");
+            String container = System.getenv("AZURE_STORAGE_BLOB_CONTAINER");
+            
+            return new StorageAPIClient(account, key,container,queue);	
+        }
     }
 
     ```
@@ -746,7 +810,7 @@ environment variables and creating a StorageAPIClient. Create
         if (fileName != null) {
     ```
 
-    Add this code after the above if statement:
+    Add this code after the if statement:
     ```java
         //now upload the file to blob storage 
         log.info("uploading to blob");
@@ -756,17 +820,20 @@ environment variables and creating a StorageAPIClient. Create
         StorageAPIHelper.getStorageAPIClient().AddMessageToQueue(IncidentID, fileName);
     ```
 
-1. Open a browser window and navigate to `http://localhost:8080/new`.  Fill out the form and hit the **Submit** button.
+1. We should be ready to test the storage changes at this point.  Run or debug the application within Eclipse, and open a browser window.  Before you go to the application, use your favorite search engine and download an image you can post with the incident. Then, navigate to `http://localhost:8080/new` (or click on Report Outage).  Fill out the form and hit the **Submit** button.
 
     ![image](./media/image-021.png)
 
-    You should be redirected to the Dashboard screen. 
+    You should be redirected to the Dashboard screen, which will contain your new Incident.  
 
-2. In the Microsoft Azure Storage Explorer, navigate to your Storage Account and ensure that the blob was created.
+1. Let's install the Microsoft Azure Storage Explorer.  Go to `http://storageexplorer.com/`, 
+1. In the Microsoft Azure Storage Explorer, navigate to your Storage Account and ensure that the blob was created.
 
     ![image](./media/image-022.png)
 
+  You can also use the Azure Storage Explorer to view the `thumbnails` queue, and verify that there is an entry for the image we uploaded.  It is also safe to delete the images and queue entries using Azure Storage Explorer, and enter new Incidents for testing.
+
 Our application can now create new incidents and upload related images to Azure Blob Storage.  It will also put an 
-entry into an Azure queue, to invoke an image resizing process, for example.  In a later demo, we'll show how 
+entry into an Azure queue, to invoke an image resizing process, for example. In a later demo, we'll show how 
 an [Azure Function](https://azure.microsoft.com/en-us/services/functions/) can be invoked via a queue entry to 
 do tasks such as this.
