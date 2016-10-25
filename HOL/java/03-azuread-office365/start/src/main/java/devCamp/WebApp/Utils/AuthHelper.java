@@ -18,6 +18,10 @@ public final class AuthHelper {
         return (AuthenticationResult) request.getSession().getAttribute(PRINCIPAL_SESSION_NAME);
     }
 
+    public static AuthenticationResult getAuthSessionObject(HttpSession session) {       
+        return (AuthenticationResult)session.getAttribute(PRINCIPAL_SESSION_NAME);    
+    }
+    
     public static boolean containsAuthenticationData(HttpServletRequest httpRequest) {
         return httpRequest.getMethod().equalsIgnoreCase("POST")
                 && (httpRequest.getParameterMap().containsKey(AuthParameterNames.ERROR)
