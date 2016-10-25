@@ -10,7 +10,7 @@ City Power & Light is a sample application that allows citizens to to report "in
 
 In this lab, you will work with an existing API to connect to the web application front end. This will allow you perform CRUD operations for incidents. You will also configure additional Azure features for Redis Cache, Azure Storage Queues, and Azure Blob Storage. 
 
-This guide uses [Eclipse STS](https://spring.io/tools) for editing, however please feel free to use your editor of choice.
+This guide uses [Eclipse](https://www.eclipse.org) for editing, however please feel free to use your editor of choice.
 
 ## Objectives
 

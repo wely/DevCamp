@@ -98,6 +98,4 @@ public class UserProfileBean {
 	public void setUserPrincipalName(String userPrincipalName) {
 		UserPrincipalName = userPrincipalName;
 	}
-
-	
 }
