@@ -1,43 +1,43 @@
-package devCamp.WebApp.IncidentAPIClient;
+ package devCamp.WebApp.IncidentAPIClient;
 
-import java.util.List;
+ import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
+ import org.apache.commons.logging.Log;
+ import org.apache.commons.logging.LogFactory;
+ import org.springframework.cache.annotation.CacheEvict;
+ import org.springframework.cache.annotation.Cacheable;
+ import org.springframework.stereotype.Service;
 
-import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
-import devCamp.WebApp.Utils.IncidentApiHelper;
+ import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
+ import devCamp.WebApp.Utils.IncidentAPIHelper;
 
-@Service
-public class IncidentService {
-	
-	private Log log = LogFactory.getLog(IncidentService.class);
+ @Service
+ public class IncidentService {
 
-	@Cacheable("incidents")
-	public List<IncidentBean> GetAllIncidents() {			
-		IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
-		return client.GetAllIncidents();
-	}
-	
-	@CacheEvict(cacheNames="incidents", allEntries=true)
-	public IncidentBean CreateIncident(IncidentBean incident) {
-		return IncidentApiHelper.getIncidentAPIClient().CreateIncident(incident);		
-	}
-	
-	@CacheEvict(cacheNames="incidents", allEntries=true)
-	public IncidentBean UpdateIncident(String incidentId,IncidentBean newIncident){
-		return IncidentApiHelper.getIncidentAPIClient().UpdateIncident(incidentId,newIncident);
-	}
-	
-	public IncidentBean GetById(String incidentId) {
-		return IncidentApiHelper.getIncidentAPIClient().GetById(incidentId);		
-	}
+     private Log log = LogFactory.getLog(IncidentService.class);
 
-	@CacheEvict(cacheNames="incidents", allEntries=true)
-	public void ClearCache() {
-	}
+     @Cacheable("incidents")
+     public List<IncidentBean> GetAllIncidents() {
+         IncidentAPIClient client = IncidentAPIHelper.getIncidentAPIClient();
+         return client.GetAllIncidents();
+     }
 
-}
+     @CacheEvict(cacheNames="incidents", allEntries=true)
+     public IncidentBean CreateIncident(IncidentBean incident) {
+         return IncidentAPIHelper.getIncidentAPIClient().CreateIncident(incident);		
+     }
+     
+     @CacheEvict(cacheNames="incidents", allEntries=true)
+     public IncidentBean UpdateIncident(String incidentId,IncidentBean newIncident){
+         return IncidentAPIHelper.getIncidentAPIClient().UpdateIncident(incidentId,newIncident);
+     }
+     
+     public IncidentBean GetById(String incidentId) {
+         return IncidentAPIHelper.getIncidentAPIClient().GetById(incidentId);		
+     }
+
+     @CacheEvict(cacheNames="incidents", allEntries=true)
+     public void ClearCache() {
+     }
+     
+ }
