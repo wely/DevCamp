@@ -11,7 +11,7 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-The source for the starter app is located in the [TODO:ADD REF](#) folder. 
+The source for the starter app is located in the `c:\DevCamp\HOL\java\06-appinsights\start` folder. 
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -35,7 +35,7 @@ An instance of Application Insights can be created in a variety of ways, includi
 
     ![image](./media/image-002.png)
 
-1. In the overview blade that opens, click **Create** to open the creation settings blade. Select a name, configure **Application Type** to `Java web Application` and then click the **Create** button. 
+1. In the overview blade that opens, click **Create** to open the creation settings blade. Select a name, configure **Application Type** to `Java web application` and then click the **Create** button. 
 
     Creation typically takes less than a minute.
 
