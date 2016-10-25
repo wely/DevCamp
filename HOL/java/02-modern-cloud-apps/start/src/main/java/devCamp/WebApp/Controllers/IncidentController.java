@@ -59,7 +59,7 @@ public class IncidentController {
 	public String Create(@ModelAttribute IncidentBean incident,@RequestParam("file") MultipartFile imageFile) {
 		log.info("creating incident");
 		/*
-		IncidentBean result = service.CreateIncident(incident);
+		IncidentBean result = IncidentAPIHelper.getIncidentAPIClient().CreateIncident(incident);
 		*/
 		IncidentBean result = null;
 		if (result != null){
