@@ -1,3 +1,4 @@
+/*
 package devCamp.WebApp.GraphAPIClient;
 
 import java.io.OutputStream;
@@ -51,3 +52,4 @@ public class GraphAPIClient {
         return createdBean;		
 	}	
 }
+*/
