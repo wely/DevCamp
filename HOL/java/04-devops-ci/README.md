@@ -83,7 +83,7 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
     ![image](./media/image-008.png)
 
-1. Execute `git add *` to track the files, then a `git commit -m "initial upload` to commit the files to the repository. Finally, execute `git push origin master` to push the files up to VSTS.
+1. Execute `git add *` to track the files, then a `git commit -m "initial upload"` to commit the files to the repository. Finally, execute `git push origin master` to push the files up to VSTS.
 
     ![image](./media/image-009.png)
 
@@ -131,7 +131,7 @@ exercise.
 
     ![image](./media/image-014.png)
 
-1.  Add a Build Step for **Gradle**, found under the left-hand filter for **Build**
+1.  Add a Build Step for **Gradle**, found under the left-hand filter for **Build**.  After you have done this, click `Close` to close the task catalog.
 
     ![image](./media/image-015.png)
 
@@ -409,6 +409,10 @@ to open a new browser tab holding configuration options.
 
     ![image](./media/image-055.png)
 
+    If you make changes to the application and `git push` back to the VSTS server, this will
+    automatically trigger a build and deployment.  Try to make a small change to the application and verify that the 
+    application is re-deployed to the test environment.
+    
 ## Summary
 
 In this hands-on lab, you learned how to:
