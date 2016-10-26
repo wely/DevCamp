@@ -326,28 +326,30 @@ Application Insights has the ability to do performance and availability testing 
 
     >With all of this testing, you may exceed the limits of the free service tier for Azure app services.  If that occurs, you can click on the App Service, and you'll see a notification that your App Service has been stopped due to it's consumption.  All you need to do is change the App service plan to basic, which will start the application again.
 
-
-
 ### Exercise 5: Interact with your telemetry data
 
-In the `Metrics Explorer`, you can create charts and grids based on the telemetry data recieved, and you can relate data points over time.  Here is an example of page views vs process CPU and processor time:
+In the `Metrics Explorer`, you can create charts and grids based on the telemetry data recieved, and you can relate data points over time.  These charts and graphs are very configurable, so you can see the metrics that matter to you.
+
+1. Here is an example of page views vs process CPU and processor time:
 
     ![image](./media/2016-10-25_22-10-19.png)
 
-In `Search` you can see the raw telemetry events, you can filter on the specific events you want to see, and you can drill into more detail on those events.  you can also search for proerties on the telemetry event.  This will be particularly useful when we add logging to the telemetry in Exercise 6.  Here is the basic view:
+    In `Search` you can see the raw telemetry events, you can filter on the specific events you want to see, and you can drill into more detail on those events.
+    You can also search for proerties on the telemetry event.  This will be particularly useful when we add logging to the telemetry in Exercise 6.  Here is the
+    basic view:
 
     ![image](./media/2016-10-25_22-13-47.png)
     
-Clicking on one of the events gives you a detail blade for that event:
+    Clicking on one of the events gives you a detail blade for that event:
 
     ![image](./media/2016-10-25_22-15-49.png)
 
-If there are remote dependencies, such as calls to a database or other resources, those will appear under `Calls to Remote Dependencies`.
-If there were exceptions, traces or failed calls to dependencies, you could get detail on that under `Related Items`.
+    If there are remote dependencies, such as calls to a database or other resources, those will appear under `Calls to Remote Dependencies`.
+    If there were exceptions, traces or failed calls to dependencies, you could get detail on that under `Related Items`.
 
-When we go to `Application map`, we can see a diagram of the monitored items that make up the application:
+1. When we go to `Application map`, we can see a diagram of the monitored items that make up the application:
 
-![image](./media/2016-10-25_22-29-02.png)
+   ![image](./media/2016-10-25_22-29-02.png)
 
 ### Exercise 6: Monitor logging events
 
