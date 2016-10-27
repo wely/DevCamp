@@ -1,4 +1,4 @@
- package devCamp.WebApp.IncidentAPIClient;
+ /*package devCamp.WebApp.IncidentAPIClient;
 
  import java.util.List;
 
@@ -8,7 +8,7 @@
  import org.springframework.cache.annotation.Cacheable;
  import org.springframework.stereotype.Service;
 
- import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
+ import devCamp.WebApp.models.IncidentBean;
  import devCamp.WebApp.Utils.IncidentAPIHelper;
 
  @Service
@@ -40,4 +40,4 @@
      public void ClearCache() {
      }
      
- }
+ }*/

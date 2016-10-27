@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.microsoft.azure:azure-svc-mgmt-storage:0.9.5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.microsoft.azure/azure-svc-mgmt-storage/0.9.5/c4bf94c26468d7ca645074743ed9425608c205ba/azure-svc-mgmt-storage-0.9.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.microsoft.azure/azure-svc-mgmt-storage/0.9.5/44bfc6dc393f5f637b094c9934779cab84e12e97/azure-svc-mgmt-storage-0.9.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

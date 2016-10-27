@@ -1,10 +1,9 @@
-package devCamp.WebApp.IncidentAPIClient;
+/*package devCamp.WebApp.IncidentAPIClient;
 
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,7 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
+import devCamp.WebApp.models.IncidentBean;
 
 public class IncidentAPIClient {
     private Log log = LogFactory.getLog(IncidentAPIClient.class);
@@ -80,4 +79,4 @@ public class IncidentAPIClient {
         this.baseURI = baseURI;
 
     }
-}
+}*/

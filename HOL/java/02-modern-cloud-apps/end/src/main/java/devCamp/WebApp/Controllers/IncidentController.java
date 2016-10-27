@@ -1,27 +1,19 @@
 package devCamp.WebApp.Controllers;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-
+import devCamp.WebApp.services.IncidentService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import devCamp.WebApp.IncidentAPIClient.IncidentService;
-import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
-import devCamp.WebApp.Utils.IncidentAPIHelper;
+//import devCamp.WebApp.IncidentAPIClient.IncidentService;
+
+import devCamp.WebApp.models.IncidentBean;
 /*
 import devCamp.WebApp.IncidentAPIClient.IncidentAPIClient;
 import devCamp.WebApp.IncidentAPIClient.IncidentService;
@@ -30,14 +22,18 @@ import devCamp.WebApp.Utils.StorageHelper;
 */
 import devCamp.WebApp.Utils.StorageAPIHelper;
 
+import java.util.concurrent.CompletableFuture;
+
 @Controller
 public class IncidentController {
-	
+	private static final Logger LOG = LoggerFactory.getLogger(IncidentController.class);
+
 	//the Autowired annotation makes sure Spring can manage/cache the incident service
     
 	@Autowired
-	IncidentService service;
-    
+	//IncidentService service;
+    private IncidentService service;
+
 	private Log log = LogFactory.getLog(IncidentController.class);
 
 	@GetMapping("/details")
@@ -59,40 +55,37 @@ public class IncidentController {
 	}
 
 	@PostMapping("/new")
-	public String Create(@ModelAttribute IncidentBean incident,@RequestParam("file") MultipartFile imageFile) {
+	public CompletableFuture<String> Create(@ModelAttribute IncidentBean incident,@RequestParam("file") MultipartFile imageFile) {
 		log.info("creating incident");
 		
-		IncidentBean result = service.CreateIncident(incident);
-		
-		/*
-		IncidentBean result = null;
-		*/
-		if (result != null){
+		//IncidentBean result = service.CreateIncident(incident);
+		return service.createIncidentAsync(incident).thenApply((result) -> {
 			String IncidentID = result.getId();
 
 			if (imageFile != null) {
 				try {
 					String fileName = imageFile.getOriginalFilename();
 					if (fileName != null) {
-					    
-						//now upload the file to blob storage 
+
+						//now upload the file to blob storage
 						log.info("uploading to blob");
 						StorageAPIHelper.getStorageAPIClient().UploadFileToBlobStorage(IncidentID, imageFile);
 						//add a event into the queue to resize and attach to incident
 						log.info("adding to queue");
 						StorageAPIHelper.getStorageAPIClient().AddMessageToQueue(IncidentID, fileName);
-					    
+
 					}
 				} catch (Exception e) {
 					return "Incident/details";
 				}
 			}
-			/*
-			service.ClearCache();
-			*/
 			return "redirect:/dashboard";
-		} else {
-			return "/error";
-		}
+		});
+
+	}
+	@ExceptionHandler(Exception.class)
+	public String catchAllErrors(Exception e) {
+		LOG.error("Error occurred in IncidentController", e);
+		return "/error";
 	}
 }
