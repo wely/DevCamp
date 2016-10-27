@@ -11,7 +11,7 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-The source for the starter app is located in the [TODO:ADD REF](#) folder. 
+The source for the starter app is located in the `c:\DevCamp\HOL\java\06-appinsights\start` folder. 
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -35,13 +35,13 @@ An instance of Application Insights can be created in a variety of ways, includi
 
     ![image](./media/image-002.png)
 
-1. In the overview blade that opens, click **Create** to open the creation settings blade. Select a name, configure **Application Type** to `Java web Application` and then click the **Create** button. 
+1. In the overview blade that opens, click **Create** to open the creation settings blade. Type a name (for example, `citypower`, as we've used here), configure **Application Type** to `Java web application` and then click the **Create** button. 
 
     Creation typically takes less than a minute.
 
     ![image](./media/image-003.png)
 
-1. Once provisioning completes, return to your Resource Group and open the resource.
+1. Once provisioning completes, return to your Resource Group and open the resource.  You may need to hit the refresh button within the resource group blade.
 
     ![image](./media/image-004.png)
 
@@ -54,12 +54,12 @@ We now have an instance of Application Insights created and ready for data.  The
 ### Exercise 2: Add server and client side SDK's 
 
 App Insights works with 2 components: 
-1. A server side SDK that integrates into the NodeJS processes
+1. A server side SDK that integrates into the Java processes
 2. A snippet of JavaScript sent down to the client's browser to monitor behavior
 
 We will add both components to our application and enable the sending of telementry into the AppInsights service.
 
-1. Open the application in Eclipse STS. Feel free to use the folder you've been using throughout the hands on labs, or feel free to use the `start` folder. 
+1. Open the application in Eclipse. Feel free to use the folder you've been using throughout the hands on labs, or feel free to use the `start` folder. 
 
 1. Microsoft publishes an SDK for AppInsights on Java on [GitHub](https://github.com/Microsoft/ApplicationInsights-Java).  This SDK can be configured via environment variable, so for consistency let's set an environment variable for `APPLICATION_INSIGHTS_IKEY` equal to the key we noted in Exercise 1.
 
@@ -85,13 +85,22 @@ We will add both components to our application and enable the sending of telemen
     import org.springframework.boot.context.embedded.FilterRegistrationBean;
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
-
+    import com.microsoft.applicationinsights.TelemetryConfiguration;
     import com.microsoft.applicationinsights.web.internal.WebRequestTrackingFilter;
 
 
     @Configuration
     public class AppInsightsConfig {
 
+        @Bean
+        public String telemetryConfig() {
+            String telemetryKey = System.getenv("APPLICATION_INSIGHTS_IKEY");
+            if (telemetryKey != null) {
+                TelemetryConfiguration.getActive().setInstrumentationKey(telemetryKey);
+            }
+            return telemetryKey;
+        }
+	
         @Bean
         public FilterRegistrationBean aiFilterRegistration() {
             FilterRegistrationBean registration = new FilterRegistrationBean();
@@ -108,7 +117,8 @@ We will add both components to our application and enable the sending of telemen
     }
     ```
 
-    This class will configure the `WebRequestTrackingFilter` to be the first filter on the http filter chain. 
+    This class will configure the `WebRequestTrackingFilter` to be the first filter on the http filter chain. It 
+    will also pull the instrumentation key from the operating system environment variable if it is available.
 
     > We are using the web http filter configuration rather than the Spring MFC configuration [described here](https://azure.microsoft.com/en-us/documentation/articles/app-insights-java-get-started/) because this is a Spring Boot application, and it has it's own spring MVC configuration. 
 
@@ -168,11 +178,11 @@ We will add both components to our application and enable the sending of telemen
     
     ![image](./media/image-007.png)
 
-1. The next blade with give you a JavaScript snippet pre-loaded with the Instrumentation Key.  This snippet, when place on an HTML page, will download the full Application Insights JavaScript library and configure itself.  Click the clipboard icon to copy the snippet.
+1. The next blade with give you a JavaScript snippet pre-loaded with the Instrumentation Key.  This snippet, when placed on an HTML page, will download the full Application Insights JavaScript library and configure itself.  Click the clipboard icon to copy the snippet.
 
     ![image](./media/image-008.png)
 
-1. Let's integrate the snippet into our web pages. Create a new file at `src/main/resources/templates/appinsights.html` and paste in the snippet.
+1. Let's integrate the snippet into our web pages. Create a new file at `src/main/resources/templates/appinsights.html` and paste in the snippet, which will look like this (with your instrumentationKey:
 
     ```html
     <!-- 
@@ -258,10 +268,9 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
         telemetry.trackException(exc); 
         System.out.println("[6] Exception             -- message=\"This is only a test!\""); 
     } 
-    	    ```
+    ```
 
-    This code will send the users `UserPrincipalName` and `DisplayName` to AppInsights.  
-    It also demonstrates how to send exceptions to AppInsights.
+    This code will send the users `UserPrincipalName` and `DisplayName` to AppInsights. It also demonstrates how to send exceptions to AppInsights.
 
 1. Save the file, restart the application, and generate sample telemetry by visitng the profile page, leaving, 
     and returning to the profile page.  In the Azure Portal we can see the data by pressing the **Search** 
@@ -282,7 +291,65 @@ application and centralize monitoring across multiple application instances.
 
 ### Exercise 4: Create a global web test
 
+Application Insights has the ability to do performance and availability testing of your application from multiple locations around the world, all configured from the Azure portal.  
+
+1. To show the Application Insights availability monitoring capability, we first need to make sure the application is deployed to the Azure App service.  This is done in the `04-devops-ci` hands-on-lab.  To verify the application is running in the cloud, first go to the Azure portal, open your resource group, and click on the Java app service:
+
+    ![image](./media/2016-10-25_21-12-41.png)
+
+    then, click the `browse` link in the App service blade:
+
+    ![image](./media/2016-10-25_21-15-12.png)
+
+    This should open another window with the City Power and Light application in it.  Make note of the URL at the top of the browser.
+
+2. In the Azure portal, click on the citypower Application Insights deployment in your resource group to open it's blade.  Availability is under `INVESTIGATE` in the scrolling pane - click on it to open the Availability tab:
+
+    ![image](./media/2016-10-25_21-18-39.png)
+
+    Click on `+ Add web test`.  In the Create test blade, give the test a name, put the URL for your application in the URL box, and choose several
+    locations to test your application from.  You can choose to receive an alert email when the availability test fails by clicking on the `Alerts` box and entering the alert configuration.  Click `OK` and `Create`.  
+
+    ![image](./media/2016-10-25_21-22-34.png)
+
+    It may take 5-10 minutes for your web test to start running.  When it is executing and collecting data, you should see availability information on the Availability tab of the Application Insights blade, for example:
+
+    ![image](./media/2016-10-25_21-37-37.png)
+
+    you can click on the web test to get more information:
+
+    ![image](./media/2016-10-25_21-39-05.png)
+
+    and clicking on one of the dots on the graph will give you information about that specific test.  Clicking on the request will show you the response that was received from your application:
+
+    ![image](./media/2016-10-25_21-40-19.png)
+
+    >With all of this testing, you may exceed the limits of the free service tier for Azure app services.  If that occurs, you can click on the App Service, and you'll see a notification that your App Service has been stopped due to it's consumption.  All you need to do is change the App service plan to basic, which will start the application again.
+
 ### Exercise 5: Interact with your telemetry data
+
+In the `Metrics Explorer`, you can create charts and grids based on the telemetry data recieved, and you can relate data points over time.  These charts and graphs are very configurable, so you can see the metrics that matter to you.
+
+1. Here is an example of page views vs process CPU and processor time:
+
+    ![image](./media/2016-10-25_22-10-19.png)
+
+    In `Search` you can see the raw telemetry events, you can filter on the specific events you want to see, and you can drill into more detail on those events.
+    You can also search for proerties on the telemetry event.  This will be particularly useful when we add logging to the telemetry in Exercise 6.  Here is the
+    basic view:
+
+    ![image](./media/2016-10-25_22-13-47.png)
+    
+    Clicking on one of the events gives you a detail blade for that event:
+
+    ![image](./media/2016-10-25_22-15-49.png)
+
+    If there are remote dependencies, such as calls to a database or other resources, those will appear under `Calls to Remote Dependencies`.
+    If there were exceptions, traces or failed calls to dependencies, you could get detail on that under `Related Items`.
+
+1. When we go to `Application map`, we can see a diagram of the monitored items that make up the application:
+
+   ![image](./media/2016-10-25_22-29-02.png)
 
 ### Exercise 6: Monitor logging events
 

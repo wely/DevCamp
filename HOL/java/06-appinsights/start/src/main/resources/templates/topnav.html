@@ -20,6 +20,7 @@
                     <li><a th:href="@{/new}">Report Outage</a></li>
                 </ul>
             <!-- Top Navigation Right -->
+            
             <ul class="nav navbar-nav navbar-right" th:if="${session.principal!=null}">
 			        <li class="dropdown">
 			            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -32,9 +33,9 @@
 			            </ul>
 			        </li>
 			</ul>
-			    <ul class="nav navbar-nav navbar-right" th:unless="${session.principal!=null}">
-			        <li><a th:href="@{/login}">Login</a></li>
-			    </ul>
+			<ul class="nav navbar-nav navbar-right" th:unless="${session.principal!=null}">
+			    <li><a th:href="@{/login}">Login</a></li>
+			</ul>
 	        </div>
         </div>
     </nav>

@@ -10,7 +10,7 @@ City Power & Light is a sample application that allows citizens to to report "in
 
 In this lab, you will continue enhancing the City Power & Light application by adding authentication for users powered by [Azure Active Direcotry](https://azure.microsoft.com/en-us/services/active-directory/).  Once authenticated, you may then query the [Microsoft Office Graph](https://graph.microsoft.io) to retrieve information pertinent to the aplication.
 
-This guide uses [Eclipse STS](https://spring.io/tools) for editing, however please feel free to use your editor of choice.
+This guide uses [Eclipse](https://www.eclipse.org) for editing, however please feel free to use your editor of choice.
 
 ## Objectives
 In this hands-on lab, you will learn how to:
@@ -21,8 +21,8 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-* The source for the starter app is located in the `HOL\node\azuread-office365\start` folder. 
-* The finished project is located in the `HOL\node\azuread-office365\end` folder. 
+* The source for the starter app is located in the `c:\DevCamp\HOL\java\azuread-office365\start` folder. 
+* The finished project is located in the `c:\DevCamp\HOL\java\azuread-office365\end` folder. 
 * Deployed the starter ARM Template
 * Completion of the first modern-apps lab
 
@@ -79,10 +79,9 @@ AzureAD can handle authentication for web applications. First we will create a n
 1. In Eclipse, let's add those environment variables by opening the run environment, click on the environment tab, and clicking `new` (using the values you captured above):
 
     ```
-    "AAD_RETURN_URL": "http://localhost:3000/auth/openid/return",
+    "AAD_RETURN_URL": "http://localhost:8080/auth/openid/return",
     "AAD_CLIENT_ID": "2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6",
     "AAD_CLIENT_SECRET": "JjrKfgDyo5peQ4xJa786e8z"
-    "AAD_TENANT_ID": "JjrKfgDyo5peQ4xJa786e8z"
     ```
 
 1. To add AAD identity support libraries to your Spring application, open the build.gradle
@@ -112,10 +111,11 @@ with Spring security to allow flexible security requirements for pages in the ap
     This is a Spring security fiter that will make sure the user is authenticated on pages
     that require it.  If the user needs authentication, they will be redirected to the login
     page to get the requred token.  
+    >Eclipse will complain that there are some missing types - don't worry, we will be adding them in subsequent steps.
 
 1. When the user completes their login, the browser will be redirected back to the same
     page, but with an HTTP post and the token attached.  We need to add a class to catch 
-    that post. Open the file named `devCamp.WebApp.AzureADResponseFilter.java` which has been commented 
+    that post, and save the authentication state in the user's HTTP session. Open the file named `devCamp.WebApp.AzureADResponseFilter.java` which has been commented 
     out. Remove the `/*` at the beginning and the `*/` at the end, so the code is no longer commented out. 
 
 1. These classes need a "helper" class to do some utility functions. Open the file 
@@ -124,11 +124,44 @@ named  `devCamp.WebApp.Utils.AuthHelper.java`, which has been commented
 
 1. Next, we need a class to configure security for our application.  Open `devCamp.WebApp.WWebSecurityConfig.java` which has been commented out. Remove the `/*` at the beginning and the `*/` at the end, so the code is no longer commented out. 
 
-    This class adds the `AzureADAuthenticationFilter` and the `AzureADResponseFilter` to the 
+    >This class adds the `AzureADAuthenticationFilter` and the `AzureADResponseFilter` to the 
     filter chain, and configures page matching so that they will be invoked on the proper pages.
 
+1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `templates/topnav.html` and remove the commented out block of HTML code by deleting the `<!--`  and `-->` characters. Next, for each of the template files (`Dashbord/index.html`, `Home/index.html`, `Incident/index.html`, `Incident/new.html`), replace the navigation bar code with an include for the topnav template.  This is the existing nav bar code:
 
-1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `templates/topnav.html` and remove the commented out block of HTML code by deleting the `<!--`  and `-->` characters. Save all files and run the application and visit the application in the browser, and you should see the **Login** button on the top navigation.
+   ```HTML
+    <!-- Top Navigation -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">Outages</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a th:href="@{/dashboard}">Dashboard</a></li>
+                    <li><a th:href="@{/new}">Report Outage</a></li>
+                </ul>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    ```
+
+    replace it with this:
+    ```HTML
+    <div th:include="topnav::topnav"></div> 
+    ```
+
+    Save all files, run the application and visit the application in the browser. You should see the **Login** button on the top navigation.
 
     ![image](./media/image-009.png)
 
@@ -136,10 +169,10 @@ named  `devCamp.WebApp.Utils.AuthHelper.java`, which has been commented
 
     ![image](./media/image-010.png)
 
-The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
+    The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
 
 ## Exercise 2: Create a user profile page
-Next, we are going to create a page to display information about the logged in user.  While AzureAD returns a name and email address, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a route, and then query the Graph for user information.
+Next, we are going to create a page to display information about the logged in user.  While AzureAD returns a name and email address when the user logs in, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a controller, and then query the Graph for user information.
 
 1. Create a new file named `templates/Profile/index.html`. Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
 
@@ -172,11 +205,11 @@ Next, we are going to create a page to display information about the logged in u
                 <tbody>       
                     <tr>
                         <th>id</th>
-                        <td th:text="${userProfileBean.Id}"></td>
+                        <td th:text="${userProfileBean.ObjectId}"></td>
                     </tr>
                     <tr>
                         <th>businessPhones</th>
-                        <td th:text="${userProfileBean.businessPhones}"></td>
+                        <td th:text="${userProfileBean.telephoneNumber}"></td>
                     </tr>
                     <tr>
                         <th>displayName</th>
@@ -196,11 +229,11 @@ Next, we are going to create a page to display information about the logged in u
                     </tr>
                     <tr>
                         <th>mobilePhone</th>
-                        <td th:text="${userProfileBean.mobilePhone}"></td>
+                        <td th:text="${userProfileBean.mobile}"></td>
                     </tr>
                     <tr>
                         <th>officeLocation</th>
-                        <td th:text="${userProfileBean.OfficeLocation}"></td>
+                        <td th:text="${userProfileBean.physicalDeliveryOfficeName}"></td>
                     </tr>
                     <tr>
                         <th>preferredLanguage</th>
@@ -224,6 +257,54 @@ Next, we are going to create a page to display information about the logged in u
     </html>    
     ```
 
+1. We will need a class to perform the graph API operations - create the `devCamp.WebApp.GraphAPIClient.GraphAPIClient`, and paste in the following code:
+    ```java
+    package devCamp.WebApp.GraphAPIClient;
+
+    import javax.servlet.http.HttpSession;
+
+    import org.springframework.http.HttpEntity;
+    import org.springframework.http.HttpHeaders;
+    import org.springframework.http.HttpMethod;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.http.converter.StringHttpMessageConverter;
+    import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+    import org.springframework.web.client.RestTemplate;
+
+    import com.microsoft.aad.adal4j.AuthenticationResult;
+
+    import devCamp.WebApp.Utils.AuthHelper;
+    import devCamp.WebApp.ViewModels.UserProfileBean;
+
+    public class GraphAPIClient {
+
+        public static UserProfileBean getUserProfile(HttpSession session) {
+            
+            //call REST API to create the incident
+            // final String uri = "https://graph.windows.net/devcampross.onmicrosoft.com/me?api-version=1.6";
+        //final String uri = "https://graph.windows.net/v1.0/me";
+        final String uri="https://graph.windows.net/me?api-version=1.6";
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            HttpHeaders headers = new HttpHeaders();
+            
+            AuthenticationResult result = AuthHelper.getAuthSessionObject(session);
+            String token = result.getAccessToken();
+            
+            headers.set("Authorization", token);
+            System.out.println("TOKEN:"+token);
+            headers.set("Accept", "application/json;odata=minimalmetadata");
+            HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+            
+            ResponseEntity<UserProfileBean>  response = restTemplate.exchange(uri, HttpMethod.GET, entity, UserProfileBean.class);
+
+            UserProfileBean createdBean =response.getBody();
+            return createdBean;		
+        }	
+    }
+    ```
+
 1. With the view prepped, create a controller at `Controllers/ProfileController.java`.  When the `/profile` url is loaded, it will query the Microsoft Graph "Me" endpoint.  This query requires a token to be passed in an `authorization` request header, which we grab from the `user` object provided by the adal4j library.
 
     ```Java
@@ -233,39 +314,26 @@ Next, we are going to create a page to display information about the logged in u
     import javax.servlet.http.HttpSession;
 
     import org.springframework.context.annotation.Scope;
+    import org.springframework.http.HttpEntity;
+    import org.springframework.http.HttpHeaders;
+    import org.springframework.http.HttpMethod;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.http.converter.StringHttpMessageConverter;
+    import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.RequestMapping;
+    import org.springframework.web.client.RestTemplate;
 
-    import devCamp.WebApp.Utils.GraphAPIClient;
+    import com.microsoft.aad.adal4j.AuthenticationResult;
+
+    import devCamp.WebApp.Utils.AuthHelper;
+    import devCamp.WebApp.GraphAPIClient.GraphAPIClient;
     import devCamp.WebApp.ViewModels.UserProfileBean;
 
     @Controller
     @Scope("session")
     public class ProfileController {
-
-        private UserProfileBean getUserProfile(HttpSession session) {
-            
-            //call REST API to create the incident
-            final String uri = "https://graph.windows.net/me?api-version=1.6";
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-            HttpHeaders headers = new HttpHeaders();
-            
-            AuthenticationResult result = AuthHelper.getAuthSessionObject(session);
-            String token = result.getAccessToken();
-            
-            headers.set("api-version", "2013-04-05");
-            headers.set("Authorization", token);
-            headers.set("Accept", "application/json;odata=minimalmetadata");
-            HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-
-            ResponseEntity<UserProfileBean>  response = restTemplate.exchange(uri, HttpMethod.GET, entity, UserProfileBean.class);
-
-            UserProfileBean createdBean =response.getBody();
-            return createdBean;		
-        }	
 
         @RequestMapping("/profile")
         public String index(Model model,HttpServletRequest request) {
@@ -276,7 +344,7 @@ Next, we are going to create a page to display information about the logged in u
         }
     }
     ```
-1. We will have to create the `devCamp.WebApp.ViewModels.UserProfileBean.java` class to contain the user profile information that is retrieved from the Graph API web service.  The file should already be there, but commented out.  Remove the block comments around the code in this file.
+1. We will need a class to contain the user profile information that is retrieved from the Graph API.  It is located in  `devCamp.WebApp.ViewModels.UserProfileBean.java` 
 
 1. The `ProfileController` will display data via the `templates/Profile/index.html` template.  Open this file up and see that it's displaying data from the UserProfileBean.
 

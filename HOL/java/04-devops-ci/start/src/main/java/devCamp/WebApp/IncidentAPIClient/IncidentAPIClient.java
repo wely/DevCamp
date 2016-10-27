@@ -15,20 +15,19 @@ import org.springframework.web.client.RestTemplate;
 import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
 
 public class IncidentAPIClient {
-	private Log log = LogFactory.getLog(IncidentAPIClient.class);
-	private String baseURI;	
-	
-	public String getBaseURI() {
-		return baseURI;
-	}
+    private Log log = LogFactory.getLog(IncidentAPIClient.class);
+    private String baseURI;
 
-	public void setBaseURI(String baseURI) {
-		this.baseURI = baseURI;
-	}
+    public String getBaseURI() {
+        return baseURI;
+    }
 
-	@CacheEvict("incidents")
-	public IncidentBean CreateIncident(IncidentBean incident) {
-		//call REST API to create the incident
+    public void setBaseURI(String baseURI) {
+        this.baseURI = baseURI;
+    }
+
+    public IncidentBean CreateIncident(IncidentBean incident) {
+        //call REST API to create the incident
         final String uri = baseURI+"/incidents";
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
@@ -36,51 +35,49 @@ public class IncidentAPIClient {
         
         IncidentBean createdBean = restTemplate.postForObject(uri, incident, IncidentBean.class);
         return createdBean;
-	}
- 
-	
-	public List<IncidentBean> GetAllIncidents() {
-		log.info("Performing get /incidents web service");
-		final String uri = baseURI+"/incidents";
-        RestTemplate restTemplate = new RestTemplate();
- 
-        ResponseEntity<List<IncidentBean>> IncidentResponse =
-		        restTemplate.exchange(uri,
-		                    HttpMethod.GET, null, new ParameterizedTypeReference<List<IncidentBean>>() {
-		            });
-		
-		return IncidentResponse.getBody();
-	}
-	
-	public IncidentBean GetById(String incidentId) {
-		//call REST API to create the incident
-        final String uri = String.format("%s/incidents/%s", baseURI,incidentId);
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        
-        IncidentBean retval = restTemplate.getForObject(uri, IncidentBean.class);
-        
-        return retval;		
-	}
- 
-	@CacheEvict("incidents")
-	public IncidentBean UpdateIncident(String incidentId,IncidentBean newIncident){
-		//call REST API to create the incident
+    }
+
+    public List<IncidentBean> GetAllIncidents() {
+        log.info("Performing get /incidents web service");
         final String uri = baseURI+"/incidents";
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        
-        IncidentBean retval = null;
-        return retval;		
-	}
-	
-	public IncidentAPIClient(String baseURI) {
-		if (baseURI == null){
-			//throw argument null exception
-		}
-		this.baseURI = baseURI;
 
-	}
+        ResponseEntity<List<IncidentBean>> IncidentResponse =
+                restTemplate.exchange(uri,
+                            HttpMethod.GET, null, new ParameterizedTypeReference<List<IncidentBean>>() {
+                    });
+
+        return IncidentResponse.getBody();
+    }
+
+    public IncidentBean GetById(String incidentId) {
+            //call REST API to create the incident
+            final String uri = String.format("%s/incidents/%s", baseURI,incidentId);
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            
+            IncidentBean retval = restTemplate.getForObject(uri, IncidentBean.class);
+            
+            return retval;		
+        }
+    
+        public IncidentBean UpdateIncident(String incidentId,IncidentBean newIncident){
+            //call REST API to create the incident
+            final String uri = baseURI+"/incidents";
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            
+            IncidentBean retval = null;
+            return retval;		
+        }
+        
+    public IncidentAPIClient(String baseURI) {
+        if (baseURI == null){
+            //throw argument null exception
+        }
+        this.baseURI = baseURI;
+
+    }
 }

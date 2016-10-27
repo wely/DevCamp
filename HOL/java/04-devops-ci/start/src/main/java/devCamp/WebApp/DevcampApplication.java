@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @SpringBootApplication
-@EnableCaching
+//@EnableCaching
 public class DevcampApplication {
 
 	public static void main(String[] args) {
