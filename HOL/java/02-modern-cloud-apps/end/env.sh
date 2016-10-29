@@ -13,4 +13,4 @@ export REDISCACHE_SSLPORT=6380
 
 
 
-gradle bootRun "-Dazure.storage.account.key=$AZURE_STORAGE_ACCESS_KEY" "-Dazure.storage.account.name=$AZURE_STORAGE_ACCOUNT" "-Dazure.storage.account.blobContainer=$AZURE_STORAGE_BLOB_CONTAINER" "-Dazure.storage.account.queue=$AZURE_STORAGE_QUEUE" "-Dapplication.incidentApiUrl=$INCIDENT_API_URL" "-Dapplication.incidentResourcePath=$INCIDENT_RESOURCE_PATH" "-Dapplication.redisHost=$REDISCACHE_HOSTNAME" "-Dapplication.redisPort=$REDISCACHE_PORT" "-Dapplication.primaryKey=$REDISCACHE_PRIMARY_KEY" "-Dapplication.redisSslPort=$REDISCACHE_SSLPORT"
+gradle bootRun
