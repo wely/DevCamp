@@ -1,11 +1,11 @@
 package devCamp.WebApp.Controllers;
 
+import devCamp.WebApp.services.AzureStorageService;
 import devCamp.WebApp.services.IncidentService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,6 @@ import devCamp.WebApp.IncidentAPIClient.IncidentService;
 import devCamp.WebApp.Utils.IncidentApiHelper;
 import devCamp.WebApp.Utils.StorageHelper;
 */
-import devCamp.WebApp.Utils.StorageAPIHelper;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -32,9 +31,10 @@ public class IncidentController {
     
 	@Autowired
 	//IncidentService service;
-    private IncidentService service;
+    private IncidentService incidentService;
 
-	private Log log = LogFactory.getLog(IncidentController.class);
+	@Autowired
+	private AzureStorageService storageService;
 
 	@GetMapping("/details")
 	public String Details( @RequestParam(value="Id", required=false, defaultValue="") String id,Model model) {
@@ -54,25 +54,30 @@ public class IncidentController {
 		return "Incident/new";
 	}
 
+	@Async
 	@PostMapping("/new")
-	public CompletableFuture<String> Create(@ModelAttribute IncidentBean incident,@RequestParam("file") MultipartFile imageFile) {
-		log.info("creating incident");
+	public CompletableFuture<String> Create(@ModelAttribute IncidentBean incident, @RequestParam("file") MultipartFile imageFile) {
+		LOG.info("creating incident");
 		
 		//IncidentBean result = service.CreateIncident(incident);
-		return service.createIncidentAsync(incident).thenApply((result) -> {
-			String IncidentID = result.getId();
+		return incidentService.createIncidentAsync(incident).thenApply((result) -> {
+			String incidentID = result.getId();
 
 			if (imageFile != null) {
 				try {
 					String fileName = imageFile.getOriginalFilename();
 					if (fileName != null) {
-
+						//save the file
 						//now upload the file to blob storage
-						log.info("uploading to blob");
-						StorageAPIHelper.getStorageAPIClient().UploadFileToBlobStorage(IncidentID, imageFile);
-						//add a event into the queue to resize and attach to incident
-						log.info("adding to queue");
-						StorageAPIHelper.getStorageAPIClient().AddMessageToQueue(IncidentID, fileName);
+						LOG.info("Uploading to blob");
+						storageService.uploadFileToBlobStorageAsync(incidentID, fileName, imageFile.getContentType(),
+								imageFile.getBytes())
+								.whenComplete((a, b) -> {
+									//add a event into the queue to resize and attach to incident
+									LOG.info("Successfully uploaded file to blob storage, now adding message to queue");
+									storageService.addMessageToQueueAsync(incidentID, fileName);
+								});
+
 
 					}
 				} catch (Exception e) {

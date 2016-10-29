@@ -13,12 +13,12 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'spring-boot'
-//apply plugin: 'war'
+apply plugin: 'war'
 
 
-/*war {
+war {
 	baseName = 'ROOT'
-}*/
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -55,4 +55,10 @@ dependencies {
 	*/
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+bootRun {
+	systemProperties = System.properties
+
+
 }

@@ -1,18 +1,18 @@
 application:
-  incidentApiUrl: "http://incidentapi32csxy6h3sbku.azurewebsites.net"
-  incidentResourcePath: "/incidents"
-  redisHost: incidentcache32csxy6h3sbku.redis.cache.windows.net
-  redisPort: 6379
-  primaryKey: Fw1IK6VXPILlqXNOiUBd9Kl8nyWLLBvR2QwosWZkRLY=
-  sslPort: 6380
+  incidentApiUrl:
+  incidentResourcePath:
+  redisHost:
+  redisPort:
+  primaryKey:
+  redisSslPort:
 
 azure:
   storage:
     account:
-      name: incidentblobstg32csxy6h3
-      key: "yMH9b0E3u5Cf9sZTwxwoQXsM90ygX/VO5qyJmRStJ1NR5cr8xiLm788ELahxTtzL376BGJZG8SOdx5PnlZpkbA=="
-      blob: images
-      queue: thumbnails
+      name:
+      key:
+      blobContainer:
+      queue:
 
 logging:
   level: info

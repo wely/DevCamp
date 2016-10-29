@@ -38,16 +38,8 @@ import java.security.InvalidKeyException;
 public class ApplicationConfig {
     private static final Logger LOG = LoggerFactory.getLogger(ApplicationConfig.class);
 
-    private static String AZURE_STORAGEACCOUNT_KEY = "AZURE_STORAGE_ACCESS_KEY";
-
-    @Autowired
-    private Environment environment;
-
     @Autowired
     private AzureStorageAccountProperties azureStorageAccountProperties;
-
-    @Autowired
-    private ApplicationProperties applicationProperties;
 
     @PostConstruct
     protected void postConstruct() throws IOException {
@@ -55,11 +47,14 @@ public class ApplicationConfig {
         LOG.info(azureStorageAccountProperties.toString());
     }
 
+    @Autowired
+    private ApplicationProperties applicationProperties;
+
     @Bean
-    CloudStorageAccount getStorageAccount() throws InvalidKeyException, URISyntaxException {
+    public CloudStorageAccount getStorageAccount() throws InvalidKeyException, URISyntaxException {
         String cs = String.format("DefaultEndpointsProtocol=http;AccountName=%s;AccountKey=%s",
                 azureStorageAccountProperties.getName(),
-                environment.getProperty(AZURE_STORAGEACCOUNT_KEY));
+                azureStorageAccountProperties.getKey());
         return CloudStorageAccount.parse(cs);
     }
 

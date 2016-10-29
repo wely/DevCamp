@@ -8,6 +8,7 @@ import devCamp.WebApp.services.IncidentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,9 @@ public class DashboardController {
 	//IncidentService service;
 	private IncidentService service;
 
+
 	@RequestMapping("/dashboard")
-	public CompletableFuture<String> dashboard(Model model) {
+	public String dashboard(Model model) {
 		/*
 		ArrayList<IncidentBean> theList = new ArrayList<>();
 		for (int i = 1;i<=3;++i){
@@ -42,16 +44,20 @@ public class DashboardController {
 		List<IncidentBean> theList = client.GetAllIncidents();
 		model.addAttribute("allIncidents",theList);
 		*/
-	    return service.getAllIncidentsAsync()
-							.thenApply(list -> {
-			model.addAttribute("allIncidents", list);
-			return "Dashboard/index";
-		});
-
-		//List<IncidentBean> theList = service.GetAllIncidents();
+		List<IncidentBean> theList = service.getAllIncidents();
 		//display the data on the dashboard screen
-		
-		//model.addAttribute("allIncidents", theList);
-		//return "Dashboard/index";
+
+		model.addAttribute("allIncidents", theList);
+		return "Dashboard/index";
+	}
+
+	@Async
+	@RequestMapping("/dashboardAsync")
+	public CompletableFuture<String> dashboardAsync(Model model) {
+		return service.getAllIncidentsAsync()
+				.thenApply(list -> {
+					model.addAttribute("allIncidents", list);
+					return "Dashboard/index";
+				});
 	}
 }

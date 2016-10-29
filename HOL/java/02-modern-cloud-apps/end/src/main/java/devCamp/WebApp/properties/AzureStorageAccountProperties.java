@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "azure.storage.account")
 public class AzureStorageAccountProperties {
     private String name;
-    private String blob;
+    private String blobContainer;
     private String queue;
     private String key;
 
@@ -19,12 +19,12 @@ public class AzureStorageAccountProperties {
         this.name = name;
     }
 
-    public String getBlob() {
-        return blob;
+    public String getBlobContainer() {
+        return blobContainer;
     }
 
-    public void setBlob(String blob) {
-        this.blob = blob;
+    public void setBlobContainer(String blobContainer) {
+        this.blobContainer = blobContainer;
     }
 
     public String getQueue() {
@@ -33,6 +33,14 @@ public class AzureStorageAccountProperties {
 
     public void setQueue(String queue) {
         this.queue = queue;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

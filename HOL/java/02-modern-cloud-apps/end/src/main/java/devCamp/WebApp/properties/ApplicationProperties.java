@@ -11,7 +11,7 @@ public class ApplicationProperties {
     private String redisHost;
     private Integer redisPort;
     private String primaryKey;
-    private Integer sslPort;
+    private Integer redisSslPort;
 
     public String getIncidentApiUrl() {
         return incidentApiUrl;
@@ -53,16 +53,17 @@ public class ApplicationProperties {
         this.primaryKey = primaryKey;
     }
 
-    public Integer getSslPort() {
-        return sslPort;
+    public Integer getRedisSslPort() {
+        return redisSslPort;
     }
 
-    public void setSslPort(Integer sslPort) {
-        this.sslPort = sslPort;
+    public void setRedisSslPort(Integer redisSslPort) {
+        this.redisSslPort = redisSslPort;
     }
 
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
+
 }

@@ -26,7 +26,7 @@ public class IncidentServiceImpl implements IncidentService {
 
     @Override
     public List<IncidentBean> getAllIncidents() {
-        LOG.info("Performing get /incidents web service");
+        LOG.info("Performing get {} web service", applicationProperties.getIncidentApiUrl() + applicationProperties.getIncidentResourcePath());
         final String restUri = applicationProperties.getIncidentApiUrl() + applicationProperties.getIncidentResourcePath();
         ResponseEntity<List<IncidentBean>> response = restTemplate.exchange(restUri, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<IncidentBean>>() {});
