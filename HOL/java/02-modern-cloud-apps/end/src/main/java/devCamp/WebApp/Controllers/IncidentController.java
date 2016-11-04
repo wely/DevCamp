@@ -1,44 +1,40 @@
 package devCamp.WebApp.Controllers;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import devCamp.WebApp.services.AzureStorageService;
+import devCamp.WebApp.services.IncidentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import devCamp.WebApp.IncidentAPIClient.IncidentService;
-import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
-import devCamp.WebApp.Utils.IncidentAPIHelper;
+//import devCamp.WebApp.IncidentAPIClient.IncidentService;
+
+import devCamp.WebApp.models.IncidentBean;
 /*
 import devCamp.WebApp.IncidentAPIClient.IncidentAPIClient;
 import devCamp.WebApp.IncidentAPIClient.IncidentService;
 import devCamp.WebApp.Utils.IncidentApiHelper;
 import devCamp.WebApp.Utils.StorageHelper;
 */
-import devCamp.WebApp.Utils.StorageAPIHelper;
+
+import java.util.concurrent.CompletableFuture;
 
 @Controller
 public class IncidentController {
-	
+	private static final Logger LOG = LoggerFactory.getLogger(IncidentController.class);
+
 	//the Autowired annotation makes sure Spring can manage/cache the incident service
     
 	@Autowired
-	IncidentService service;
-    
-	private Log log = LogFactory.getLog(IncidentController.class);
+	//IncidentService service;
+    private IncidentService incidentService;
+
+	@Autowired
+	private AzureStorageService storageService;
 
 	@GetMapping("/details")
 	public String Details( @RequestParam(value="Id", required=false, defaultValue="") String id,Model model) {
@@ -58,41 +54,43 @@ public class IncidentController {
 		return "Incident/new";
 	}
 
+	@Async
 	@PostMapping("/new")
-	public String Create(@ModelAttribute IncidentBean incident,@RequestParam("file") MultipartFile imageFile) {
-		log.info("creating incident");
+	public CompletableFuture<String> Create(@ModelAttribute IncidentBean incident, @RequestParam("file") MultipartFile imageFile) {
+		LOG.info("creating incident");
 		
-		IncidentBean result = service.CreateIncident(incident);
-		
-		/*
-		IncidentBean result = null;
-		*/
-		if (result != null){
-			String IncidentID = result.getId();
+		//IncidentBean result = service.CreateIncident(incident);
+		return incidentService.createIncidentAsync(incident).thenApply((result) -> {
+			String incidentID = result.getId();
 
 			if (imageFile != null) {
 				try {
 					String fileName = imageFile.getOriginalFilename();
 					if (fileName != null) {
-					    
-						//now upload the file to blob storage 
-						log.info("uploading to blob");
-						StorageAPIHelper.getStorageAPIClient().UploadFileToBlobStorage(IncidentID, imageFile);
-						//add a event into the queue to resize and attach to incident
-						log.info("adding to queue");
-						StorageAPIHelper.getStorageAPIClient().AddMessageToQueue(IncidentID, fileName);
-					    
+						//save the file
+						//now upload the file to blob storage
+						LOG.info("Uploading to blob");
+						storageService.uploadFileToBlobStorageAsync(incidentID, fileName, imageFile.getContentType(),
+								imageFile.getBytes())
+								.whenComplete((a, b) -> {
+									//add a event into the queue to resize and attach to incident
+									LOG.info("Successfully uploaded file to blob storage, now adding message to queue");
+									storageService.addMessageToQueueAsync(incidentID, fileName);
+								});
+
+
 					}
 				} catch (Exception e) {
 					return "Incident/details";
 				}
 			}
-			/*
-			service.ClearCache();
-			*/
 			return "redirect:/dashboard";
-		} else {
-			return "/error";
-		}
+		});
+
+	}
+	@ExceptionHandler(Exception.class)
+	public String catchAllErrors(Exception e) {
+		LOG.error("Error occurred in IncidentController", e);
+		return "/error";
 	}
 }
