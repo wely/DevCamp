@@ -1,4 +1,4 @@
-package devCamp.WebApp.IncidentAPIClient.Models;
+package devCamp.WebApp.models;
 
 import java.io.Serializable;
 
