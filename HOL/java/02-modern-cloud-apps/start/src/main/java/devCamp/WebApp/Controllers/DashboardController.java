@@ -9,7 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 //import devCamp.WebApp.IncidentAPIClient.IncidentService;
-import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
+import devCamp.WebApp.models.IncidentBean;
+
 
 @Controller
 public class DashboardController {
@@ -30,11 +31,20 @@ public class DashboardController {
 			theList.add(bean);
 		}
 		
-	    /*
-	    		List<IncidentBean> theList = service.GetAllIncidents();
-		//display the data on the dashboard screen
-		*/
 		model.addAttribute("allIncidents", theList);
 		return "Dashboard/index";
 	}
+
+	/*
+	@Autowired
+	IncidentService service;
+	
+	@RequestMapping("/dashboard")
+	public String dashboard(Model model) {
+		List<IncidentBean> list = service.getAllIncidents();
+		model.addAttribute("allIncidents", list);
+		return "Dashboard/index";
+	}	
+
+	*/
 }
