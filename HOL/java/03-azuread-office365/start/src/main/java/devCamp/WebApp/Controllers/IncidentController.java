@@ -64,7 +64,7 @@ public class IncidentController {
 	@PostMapping("/new")
 	public String Create(@ModelAttribute IncidentBean incident, @RequestParam("file") MultipartFile imageFile) {
 		LOG.info("creating incident");
-		graphService.sendMail(OAuth2TokenUtils.getGivenName(),OAuth2TokenUtils.getMail());
+		//graphService.sendMail(OAuth2TokenUtils.getGivenName(),OAuth2TokenUtils.getMail());
 		IncidentBean result = incidentService.createIncident(incident);
 		String incidentID = result.getId();
 
