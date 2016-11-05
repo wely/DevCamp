@@ -27,14 +27,7 @@ import java.util.concurrent.CompletableFuture;
 public class IncidentController {
 	private static final Logger LOG = LoggerFactory.getLogger(IncidentController.class);
 
-	//the Autowired annotation makes sure Spring can manage/cache the incident service
-    
-	@Autowired
-	//IncidentService service;
-    private IncidentService incidentService;
 
-	@Autowired
-	private AzureStorageService storageService;
 
 	@GetMapping("/details")
 	public String Details( @RequestParam(value="Id", required=false, defaultValue="") String id,Model model) {
@@ -54,6 +47,20 @@ public class IncidentController {
 		return "Incident/new";
 	}
 
+	/*
+	@PostMapping("/new")
+	public String Create(@ModelAttribute IncidentBean incident,@RequestParam("file") MultipartFile imageFile) {
+		LOG.info("creating incident");
+		return "redirect:/dashboard";
+	}
+	*/
+	
+	@Autowired
+    private IncidentService incidentService;
+	
+	@Autowired
+	private AzureStorageService storageService;
+	
 	@Async
 	@PostMapping("/new")
 	public CompletableFuture<String> Create(@ModelAttribute IncidentBean incident, @RequestParam("file") MultipartFile imageFile) {
@@ -73,12 +80,10 @@ public class IncidentController {
 						storageService.uploadFileToBlobStorageAsync(incidentID, fileName, imageFile.getContentType(),
 								imageFile.getBytes())
 								.whenComplete((a, b) -> {
-									//add a event into the queue to resize and attach to incident
+									//add an event into the queue to resize and attach to incident
 									LOG.info("Successfully uploaded file to blob storage, now adding message to queue");
 									storageService.addMessageToQueueAsync(incidentID, fileName);
 								});
-
-
 					}
 				} catch (Exception e) {
 					return "Incident/details";

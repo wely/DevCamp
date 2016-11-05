@@ -2,7 +2,7 @@
 
 ## Overview
 
-City Power & Light is a sample application that allows citizens to to report "incidents" that have occured in their community.  It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
+City Power & Light is a sample application that allows citizens to to report "incidents" that have occurred in their community.  It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
 
 * Front end web application contains the user interface and business logic.  This component has been implemented three times in .NET, NodeJS, and Java.
 * WebAPI is shared across the front ends and exposes the backend DocumentDB
@@ -36,7 +36,8 @@ This hands-on-lab has the following exercises:
 * Exercise 2: Add a caching layer
 * Exercise 3: Write images to Azure Blob storage
 
-## Exercise 1: Integrate the API
+---
+### Exercise 1: Integrate the API
 
 1. In your development virtual machine, open a command prompt window and navigate to the `c:\DevCamp\HOL\java\02-modern-cloud-apps\start` folder 
 1. Run `gradle eclipse` in the terminal window to restore all dependencies and configure the
@@ -133,7 +134,7 @@ This hands-on-lab has the following exercises:
     Stop the debugger by pressing the red "stop" square, and open the
     run configuration you created earlier.  Click the "Environment"
     tab.  This section defines key/value pairs that will be passed
-    into enviromment variables whenever the debugger is launched. Add
+    into environment variables whenever the debugger is launched. Add
     an entry for `INCIDENT_API_URL` and set the value to the ASP.NET
     WebAPI that we earlier loaded into the browser (and captured in
     notepad). It should look like this: `http://incidentapib6prykosg3fjk.azurewebsites.net/`, but with your own website name.  Click OK to save the
@@ -142,177 +143,398 @@ This hands-on-lab has the following exercises:
     ![image](./media/image-009.png)
 
     Now that the URL is loaded as an environment variable, we can
-    access it from our application by calling `System.getenv("INCIDENT_API_URL")`.  We will repeat this process several times to configure our application with Azure services.
-
-    > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application
-
-1. Several components will work together to call and display the
-   incidents in the database.  First we will need an object to hold
-   the data associated with each incident.  We've supplied that object
-   in devCamp.WebApp.IncidentAPIClient.Models.IncedentBean.Java.  Open
-   that file and look at the properties and methods.
-
-1. Create the class `devCamp.WebApp.IncidentAPIClient.IncidentAPIClient.java` with the
-   following code:
-
+    access it from our application by creating a configuration object to hold configuration variables, and setting those variables within the application.yml file.  First, let's create the java class `devCamp.WebApp.properties.ApplicationProperties`, and paste in this code:
     ```java
-    package devCamp.WebApp.IncidentAPIClient;
+    package devCamp.WebApp.properties;
 
-    import java.util.List;
+    import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+    import org.apache.commons.lang3.builder.ToStringStyle;
+    import org.springframework.boot.context.properties.ConfigurationProperties;
 
-    import org.apache.commons.logging.Log;
-    import org.apache.commons.logging.LogFactory;
-    import org.springframework.cache.annotation.CacheEvict;
-    import org.springframework.core.ParameterizedTypeReference;
-    import org.springframework.http.HttpMethod;
-    import org.springframework.http.ResponseEntity;
-    import org.springframework.http.converter.StringHttpMessageConverter;
-    import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-    import org.springframework.web.client.RestTemplate;
+    @ConfigurationProperties(prefix = "application")
+    public class ApplicationProperties {
+        private String incidentApiUrl;
 
-    import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
-
-    public class IncidentAPIClient {
-        private Log log = LogFactory.getLog(IncidentAPIClient.class);
-        private String baseURI;
-
-        public String getBaseURI() {
-            return baseURI;
+        public String getIncidentApiUrl() {
+            return incidentApiUrl;
         }
 
-        public void setBaseURI(String baseURI) {
-            this.baseURI = baseURI;
+        public void setIncidentApiUrl(String incidentApiUrl) {
+            this.incidentApiUrl = incidentApiUrl;
         }
 
-        public IncidentBean CreateIncident(IncidentBean incident) {
-            //call REST API to create the incident
-            final String uri = baseURI+"/incidents";
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-            
-            IncidentBean createdBean = restTemplate.postForObject(uri, incident, IncidentBean.class);
-            return createdBean;
-        }
-
-        public List<IncidentBean> GetAllIncidents() {
-            log.info("Performing get /incidents web service");
-            final String uri = baseURI+"/incidents";
-            RestTemplate restTemplate = new RestTemplate();
-
-            ResponseEntity<List<IncidentBean>> IncidentResponse =
-                    restTemplate.exchange(uri,
-                                HttpMethod.GET, null, new ParameterizedTypeReference<List<IncidentBean>>() {
-                        });
-
-            return IncidentResponse.getBody();
-        }
-
-        public IncidentBean GetById(String incidentId) {
-                //call REST API to create the incident
-                final String uri = String.format("%s/incidents/%s", baseURI,incidentId);
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                
-                IncidentBean retval = restTemplate.getForObject(uri, IncidentBean.class);
-                
-                return retval;		
-            }
-        
-            public IncidentBean UpdateIncident(String incidentId,IncidentBean newIncident){
-                //call REST API to create the incident
-                final String uri = baseURI+"/incidents";
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                
-                IncidentBean retval = null;
-                return retval;		
-            }
-            
-        public IncidentAPIClient(String baseURI) {
-            if (baseURI == null){
-                //throw argument null exception
-            }
-            this.baseURI = baseURI;
-
+        @Override
+        public String toString() {
+            return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
         }
     }
 
     ```
 
-    This class uses the
+    You'll notice a red line under `ReflectionToStringBuilder`. this is because we have to add `org.apache.commons.lang3` as a dependency.  Open up the `build.gradle` file, and add this line to the dependencies section:
+    ```java
+    compile('org.apache.commons:commons-lang3:3.5')
+    ```
+
+    To make sure that Eclipse knows about the new packages we added to
+    the buld, go to the `gradle tasks` tab in the bottom pane, navigate to the `ide/eclipse` gradle task and right click on it and choose `Run gradle tasks`.  Then right-click on the project in the project explorer,
+    close the project, and then open it again.  We will do this several times over the course of the DevCamp.
+
+    Let's take a look at `src/main/resources/application.yml`.  This is a configuration file that sets up the parameters that we want to import into the application.  For example, this line:
+    ```java
+    incidentApiUrl: ${INCIDENT_API_URL}
+    ```
+    tells spring boot to get the INCIDENT_API_URL environment variable, and place it into the ApplicationProperties object that we just created.  This file has several other setings that we will be using later.
+
+    > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application
+
+1. Several components will work together to call and display the
+   incidents in the database.  We will need an object to hold
+   the data associated with each incident.  We've supplied that object
+   in devCamp.WebApp.models.IncedentBean.Java.  Open
+   that file and look at its properties and methods.
+
+1. Create the interface `devCamp.WebApp.services.IncidentService.java` with the
+   following code:
+
+    ```java
+    package devCamp.WebApp.services;
+
+    import devCamp.WebApp.models.IncidentBean;
+
+    import org.springframework.cache.annotation.CacheEvict;
+    import org.springframework.cache.annotation.Cacheable;
+    import org.springframework.scheduling.annotation.Async;
+    import org.springframework.stereotype.Service;
+
+    import java.util.List;
+    import java.util.concurrent.CompletableFuture;
+
+    @Service
+    public interface IncidentService {
+
+        List<IncidentBean> getAllIncidents();
+
+        @Async
+        CompletableFuture<List<IncidentBean>> getAllIncidentsAsync();
+
+        public IncidentBean createIncident(IncidentBean incident);
+        
+        @Async
+        CompletableFuture<IncidentBean> createIncidentAsync(IncidentBean incident);
+        
+        @Async
+        CompletableFuture<IncidentBean> updateIncidentAsync(String incidentId,IncidentBean newIncident);
+
+        @Async
+        CompletableFuture<IncidentBean> getByIdAsync(String incidentId);
+
+        void clearCache();
+    }
+
+    ```
+
+    We now need an implementation for this interface, so create `devCamp.WebApp.services.IncidentServiceImpl.java`, and add this code:
+    ```java
+    package devCamp.WebApp.services;
+
+    import devCamp.WebApp.models.IncidentBean;
+    import devCamp.WebApp.properties.ApplicationProperties;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.core.ParameterizedTypeReference;
+    import org.springframework.http.HttpMethod;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.stereotype.Service;
+    import org.springframework.web.client.RestTemplate;
+
+    import java.util.List;
+    import java.util.concurrent.CompletableFuture;
+    import java.util.concurrent.ExecutionException;
+
+    @Service
+    public class IncidentServiceImpl implements IncidentService {
+        private static final Logger LOG = LoggerFactory.getLogger(IncidentServiceImpl.class);
+
+        @Autowired
+        private ApplicationProperties applicationProperties;
+
+        @Autowired
+        private RestTemplate restTemplate;
+
+        @Override
+        public List<IncidentBean> getAllIncidents() {
+            LOG.info("Performing get {} web service", applicationProperties.getIncidentApiUrl() +"/incidents");
+            final String restUri = applicationProperties.getIncidentApiUrl()+"/incidents";
+            ResponseEntity<List<IncidentBean>> response = restTemplate.exchange(restUri, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<List<IncidentBean>>() {});
+            LOG.info("Total Incidents {}", response.getBody().size());
+            return response.getBody();
+        }
+
+        @Override
+        public CompletableFuture<List<IncidentBean>> getAllIncidentsAsync() {
+            CompletableFuture<List<IncidentBean>> cf = new CompletableFuture<>();
+            CompletableFuture.runAsync(() -> {
+                LOG.info("Performing get /incidents web service");
+                final String restUri = applicationProperties.getIncidentApiUrl()+"/incidents";
+                ResponseEntity<List<IncidentBean>> response = restTemplate.exchange(restUri, HttpMethod.GET, null,
+                        new ParameterizedTypeReference<List<IncidentBean>>() {});
+                LOG.info("Total Incidents {}", response.getBody().size());
+                cf.complete(response.getBody());
+                LOG.info("Done getting incidents");
+            });
+            return cf;
+        }
+
+        @Override
+        public IncidentBean createIncident(IncidentBean incident) {
+            LOG.info("Creating incident");
+            final String restUri = applicationProperties.getIncidentApiUrl()+"/incidents";
+            IncidentBean createdBean = restTemplate.postForObject(restUri, incident, IncidentBean.class);
+            LOG.info("Done creating incident");
+            return createdBean;
+        }
+        
+        @Override
+        public CompletableFuture<IncidentBean> createIncidentAsync(IncidentBean incident) {
+            CompletableFuture<IncidentBean> cf = new CompletableFuture<>();
+            CompletableFuture.runAsync(() -> {
+                LOG.info("Creating incident");
+                final String restUri = applicationProperties.getIncidentApiUrl()+"/incidents";
+                IncidentBean createdBean = restTemplate.postForObject(restUri, incident, IncidentBean.class);
+                cf.complete(createdBean);
+                LOG.info("Done creating incident");
+            });
+            return cf;
+        }
+
+        @Override
+        public CompletableFuture<IncidentBean> updateIncidentAsync(String incidentId, IncidentBean newIncident) {
+            CompletableFuture<IncidentBean> cf = new CompletableFuture<>();
+            CompletableFuture.runAsync(() -> {
+                LOG.info("Updating incident");
+                //Add update logic here
+
+                cf.complete(null); //change null to data that this method will return after update
+                LOG.info("Done updating incident");
+            });
+            return cf;
+        }
+
+        @Override
+        public CompletableFuture<IncidentBean> getByIdAsync(String incidentId) {
+            CompletableFuture<IncidentBean> cf = new CompletableFuture<>();
+            CompletableFuture.runAsync(() -> {
+                LOG.info("Getting incident by ID {}", incidentId);
+                final String restUri = applicationProperties.getIncidentApiUrl()+"/incidents";
+                IncidentBean result = restTemplate.getForObject(restUri, IncidentBean.class);
+
+                cf.complete(result);
+                LOG.info("Done getting incident by ID");
+            });
+            return cf;
+        }
+
+        @Override
+        public void clearCache() {
+
+        }
+    }    
+    ```
+
+    This class uses the 
     [RestTemplate](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) library
     to generate a HTTP GET to the API endpoint, and to convert the
     return javascript into a java object.  In this case, we've
     specified that it should return a `List<IncidentBean>`.
 
-    The class also contains functions to create a new incident, update an incident, and get a single incident by ID.  These 
-    invoke the appropriate REST api call.
+    It also uses the `CompletableFuture` object to allow the API calls to run asynchronously.  This will 
+    make pages load faster, because back-end calls don't have to be done synchronously.  A couple of the functions 
+    we will use later are not asyncronous, for reasons we'll see later.
+    The class also contains functions to create a new incident, update an incident, and get a single incident by ID.  These invoke the appropriate REST api call.
 
-1.  Next, create an object to create an IncidentAPIClient with the
-    proper URI. Create the class `devCamp.WebApp.Utils.IncidentAPIHelper`:
-
-    ```java
-    package devCamp.WebApp.Utils;
-
-    import devCamp.WebApp.IncidentAPIClient.IncidentAPIClient;
-
-    public class IncidentAPIHelper {
-        public static IncidentAPIClient getIncidentAPIClient() {
-
-            String apiurl= System.getenv("INCIDENT_API_URL");
-            return new IncidentAPIClient(apiurl);
-        }
-    }
-    ```
-
-    >this class will create an incident of the IncidentAPIClient, configured so that it will pull the configuration from the OS environment variable.
+    Notice this class uses the `applicationProperties` object that we created earlier, to get the incident URL.
 
 1. Open `DevCamp.WebApp.Controllers.DashboardController.java`. The dashboard function in this class is called when the user hits the `/dashboard` url.  In the function we are currently populating some dummy data to display on the dashboard.  We are going to change this to call the API, and display the retrieved data in the dashboard.
 
     In the dashboard function,
-    comment out this section of code that generated the dummy
-    dashboard data:
+    comment out the whole dashboard function:
 
     ```java
-    ArrayList<IncidentBean> theList = new ArrayList<>();
-    for (int i = 1;i<=3;++i){
-        IncidentBean bean = new IncidentBean();
-        bean.setId("12345");
-        bean.setStreet("123 Main St.");
-        bean.setFirstName("Jane");
-        bean.setLastName("Doe");
-        bean.setCreated("1/01/2016");
-        theList.add(bean);
-    }
+ 	@RequestMapping("/dashboard")
+	public String dashboard(Model model) {
+		ArrayList<IncidentBean> theList = new ArrayList<>();
+		for (int i = 1;i<=3;++i){
+			IncidentBean bean = new IncidentBean();
+			bean.setId("12345");
+			bean.setStreet("123 Main St.");
+			bean.setFirstName("Jane");
+			bean.setLastName("Doe");
+			bean.setCreated("1/01/2016");
+			theList.add(bean);
+		}
     ```
 
     Insert this code to call the GetAllIncidents API and put the
     resulting list of IncidentBean in the model.
 
     ```java
-    IncidentAPIClient client = IncidentAPIHelper.getIncidentAPIClient();
-    List<IncidentBean> theList = client.GetAllIncidents();
-    model.addAttribute("allIncidents",theList);
+    @Autowired
+	IncidentService service;
+
+	@RequestMapping("/dashboard")
+	public String dashboard(Model model) {
+		List<IncidentBean> list = service.getAllIncidents();
+		model.addAttribute("allIncidents", list);
+		return "Dashboard/index";
+	}	
+
     ```
 
-    > You will notice that IncidentAPIClient and IncidentAPIHelper will be underlined in red, indicating that they are currently undefined in this class.  Either click on the red icon with the X on the left side of the code, or hover over the code to get the error correction menu.  For each, choose the appropriate import to add to this class:
+    You will notice that the `@Autowired` annotation is underlined in red - you have to resolve the import for it by hovering the mouse pointer over it, and choose the `import Autowired` quck fix.  You can also do this by clicking on the red `x` next to that line, and choosing the `import Autowired` quick fix.  you will have to do this for IncidentService and List.  For list, choose the `import java.util.List` option.  This simply adds the appropriate imports to the top of the class.  You will have to do this many times during the DevCamp to make sure the proper imports are included.
 
-    ![image](./media/2016-10-24_21-03-58.png)
+1. We will need to create two configuration classes.  The first is `devCamp.WebApp.configurations.ApplicationConfig`, with this code:
+    ```java
+    package devCamp.WebApp.configurations;
+
+    import java.io.IOException;
+
+    import javax.annotation.PostConstruct;
+
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.boot.context.properties.EnableConfigurationProperties;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.http.converter.StringHttpMessageConverter;
+    import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+    import org.springframework.web.client.RestTemplate;
+
+    import devCamp.WebApp.properties.ApplicationProperties;
+
+    @Configuration
+    @EnableConfigurationProperties(value = {
+            ApplicationProperties.class,
+    })
+
+    public class ApplicationConfig {
+        private static final Logger LOG = LoggerFactory.getLogger(ApplicationConfig.class);
+        
+        @Autowired
+        private ApplicationProperties applicationProperties;
+
+        @PostConstruct
+        protected void postConstruct() throws IOException {
+            LOG.info(applicationProperties.toString());
+        }
+        
+        @Bean
+        RestTemplate getRestTemplate(){
+            //create/configure REST template class here and autowire where needed
+            final RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            return restTemplate;
+        }
+    }    
+    ```
+    >this class simply makes sure the application configuration is read in, and also configures the RestTemplate library to use the proper message converters.
+
+    The other configuration class is `devCamp.WebApp.configurations.AsyncConfig`, which sets up a pool of threads for asynchronous processing of calls.  This is the code to paste into that class:
+
+    ```java
+    package devCamp.WebApp.configurations;
+
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.scheduling.annotation.AsyncConfigurer;
+    import org.springframework.scheduling.annotation.EnableAsync;
+    import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+    import java.util.concurrent.Executor;
+
+    @Configuration
+    @EnableAsync
+    public class AsyncConfig implements AsyncConfigurer{
+        private static final Logger LOG = LoggerFactory.getLogger(AsyncConfig.class);
+
+        @Override
+        public Executor getAsyncExecutor() {
+            ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+            executor.setCorePoolSize(5);
+            executor.setMaxPoolSize(5);
+            executor.setQueueCapacity(500);
+            executor.setThreadNamePrefix("Chameleon-");
+            executor.initialize();
+
+            return executor;
+        }
+
+        @Override
+        public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+            return (ex, method, params) -> LOG.error("Uncaught async error", ex);
+        }
+    }    
+    ```
+
 
 1. In addition to displaying incidents, the application also provides a form to enter in new Incidents.  
 The POST from the form is handled by the `IncidentController.java` class.  
-Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.java` and locate this line of code:
+Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.java` and comment the function out. After the commented out function, add the following code:
     ```java
-    IncidentBean result = null;
-    ```
 
-    Change this to call the function in the IncidentAPIClient:
-    ```java
-    IncidentBean result = IncidentAPIHelper.getIncidentAPIClient().CreateIncident(incident);
+	@Autowired
+    private IncidentService incidentService;
+
+	@Async
+	@PostMapping("/new")
+	public CompletableFuture<String> Create(@ModelAttribute IncidentBean incident, @RequestParam("file") MultipartFile imageFile) {
+		LOG.info("creating incident");
+		
+		//IncidentBean result = service.CreateIncident(incident);
+		return incidentService.createIncidentAsync(incident).thenApply((result) -> {
+			String incidentID = result.getId();
+
+			if (imageFile != null) {
+				try {
+					String fileName = imageFile.getOriginalFilename();
+					if (fileName != null) {
+						//save the file
+						//now upload the file to blob storage
+						LOG.info("Uploading to blob");
+                        /*
+						storageService.uploadFileToBlobStorageAsync(incidentID, fileName, imageFile.getContentType(),
+								imageFile.getBytes())
+								.whenComplete((a, b) -> {
+									//add an event into the queue to resize and attach to incident
+									LOG.info("Successfully uploaded file to blob storage, now adding message to queue");
+									storageService.addMessageToQueueAsync(incidentID, fileName);
+								});
+                        */
+					}
+				} catch (Exception e) {
+					return "Incident/details";
+				}
+			}
+			return "redirect:/dashboard";
+		});
+
+	}
+
+	@ExceptionHandler(Exception.class)
+	public String catchAllErrors(Exception e) {
+		LOG.error("Error occurred in IncidentController", e);
+		return "/error";
+	}
+    
     ```
+ 
+     > you will have to resolve the imports for `@Autowired`, `@Async`, `IncidentService`, etc.  as explained above.
 
     Before we test this code, lets take a look at the HTML template for the dashboard
     page, located in
@@ -358,6 +580,7 @@ Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.
 
 The cards now represent data returned from our API, replacing the static mockup code.  You can also click on `Report Outage`, enter the information requested, then come back to the dashboard display to verify that your outage was saved.
 
+---
 ## Exercise 2: Add a caching layer
 Querying our API is a big step forward, but caching the data in memory would increase 
 performance and reduce the load on our API.  Azure offers a managed (PaaS) 
@@ -389,6 +612,51 @@ and can easily use Azure Redis Cache to hold the data.
 
     We will use these variables to configure a Redis client.
 
+    Let's add these variables to the `devCamp.WebApp.properties.ApplicationProperties` class.  Open that up, and add the following after the first private property in the `ApplicationProperties` class:
+
+    ```java
+    private String redisHost;
+    private Integer redisPort;
+    private String primaryKey;
+    private Integer redisSslPort;
+    ```
+
+    And let's create setters and getters for those class variables by adding these functions:
+    ```java
+        public String getRedisHost() {
+            return redisHost;
+        }
+
+        public void setRedisHost(String redisHost) {
+            this.redisHost = redisHost;
+        }
+
+        public Integer getRedisPort() {
+            return redisPort;
+        }
+
+        public void setRedisPort(Integer redisPort) {
+            this.redisPort = redisPort;
+        }
+
+        public String getPrimaryKey() {
+            return primaryKey;
+        }
+
+        public void setPrimaryKey(String primaryKey) {
+            this.primaryKey = primaryKey;
+        }
+
+        public Integer getRedisSslPort() {
+            return redisSslPort;
+        }
+
+        public void setRedisSslPort(Integer redisSslPort) {
+            this.redisSslPort = redisSslPort;
+        }
+    
+    ```
+
 1. To add caching support to your Spring application, open the build.gradle
    file and add the following entries under dependencies:
    ```java
@@ -403,131 +671,89 @@ and can easily use Azure Redis Cache to hold the data.
     window. Then right-click on the project in the project explorer,
     close the project, and then open it again.
 
-    In Spring, you can apply caching to a Spring
-   [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html). 
-   We need to create a Java class to represent this service, so create a new Java class named 
-   `devCamp.WebApp.IncidentAPIClient.IncidentService.java` with this code:
-
+1. In Spring, you can apply caching to a Spring
+   [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html), and we will be using the `devCamp.WebApp.services.IncidentService` that we created earlier.  Open that file up, and put a line with `@Cacheable("incidents")` above the getAllIncidentsAsync function declaration:
    ```java
-
-    package devCamp.WebApp.IncidentAPIClient;
-
-    import java.util.List;
-
-    import org.apache.commons.logging.Log;
-    import org.apache.commons.logging.LogFactory;
-    import org.springframework.cache.annotation.CacheEvict;
-    import org.springframework.cache.annotation.Cacheable;
-    import org.springframework.stereotype.Service;
-
-    import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
-    import devCamp.WebApp.Utils.IncidentAPIHelper;
-
-    @Service
-    public class IncidentService {
-
-        private Log log = LogFactory.getLog(IncidentService.class);
-
-        @Cacheable("incidents")
-        public List<IncidentBean> GetAllIncidents() {
-            IncidentAPIClient client = IncidentAPIHelper.getIncidentAPIClient();
-            return client.GetAllIncidents();
-        }
-
-        @CacheEvict(cacheNames="incidents", allEntries=true)
-        public IncidentBean CreateIncident(IncidentBean incident) {
-            return IncidentAPIHelper.getIncidentAPIClient().CreateIncident(incident);		
-        }
-        
-        @CacheEvict(cacheNames="incidents", allEntries=true)
-        public IncidentBean UpdateIncident(String incidentId,IncidentBean newIncident){
-            return IncidentAPIHelper.getIncidentAPIClient().UpdateIncident(incidentId,newIncident);
-        }
-        
-        public IncidentBean GetById(String incidentId) {
-            return IncidentAPIHelper.getIncidentAPIClient().GetById(incidentId);		
-        }
-
-        @CacheEvict(cacheNames="incidents", allEntries=true)
-        public void ClearCache() {
-        }
-        
-    }
+	@Cacheable("incidents")
+	List<IncidentBean> getAllIncidents();   
    ```
-
-    The `@Service` annotation tells Spring that this is a service
-    class, and the `@Cacheable` annotation tells spring that the
+    The `@Cacheable` annotation tells spring that the
     result of the GetAllIncidents is cachable and will automatically
-    use the cached version if available.
+    use the cached version if available.  You will have to resolve the import for this annotation.
 
-    The `@CacheEvict` annotation on the other API calls tells Spring to clear the cache 
-    when those functions are called; these are the ones that make changes to the Incident database.
-
+    Before the createIncident, createIncidentAsync, and updateIncidentAsync functions, add a line with `@CacheEvict(cacheNames="incidents", allEntries=true)`.  This tells the Spring framework to clear out the entire cache when those functions are called - these are the ones that make changes to the Incident database.
+   
     We still have to configure Spring caching to use Azure Redis
     Cache. To do this, create a new class
-    devCamp.WebApp.CacheConfig.java with this code:
+    `devCamp.WebApp.configurations.CacheConfig.java` with this code:
 
     ```java
+    package devCamp.WebApp.configurations;
 
-    package devCamp.WebApp;
 
-    import java.util.Arrays;
-    import org.apache.commons.logging.Log;
-    import org.apache.commons.logging.LogFactory;
-    import org.springframework.cache.CacheManager;
-    import org.springframework.cache.annotation.CachingConfigurerSupport;
-    import org.springframework.cache.annotation.EnableCaching;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.boot.context.properties.EnableConfigurationProperties;
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
     import org.springframework.data.redis.cache.RedisCacheManager;
-    import org.springframework.data.redis.connection.RedisConnection;
     import org.springframework.data.redis.connection.RedisConnectionFactory;
     import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
     import org.springframework.data.redis.core.RedisTemplate;
+    import org.springframework.cache.CacheManager;
 
+    import devCamp.WebApp.properties.ApplicationProperties;
     import redis.clients.jedis.JedisPoolConfig;
 
     @Configuration
-    @EnableCaching
-    public class CacheConfig extends CachingConfigurerSupport {
-        private Log log = LogFactory.getLog(CacheConfig.class);
-
+    @EnableConfigurationProperties(value = {
+            ApplicationProperties.class,
+    })
+    public class CacheConfig {
+        private static final Logger LOG = LoggerFactory.getLogger(ApplicationConfig.class);
+        
+        @Autowired
+        private ApplicationProperties applicationProperties;
+        
         @Bean
         public JedisConnectionFactory redisConnectionFactory() {
-                JedisPoolConfig poolConfig = new JedisPoolConfig();
-                poolConfig.setMaxTotal(5);
-                poolConfig.setTestOnBorrow(true);
-                poolConfig.setTestOnReturn(true);
-                JedisConnectionFactory ob = new JedisConnectionFactory(poolConfig);
-                ob.setUsePool(true);
-                String redishost = System.getenv("REDISCACHE_HOSTNAME");
-                log.info("REDISCACHE_HOSTNAME="+redishost);
-                ob.setHostName(redishost);
-                String redisport = System.getenv("REDISCACHE_PORT");
-                log.info("REDISCACHE_PORT="+redisport);
-                try {
-                    ob.setPort(Integer.parseInt(  redisport));
-                } catch (NumberFormatException e1) {
-                    // if the port is not in the ENV, use the default
-                    ob.setPort(6379);
-                }
-                String rediskey = System.getenv("REDISCACHE_PRIMARY_KEY");
-                log.info("REDISCACHE_PRIMARY_KEY="+rediskey);
-                ob.setPassword(rediskey);
-                ob.afterPropertiesSet();
-                RedisTemplate<Object,Object> tmp = new RedisTemplate<>();
-                tmp.setConnectionFactory(ob);
-
-                //make sure redis connection is working
-                try {
-                    String msg = tmp.getConnectionFactory().getConnection().ping();
-                    log.info("redis ping response="+msg);
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                return ob;
+            JedisPoolConfig poolConfig = new JedisPoolConfig();
+            poolConfig.setMaxTotal(5);
+            poolConfig.setTestOnBorrow(true);
+            poolConfig.setTestOnReturn(true);
+            JedisConnectionFactory ob = new JedisConnectionFactory(poolConfig);
+            ob.setUsePool(true);
+            String redishost = applicationProperties.getRedisHost(); //System.getenv("REDISCACHE_HOSTNAME");
+            LOG.info("REDISCACHE_HOSTNAME={}", redishost);
+            ob.setHostName(redishost);
+            String redisport = applicationProperties.getRedisPort().toString(); //System.getenv("REDISCACHE_PORT");
+            LOG.info("REDISCACHE_PORT= {}", redisport);
+            try {
+                ob.setPort(Integer.parseInt(  redisport));
+            } catch (NumberFormatException e1) {
+                // if the port is not in the ENV, use the default
+                ob.setPort(6379);
             }
+            String rediskey = applicationProperties.getPrimaryKey(); //System.getenv("REDISCACHE_PRIMARY_KEY");
+            LOG.info("REDISCACHE_PRIMARY_KEY= {}", rediskey);
+            ob.setPassword(rediskey);
+            ob.afterPropertiesSet();
+            RedisTemplate<Object,Object> tmp = new RedisTemplate<>();
+            tmp.setConnectionFactory(ob);
+
+            //make sure redis connection is working
+            try {
+                String msg = tmp.getConnectionFactory().getConnection().ping();
+                LOG.info("redis ping response="+msg);
+                //clear the cache before use
+                tmp.getConnectionFactory().getConnection().flushAll();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return ob;
+        }
 
         @Bean(name="redisTemplate")
         public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory cf) {
@@ -538,11 +764,13 @@ and can easily use Azure Redis Cache to hold the data.
 
         @Bean
         public CacheManager cacheManager() {
-            RedisCacheManager manager =new RedisCacheManager(redisTemplate(redisConnectionFactory()));
+            RedisCacheManager manager = new RedisCacheManager(redisTemplate(redisConnectionFactory()));
             manager.setDefaultExpiration(300);
             return manager;
         }
+        
     }
+
     ```
 
     There is a lot going on in this class.  The `@Configuration`
@@ -565,74 +793,31 @@ and can easily use Azure Redis Cache to hold the data.
     use Azure Redis Cache. Under high traffic, this will improve page
     performance and decrease the API's scaling needs.
 
-1. Change the `devCamp.WebApp.Controllers.DashboardController.java`
-class to use the IncidentService rather than the IncidentAPIClient
-directly. To do this add these lines inside the DashboardController class:
-
-    ```java
-    @Autowired
-    IncidentService service;
-    ```
-    >you will also have to resolve the import for devCamp.WebApp.IncidentAPIClient.IncidentService
-
-    Also, change these two lines:
-    ```java
-    IncidentAPIClient client = IncidentApiHelper.getIncidentAPIClient();
-    ArrayList<IncidentBean> theList = client.GetAllIncidents();
-    ```
-    to this:
-
-    ```java
-    List<IncidentBean> theList = service.GetAllIncidents();
-    ```
-
-    These changes will ensure that the IncidentAPI is called via the service, rather than directly.  This is required to make Spring caching annotations work properly.
-
-1. We need to change the `IncidentController.java` class to use the IncidentService 
-   object also.  Add these lines inside the class definition:
-
-    ```java
-    @Autowired
-    IncidentService service;
-    ```
-
-    Find this line inside of the create function:
-
-      ```java
-    IncidentBean result = IncidentAPIHelper.getIncidentAPIClient().CreateIncident(incident);
-    ```
-
-    Change it to this:
-    ```java
-    IncidentBean result = service.CreateIncident(incident);
-    ```
-
-   >Again, you will have to resolve the import for devCamp.WebApp.IncidentAPIClient.IncidentService
-
-   These changes ensure that we call the IncidentAPI via the service, rather than directly.
+1. Finally enable caching for the application.  Open `devCamp.WebApp.DevcampApplication.java`, and add the annotation `@EnableCaching` for the class. You will also have to resolve the dependency for the EnableCaching annotation by importing `org.springframework.cache.annotation.EnableCaching`.
 
 1. To test the application using the Azure Redis Cache, note that in
-   the IncidentAPIClient class, the `GetAllincidents` function has
+   the IncidentServiceImpl class, the `GetAllincidents` function has
    this code at the top:
 
    ```java
-    log.info("Performing get /incidents web service");
+    LOG.info("Performing get {} web service", applicationProperties.getIncidentApiUrl() +"/incidents")
    ```
 
    This will print a log message every time the API is called. Start
    the application and in your browser go to
    `http://localhost:8080/dashboard`. Look at your console out window
-   in Eclipse, it should end with a line that says
+   in Eclipse, it should end with a line that says (with your own API URL of course)
 
    ```
-   Performing get /incidents web service
+   Performing get http://incidentapi32csxy6h3sbku.azurewebsites.net/incidents web service
    ```
 
-If you refresh your page in the browser, you should not get another log message, since the actual API code will not be called for 300 seconds.
+If you refresh your page in the browser, you should not get another log message, since the actual API code will not be called for 300 seconds. Go back to the main page `http://localhost:8080`, and then go to `dashboard`, and verify that you **dont't** get another log message that the web service is called.  This indicates that the dashboard information is being retrieved from the cache. 
 
 > if you refresh or click `Dashboard` before the previous request has completed, you may get two log messages indicating the web service has been called.  This is expected behavior, since the write to cache will happen when the request has completed.
 
-## Exercise 3: Write images to Azure Blob Storage
+---
+### Exercise 3: Write images to Azure Blob Storage
 
 When a new incident is reported, the user can attach a photo.  In this exercise we will process that image and upload it into an Azure Blob Storage Container.
 
@@ -653,7 +838,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     and add the following environment variables:
     * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource
     * `AZURE_STORAGE_ACCESS_KEY` is **key1** from the Access Keys blade
-    * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containres to group 
+    * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containers to group 
     sets of blobs together.  For this demo let's use `images` as the Container name
     * `AZURE_STORAGE_QUEUE` is the name of the Azure Storage Queue resource.  For this demo we will use `thumbnails`.
 
@@ -671,162 +856,280 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     window. Then right-click on the project in the project explorer,
     close the project, and then open it again.
 
+1. To retrieve those configurations in our application, we already have variables set up in the `application.yml` file, but we still need to create a class to hold those values.  Create `devCamp.WebApp.properties.AzureStorageAccountProperties.java`, and paste in this code:
+    ```java
+    package devCamp.WebApp.properties;
+
+    import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+    import org.apache.commons.lang3.builder.ToStringStyle;
+    import org.springframework.boot.context.properties.ConfigurationProperties;
+
+    @ConfigurationProperties(prefix = "azure.storage.account")
+    public class AzureStorageAccountProperties {
+        private String name;
+        private String blobContainer;
+        private String queue;
+        private String key;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getBlobContainer() {
+            return blobContainer;
+        }
+
+        public void setBlobContainer(String blobContainer) {
+            this.blobContainer = blobContainer;
+        }
+
+        public String getQueue() {
+            return queue;
+        }
+
+        public void setQueue(String queue) {
+            this.queue = queue;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        @Override
+        public String toString() {
+            return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+        }
+    }
+    
+    ```
+
 1. Today we are working with Azure Storage Blobs, but in the future we may 
 decide to extend our application use Azure Stage Tables or Azure Storage 
 Queues.  To better organize our code, let's create a storage interaction 
-class.  Create `devCamp.WebApp.StorageAPIClient.StorageAPIClient.java` and 
+class with an interface.  Create the interface `devCamp.WebApp.services.AzureStorageService.java` and 
 paste in the following code: 
 
     ```java
-    package devCamp.WebApp.StorageAPIClient;
+        package devCamp.WebApp.services;
 
-    import org.apache.commons.io.FilenameUtils;
-    import org.codehaus.jettison.json.JSONException;
-    import org.codehaus.jettison.json.JSONObject;
-    import org.springframework.web.multipart.MultipartFile;
-    import com.microsoft.azure.storage.*;
-    import com.microsoft.azure.storage.blob.*;
-    import com.microsoft.azure.storage.queue.CloudQueue;
-    import com.microsoft.azure.storage.queue.CloudQueueClient;
-    import com.microsoft.azure.storage.queue.CloudQueueMessage;
 
-    import java.io.*;
-    import java.net.URISyntaxException;
-    import java.security.InvalidKeyException;
+        import org.springframework.scheduling.annotation.Async;
+        import org.springframework.stereotype.Service;
 
-    import javax.ws.rs.core.UriBuilder;
+        import java.util.concurrent.CompletableFuture;
 
-    public class StorageAPIClient {
+        @Service
+        public interface AzureStorageService {
 
-        //configuration values from the system Environment
-        private String account;
-        private String key;
-        private String azureStorageContainer;
-        private String azureStorageQueue;
-        private String blobStorageConnectionString;
-        
-        public StorageAPIClient(String account, String key, String azureStorageContainer, String azureStorageQueue) {
-            this.account = account;
-            this.key = key;
-            this.azureStorageContainer = azureStorageContainer;
-            this.azureStorageQueue = azureStorageQueue;
-            blobStorageConnectionString = String.format("DefaultEndpointsProtocol=http;AccountName=%s;AccountKey=%s", account,key);
+            @Async
+            CompletableFuture<Void> addMessageToQueueAsync(String IncidentId, String ImageFileName);
+
+            @Async
+            CompletableFuture<String> uploadFileToBlobStorageAsync(String IncidentId, String fileName, String contentType, byte[] fileBuffer);
+
         }
 
-	
-        public void AddMessageToQueue(String IncidentId, String ImageFileName)
-        {
-            CloudStorageAccount storageAccount;
-            try {
-                storageAccount = CloudStorageAccount.parse(blobStorageConnectionString);
-                CloudQueueClient queueClient = storageAccount.createCloudQueueClient();
+    ```
 
-                CloudQueue msgQ = queueClient.getQueueReference(azureStorageQueue);
-                msgQ.createIfNotExists();
-        
-                JSONObject json = new JSONObject()
-                .put("IncidentId", IncidentId)
-                .put("BlobContainerName", azureStorageContainer)
-                .put("BlobName",getIncidentBlobFilename(IncidentId,ImageFileName));
-        
-                String msgPayload = json.toString();
-                CloudQueueMessage qMsg = new CloudQueueMessage(msgPayload);
-                msgQ.addMessage(qMsg);
-            } catch (InvalidKeyException | URISyntaxException | StorageException | JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+    1. Now lets create the implementation for this class.  Create `devCamp.WebApp.services.AzureStorageServiceImpl.java` and 
+    paste in the following code: 
+
+    ```java
+        package devCamp.WebApp.services;
+
+        import com.microsoft.azure.storage.CloudStorageAccount;
+        import com.microsoft.azure.storage.StorageException;
+        import com.microsoft.azure.storage.blob.*;
+        import com.microsoft.azure.storage.queue.CloudQueue;
+        import com.microsoft.azure.storage.queue.CloudQueueClient;
+        import com.microsoft.azure.storage.queue.CloudQueueMessage;
+        import devCamp.WebApp.properties.AzureStorageAccountProperties;
+        import org.apache.commons.io.FilenameUtils;
+        import org.codehaus.jettison.json.JSONException;
+        import org.codehaus.jettison.json.JSONObject;
+        import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.scheduling.annotation.Async;
+        import org.springframework.stereotype.Service;
+        import org.springframework.web.multipart.MultipartFile;
+
+        import javax.ws.rs.core.UriBuilder;
+        import java.io.IOException;
+        import java.net.URISyntaxException;
+        import java.util.concurrent.CompletableFuture;
+
+        @Service
+        public class AzureStorageServiceImpl implements AzureStorageService {
+            private static final Logger LOG = LoggerFactory.getLogger(AzureStorageServiceImpl.class);
+
+            @Autowired
+            private CloudStorageAccount cloudStorageAccount;
+
+            @Autowired
+            private AzureStorageAccountProperties azureStorageAccountProperties;
+
+            @Async
+            @Override
+            public CompletableFuture<Void> addMessageToQueueAsync(String IncidentId, String ImageFileName) {
+                CompletableFuture<Void> cf = new CompletableFuture<>();
+                CompletableFuture.runAsync(() -> {
+                    try {
+                        CloudQueueClient queueClient = cloudStorageAccount.createCloudQueueClient();
+
+                        CloudQueue msgQ = queueClient.getQueueReference(azureStorageAccountProperties.getQueue());
+                        msgQ.createIfNotExists();
+
+                        JSONObject json = new JSONObject()
+                                .put("IncidentId", IncidentId)
+                                .put("BlobContainerName", azureStorageAccountProperties.getBlobContainer())
+                                .put("BlobName", getIncidentBlobFilename(IncidentId, ImageFileName));
+
+                        String msgPayload = json.toString();
+                        CloudQueueMessage qMsg = new CloudQueueMessage(msgPayload);
+                        msgQ.addMessage(qMsg);
+                    } catch (URISyntaxException | StorageException | JSONException e) {
+                        LOG.error("addMessageToQueue - error", e);
+                        cf.completeExceptionally(e);
+                    }
+                    cf.complete(null);
+                });
+                return cf;
+            }
+
+            @Async
+            @Override
+            public CompletableFuture<String> uploadFileToBlobStorageAsync(String IncidentId, String fileName,
+                                                                        String contentType, byte[] fileBuffer) {
+                CompletableFuture<String> cf = new CompletableFuture<>();
+                CompletableFuture.runAsync(() ->{
+                    try {
+                        CloudBlobClient serviceClient = cloudStorageAccount.createCloudBlobClient();
+
+                        // Container name must be lower case.
+                        CloudBlobContainer container = serviceClient.getContainerReference(azureStorageAccountProperties.getBlobContainer());
+                        container.createIfNotExists();
+
+                        // Set anonymous access on the container.
+                        BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
+                        containerPermissions.setPublicAccess(BlobContainerPublicAccessType.CONTAINER);
+                        container.uploadPermissions(containerPermissions);
+
+                        //
+                        CloudBlockBlob imgBlob = container.getBlockBlobReference(getIncidentBlobFilename(IncidentId,
+                                fileName));
+                        imgBlob.getProperties().setContentType(contentType);
+                        imgBlob.uploadFromByteArray(fileBuffer, 0, fileBuffer.length);
+                        UriBuilder builder = UriBuilder.fromUri(imgBlob.getUri());
+                        builder.scheme("https");
+
+                        //return result
+                        cf.complete(builder.toString());
+                    } catch (URISyntaxException | StorageException | IOException e) {
+                        LOG.error("uploadFileToBlobStorage - error {}", e);
+                        cf.completeExceptionally(e);
+                    }
+                });
+                return cf;
+            }
+
+            private String getIncidentBlobFilename(String IncidentId,String FileName) {
+                String fileExt = FilenameUtils.getExtension(FileName);
+                return String.format("%s.%s", IncidentId,fileExt);
             }
         }
-	
-        public  String UploadFileToBlobStorage(String IncidentId, MultipartFile imageFile){
-            CloudStorageAccount account;
-            try {
-                account = CloudStorageAccount.parse(blobStorageConnectionString);
-                CloudBlobClient serviceClient = account.createCloudBlobClient();
-
-                // Container name must be lower case.
-                CloudBlobContainer container = serviceClient.getContainerReference(azureStorageContainer);
-                container.createIfNotExists();
-
-                // Set anonymous access on the container.
-                BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
-                containerPermissions.setPublicAccess(BlobContainerPublicAccessType.CONTAINER);
-                container.uploadPermissions(containerPermissions);
-
-                // 
-                CloudBlockBlob imgBlob = container.getBlockBlobReference(getIncidentBlobFilename(IncidentId,imageFile.getOriginalFilename()));
-                imgBlob.getProperties().setContentType(imageFile.getContentType());
-                imgBlob.upload(imageFile.getInputStream(),imageFile.getSize());
-                UriBuilder builder = UriBuilder.fromUri(imgBlob.getUri());
-                builder.scheme("https");
-                return builder.toString();
-            } catch (InvalidKeyException | URISyntaxException | StorageException | IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } 
-            return null;
-        }
-
-        private String getIncidentBlobFilename(String IncidentId,String FileName) {
-            String fileExt = FilenameUtils.getExtension(FileName);
-            // TODO check this against the .NET code - 
-            //	with this code in, we're generating filenames that don't have a period between the incident id and the extension 
-    //		if (fileExt.startsWith(".")){
-    //			fileExt = fileExt.substring(1);
-    //		}
-            return String.format("%s.%s", IncidentId,fileExt);
-        }
-    }
-
-
+    
     ```
+    >This code calls the Azure storage APIs to create either a Blob or a queue entry.  Both of the functions are using the CompletableFuture async pattern so that the application doesn't have to wait for the operations to complete before continuing on.
 
-1. Next lets create a configuration class to handle retrieving the 
-environment variables and creating a StorageAPIClient. Create 
-`devCamp.WebApp.Utils.StorageAPIHelper.java` and paste in the following code:
-    ```java
-    package devCamp.WebApp.Utils;
-
-    import devCamp.WebApp.StorageAPIClient.StorageAPIClient;
-
-    public class StorageAPIHelper {
-
-        public static StorageAPIClient getStorageAPIClient() {
-
-            String account = System.getenv("AZURE_STORAGE_ACCOUNT");;
-            String key = System.getenv("AZURE_STORAGE_ACCESS_KEY");;
-            String queue = System.getenv("AZURE_STORAGE_QUEUE");
-            String container = System.getenv("AZURE_STORAGE_BLOB_CONTAINER");
-            
-            return new StorageAPIClient(account, key,container,queue);	
-        }
-    }
-
-    ```
 
 1. Now lets arrange for the controller that manages new incidents to call the Storage API.  Open up 
-`devCamp.WebApp.Controllers.IncidentController.java`.  Find the code inside the Create function:
+`devCamp.WebApp.Controllers.IncidentController.java`.  
+    Add a class variable for the storage service under the one for IncidentService:
     ```java
-        if (fileName != null) {
+    @Autowired
+    private AzureStorageService storageService;
+    ```
+    Resolve the import for `AzureStorageService`.
+
+    Find the code inside the Create function:
+    ```java
+    if (fileName != null) {
     ```
 
-    Add this code after the if statement:
+    Take the block comments out of the following section so it looks like this:
+
     ```java
-        //now upload the file to blob storage 
-        log.info("uploading to blob");
-        StorageAPIHelper.getStorageAPIClient().UploadFileToBlobStorage(IncidentID, imageFile);
-        //add a event into the queue to resize and attach to incident
-        log.info("adding to queue");
-        StorageAPIHelper.getStorageAPIClient().AddMessageToQueue(IncidentID, fileName);
+    //save the file
+    //now upload the file to blob storage
+    
+    LOG.info("Uploading to blob");
+    storageService.uploadFileToBlobStorageAsync(incidentID, fileName, imageFile.getContentType(),
+            imageFile.getBytes())
+            .whenComplete((a, b) -> {
+                //add an event into the queue to resize and attach to incident
+                LOG.info("Successfully uploaded file to blob storage, now adding message to queue");
+                storageService.addMessageToQueueAsync(incidentID, fileName);
+            });
+    
     ```
 
+1. Finally, lets make sure the configuration class is created when the application starts.  Open `ApplicationConfig.java`, and add a line containing `AzureStorageAccountProperties.class` in the `@EnableConfigurationProperties` annotation and resolve the import for `AzureStorageAccountProperties`:
+    ```java
+    @Configuration
+    @EnableConfigurationProperties(value = {
+            ApplicationProperties.class,
+            AzureStorageAccountProperties.class
+    })    
+    ```
+
+    Add an `@Autowired` instance of the new class inside the class definition:
+    ```java
+        @Autowired
+        private AzureStorageAccountProperties azureStorageAccountProperties;
+    ```
+
+    Add a `LOG` statement for the new class to the postConstruct function:
+
+    ```java
+    @PostConstruct
+    protected void postConstruct() throws IOException {
+        LOG.info(applicationProperties.toString());
+        LOG.info(azureStorageAccountProperties.toString());
+    }    
+    ```
+
+    And add a function to create the storage account name:
+    ```java
+    @Bean
+    public CloudStorageAccount getStorageAccount() throws InvalidKeyException, URISyntaxException {
+        String cs = String.format("DefaultEndpointsProtocol=http;AccountName=%s;AccountKey=%s",
+                azureStorageAccountProperties.getName(),
+                azureStorageAccountProperties.getKey());
+        LOG.info("using cloud storage account {}",cs);
+        return CloudStorageAccount.parse(cs);
+    }
+    ```
+
+    Resolve the imports for `CloudStorageAccount`, `InvalidKeyException`, and `URISyntaxException`.
+    
 1. We should be ready to test the storage changes at this point.  Run or debug the application within Eclipse, and open a browser window.  Before you go to the application, use your favorite search engine and download an image you can post with the incident. Then, navigate to `http://localhost:8080/new` (or click on Report Outage).  Fill out the form and hit the **Submit** button.
 
     ![image](./media/image-021.png)
 
     You should be redirected to the Dashboard screen, which will contain your new Incident.  
 
-1. Let's install the Microsoft Azure Storage Explorer.  Go to `http://storageexplorer.com/`, 
+1. Let's install the Microsoft Azure Storage Explorer.  Go to `http://storageexplorer.com/`, download the appropriate version of the azure storage explorer and install it.  When you run the Azure Storage Explorer, you will
+have to configure it with your storage account or azure subscription credentials to be able to connect to your Azure storage.
+
 1. In the Microsoft Azure Storage Explorer, navigate to your Storage Account and ensure that the blob was created.
 
     ![image](./media/image-022.png)
@@ -837,3 +1140,14 @@ Our application can now create new incidents and upload related images to Azure 
 entry into an Azure queue, to invoke an image resizing process, for example. In a later demo, we'll show how 
 an [Azure Function](https://azure.microsoft.com/en-us/services/functions/) can be invoked via a queue entry to 
 do tasks such as this.
+
+---
+## Summary
+Our application started as a prototype on our local machine, but now uses a variety of Azure services.  We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
+
+After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs 
+
+#### View Module 3 instructions for [Java](../03-azuread-office365)
+
+---
+Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

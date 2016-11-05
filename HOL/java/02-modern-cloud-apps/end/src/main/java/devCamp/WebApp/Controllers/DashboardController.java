@@ -21,14 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DashboardController {
 	private static final Logger LOG = LoggerFactory.getLogger(DashboardController.class);
 
-	@Autowired
-	//IncidentService service;
-	private IncidentService service;
-
-
+/*
 	@RequestMapping("/dashboard")
 	public String dashboard(Model model) {
-		/*
+		
 		ArrayList<IncidentBean> theList = new ArrayList<>();
 		for (int i = 1;i<=3;++i){
 			IncidentBean bean = new IncidentBean();
@@ -38,26 +34,19 @@ public class DashboardController {
 			bean.setLastName("Doe");
 			bean.setCreated("1/01/2016");
 			theList.add(bean);
-		}
-		/*
-		IncidentAPIClient client = IncidentAPIHelper.getIncidentAPIClient();
-		List<IncidentBean> theList = client.GetAllIncidents();
-		model.addAttribute("allIncidents",theList);
-		*/
-		List<IncidentBean> theList = service.getAllIncidents();
-		//display the data on the dashboard screen
+		}				
 
 		model.addAttribute("allIncidents", theList);
 		return "Dashboard/index";
 	}
+*/
+	@Autowired
+	IncidentService service;
 
-	@Async
-	@RequestMapping("/dashboardAsync")
-	public CompletableFuture<String> dashboardAsync(Model model) {
-		return service.getAllIncidentsAsync()
-				.thenApply(list -> {
-					model.addAttribute("allIncidents", list);
-					return "Dashboard/index";
-				});
-	}
+	@RequestMapping("/dashboard")
+	public String dashboard(Model model) {
+		List<IncidentBean> list = service.getAllIncidents();
+		model.addAttribute("allIncidents", list);
+		return "Dashboard/index";
+	}	
 }
