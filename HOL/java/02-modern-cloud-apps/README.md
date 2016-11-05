@@ -594,6 +594,9 @@ and can easily use Azure Redis Cache to hold the data.
 
     ![image](./media/image-018.png)
 
+    While you are in the Redis blade, go to `Advanced Settings` and set `Allow access only via SSL` to `No`.  At the time of this writing, the Spring support for Redis does not support 
+    SSL communication, however it is coming in the near future.
+    
     In Eclipse open the run configuration, click the environment tab
     and add four variables for `REDISCACHE_HOSTNAME`,
     `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and
