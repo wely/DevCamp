@@ -1,28 +1,30 @@
 package devCamp.WebApp.Controllers;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
+import devCamp.WebApp.models.IncidentBean;
+import devCamp.WebApp.services.IncidentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import devCamp.WebApp.IncidentAPIClient.IncidentAPIClient;
-import devCamp.WebApp.IncidentAPIClient.IncidentService;
 //import devCamp.WebApp.IncidentAPIClient.IncidentService;
-import devCamp.WebApp.IncidentAPIClient.Models.IncidentBean;
-import devCamp.WebApp.Utils.IncidentAPIHelper;
+//import devCamp.WebApp.IncidentAPIClient.IncidentService;
+//import devCamp.WebApp.models.IncidentBean;
 
 @Controller
 public class DashboardController {
-    
-	@Autowired
-	IncidentService service;
-    		
+	private static final Logger LOG = LoggerFactory.getLogger(DashboardController.class);
+
+/*
 	@RequestMapping("/dashboard")
 	public String dashboard(Model model) {
-		/*
+		
 		ArrayList<IncidentBean> theList = new ArrayList<>();
 		for (int i = 1;i<=3;++i){
 			IncidentBean bean = new IncidentBean();
@@ -32,17 +34,19 @@ public class DashboardController {
 			bean.setLastName("Doe");
 			bean.setCreated("1/01/2016");
 			theList.add(bean);
-		}
-		/*
-		IncidentAPIClient client = IncidentAPIHelper.getIncidentAPIClient();
-		List<IncidentBean> theList = client.GetAllIncidents();
-		model.addAttribute("allIncidents",theList);
-		*/
-	    
-	    List<IncidentBean> theList = service.GetAllIncidents();
-		//display the data on the dashboard screen
-		
+		}				
+
 		model.addAttribute("allIncidents", theList);
 		return "Dashboard/index";
 	}
+*/
+	@Autowired
+	IncidentService service;
+
+	@RequestMapping("/dashboard")
+	public String dashboard(Model model) {
+		List<IncidentBean> list = service.getAllIncidents();
+		model.addAttribute("allIncidents", list);
+		return "Dashboard/index";
+	}	
 }

@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 @SpringBootApplication
-//@EnableCaching
+@EnableCaching
 public class DevcampApplication {
 
 	public static void main(String[] args) {
