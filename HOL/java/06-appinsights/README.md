@@ -75,10 +75,10 @@ We will add both components to our application and enable the sending of telemen
     window. Then right-click on the project in the project explorer,
     close the project, and then open it again.
 
-1. With the SDK installed we need a class file to handle its setup. Create a new file in `devCamp.WebApp.AppInsightsConfig` and paste in the following code:
+1. With the SDK installed we need a class file to handle its setup. Create a new file in `devCamp.WebApp.configurations.AppInsightsConfig` and paste in the following code:
 
     ```Java
-    package devCamp.WebApp;
+    package devCamp.WebApp.configurations;
 
     import javax.servlet.Filter;
 
@@ -255,12 +255,12 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
     TelemetryClient telemetry = new TelemetryClient();
 
     Map<String, String> properties = new HashMap<String, String>();
-    properties.put("User", userProfile.getUserPrincipalName());
-    properties.put("displayname", userProfile.getDisplayName());
+    properties.put("User", result.getUserPrincipalName());
+    properties.put("displayname", result.getDisplayName());
 
     telemetry.trackEvent("Profile", properties, null);    	
 
-    model.addAttribute("userProfileBean",userProfile);
+    model.addAttribute("userProfileBean",result);
 
     try { 
         throw new Exception("This is only a test!"); 
@@ -270,6 +270,8 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
     } 
     ```
 
+    Resolve the imports for `TelemetryClient`, `Map` and `HashMap`.
+    
     This code will send the users `UserPrincipalName` and `DisplayName` to AppInsights. It also demonstrates how to send exceptions to AppInsights.
 
 1. Save the file, restart the application, and generate sample telemetry by visitng the profile page, leaving, 

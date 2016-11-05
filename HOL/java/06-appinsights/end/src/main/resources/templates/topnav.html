@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <td th:fragment="topnav">
 
@@ -12,7 +12,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Outages</a>
+                <a class="navbar-brand" th:href="@{/}">Outages</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -20,21 +20,24 @@
                     <li><a th:href="@{/new}">Report Outage</a></li>
                 </ul>
             <!-- Top Navigation Right -->
-            <ul class="nav navbar-nav navbar-right" th:if="${session.principal!=null}">
+             
+            <ul class="nav navbar-nav navbar-right" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
 			        <li class="dropdown">
 			            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-			                Hi, <span th:text="${session.principal.getUserInfo().getGivenName()}"></span>!<span class="caret"></span>
+			                Hi, <span th:text="${T(devCamp.WebApp.Utils.OAuth2TokenUtils).getGivenName()}"></span>!<span class="caret"></span>
 			            </a>
 			            <ul class="dropdown-menu">
 			                <li><a th:href="@{/profile}">Profile</a></li>
 			                <li role="separator" class="divider"></li>
-			                <li><a th:href="@{/logout}">Sign out</a></li>
+							<form th:action="@{/logout}" method="post" id="logout"></form>	                
+			                <li><a href="#" onclick="document.getElementById('logout').submit();">Sign out</a></li>
 			            </ul>
 			        </li>
 			</ul>
-			    <ul class="nav navbar-nav navbar-right" th:unless="${session.principal!=null}">
-			        <li><a th:href="@{/login}">Login</a></li>
-			    </ul>
+			<ul class="nav navbar-nav navbar-right" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+			    <li><a th:href="@{/login}">Login</a></li>
+			</ul>
+			
 	        </div>
         </div>
     </nav>

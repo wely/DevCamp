@@ -491,45 +491,36 @@ Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.
 	@Autowired
     private IncidentService incidentService;
 
-	@Async
 	@PostMapping("/new")
-	public CompletableFuture<String> Create(@ModelAttribute IncidentBean incident, @RequestParam("file") MultipartFile imageFile) {
+	public String Create(@ModelAttribute IncidentBean incident, @RequestParam("file") MultipartFile imageFile) {
 		LOG.info("creating incident");
-		
-		//IncidentBean result = service.CreateIncident(incident);
-		return incidentService.createIncidentAsync(incident).thenApply((result) -> {
-			String incidentID = result.getId();
+		graphService.sendMail(OAuth2TokenUtils.getGivenName(),OAuth2TokenUtils.getMail());
+		IncidentBean result = incidentService.createIncident(incident);
+		String incidentID = result.getId();
 
-			if (imageFile != null) {
-				try {
-					String fileName = imageFile.getOriginalFilename();
-					if (fileName != null) {
-						//save the file
-						//now upload the file to blob storage
-						LOG.info("Uploading to blob");
-                        /*
-						storageService.uploadFileToBlobStorageAsync(incidentID, fileName, imageFile.getContentType(),
-								imageFile.getBytes())
-								.whenComplete((a, b) -> {
-									//add an event into the queue to resize and attach to incident
-									LOG.info("Successfully uploaded file to blob storage, now adding message to queue");
-									storageService.addMessageToQueueAsync(incidentID, fileName);
-								});
-                        */
-					}
-				} catch (Exception e) {
-					return "Incident/details";
+		if (imageFile != null) {
+			try {
+				String fileName = imageFile.getOriginalFilename();
+				if (fileName != null) {
+					//save the file
+					//now upload the file to blob storage
+					/*
+					LOG.info("Uploading to blob");
+					storageService.uploadFileToBlobStorageAsync(incidentID, fileName, imageFile.getContentType(),
+							imageFile.getBytes())
+							.whenComplete((a, b) -> {
+								//add a event into the queue to resize and attach to incident
+								LOG.info("Successfully uploaded file to blob storage, now adding message to queue");
+								storageService.addMessageToQueueAsync(incidentID, fileName);
+							});
+                    */
 				}
+			} catch (Exception e) {
+				return "Incident/details";
 			}
 			return "redirect:/dashboard";
-		});
-
-	}
-
-	@ExceptionHandler(Exception.class)
-	public String catchAllErrors(Exception e) {
-		LOG.error("Error occurred in IncidentController", e);
-		return "/error";
+		}
+		return "redirect:/dashboard";
 	}
     
     ```

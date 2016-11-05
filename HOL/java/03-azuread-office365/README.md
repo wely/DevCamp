@@ -2,13 +2,13 @@
 
 ## Overview
 
-City Power & Light is a sample application that allows citizens to to report "incidents" that have occured in their community.  It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
+City Power & Light is a sample application that allows citizens to to report "incidents" that have occurred in their community.  It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
 
 * Front end web application contains the user interface and business logic.  This component has been implemented three times in .NET, NodeJS, and Java.
 * WebAPI is shared across the front ends and exposes the backend DocumentDB
 * DocumentDB is used as the data persistence layer 
 
-In this lab, you will continue enhancing the City Power & Light application by adding authentication for users powered by [Azure Active Direcotry](https://azure.microsoft.com/en-us/services/active-directory/).  Once authenticated, you may then query the [Microsoft Office Graph](https://graph.microsoft.io) to retrieve information pertinent to the aplication.
+In this lab, you will continue enhancing the City Power & Light application by adding authentication for users powered by [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/).  Once authenticated, you may then query the [Microsoft Office Graph](https://graph.microsoft.io) to retrieve information pertinent to the application.
 
 This guide uses [Eclipse](https://www.eclipse.org) for editing, however please feel free to use your editor of choice.
 
@@ -33,7 +33,8 @@ This hands-on-lab has the following exercises:
 * Exercise 1: Setup authentication 
 * Exercise 2: Create a user profile page
 
-## Exercise 1: Integrate the API
+---
+### Exercise 1: Integrate the API
 
 AzureAD can handle authentication for web applications. First we will create a new application in our AzureAD directory, and then we will extend our application code to work with an authentication flow. 
 
@@ -80,88 +81,154 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ```
     "AAD_RETURN_URL": "http://localhost:8080/auth/openid/return",
-    "AAD_CLIENT_ID": "2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6",
-    "AAD_CLIENT_SECRET": "JjrKfgDyo5peQ4xJa786e8z"
+    "AAD_CLIENT_ID": "YOUR CLIENT ID HERE",
+    "AAD_CLIENT_SECRET": "YOUR SECRET HERE"
     ```
 
 1. To add AAD identity support libraries to your Spring application, open the build.gradle
    file and add the following entries under dependencies:
    ```java
-	compile('com.microsoft.azure:adal4j:1.1.1')
-	compile('com.nimbusds:oauth2-oidc-sdk:4.5')
-	compile('org.springframework.security:spring-security-core')
-	compile('org.springframework.security:spring-security-web')
-	compile('org.springframework.security:spring-security-config')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.security.oauth:spring-security-oauth2')					
+	compile('org.springframework.security:spring-security-jwt')
+	compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4')
     ```
 
     To make sure that Eclipse knows about the new packages we added to
-    the buld, run the `ide/eclipse` gradle task in the `gradle tasks`
+    the build, run the `ide/eclipse` gradle task in the `gradle tasks`
     window. When that is done, right-click on the project in the project explorer,
     close the project, and then open it again.
 
 
 
-1. We are going to take a simplistic route for the security features for this example. We are going to create two security filters, one for requesting Azure 
-AD Authentication, and the other to process the Azure AD response.  These filters work in conjunction 
-with Spring security to allow flexible security requirements for pages in the application.
+1. We are going to use the OAuth2 support in Spring to implement most of the features we need for logins. 
+The main effort here is going to be configuring the application.  First, open your `application.yml` file, and add these lines at the bottom:
+    ```
+    security:
+      oauth2:
+        client:
+          clientId: ${AAD_CLIENT_ID}
+          clientSecret: ${AAD_CLIENT_SECRET}
+          accessTokenUri: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          userAuthorizationUri: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenName: access_token
+          authenticationScheme: header
+          clientAuthenticationScheme: form
+          preEstablishedRedirectUri: ${AAD_RETURN_URL}
+          scope:  openid,profile,User.Read, Mail.Send
+      resource:
+        userInfoUri: https://graph.microsoft.com/v1.0/me    
+    ```
+    This will configure the Spring OAuth2 to use the Azure Active Directory URLs for login, token exchange, and getting the user's information, and it will retrieve the application configuration variables from the OS environment.
 
-    First, open the file `devCamp.WebApp.AzureADAuthenticationFilter.java`, which has been commented 
-    out. Remove the `/*` at the beginning and the `*/` at the end, so the code is no longer commented out. 
+    >Be careful with indentation in the `application.yml` file.  The line with `security:` should not be indented at all, the line with `oauth2:` should be indented with two spaces, etc.  If you run the application and get an error like this: `java.lang.IllegalArgumentException: HTTP URL must not be null`, check your indentation.  If you continue to have problems with this, it may be convenient to copy this file from the `end` directory.
 
-    This is a Spring security fiter that will make sure the user is authenticated on pages
-    that require it.  If the user needs authentication, they will be redirected to the login
-    page to get the requred token.  
-    >Eclipse will complain that there are some missing types - don't worry, we will be adding them in subsequent steps.
+1. We will need to tell Spring which pages to protect and which ones to remain public.  Open the `DevcampApplication` class.  Add the `@EnableOauth2Sso` annotation, and make the `DevcampApplication` class inherit from `WebSecurityConfigurerAdapter`.  Also, add a `configure` function so the class looks like this:
 
-1. When the user completes their login, the browser will be redirected back to the same
-    page, but with an HTTP post and the token attached.  We need to add a class to catch 
-    that post, and save the authentication state in the user's HTTP session. Open the file named `devCamp.WebApp.AzureADResponseFilter.java` which has been commented 
-    out. Remove the `/*` at the beginning and the `*/` at the end, so the code is no longer commented out. 
+    ```java
+    package devCamp.WebApp;
 
-1. These classes need a "helper" class to do some utility functions. Open the file 
-named  `devCamp.WebApp.Utils.AuthHelper.java`, which has been commented 
-    out. Remove the `/*` at the beginning and the `*/` at the end, so the code is no longer commented out. 
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+    import org.springframework.cache.annotation.EnableCaching;
+    import org.springframework.context.annotation.Configuration;
 
-1. Next, we need a class to configure security for our application.  Open `devCamp.WebApp.WWebSecurityConfig.java` which has been commented out. Remove the `/*` at the beginning and the `*/` at the end, so the code is no longer commented out. 
+    @Configuration
+    @SpringBootApplication
+    @EnableCaching
+    @EnableOAuth2Sso
+    public class DevcampApplication extends WebSecurityConfigurerAdapter {
 
-    >This class adds the `AzureADAuthenticationFilter` and the `AzureADResponseFilter` to the 
-    filter chain, and configures page matching so that they will be invoked on the proper pages.
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            // @formatter:off
+            http.antMatcher("/**").authorizeRequests().antMatchers("/", "/login**", "/dashboard**", "/webjars/**").permitAll().anyRequest()
+                    .authenticated().and().logout().logoutSuccessUrl("https://login.windows.net/common/oauth2/logout").permitAll().and().csrf()
+                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+            // @formatter:on
+        }   
 
-1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `templates/topnav.html` and remove the commented out block of HTML code by deleting the `<!--`  and `-->` characters. Next, for each of the template files (`Dashbord/index.html`, `Home/index.html`, `Incident/index.html`, `Incident/new.html`), replace the navigation bar code with an include for the topnav template.  This is the existing nav bar code:
+        public static void main(String[] args) {
+            SpringApplication.run(DevcampApplication.class, args);
+        }
+    }
 
-   ```HTML
-    <!-- Top Navigation -->
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" th:href="@{/}">Outages</a>
-            </div>
+    ```
+    > you will need to resolve the imports for `EnableOAuth2Sso`, `WebSecurityConfigurerAdapter`, `HttpSecurity` and `HttpSecurity`.
 
-            <div class="collapse navbar-collapse" id="navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a th:href="@{/dashboard}">Dashboard</a></li>
-                    <li><a th:href="@{/new}">Report Outage</a></li>
-                </ul>
+    This configures the `/`, `/login`, `/dashboard` and `/webjars` URLs to be public, and all others to be private.  It will also automatically implement a `/logout` URL which will logout the user from the application and Azure Active Directory.
 
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
+1. These are the main changes to our application to add Azure Active Directory authentication.  In fact, if you were to run the application at this point, you should be able to get to the main page and the dashboard, but be redirected to the Azure Active Directory login page if you try to go to the new incident page.  We need the user interface to display a **Login** button if the user is not logged in.  Open up `templates/topnav.html` and remove the commented out block of HTML code by deleting the `<!--`  and `-->` characters. 
+
+    Also, update the HTML line at the top of the `templates/topnav.html` file to include a definition for `http://www.thymeleaf.org/thymeleaf-extras-springsecurity4`:
+
+    ```
+    <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
     ```
 
-    replace it with this:
-    ```HTML
-    <div th:include="topnav::topnav"></div> 
+    The `topnav.html` file relies on a function to retrieve the user's name from the token that is retrieved from Azure Active Directory.  Create the class `devCamp.WebApp.Utils.OAuth2TokenUtils`, and paste in this code:
+    ```java
+    package devCamp.WebApp.Utils;
+
+    import java.util.HashMap;
+
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.security.core.Authentication;
+    import org.springframework.security.core.context.SecurityContext;
+    import org.springframework.security.core.context.SecurityContextHolder;
+    import org.springframework.security.oauth2.provider.OAuth2Authentication;
+
+    public class OAuth2TokenUtils {
+        private static final Logger LOG = LoggerFactory.getLogger(OAuth2TokenUtils.class);
+        //businessPhones
+        //mail
+        //officeLocation
+        //displayName
+        //givenName
+        //userPrincipalName
+
+        public static String getMail() {
+            return getAttr("mail");
+        }
+
+        public static String getGivenName() {
+            return getAttr("givenName");
+        }
+
+        public static String getAttr(String attr) {
+            HashMap hm = getMap();
+            if (hm != null){
+                String m = (String)hm.get(attr);
+                LOG.info("{} = {}",attr,m);
+                return m;
+            }
+            return null;
+        }
+
+        private static HashMap getMap(){
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            if (securityContext != null) {
+                Authentication sco = securityContext.getAuthentication();
+                if (sco instanceof OAuth2Authentication){
+                    OAuth2Authentication au = (OAuth2Authentication)sco;
+                    Authentication auth = au.getUserAuthentication();
+                    Object deets = auth.getDetails();
+                    if (deets instanceof HashMap){
+                        return (HashMap)deets;
+                    }
+                }
+            }
+            return null;		
+        }
+    }
+    
     ```
 
-    Save all files, run the application and visit the application in the browser. You should see the **Login** button on the top navigation.
+    This is a relatively ugly class - Spring has generic support for OAuth2, but in this class we are depending on the fact that we are using Azure Active Directory.  That makes it possible for us to downcast and get the underlying user's information.
+
+1. Save all files, run the application and visit the application in the browser. You should see the **Login** button on the top navigation.
 
     ![image](./media/image-009.png)
 
@@ -171,8 +238,113 @@ named  `devCamp.WebApp.Utils.AuthHelper.java`, which has been commented
 
     The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
 
-## Exercise 2: Create a user profile page
+---
+### Exercise 2: Create a user profile page
 Next, we are going to create a page to display information about the logged in user.  While AzureAD returns a name and email address when the user logs in, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a controller, and then query the Graph for user information.
+
+1. We will need a class to contain the user profile information that is retrieved from the Graph API.  It is located in  `devCamp.WebApp.models.UserProfileBean`, with this code:
+    ```java
+    package devCamp.WebApp.models;
+
+    import org.codehaus.jackson.annotate.JsonProperty;
+
+    public class UserProfileBean {
+        @JsonProperty(value = "odata.metadata")
+        private String OdataMetadata;
+        private String Entity;
+        private String objectId;
+        private String TelephoneNumber;
+        private String DisplayName;
+        private String GivenName;
+        private String JobTitle;
+        private String Mail;
+        private String Mobile;
+        private String PhysicalDeliveryOfficeName;
+        private String PreferredLanguage;
+        private String Surname;
+        private String UserPrincipalName;
+        
+        public String getOdataMetadata(){
+            return OdataMetadata;
+        }
+        public void setOdataMetadata(String data){
+            OdataMetadata = data;
+        }
+        public String getEntity(){
+            return Entity;
+        }
+        public void setEntity(String entity) {
+            Entity = entity;
+        }
+        public String getObjectId() {
+            return objectId;
+        }
+        public void setObjectId(String id) {
+            objectId = id;
+        }
+        public String getTelephoneNumber() {
+            return TelephoneNumber;
+        }
+        public void setTelephoneNumber(String telephoneNumber) {
+            TelephoneNumber=telephoneNumber;
+        }
+        public String getDisplayName() {
+            return DisplayName;
+        }
+        public void setDisplayName(String displayName) {
+            DisplayName = displayName;
+        }
+        public String getGivenName() {
+            return GivenName;
+        }
+        public void setGivenName(String givenName) {
+            GivenName = givenName;
+        }
+        public String getJobTitle() {
+            return JobTitle;
+        }
+        public void setJobTitle(String jobTitle) {
+            JobTitle = jobTitle;
+        }
+        public String getMail() {
+            return Mail;
+        }
+        public void setMail(String mail) {
+            Mail = mail;
+        }
+        public String getMobile() {
+            return Mobile;
+        }
+        public void setMobile(String mobile) {
+            Mobile = mobile;
+        }
+        public String getPhysicalDeliveryOfficeName() {
+            return PhysicalDeliveryOfficeName;
+        }
+        public void setPhysicalDeliveryOfficeName(String officeLocation) {
+            PhysicalDeliveryOfficeName = officeLocation;
+        }
+        public String getPreferredLanguage() {
+            return PreferredLanguage;
+        }
+        public void setPreferredLanguage(String preferredLanguage) {
+            PreferredLanguage = preferredLanguage;
+        }
+        public String getSurname() {
+            return Surname;
+        }
+        public void setSurname(String surname) {
+            Surname = surname;
+        }
+        public String getUserPrincipalName() {
+            return UserPrincipalName;
+        }
+        public void setUserPrincipalName(String userPrincipalName) {
+            UserPrincipalName = userPrincipalName;
+        }
+    }
+    
+    ```
 
 1. Create a new file named `templates/Profile/index.html`. Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
 
@@ -257,102 +429,205 @@ Next, we are going to create a page to display information about the logged in u
     </html>    
     ```
 
-1. We will need a class to perform the graph API operations - create the `devCamp.WebApp.GraphAPIClient.GraphAPIClient`, and paste in the following code:
+1. We will need a class to perform the graph API operations - create the `devCamp.WebApp.services.GraphService` interface, and paste in the following code:
     ```java
-    package devCamp.WebApp.GraphAPIClient;
+    package devCamp.WebApp.services;
 
-    import javax.servlet.http.HttpSession;
+    import org.springframework.stereotype.Service;
 
-    import org.springframework.http.HttpEntity;
-    import org.springframework.http.HttpHeaders;
-    import org.springframework.http.HttpMethod;
-    import org.springframework.http.ResponseEntity;
-    import org.springframework.http.converter.StringHttpMessageConverter;
-    import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-    import org.springframework.web.client.RestTemplate;
+    import devCamp.WebApp.models.UserProfileBean;
 
-    import com.microsoft.aad.adal4j.AuthenticationResult;
-
-    import devCamp.WebApp.Utils.AuthHelper;
-    import devCamp.WebApp.ViewModels.UserProfileBean;
-
-    public class GraphAPIClient {
-
-        public static UserProfileBean getUserProfile(HttpSession session) {
-            
-            //call REST API to create the incident
-            // final String uri = "https://graph.windows.net/devcampross.onmicrosoft.com/me?api-version=1.6";
-        //final String uri = "https://graph.windows.net/v1.0/me";
-        final String uri="https://graph.windows.net/me?api-version=1.6";
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-            HttpHeaders headers = new HttpHeaders();
-            
-            AuthenticationResult result = AuthHelper.getAuthSessionObject(session);
-            String token = result.getAccessToken();
-            
-            headers.set("Authorization", token);
-            System.out.println("TOKEN:"+token);
-            headers.set("Accept", "application/json;odata=minimalmetadata");
-            HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-            
-            ResponseEntity<UserProfileBean>  response = restTemplate.exchange(uri, HttpMethod.GET, entity, UserProfileBean.class);
-
-            UserProfileBean createdBean =response.getBody();
-            return createdBean;		
-        }	
+    @Service
+    public interface GraphService {
+        public UserProfileBean getUserProfile() ;
     }
     ```
 
-1. With the view prepped, create a controller at `Controllers/ProfileController.java`.  When the `/profile` url is loaded, it will query the Microsoft Graph "Me" endpoint.  This query requires a token to be passed in an `authorization` request header, which we grab from the `user` object provided by the adal4j library.
+    The implementation for this interface will be `devCamp.WebApp.services.GraphServiceImpl`.  This is a great example of calling a service with the OAuth2 credentials.  Paste in  this code:
+
+    ```java
+    package devCamp.WebApp.services;
+
+    import org.codehaus.jettison.json.JSONArray;
+    import org.codehaus.jettison.json.JSONException;
+    import org.codehaus.jettison.json.JSONObject;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.beans.factory.annotation.Value;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.http.HttpEntity;
+    import org.springframework.http.HttpHeaders;
+    import org.springframework.http.MediaType;
+    import org.springframework.security.oauth2.client.OAuth2ClientContext;
+    import org.springframework.security.oauth2.client.OAuth2RestOperations;
+    import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+    import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
+    import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
+    import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+    import org.springframework.stereotype.Service;
+
+    import devCamp.WebApp.models.UserProfileBean;
+
+    @EnableOAuth2Client
+    @Service
+    public class GraphServiceImpl implements GraphService{
+        private static final Logger LOG = LoggerFactory.getLogger(GraphServiceImpl.class);
+        @Autowired
+        private OAuth2RestOperations restTemplate;
+            
+        @Value("${oauth2.resource.userInfoUri:https://graph.microsoft.com/v1.0/me}")
+        private String baseUrl;
+        
+        public UserProfileBean getUserProfile() {
+            LOG.info("getting user profile");
+            UserProfileBean result = restTemplate.getForObject(baseUrl, UserProfileBean.class);
+            return result;
+        }
+        
+        
+        @Bean
+        public OAuth2RestOperations restTemplate(OAuth2ClientContext oauth2ClientContext) {
+            return new OAuth2RestTemplate(resource(), oauth2ClientContext);
+        }
+
+        @Bean
+        protected OAuth2ProtectedResourceDetails resource() {
+            AuthorizationCodeResourceDetails resource = new AuthorizationCodeResourceDetails();
+            resource.setClientId("my-trusted-client");
+            return resource ;
+        }
+                
+    }
+    
+    ```
+
+1. Next, lets create a controller at `Controllers/ProfileController.java`. This will invoke the above service when the `/profile` url is loaded, querying the Microsoft Graph "Me" endpoint.  
 
     ```Java
     package devCamp.WebApp.Controllers;
 
-    import javax.servlet.http.HttpServletRequest;
-    import javax.servlet.http.HttpSession;
-
-    import org.springframework.context.annotation.Scope;
-    import org.springframework.http.HttpEntity;
-    import org.springframework.http.HttpHeaders;
-    import org.springframework.http.HttpMethod;
-    import org.springframework.http.ResponseEntity;
-    import org.springframework.http.converter.StringHttpMessageConverter;
-    import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.context.annotation.Configuration;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.client.RestTemplate;
 
-    import com.microsoft.aad.adal4j.AuthenticationResult;
+    import devCamp.WebApp.models.UserProfileBean;
+    import devCamp.WebApp.services.GraphService;
 
-    import devCamp.WebApp.Utils.AuthHelper;
-    import devCamp.WebApp.GraphAPIClient.GraphAPIClient;
-    import devCamp.WebApp.ViewModels.UserProfileBean;
 
+
+    @Configuration
     @Controller
-    @Scope("session")
     public class ProfileController {
+        private static final Logger LOG = LoggerFactory.getLogger(ProfileController.class);
 
+        @Autowired
+        private GraphService graphService;
+        
         @RequestMapping("/profile")
-        public String index(Model model,HttpServletRequest request) {
-            HttpSession session = request.getSession();
-            UserProfileBean userProfile = GraphAPIClient.getUserProfile(session);
-            model.addAttribute("userProfileBean",userProfile);
+        public String index(Model model) {
+            LOG.info("getting user profile");
+            UserProfileBean result = graphService.getUserProfile();
+
+            model.addAttribute("userProfileBean",result);
             return "Profile/index";
         }
+            
     }
+
     ```
-1. We will need a class to contain the user profile information that is retrieved from the Graph API.  It is located in  `devCamp.WebApp.ViewModels.UserProfileBean.java` 
 
-1. The `ProfileController` will display data via the `templates/Profile/index.html` template.  Open this file up and see that it's displaying data from the UserProfileBean.
-
-1. With the view and route created, we can now load `http://localhost:8080/profile` in the browser.
+1. With the view and controller created, we can now run the application, log in, and load `http://localhost:8080/profile` in the browser.
 
     ![image](./media/image-011.png)
 
-We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
+We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.  If there are missing fields in this page,
+those fields were likely not filled in in the Azure Active Directory user profile.
+
+---
+### Exercise 3: Interact with the Microsoft Graph
+In the previous exercise you read data from the Microsoft Graph API, but other endpoints can be used for more sophisticated tasks. In this exercise we will use the Graph to send an email message whenever a new incident is reported.
+
+1. We are going to create a sendMail function in the `GraphService` object - first, open up the `GraphService.java` file and add a declaration for the new function inside of the interface definition:
+    ```java
+    public void sendMail(String displayName,String emailAddr);
+    ```
+
+    Open up the `GraphServiceImpl.java` file, and add the implementation for the sendMail function:
+    ```java
+	private static String emailContent1 = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=us-ascii\'>"
+			+ "<title></title></head><body style=\"font-family:Calibri\">"
+			+ "<div style=\"width:50%;background-color:#CCC;padding:10px;margin:0 auto;text-align:center;\">"
+			+"<h1>City Power &amp; Light</h1><h2>New Incident Reported by ";
+	private static String emailContent2 = "</h2><p>A new incident has been reported to the City Power &amp; Light outage system.</p>"   
+			+"<br /></div></body></html>";
+
+	@Value("${oauth2.resource.mailUri:https://graph.microsoft.com/v1.0/me/sendMail}")
+	private String mailUrl;
+	
+    public void sendMail(String displayName,String emailAddr){
+    	LOG.info("sending email");
+    	String email = emailContent1 + displayName+ emailContent2;
+    	
+    	JSONObject body = null;
+		try {
+			body = new JSONObject()
+					.put("ContentType", "HTML")
+					.put("Content", email);
+    			
+			JSONObject aa = new JSONObject()
+					.put("Address", emailAddr);
+			JSONObject ee = new JSONObject()
+					.put("EmailAddress", aa);
+	    	JSONArray recipients = new JSONArray()
+	    			.put(ee);
+	    	JSONObject jsonMessage = new JSONObject()
+	    			.put("Subject","New Incident Reported")
+	    			.put("Body",body)
+	    			.put("ToRecipients",recipients);
+	        JSONObject json = new JSONObject()
+	                .put("Message", jsonMessage)
+	                .put("SaveToSentItems", true);   
+	        String jsons = json.toString();
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_JSON);
+	        HttpEntity<String> entity = new HttpEntity<String>(jsons,headers);
+	        
+	    	String result = restTemplate.postForObject(mailUrl, entity, String.class);   	
+	    	} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}   
+    }
+    
+    ```
+
+1. Lets update the `IncidentController` to call this function when a new incident is created. Add an `@Autowired` instance of GraphService under the one for AzureStorageService. 
+You will have to resolve the import for GraphService as well: 
+    ```java
+	@Autowired
+    private GraphService graphService;    
+    ```
+    Next, add the call to the sendMail function at the beginning of the Create function:
+    ```java
+	public String Create(@ModelAttribute IncidentBean incident, @RequestParam("file") MultipartFile imageFile) {
+		LOG.info("creating incident");
+		graphService.sendMail(OAuth2TokenUtils.getGivenName(),OAuth2TokenUtils.getMail()); 
+    ```
+    > you will need to resolve the imports for `GraphService` and `OAuth2TokenUtils`
+1. You can now test the functionality by running the application, logging in, and creating a new incident.  If you go to `outlook.office365.com`, you should soon receive an email:
+
+    ![image](./media/image-012.png)
 
 ## Summary
 Our application can now bifurcate anonymous and authenticated users to ensure flexibility between public and private data.  We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
+
+After completing this module, you can continue on to Module 4: DevOps with Visual Studio Team Services
+
+#### View instructions for [Module 4 for Java](../04-devops-ci)
+---
+Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
