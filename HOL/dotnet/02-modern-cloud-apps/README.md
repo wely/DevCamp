@@ -158,7 +158,7 @@ This hands-on-lab has the following exercises:
 1. Select Add > Rest API client
 1. In the Swagger URL field paste the value for the `INCIDENT_API_URL`
 1. Append `/swagger/docs/v1` to the URL
-1. For the Client Namespace, enter IncidentAPI and click OK. This will download the definition for the API and install some nuget packages.
+1. For the Client Namespace, enter **IncidentAPI** and click OK. This will download the definition for the API and install nuget packages for Microsoft.Rest. It will also create the IncidentAPI client proxy classes and models.
 
     ![image](./media/image-13.png)
 
@@ -207,8 +207,8 @@ This hands-on-lab has the following exercises:
     List<Incident> incidents;
     using (var client = IncidentApiHelper.GetIncidentAPIClient())
     {
-                var results = await client.Incident.GetAllIncidentsAsync();
-                incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
+        var results = await client.Incident.GetAllIncidentsAsync();
+        incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
     }
     return View(incidents);
     //##### API DATA HERE #####
