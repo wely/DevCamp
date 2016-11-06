@@ -60,7 +60,7 @@ This lab will introduce you to building modern cloud apps with Azure. You will p
 ##  Module 3 - Identity and Office365 APIs Overview ##
 We will provide an overview of Azure AD, and discuss areas for integration with the Office 365 APIs.
 
-[View PowerPoint](Presentation/Module03-Identity-0365Apis.pptxx?raw=true)
+[View PowerPoint](Presentation/Module03-Identity-0365Apis.pptx?raw=true)
 
 ----
 ### HOL 3: Identity with Azure AD and Office 365 APIs ###
@@ -113,7 +113,7 @@ This lab will introduce you to ARM templates and deployments to Azure. You will 
 ## Module 6 - Monitoring ####
 We will introduce you to the monitoring capabilities in Azure and show you how you can use them in your application.
 
-[View PowerPoint](Presentation/Module06-Monitoring.pptxx?raw=true)
+[View PowerPoint](Presentation/Module06-Monitoring.pptx?raw=true)
 
 ### HOL 6: Monitoring applications with App Insights ###
 This lab will introduce you to Azure Application Insights. You will perform the following tasks:
