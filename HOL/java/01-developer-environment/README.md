@@ -174,56 +174,60 @@ Remote Desktop:
     ![image](./media/2016-10-18_16-37-57.png)
 
     This will download a remote desktop connection file, and when you open it, remote desktop 
-    on your local machine will attempt to attach to your virtual machine.   When the windows security dialog pops up, click on the `more choices link, then choose `use a different account`
-    
+    on your local machine will attempt to attach to your virtual machine.   When the windows security dialog pops up, click on the `more choices link, then choose ` use a different account`
+
     ![image](./media/2016-10-19_14-42-16.png)
 
     Use the credentials below to log onto the machine.
 
-    > UserID = **L-ADMIN**
-    >
-    > Password = **Devc@mp2016!**
-    
-    It would be wise to change the password in the virtual machine.
+    ***UserID = L-ADMIN***
 
-    When remote desktop is connected, you will see server manager initally.  We will
-    want to turn of IE enhanced security, to make accessing the web within the virtual machine easier.  First click local server;
+    ***Password = Devc@mp2016!***
+
+    > It would be wise to change the password in the virtual machine.
+
+1. When remote desktop is connected, you will see server manager initally.  We will
+    want to turn of IE enhanced security, to make accessing the web within the virtual machine easier.  
+    
+1. Click local server:
 
     ![image](./media/2016-10-18_16-46-33.png)
 
-    then click the `on` next to 
+1. Click the `on` next to 
 
     ![image](./media/2016-10-18_16-50-50.png)
 
     A dialog box pops up - choose to turn enhanced security off for administrators.
 
-1. We are going to use git to clone the DevCamp github repository to this development machine.  Open `cmd`, change directory to the root using `cd c:\`, and do `git clone https://github.com/AzureCAT-GSI/DevCamp.git` :
+1. We are going to use git to clone the DevCamp github repository to this development machine.  Open `cmd`, change directory to the root using `cd c:\`, and perform a Git clone 
+
+    `git clone https://github.com/AzureCAT-GSI/DevCamp.git`
 
     ![image](./media/2016-10-18_17-03-51.png)
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-    Start `visual studio 2015`, and in the sign in screen, click `sign in` and use the credentials you used earlier for Office 365.
+1. Start `visual studio 2015`, and in the sign in screen, click `sign in` and use the credentials you used earlier for Office 365.
 
     ![image](./media/2016-10-18_17-59-21.png)
     
-    You can create a VSTS repository now, choose an appropriate repository name and click continue:
+1. You can create a VSTS repository now, choose an appropriate repository name and click continue:
 
     ![image](./media/2016-10-18_18-07-34.png)
 
-    Create your first team project, and name it `DevCamp`:
+1. Create your first team project, and name it `DevCamp`:
 
     ![image](./media/2016-10-18_18-10-39.png)
 
-    Finally click close, and you are done with the Visual Studio setup.
+1. Finally click close, and you are done with the Visual Studio setup.
 
 1. We are now going to deploy our .NET API to an Azure App Service.  In the command window change the directory too the root with `cd \`, and clone the github repository for the API with `git clone https://github.com/AzureCAT-GSI/DevCampSharedDotNetAPI.git`.  
 
-1. Switch back to Visual Studio and open the API solution with File/Open/Project/Solution:
+1. Switch back to Visual Studio and open the API solution with `File > Open > Project > Solution`:
 
     ![image](./media/2016-10-18_18-34-01.png)
 
-    and open the API solution located at `C:\DevCampSharedDotNetAPI\src>`.  
+1. Open the API solution located at `C:\DevCampSharedDotNetAPI\src>`.  
 
     ![image](./media/2016-10-18_18-44-50.png)
 
@@ -231,28 +235,30 @@ Remote Desktop:
 
     ![image](./media/2016-10-18_18-47-26.png)
 
-    In the publish wizard, click `Microsoft Azure App Service` for the publish target:
+1. In the publish wizard, click `Microsoft Azure App Service` for the publish target:
 
     ![image](./media/2016-10-18_18-49-13.png)
 
-    Next select `DevCamp` and then the `incidentapi...` app service, and click `OK`
+1. Next select `DevCamp` and then the `incidentapi...` app service, and click `OK`
 
     ![image](./media/2016-10-18_18-55-41.png)
 
-    In the next step, leave all the defaults and click `Publish`:
+1. In the next step, leave all the defaults and click `Publish`:
 
     ![image](./media/2016-10-18_19-03-10.png)
 
-    After a short time, you should see the `publish succeeded` message in the output window:
+1. After a short time, you should see the `publish succeeded` message in the output window:
 
     ![image](./media/2016-10-18_19-05-52.png)
     
+
+### Installing Node.JS ###
 1. In a browser windows inside your development Virtual Machine, open a browser window and go to `http://nodejs.org`, 
 and click on the `Other Downloads` link under v6.9.0:
 
     ![image](./media/2016-10-19_10-15-22.png)
 
-    In the next page, click on `32 bit` next to `Windows Installer (.msi)`, download the MSI and run the installation.
+1. In the next page, click on `32 bit` next to `Windows Installer (.msi)`, download the MSI and run the installation.
 
     ![image](./media/2016-10-19_10-20-21.png)
 
@@ -262,27 +268,29 @@ and click on the `Other Downloads` link under v6.9.0:
 
     `npm install azure-cli -g`
 
+### Installing Java tools ###
+
 1. For Java developers, we have already installed the Java JDK.  We will be using the gradle build manager - to install that using the [chocolatey package manager](http://www.chocolatey.org), go to a command window and type:
 
     `choco install gradle`
 
-    Also install maven with:
+1. Install maven with:
 
     `choco install maven`
 
-    Go to the root directory using `cd \`, and perform
+1. Go to the root directory using `cd \`, and perform
     ```CMD
     git clone https://github.com/swagger-api/swagger-codegen.git
     cd swagger-codegen
     mvn clean package
     ```
 
-    Also Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.  
+1. Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.  
     If you would like to download a newer version (eg. Neon), Eclipse is available here:
 
     `http://www.eclipse.org/downloads/`
 
-    and Spring Tool Suite is available here:
+1. Install the Spring Tool Suite is available here:
 
     `http://spring.io/tools/sts`
 
@@ -290,38 +298,38 @@ and click on the `Other Downloads` link under v6.9.0:
 
     ![image](./media/2016-10-19_10-44-11.png)
 
-    choose `Eclipse IDE for Java EE developers`.  In the next screen, 
+1. Choose `Eclipse IDE for Java EE developers`.  In the next screen, 
     leave the defaults and choose `Install`:
 
     ![image](./media/2016-10-19_10-46-30.png)
 
-    When that is done, click `Launch` to start the IDE and choose a directory
+1. When that is done, click `Launch` to start the IDE and choose a directory
     for your workspace. You will end up with the initial Eclipse screen:
 
     ![image](./media/2016-10-19_10-53-32.png)
 
-    Click `Help` in the menu bar, and choose `install new software`:
+1. Click `Help` in the menu bar, and choose `install new software`:
 
     ![image](./media/2016-10-19_10-55-30.png)
 
-    In the window that pops up, choose `All Available Sites` for the `Work with` dropdown,
+1. In the window that pops up, choose `All Available Sites` for the `Work with` dropdown,
     type `gradle` in the search box, and when the search is complete, 
     choose `Buildshop: Eclipse Plug-ins for Gradle`
 
     ![image](./media/2016-10-19_10-58-48.png)
     
-    click through the dialog and install the package.
+1. Click through the dialog and install the package.
     Go back to `help/install new software`, and click the `Add..` button
     next to the `work with` dropdown.  In the Add Repository dialog box, git the
     repository a name, and type `http://dl.microsoft.com/eclipse` for the Location, and click `OK`:
 
     ![image](./media/2016-10-19_11-26-29.png)
 
-    Choose both of the packages in the list, and complete the package installation:
+1. Choose both of the packages in the list, and complete the package installation:
 
     ![image](./media/2016-10-19_11-28-28.png)
 
-    Also, install the spring tool suite package by using the menu item `Help/Eclipse Marketplace...`, type `sping` in the Find: box and choose `Go`.
+1. Install the spring tool suite package by using the menu item `Help/Eclipse Marketplace...`, type `sping` in the Find: box and choose `Go`.
     in the list of packages, scroll down to `Spring Tool Suite (STS) for Eclipse 3.8.2.RELEASE` and click `Install`.
 
     ![image](./media/2016-10-24_14-29-53.png)
