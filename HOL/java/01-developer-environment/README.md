@@ -221,7 +221,11 @@ Remote Desktop:
 
 1. Finally click close, and you are done with the Visual Studio setup.
 
-1. We are now going to deploy our .NET API to an Azure App Service.  In the command window change the directory too the root with `cd \`, and clone the github repository for the API with `git clone https://github.com/AzureCAT-GSI/DevCampSharedDotNetAPI.git`.  
+#### Deploying the Shared API application (Optional if GitHub Deployment fails) ####
+
+1. We are now going to deploy our .NET API to an Azure App Service.  In the command window change the directory too the root with `cd \`, and clone the github repository for the API with 
+
+    `git clone https://github.com/AzureCAT-GSI/DevCampSharedDotNetAPI.git`.  
 
 1. Switch back to Visual Studio and open the API solution with `File > Open > Project > Solution`:
 
@@ -231,7 +235,7 @@ Remote Desktop:
 
     ![image](./media/2016-10-18_18-44-50.png)
 
-    right click on the DevCamp API project, and choose `publish`:
+1. Right click on the DevCamp API project, and choose `publish`:
 
     ![image](./media/2016-10-18_18-47-26.png)
 
