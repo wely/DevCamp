@@ -178,8 +178,13 @@ Remote Desktop:
     
     ![image](./media/2016-10-19_14-42-16.png)
 
-    Use the credentials l-admin with password Devc@mp2016! to log onto the machine.  It
-    would be wise to change the password in the virtual machine.
+    Use the credentials below to log onto the machine.
+
+    > UserID = **L-ADMIN**
+    >
+    > Password = **Devc@mp2016!**
+    
+    It would be wise to change the password in the virtual machine.
 
     When remote desktop is connected, you will see server manager initally.  We will
     want to turn of IE enhanced security, to make accessing the web within the virtual machine easier.  First click local server;
