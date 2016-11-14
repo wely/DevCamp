@@ -85,7 +85,7 @@ This hands-on-lab has the following exercises:
 1. Go back to Visual Studio
 1. Open the Dashboard view page
 
-![image](./media/image-24.png)
+    ![image](./media/image-24.png)
 
 1. On the Dashboard page, notice how the sample incidents are stubbed in between the  `<!--TEMPLATE CODE -->` comment block.   
 
@@ -207,7 +207,7 @@ This hands-on-lab has the following exercises:
     List<Incident> incidents;
     using (var client = IncidentApiHelper.GetIncidentAPIClient())
     {
-        var results = await client.Incident.GetAllIncidentsAsync();
+        var results = client.Incident.GetAllIncidentsAsync();
         incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
     }
     return View(incidents);
@@ -308,11 +308,11 @@ This hands-on-lab has the following exercises:
     ```
 
 1. Resolve the references for `DevCamp.WebApp.Mappers, DevCamp.WebApp.Utils, DevCamp.WebApp.ViewModelsIncidentAPI, IncidentAPI.Models and Newtonsoft.Json`.
-1. Now let's add code to create an incident. Add a new method to this class that will handle the Create HTTP post method. Paste the following:
+1. Now let's add code to create an incident. Add a new method to the `IncidentController` class that will handle the Create HTTP post method. Paste the following (do not delete the existing Create() method):
 
     ```csharp
     [HttpPost]
-    public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
+    public Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
     {
         try
         {
@@ -480,7 +480,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     else
     {
         //If stale refresh
-        var results = await client.Incident.GetAllIncidentsAsync();
+        var results = client.Incident.GetAllIncidentsAsync();
         incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
         RedisCacheHelper.AddtoCache(Settings.REDISCCACHE_KEY_INCIDENTDATA, incidents, CACHE_EXPIRATION_SECONDS);
     }
