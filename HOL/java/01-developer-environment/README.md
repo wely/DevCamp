@@ -120,9 +120,9 @@ to open the Azure portal, which will look like this:
 1. We have created an Azure Resource Group template that will configure the resources you need in Azure for the DevCamp.  To deploy 
 these resources in your Azure subscription, do `control-click` on this button:
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzureCAT-GSI%2FDevCamp%2Fmaster%2FShared%2FARMTemplate%2FAzureDeploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
+    <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzureCAT-GSI%2FDevCamp%2Fmaster%2FShared%2FARMTemplate%2FAzureDeploy.json" target="_blank">
+        <img src="http://azuredeploy.net/deploybutton.png"/>
+    </a>
 
 1. You should see a new tab open in your browser and open the Azure portal, with a blade that looks like this:
 
