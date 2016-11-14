@@ -666,6 +666,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 1. Save the files and hit F5 to debug.
 1. Add a new incident with a picture and it will get uploaded to Azure storage.
 1. Close the browser and stop debugging.
+1. Open the Azure Storage Explorer, connect it to your storage account and verify that your image and a queue entry were uploaded to Azure storage.
 
 END
 
