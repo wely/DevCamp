@@ -131,7 +131,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     >
     > `Microsoft.Owin.Host.SystemWeb`
 
-1. We need add code to handle the authentication and and cache the sessions tokens so we don't have to get them all time. Navigate to the Utils folder and create a 2 new helper class files. Create `AuthHelper.cs` and `SessionTokeCache.cs`
+1. We need add code to handle the authentication and and cache the sessions tokens so we don't have to get them all time. Navigate to the Utils folder and create a 2 new helper class files. Create `AuthHelper.cs` and `SessionTokenCache.cs`
 
 1. First let's update the Setting.cs class with the additional constants. Paste these values below the existing entries from HOL2.
 
@@ -305,6 +305,8 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/image-018.png)
 
+    > This may be available via right click on `App_Start`, select `Add` > `New Item`, then in the `Add New Item` dialog, choose `Visual C#`/`Web`/`General`, and choose `OWIN Startup Class` in the center pane.
+
 1. Name it `Startup`. Once it is created, open the file, paste the following code. This will handle the initial authentication flow and cache the tokens:
 
     ```csharp
@@ -397,7 +399,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     }
     ```
 
-1. Add links that will handle Signing in/out and profile pages. Create a new partial that will handle our login navigation. In the `shared` folder, create a new partial page named `_LoginPartial` and paste the following:
+1. Add links that will handle Signing in/out and profile pages. Create a new partial that will handle our login navigation. In the `Views/shared` folder, create a new partial page named `_LoginPartial` and paste the following:
 
     ```html
     @if (Request.IsAuthenticated)
@@ -533,6 +535,12 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ```
 1. Compile and hit F5 to start debuggging. 
+    >If the main page of the application doesn't load using HTTPS, there are three steps to perform:
+    > 1. go to the control panel on your machine, programs and features, find `IIS 10.0 Express`.  Right click on it, and choose `repair`.  
+    > 1. in Visual Studio, click on the DevCamp.WebApp project in the solution explorer.  In the properties window at the bottom, ensure that `SSL Enabled` is True.  Also make note of the URL and SSL URL: 
+    >
+    >       ![image](./media/2016-11-14_16-31-07.png)
+    > 1. Right-click on the DevCamp.WebApp project in the solution explorer and choose `Properties`.  This should open the properties page in the middle window of Visual Studio.  In the left hand list of pages choose `Web`, and ensure that the Project Url in the center is the SSL URL from above.  Make sure your browsers are closed, then re-run your application.
 1. When you login for the first time, you will be prompted to allow permission for the app to access your data. Click Accept
 
     ![image](./media/image-022.png)
