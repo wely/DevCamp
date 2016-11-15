@@ -216,16 +216,6 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
 These custom events (and the related concept of custom metrics) are a powerful way to integrate telemetry into our application and centralize monitoring across multiple application instances.
 
 ----
-### Exercise 4: Create a global web test
-
-***TBD***
-
-----
-### Exercise 5: Interact with your telemetry data
-
-***TBD***
-
-----
 ## Summary
 
 In this hands-on lab, you learned how to:
