@@ -26,7 +26,7 @@ This hands-on-lab has the following exercises:
 * Exercise 2: Set up Azure trial subscription
 * Exercise 3: Start your VSTS trial subscription
 * Exercise 4: Configure your Azure subscription for DevCamp
-* Exercise 5: Create an Azure Virtual Machine for development
+* Exercise 5: Use an Azure Virtual Machine for development
 * Exercise 6: Connect to the Azure Virtual Machine and configure it for development
 * Exercise 7: Connect to the Azure Virtual Machine and configure it for development
 * Exercise 8: Azure Portal walkthrough
@@ -148,9 +148,9 @@ these resources in your Azure subscription, do `control-click` on this button:
     the resources you have specified in the template.  This makes it easy to maintain the infrastructure definition in the JSON text file.
     
     In the resource group template we have created for DevCamp, there are several types of resources including Web Apps and Virtual Machines.  The 
-    whole list of resources deployed is detailed in Exercise 8 of this Hands-On-Lab.  Resource Group Templates are usually fairly quick to
+    complete list of resources deployed is detailed in Exercise 8 of this Hands-On-Lab.  Resource Group Templates are usually fairly quick to
     apply - the reason this one takes so long is that we are creating a Windows Virtual machine and installing all the tools you will
-    need for the DevCamp.
+    need for the DevCamp including Visual Studio, the Java development kit, and other software resources.
 
     When the Resource Group creation is done, go visit the resource group by clicking `resource groups on the left:
 
@@ -161,7 +161,7 @@ these resources in your Azure subscription, do `control-click` on this button:
     ![image](./media/2016-10-18_13-39-10.png)
 
 ---
-### Exercise 5: Create an Azure Virtual Machine for development
+### Exercise 5: Use an Azure Virtual Machine for development
 
 1. The Azure resource group template will have created two virtual machines - one for 
 Windows development, and the other for Linux development.  Exercise 6 describes the configuration
@@ -175,7 +175,7 @@ the configuration for the Ubuntu Linux virtual machine - this would be approproa
 
     The Linux development machine is the one that starts wit `ubudev`.
 
-1. Jump to Exercise 6 or 7, based on your development OS & language choice.
+1. Jump to Exercise 6 for Windows (all languages) or 7 for Linux (Node or Java), based on your development OS & language choice.
 
 ---
 ### Exercise 6: Connect to the Windows Azure Virtual Machine and configure it for development
@@ -213,7 +213,7 @@ Remote Desktop:
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-    Start `visual studio 2015`, and in the sign in screen, click `sign in` and use the credentials you used earlier for Office 365.
+    Start Visual Studio using `start experimental instance of visual studio 2015`, and in the sign in screen, click `sign in` and use the credentials you used earlier for Office 365.
 
     ![image](./media/2016-10-18_17-59-21.png)
     
@@ -227,13 +227,28 @@ Remote Desktop:
 
     Finally click close, and you are done with the Visual Studio setup.
 
-1. We are now going to deploy our .NET API to an Azure App Service.  In the command window change the directory too the root with `cd \`, and clone the github repository for the API with `git clone https://github.com/AzureCAT-GSI/DevCampSharedDotNetAPI.git`.  
+1. We are now going to deploy our .NET API to an Azure App Service if necessary.  First, check whether the API application is installed.  Go to the Azure portal and locate the app service named `incidentapi....` in the resource group blade:
+    ![image](./media/2016-11-14_12-00-24.png)
 
-1. Switch back to Visual Studio and open the API solution with **File > Open > Project/Solution**:
+    click on that app service, which will bring up the app service blade.  Click on `Browse` at the top:
+
+    ![image](./media/2016-11-14_12-02-26.png)
+
+    A new browser tab will open.
+
+    ![image](./media/2016-11-14_12-10-59.png)
+
+    If the page looks like the above image, this means the API was automatically deployed from github, and you can skip the rest of this step.  Otherwise, it should have the below initial web app page, and you should continue with this step, deploying the API app to the app service.
+
+    ![image](./media/2016-11-14_12-03-50.png)
+
+    In the command window change the directory too the root with `cd \`, and clone the github repository for the API with `git clone https://github.com/AzureCAT-GSI/DevCampSharedDotNetAPI.git`.  
+
+    Switch back to Visual Studio and open the API solution with **File > Open > Project/Solution**:
 
     ![image](./media/2016-10-18_18-34-01.png)
 
-    and open the API solution located at `C:\DevCampSharedDotNetAPI\src>`.  
+    and open the `DevCamp.Shared.sln` solution located at `C:\DevCampSharedDotNetAPI\src`.  
 
     ![image](./media/2016-10-18_18-44-50.png)
 
@@ -266,22 +281,25 @@ and click on the `Other Downloads` link under v6.9.0:
 
     ![image](./media/2016-10-19_10-20-21.png)
 
+    >please do not skip this step, because we will need node.js to install the Azure cross platform command line interface in the next step.
+
 1. Install the azure command line interface.  Go to a terminal window and do this command:
     `node -v` 
     Verify that the version is v6 or greater.
 
     `npm install azure-cli -g`
 
-1. For Java developers, we have already installed the Java JDK.  We will be using the gradle build manager - to install that using the [chocolatey package manager](http://www.chocolatey.org), go to a command window and type:
+1. If you are not developing in Java for the DevCamp, you can skip this step. We have already installed the Java JDK, but we will install gradle and Eclipse.  We will be using the gradle build manager - to install that using the [chocolatey package manager](http://www.chocolatey.org), open a command window as administrator and type:
 
-    `choco install gradle`
+    `choco install -y gradle`
 
     Also install maven with:
 
-    `choco install maven`
+    `choco install -y maven`
 
     Go to the root directory using `cd \`, and perform
     ```CMD
+    refreshenv
     git clone https://github.com/swagger-api/swagger-codegen.git
     cd swagger-codegen
     mvn clean package

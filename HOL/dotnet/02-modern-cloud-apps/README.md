@@ -34,13 +34,19 @@ This hands-on-lab has the following exercises:
 ---
 ### Exercise 1: Integrate the API
 
-1. Download or `git clone` the source files to your local machine
-1. Open the Visual Studio and navigate to the folder you cloned
+1. You should have performed a `git clone` of the DevCamp repository in the previous hands-on lab.  If you did not, please complete the developer workstation setup in that lab.
+
+1. Open the Visual Studio and navigate to the directory `C:\DevCamp\HOL\dotnet\02-modern-cloud-apps\start`
 
     ![image](./media/image-01.png)
 
 1. Open the DevCamp.SLN solution file
-1. Build and run the solution. Visual Studio should run IIS Express and launch the application. You should see the home page
+1. Build the solution by right-clicking on the DevCamp.WebApp project and choosing `build`:
+    ![image](./media/2016-11-14_12-42-51.png)
+
+    Then run the solution by typing `F5`.
+
+    Visual Studio should run IIS Express and launch the application. You should see the home page
 
     ![image](./media/image-02.png)
 
@@ -85,7 +91,7 @@ This hands-on-lab has the following exercises:
 1. Go back to Visual Studio
 1. Open the Dashboard view page
 
-    ![image](./media/image-24.png)
+![image](./media/image-24.png)
 
 1. On the Dashboard page, notice how the sample incidents are stubbed in between the  `<!--TEMPLATE CODE -->` comment block.   
 
@@ -151,6 +157,7 @@ This hands-on-lab has the following exercises:
     <add key="INCIDENT_API_URL" value="PASTE URL HERE" />
     ```
 
+    >the URL should not have a `/` on the end.
 1. In Visual Studio, select the project and right-click.
 
     ![image](./media/image-12.png)
@@ -163,7 +170,7 @@ This hands-on-lab has the following exercises:
     ![image](./media/image-13.png)
 
 1. In the Utils folder, open the file called Settings.cs. This will hold our static variables and constants for the application.
-1. In the Settings.cs file, paste the following:
+1. In the Settings.cs file, paste the following inside the Settings class definition:
 
     ```csharp
     //####    HOL 2    ######
@@ -188,7 +195,7 @@ This hands-on-lab has the following exercises:
     ![image](./media/image-14.png)
 
 1. In the Utils folder, there is a class named IncidentApiHelper.cs. Open this file.
-1. Paste the following and resolve the reference for `IncidentAPI`.
+1. Paste the following inside the IncidentApiHelper class definition and resolve the reference for `IncidentAPI`.
 
     ```csharp
     public static IncidentAPIClient GetIncidentAPIClient()
@@ -198,7 +205,7 @@ This hands-on-lab has the following exercises:
     }
     ```
 
-1. Open the `Dashboardcontroller.cs` file
+1. Open the `Controllers/Dashboardcontroller.cs` file
 1. Select the current comment block in the Index method and delete it. Also delete the existing return View() code.
 1. Paste the following:
 
@@ -308,11 +315,11 @@ This hands-on-lab has the following exercises:
     ```
 
 1. Resolve the references for `DevCamp.WebApp.Mappers, DevCamp.WebApp.Utils, DevCamp.WebApp.ViewModelsIncidentAPI, IncidentAPI.Models and Newtonsoft.Json`.
-1. Now let's add code to create an incident. Add a new method to the `IncidentController` class that will handle the Create HTTP post method. Paste the following (do not delete the existing Create() method):
+1. Now let's add code to create an incident. We will add a new `Create` method to the `IncidentController` class that will handle the Create HTTP post method. Add the following code:
 
     ```csharp
     [HttpPost]
-    public Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
+    public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
     {
         try
         {
@@ -465,7 +472,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     ````
 
 1. We will now add code to the dashboardcontroller. Open the `dashboardcontroller.cs` file
-1. Inside the using statement that contains the API call to the client, replace the lines with the following:
+1. Inside the `using` statement that contains the API call to the client, replace the lines with the following:
 
     ```csharp
     //##### Add caching here #####
@@ -497,7 +504,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
 
     return RedirectToAction("Index", "Dashboard");
     ``` 
-1. Hit F5 to start debugging Select the dashboard page. You should hit the breakpoint. Hit F10 to step over the call. The cache is empty so it fall to the else condition
+1. Hit F5 to start debugging. Select the dashboard page. You should hit the breakpoint. Hit F10 to step over the call. The cache is empty so it fall to the else condition
 1. Hit F5 to continue stepping. The data should be added to the cache
 1. Hit refresh in the browser and hit the breakpoint again. This time when you hit F10, you should be getting the data from cache.
 1. Create a new incident from the Report Outage page. Enter some details and click `Create`
@@ -636,7 +643,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     }
     ```
 
-1. In the `IncidentController.cs` file, add the following to process the image file.
+1. In the `IncidentController.cs` file, add the following inside the `Create` method, after clearing the cache, to process the image file.
 
     ```csharp
     //Now upload the file if there is one
@@ -659,6 +666,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 1. Save the files and hit F5 to debug.
 1. Add a new incident with a picture and it will get uploaded to Azure storage.
 1. Close the browser and stop debugging.
+1. Open the Azure Storage Explorer, connect it to your storage account and verify that your image and a queue entry were uploaded to Azure storage.
 
 END
 
