@@ -207,7 +207,7 @@ This hands-on-lab has the following exercises:
     List<Incident> incidents;
     using (var client = IncidentApiHelper.GetIncidentAPIClient())
     {
-        var results = client.Incident.GetAllIncidentsAsync();
+        var results = await client.Incident.GetAllIncidentsAsync();
         incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
     }
     return View(incidents);
@@ -480,7 +480,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     else
     {
         //If stale refresh
-        var results = client.Incident.GetAllIncidentsAsync();
+        var results = await client.Incident.GetAllIncidentsAsync();
         incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
         RedisCacheHelper.AddtoCache(Settings.REDISCCACHE_KEY_INCIDENTDATA, incidents, CACHE_EXPIRATION_SECONDS);
     }
