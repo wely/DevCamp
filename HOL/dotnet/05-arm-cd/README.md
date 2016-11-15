@@ -130,6 +130,8 @@ We are now ready to deploy our ARM Template containing an App Service Plan, and 
 
 For deploying the ARM Template we will use the Azure Xplat CLI.  Please Ensure you have [installed](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/#option-1-install-an-npm-package) the Azure XPlat CLI package from NPM before proceeding.
 
+> Before continuing, please execute `azure login` and follow the prompt to authenticate your accoutn
+
 1. From the command line, `cd` to the `start` directory containing our ARM Template
 
     ```bash
