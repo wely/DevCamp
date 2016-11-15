@@ -26,7 +26,21 @@ In this hands-on lab, you will learn how to:
 * Deployed the starter ARM Template [HOL 1](../developer-environment)
 * Completion of the first [modern-cloud-apps lab](../modern-cloud-apps) 
 
-> Note: If you did not complete the previous labs, the project in the start folder is cumulative.
+> **Note**: If you did not complete the previous labs, the project in the start folder is cumulative.
+
+
+> If you are starting from HOL 2 and not from the start folder, add the following keys to Web.config
+
+```xml
+    <add key="AAD_APP_ID" value="APPID" />
+    <add key="AAD_APP_SECRET" value="SECRET" />
+    <add key="AAD_APP_REDIRECTURI" value="SITE URL" />
+    <add key="AAD_INSTANCE" value="https://login.microsoftonline.com/{0}/{1}" />
+    <add key="AAD_AUTHORITY" value="https://login.microsoftonline.com/common/" />
+    <add key="AAD_LOGOUT_AUTHORITY" value="https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=" />
+    <add key="AAD_GRAPH_SCOPES" value="openid email profile offline_access Mail.ReadWrite Mail.Send User.Read User.ReadBasic.All" />
+    <add key="GRAPH_API_URL" value="https://graph.microsoft.com" />
+```
 
 ## Exercises
 
@@ -39,6 +53,20 @@ This hands-on-lab has the following exercises:
 ### Exercise 1: Register the application
 
 AzureAD can handle authentication for web applications. First we will create a new application in our AzureAD directory, and then we will extend our application code to work with an authentication flow. 
+
+1.  Open the Visual Studio project file from the `start` folder
+
+    ![image](./media/image-011.png)
+    
+1. Build the project and press F5 to restore the nuget packages and start IISExpress. This will create the web application with the dynamic port.
+
+1. Stop debugging. Right-click on the project and select `properties`
+
+    ![image](./media/image-012.png)
+
+    Note the website URL and port, you will need this later.
+
+    ![image](./media/image-024.png)
 
 1. Navigate in a browser to [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com), click the button to **Register your app**, and login with your Azure credentials (Work or school Account).
 
@@ -74,33 +102,13 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/image-009.png)
 
-1. After AzureAD handles the authentication, it needs a location to redirect the user. For testing locally, we'll use the local IISExpress web site `http://localhost:8443` as the **Redirect URI** and set the URL as an app setting variable named `AAD_RETURN_URL`.This URL may need to be updated to the IISExpress dynamic port that is generated while debugging. Steps to update this are provided later in the lab.  
+1. After AzureAD handles the authentication, it needs a location to redirect the user. For testing locally, we'll use the local IISExpress web site `http://localhost:[YOUR LOCAL DYNAMIC PORT]/` as the **Redirect URI** and set the URL as an app setting variable named `AAD_RETURN_URL`. This URL may need to be updated to the IISExpress dynamic port that is generated while debugging. Steps to update this are provided later in the lab.  
 
     ![image](./media/image-010.png)
 
 1. Click the **Save** button on the bottom of the screen.
 
     ![image](./media/image-017.png)  
-
-1. Open the Visual Studio project file from the `start` folder
-
-    ![image](./media/image-011.png)
-
-1. Build the project and press F5 to restore the nuget packages and start IISExpress. This will create the web application with the dynamic port.
-
-1. Stop debugging. Right-click on the project and select `properties`
-
-    ![image](./media/image-012.png)
-    
-1. Go to the Web tab and take note of the IISExpress dynamic port. Update the URL to HTTPS and click save.
-
-    ![image](./media/image-013.png)
-
-1. You should receive 2 prompts confirming the update.
-
-    ![image](./media/image-014.png)
-
-    ![image](./media/image-015.png)
 
 1. Open the web.config and update the settings with the values from the app registration screen:
 
@@ -535,12 +543,13 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ```
 1. Compile and hit F5 to start debuggging. 
-    >If the main page of the application doesn't load using HTTPS, there are three steps to perform:
+    > If the main page of the application doesn't load using HTTPS, there are three steps to perform:
     > 1. go to the control panel on your machine, programs and features, find `IIS 10.0 Express`.  Right click on it, and choose `repair`.  
     > 1. in Visual Studio, click on the DevCamp.WebApp project in the solution explorer.  In the properties window at the bottom, ensure that `SSL Enabled` is True.  Also make note of the URL and SSL URL: 
     >
     >       ![image](./media/2016-11-14_16-31-07.png)
     > 1. Right-click on the DevCamp.WebApp project in the solution explorer and choose `Properties`.  This should open the properties page in the middle window of Visual Studio.  In the left hand list of pages choose `Web`, and ensure that the Project Url in the center is the SSL URL from above.  Make sure your browsers are closed, then re-run your application.
+    
 1. When you login for the first time, you will be prompted to allow permission for the app to access your data. Click Accept
 
     ![image](./media/image-022.png)
