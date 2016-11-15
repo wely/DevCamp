@@ -317,6 +317,8 @@ This hands-on-lab has the following exercises:
 1. Resolve the references for `DevCamp.WebApp.Mappers, DevCamp.WebApp.Utils, DevCamp.WebApp.ViewModelsIncidentAPI, IncidentAPI.Models and Newtonsoft.Json`.
 1. Now let's add code to create an incident. We will add a new `Create` method to the `IncidentController` class that will handle the Create HTTP post method. Add the following code:
 
+    > DO NOT delete the existing `Create` Method. This is the method that handles the default view.
+
     ```csharp
     [HttpPost]
     public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
@@ -348,10 +350,10 @@ This hands-on-lab has the following exercises:
     } 
     ```
 
-1. Resolve the reference for `system.threading.task and system.web`
+1. Resolve the references for `system.threading.task and system.web`
 1. Build the application and hit F5 to start debugging. On the home page, click on the view dashboard link. You should see a list of the sample incidents you generated in the database.
 
-![image](./media/image-15.png)
+    ![image](./media/image-15.png)
 
 ---
 ## Exercise 2: Add a caching layer
@@ -405,7 +407,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     <add key="REDISCACHE_PRIMARY_KEY" value="" />
     ```
 
-1. In the Utils folder, there is class called RedisCacheHelper.cs. Open that file
+1. In the Utils folder, there is class called `RedisCacheHelper.cs`. Open that file
 1. Replace the existing file contents by paste the following:
 
     ```csharp
