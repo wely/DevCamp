@@ -72,7 +72,7 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
 
     ARM Templates can include `resources`, which define numerous options for a given resource.  For a web app, we can use `appsettings` to adjust the environment variables present on our app.  Here is an extended web app with the `resources` array filled in.  Paste the `resources` content into your ARM Template, updating the `dependsOn` attribute to match your website's `name`, and the environment variables to match your values. 
 
-    > If you are using VSCode and have been debugging locally with `.vscode/launch.json` then you can copy/paste the values into the template to override the sample values below
+    > If you are using VSCode and have been debugging locally with `.vscode/launch.json` then you can copy/paste the values into the template to override the `properties` sample values below. If you have been using .NET in Visual Studio, please map the web.config values into the JSON object for `properties`.
 
     ```json
     {
