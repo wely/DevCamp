@@ -52,11 +52,11 @@
     "windowsWindowsOSVersion": "2012-R2-Datacenter",
     "windowsImagePublisher": "MicrosoftWindowsServer",
     "windowsImageOffer": "WindowsServer",
-    "windowsOSDiskName": "WindowsDevOSDisk",
+    "windowsOSDiskName": "WinDevOSDisk",
     "windowsVmSize": "Standard_D2_v2",
     "windowsStorageAccountContainerName": "vhds",
     "windowsDevNicName": "[concat(variables('windowsMachineName'), 'NetworkInterface')]",
-    "windowsDevPipName": "WindowsDevPip",
+    "windowsDevPipName": "WinDevPip",
     "windowsDevPipDnsName": "[substring(concat('windev', uniqueString(resourceGroup().id)), 0, 15)]",
     "chocoPackages": "sysinternals;7zip.install;nodejs.install;git-credential-winstore;git.install;git;poshgit;sublimetext3;fiddler4;webpicmd;visualstudiocode;eclipse;azurestorageexplorer;office365business;googlechrome;postman;jsonedit;windowsazurepowershell;jre8;javaruntime",
     "setupChocolateyScriptFileName": "SetupChocolatey.ps1",
@@ -485,7 +485,7 @@
         "[concat('Microsoft.Network/publicIPAddresses/', variables('WindowsDevPipName'))]"
       ],
       "tags": {
-        "displayName": "WindowsDevNic"
+        "displayName": "WinDevNic"
       },
       "properties": {
         "ipConfigurations": [
@@ -511,7 +511,7 @@
       "apiVersion": "2015-06-15",
       "dependsOn": [],
       "tags": {
-        "displayName": "WindowsDevPip"
+        "displayName": "WinDevPip"
       },
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
@@ -530,7 +530,7 @@
         "[concat('Microsoft.Network/networkInterfaces/', variables('windowsDevNicName'))]"
       ],
       "tags": {
-        "displayName": "WindowsDev"
+        "displayName": "WinDev"
       },
       "properties": {
         "hardwareProfile": {
@@ -549,7 +549,7 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "WindowsDevOSDisk",
+            "name": "WinDevOSDisk",
             "vhd": {
               "uri": "[concat('https://', variables('VmStorageName'), '.blob.core.windows.net/', variables('windowsStorageAccountContainerName'), '/', variables('windowsOSDiskName'), '.vhd')]"
             },
