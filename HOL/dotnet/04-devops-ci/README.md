@@ -228,7 +228,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-038.png)
 
-1. Select ***Azure Website Deployment*** and click next.
+1. Select ***Azure App Service Deployment*** and click Next.
 
     ![image](./media/image-039.png)
 

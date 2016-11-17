@@ -315,7 +315,7 @@ to **Cloud Test Realease** and change the environment name to **Test Environment
 
     ![image](./media/image-038.png)
 
-    In the task catalog, find **AzureRM App Service Deployment** and click **Add**, and then **Close**
+    In the task catalog, find **Azure App Service Deploy** and click **Add**, and then **Close**
 
     ![image](./media/image-039.png)
 

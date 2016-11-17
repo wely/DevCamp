@@ -255,7 +255,7 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-048.png)
 
-1. For the newly renamed Dev environment, click **Add tasks** then from the **Deploy** tab on the left navigation choose **AzureRM App Service Deployment**.
+1. For the newly renamed Dev environment, click **Add tasks** then from the **Deploy** tab on the left navigation choose **Azure App Service Deploy**.
 
     ![image](./media/image-036.png)
 
