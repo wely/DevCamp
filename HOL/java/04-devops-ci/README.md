@@ -350,17 +350,17 @@ to open a new browser tab holding configuration options.
 
     ![image](./media/image-044.png)
 
-    3. Click the green arrow to run the PowerShell script
+    1. Click the green arrow to run the PowerShell script
 
     ![image](./media/image-045.png)
 
-    4. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
+    1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
     for the service principal only, not the password for your subscription.  So you can use whatever password 
     you would like, just remember it.    
 
     ![image](./media/image-046.png)
 
-    5. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
+    1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
     The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
     window.  Copy and paste these values from the PowerShell window:
         Subscription ID

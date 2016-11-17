@@ -273,6 +273,47 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-039.png)
 
+    If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
+    format will chage to allow you to enter connection information on your subscription:    
+
+    ![image](./media/image-043a.png)
+
+    If you have not created a service principal for the subscription, you will have to follow the 
+    [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so.  This process will 
+    provide the information to enter in this dialog:
+    1. open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
+    in your browser. Select all the content from the window and copy to the clipboard.
+    1. open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
+
+    ![image](./media/image-044a.png)
+
+    1. Click the green arrow to run the PowerShell script
+
+    ![image](./media/image-045a.png)
+
+    1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
+    for the service principal only, not the password for your subscription.  So you can use whatever password 
+    you would like, just remember it.    
+
+    ![image](./media/image-046a.png)
+
+    1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
+    The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
+    window.  Copy and paste these values from the PowerShell window:
+        Subscription ID
+        Subscription Name
+        Service Principal Client ID
+        Service Principal Key
+        Tenant ID
+    Also, enter a user-friendly name to use when referring to this service endpoint connection.
+
+    ![image](./media/image-047a.png)
+
+    Click **Verifiy connection*, and ensure that the window indicates that the connection was verified. 
+    Then Click **OK** and **Close**.
+
+    ![image](./media/image-048a.png)
+
     > This pattern is used to connect to a variety of services beyond Azure such as Jenkins, Chef, and Docker
 
 1. Back on the VSTS Build window, in the Build Step we started earlier, click the **Refresh** icon. The **Azure** connection that we setup should now appear.  Select it. 
