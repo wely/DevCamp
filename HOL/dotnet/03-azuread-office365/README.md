@@ -547,7 +547,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     > 1. go to the control panel on your machine, programs and features, find `IIS 10.0 Express`.  Right click on it, and choose `repair`.  
     > 1. in Visual Studio, click on the DevCamp.WebApp project in the solution explorer.  In the properties window at the bottom, ensure that `SSL Enabled` is True.  Also make note of the URL and SSL URL: 
     >
-    >       ![image](./media/2016-11-14_16-31-07.png)
+    >![image](./media/2016-11-14_16-31-07.png)
     > 1. Right-click on the DevCamp.WebApp project in the solution explorer and choose `Properties`.  This should open the properties page in the middle window of Visual Studio.  In the left hand list of pages choose `Web`, and ensure that the Project Url in the center is the SSL URL from above.  Make sure your browsers are closed, then re-run your application.
     
 1. When you login for the first time, you will be prompted to allow permission for the app to access your data. Click Accept
