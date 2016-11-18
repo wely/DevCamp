@@ -135,13 +135,13 @@ these resources in your Azure subscription, do `control-click` on this button:
 
     ![image](./media/2016-10-18_13-13-25.png)
 
-    Name your resource group `DevCamp`, choose a location for your deployment, check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
+    Name your resource group `DevCamp`, choose a location for your deployment (please do **NOT** choose USGov, Brazil South, UK West or UK South - they don't have all the services we'll need), check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
 
     The Resource Group template will start deploying, and the portal will pin a tile to the dashboard showing the status:
 
     ![image](./media/2016-10-18_13-19-01.png)
 
-1. This will take approximately 20 minutes to complete. While it is working, it is useful to understand what this process is doing.
+1. This will take approximately 20 minutes to complete. Please don't continue on until the template has completed.  While it is working, it is useful to understand what this process is doing.
     In a later session, we will take a look at Azure Resource Group templates, and how to manage your infrastructure the same way 
     you manage your code.  As a short introduction, a template is a JSON file that contains definitions for the resources you want in your
     resource group.  When you apply the resource group template, Azure will apply the template to your Azure resource group, and create 
