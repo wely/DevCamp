@@ -11,7 +11,7 @@
     "hostingPlanName": "[concat('incidentappplan', uniqueString(resourceGroup().id))]",
     "skuCapacity": "1",
     "skuName": "F1",
-    "repoURL": "https://github.com/AzureCAT-GSI/DevCampSharedDotNetAPI.git",
+    "repoURL": "https://github.com/AzureCAT-GSI/DevCamp.git",
     "repoBranch": "master",
     "storageName": "[substring(toLower(concat('incidentblobstg', uniqueString(resourceGroup().id))), 0, 24)]",
     "storageType": "Standard_LRS",
@@ -198,7 +198,8 @@
             "REDISCACHE_HOSTNAME": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').hostName]",
             "REDISCACHE_PORT": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').port]",
             "REDISCACHE_SSLPORT": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').sslPort]",
-            "REDISCACHE_PRIMARY_KEY": "[listKeys(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').primaryKey]"
+            "REDISCACHE_PRIMARY_KEY": "[listKeys(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').primaryKey]",
+            "PROJECT": "Shared/API/DevCamp.API/DevCamp.API.csproj"
           }
         },
         {
@@ -206,7 +207,8 @@
           "name": "web",
           "type": "sourcecontrols",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', variables('apiAppName'))]"
+            "[concat('Microsoft.Web/sites/', variables('apiAppName'))]",
+            "[concat('Microsoft.Web/sites/', variables('apiAppName'), '/config/appsettings')]"
           ],
           "properties": {
             "RepoUrl": "[variables('repoURL')]",
