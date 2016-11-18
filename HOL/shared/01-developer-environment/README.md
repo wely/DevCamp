@@ -238,17 +238,17 @@ Remote Desktop:
 
     ![image](./media/2016-11-14_12-10-59.png)
 
-    If the page looks like the above image, this means the API was automatically deployed from github, and you can skip the rest of this step.  Otherwise, it should have the below initial web app page, and you should continue with this step, deploying the API app to the app service.
+    If the page looks like the above image, this means the API was automatically deployed from GitHub, and you can skip the rest of this step.  Otherwise, it should have the below initial web app page, and you should continue with this step, deploying the API app to the app service.
 
     ![image](./media/2016-11-14_12-03-50.png)
 
-    In the command window change the directory too the root with `cd \`, and clone the github repository for the API with `git clone https://github.com/AzureCAT-GSI/DevCampSharedDotNetAPI.git`.  
+    In the command window change the directory to the root with `cd \`, and clone the GitHub repository for the API with `git clone https://github.com/AzureCAT-GSI/DevCamp.git`.  
 
     Switch back to Visual Studio and open the API solution with **File > Open > Project/Solution**:
 
     ![image](./media/2016-10-18_18-34-01.png)
 
-    and open the `DevCamp.Shared.sln` solution located at `C:\DevCampSharedDotNetAPI\src`.  
+    and open the `DevCamp.Shared.sln` solution located at `C:\DevCamp\Shared\API\src`.  
 
     ![image](./media/2016-10-18_18-44-50.png)
 
