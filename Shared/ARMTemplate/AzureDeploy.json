@@ -213,7 +213,7 @@
           "properties": {
             "RepoUrl": "[variables('repoURL')]",
             "branch": "[variables('repoBranch')]",
-            "IsManualIntegration": false
+            "IsManualIntegration": true
           },
           "tags": {
             "displayName": "Deployment"
