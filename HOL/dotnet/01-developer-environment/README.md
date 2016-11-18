@@ -289,71 +289,6 @@ and click on the `Other Downloads` link under v6.9.0:
 
     `npm install azure-cli -g`
 
-1. If you are not developing in Java for the DevCamp, you can skip this step. We have already installed the Java JDK, but we will install gradle and Eclipse.  We will be using the gradle build manager - to install that using the [chocolatey package manager](http://www.chocolatey.org), open a command window as administrator and type:
-
-    `choco install -y gradle`
-
-    Also install maven with:
-
-    `choco install -y maven`
-
-    Go to the root directory using `cd \`, and perform
-    ```CMD
-    refreshenv
-    git clone https://github.com/swagger-api/swagger-codegen.git
-    cd swagger-codegen
-    mvn clean package
-    ```
-
-    Also Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.  
-    If you would like to download a newer version (eg. Neon), Eclipse is available here:
-
-    `http://www.eclipse.org/downloads/`
-
-    and Spring Tool Suite is available here:
-
-    `http://spring.io/tools/sts`
-
-    For example, after downloading the Eclipse install, run it and you'll get this screen:
-
-    ![image](./media/2016-10-19_10-44-11.png)
-
-    choose `Eclipse IDE for Java EE developers`.  In the next screen, 
-    leave the defaults and choose `Install`:
-
-    ![image](./media/2016-10-19_10-46-30.png)
-
-    When that is done, click `Launch` to start the IDE and choose a directory
-    for your workspace. You will end up with the initial Eclipse screen:
-
-    ![image](./media/2016-10-19_10-53-32.png)
-
-    Click `Help` in the menu bar, and choose `install new software`:
-
-    ![image](./media/2016-10-19_10-55-30.png)
-
-    In the window that pops up, choose `All Available Sites` for the `Work with` dropdown,
-    type `gradle` in the search box, and when the search is complete, 
-    choose `Buildshop: Eclipse Plug-ins for Gradle`
-
-    ![image](./media/2016-10-19_10-58-48.png)
-    
-    click through the dialog and install the package.
-    Go back to `help/install new software`, and click the `Add..` button
-    next to the `work with` dropdown.  In the Add Repository dialog box, git the
-    repository a name, and type `http://dl.microsoft.com/eclipse` for the Location, and click `OK`:
-
-    ![image](./media/2016-10-19_11-26-29.png)
-
-    Choose both of the packages in the list, and complete the package installation:
-
-    ![image](./media/2016-10-19_11-28-28.png)
-
-    Also, install the spring tool suite package by using the menu item `Help/Eclipse Marketplace...`, type `spring` in the Find: box and choose `Go`.
-    in the list of packages, scroll down to `Spring Tool Suite (STS) for Eclipse 3.8.2.RELEASE` and click `Install`.
-
-    ![image](./media/2016-10-24_14-29-53.png)
-
 ---
 ### Exercise 7: Connect to the Linux Azure Virtual Machine and configure it for development
 You only need to perform Exercise 7 if you want to use the Linux Virtual Machine for development.  If you are going to use Windows for development instead, feel free skip to Exercise 8.  Otherwise, let's configure the Linux machine for DevCamp:
@@ -437,56 +372,6 @@ assume Putty, but you can install the terminal/SSH application of your choice.
     ![image](./media/2016-10-18_17-03-51.png)
 
     All of the content for this DevCamp will now be located in `~/DevCamp`.
-
-1. Next, we are going to install Eclipse (if you are developing for Java).  The Eclipse download is available here:
-
-    `http://www.eclipse.org/downloads/`
-
-    Download the Eclipse install using the `save file` option.  When that is complete, to your `Downloads` directory, unpack the .tar.gz file, and run the installer using these commands:
-    ```
-    tar -xzf eclipse-inst-linux64.tar.gz
-    cd eclipse-installer
-    ./eclipse-inst
-    ```
-
-    This will pop up the eclipse installer window:
-
-    ![image](./media/2016-10-19_10-44-11.png)
-
-    choose `Eclipse IDE for Java EE developers`.  In the next screen, 
-    leave the defaults and choose `Install`:
-
-    ![image](./media/2016-10-19_10-46-30.png)
-
-    You may have to accept the licenses and click ok.  When that is done, click `Launch` to start the IDE and choose a directory for your workspace. You will end up with the initial Eclipse screen:
-
-    ![image](./media/2016-10-19_10-53-32.png)
-
-    Click `Help` in the menu bar, and choose `install new software`:
-
-    ![image](./media/2016-10-19_10-55-30.png)
-
-    In the window that pops up, choose `All Available Sites` for the `Work with` dropdown,
-    type `gradle` in the search box, and when the search is complete, 
-    choose `Buildshop: Eclipse Plug-ins for Gradle`
-
-    ![image](./media/2016-10-19_10-58-48.png)
-    
-    click through the dialog and install the package.
-    Go back to `help/install new software`, and click the `Add..` button
-    next to the `work with` dropdown.  In the Add Repository dialog box, git the
-    repository a name, and type `http://dl.microsoft.com/eclipse` for the Location, and click `OK`:
-
-    ![image](./media/2016-10-19_11-26-29.png)
-
-    Choose both of the packages in the list, and complete the package installation:
-
-    ![image](./media/2016-10-19_11-28-28.png)
-
-    Also, install the spring tool suite package by using the menu item `Help/Eclipse Marketplace...`, type `spring` in the Find: box and choose `Go`.
-    in the list of packages, scroll down to `Spring Tool Suite (STS) for Eclipse 3.8.2.RELEASE` and click `Install`.
-
-    ![image](./media/2016-10-24_14-29-53.png)
 
 ---
 ### Exercise 8: Azure Portal walkthrough
@@ -633,7 +518,7 @@ In this hands-on lab, you learned how to:
 
 After completing this module, you can continue on to Module 2: Building modern cloud apps
 
-#### View Module 2 instructions for [.NET](../../../HOL/dotnet/02-modern-cloud-apps) | [Node.JS](../../../HOL/node/02-modern-cloud-apps) | [Java](../../../HOL/java/02-modern-cloud-apps)
+#### View Module 2 instructions for [.NET](../../../HOL/dotnet/02-modern-cloud-apps) 
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
