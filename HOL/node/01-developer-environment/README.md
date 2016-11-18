@@ -1,6 +1,6 @@
 
 
-# Developer Environment (Common to all languages)
+# Developer Environment (NodeJS)
 
 ## Overview
 In this lab, you will set up an Office365 trial subscription, an Azure trial subscription, configure your Azure subscription for the DevCamp, and provision 
