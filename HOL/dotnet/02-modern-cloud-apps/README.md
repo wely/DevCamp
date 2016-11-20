@@ -221,7 +221,7 @@ This hands-on-lab has the following exercises:
     //##### API DATA HERE #####
     ```
 
-1. Resolve the references for `Newtonsoft.Json, IncidentAPI, IncidentAPI.Models and System.Collections.Generic`
+1. Resolve the references for `Newtonsoft.Json, IncidentAPI, IncidentAPI.Models and System.Collections.Generic`. Make sure you have also added the IncidentAPI namespace, as  GetIAllIncidentsAsync() is an extension method which cannot be resolved automatically.
 1. Change the method to async. The code should look like the following:
 
     ```csharp
