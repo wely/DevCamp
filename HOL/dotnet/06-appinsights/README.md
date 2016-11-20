@@ -53,7 +53,7 @@ An instance of Application Insights can be created in a variety of ways, includi
 
     ![image](./media/image-004.png)
 
-1.  In the **Essentials** section, take not of the **Instrumentation Key**.  We will need that in future exercises.
+1.  In the **Essentials** section, take note of the **Instrumentation Key**.  We will need that in future exercises.
 
     ![image](./media/image-005.png)
 
