@@ -1,7 +1,7 @@
 # Modern Apps hands on lab (.NET)
 
 ## Overview
-City Power & Light is a sample application that allows citizens to to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo. The application is implemented with several components:
+City Power & Light is a sample application that allows citizens to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo. The application is implemented with several components:
 * Front end web application contains the user interface and business logic. This component has been implemented three times in .NET, NodeJS, and Java.
 * WebAPI is shared across the front ends and exposes the backend DocumentDB
 * DocumentDB is used as the data persistence layer 
