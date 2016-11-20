@@ -89,6 +89,7 @@ We will add both components to our application and enable the sending of telemen
 1. Click on Configure Exception collection and configure trace collection. This will enable additional trace listeners.
     
     ![image](./media/image-017.png)
+    > The snipet above was taken from the Application Insights Configuration window. You can access it by right-clicking the project in your solution and choosing 'Application Insights > Configure Application Insights...'. If you aren't seing this option, make sure you are using an updated version of the 'Developer Analytics Tools' extension. By the time of this writing, this is 7.12.
 
 1. Your Application Insights page should appear like below.
 
