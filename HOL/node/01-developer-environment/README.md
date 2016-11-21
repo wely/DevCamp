@@ -354,8 +354,7 @@ assume Putty, but you can install the terminal/SSH application of your choice.
     nvm install 6.9.1
     nvm alias default 6.9.1
     npm install azure-cli -g
-    sudo apt-get git
-    sudo apt-get update
+    sudo apt-get install git
     sudo add-apt-repository ppa:webupd8team/java
     sudo apt-get update
     sudo apt-get install oracle-java8-installer
