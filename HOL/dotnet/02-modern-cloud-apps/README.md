@@ -89,9 +89,10 @@ This hands-on-lab has the following exercises:
     We can see that several incidents have been created and are now available to the API.
 
 1. Go back to Visual Studio
+
 1. Open the Dashboard view page
 
-![image](./media/image-24.png)
+    ![image](./media/image-24.png)
 
 1. On the Dashboard page, notice how the sample incidents are stubbed in between the  `<!--TEMPLATE CODE -->` comment block.   
 
@@ -99,6 +100,7 @@ This hands-on-lab has the following exercises:
 
     As part of the original ARM template we deployed an ASP.NET WebAPI that queries a DocumentDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
 1. In Visual Studio, select the code between the `<!--TEMPLATE CODE -->` comment block and delete it.
+
 1. Between the `<!--INSERT VIEW CODE -->` comment block paste the following. This block handles the display of the incident dashboard:
 
     ```csharp
