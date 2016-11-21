@@ -248,7 +248,7 @@ Remote Desktop:
 
     ![image](./media/2016-10-18_18-34-01.png)
 
-    and open the `DevCamp.Shared.sln` solution located at `C:\DevCamp\Shared\API\src`.  
+    and open the `DevCamp.Shared.sln` solution located at `C:\DevCamp\Shared\API\`.  
 
     ![image](./media/2016-10-18_18-44-50.png)
 

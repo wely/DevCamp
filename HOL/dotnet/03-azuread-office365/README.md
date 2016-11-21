@@ -139,7 +139,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     >
     > `Microsoft.Owin.Host.SystemWeb`
 
-1. We need add code to handle the authentication and and cache the sessions tokens so we don't have to get them all time. Navigate to the Utils folder and create a 2 new helper class files. Create `AuthHelper.cs` and `SessionTokenCache.cs`
+1. We need add code to handle the authentication and cache the sessions tokens so we don't have to get them all time. Navigate to the Utils folder and create two new helper class files. Create `AuthHelper.cs` and `SessionTokenCache.cs`. The corresponding code for these classes will be added later.
 
 1. First let's update the Setting.cs class with the additional constants. Paste these values below the existing entries from HOL2.
 
