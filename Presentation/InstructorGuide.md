@@ -187,6 +187,7 @@ We will provide an overview of some common cloud technologies, patterns and Azur
 
 **Possible issues**
 * As always, if there is not enough time to create the lab, feel free to jump to `end`
+* In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
 
 ---
 
