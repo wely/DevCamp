@@ -149,6 +149,8 @@ We will provide an overview of the developer tools available for developing on y
 * If trials have already been created using that phone or credit card, the process may fail.  If so, give them an azure pass. 
 * If they have an existing subscription they'd like to use, that's fine but there may be issues with connectivity to O365.
 
+> The ARM Template may not deploy successfully in all regions. As of Nov 18 2016 the following regions will fail: brazilsouth, westindia, uksouth, ukwest (lack of DocumentDB) and southindia, centralindia, and canadaeast (lack of VM tier). Please have attendees select one of the other Azure regions.
+
 ----
 ##  Module 2 - Modern Cloud Apps Overview ####
 We will provide an overview of some common cloud technologies, patterns and Azure features (Polyglot, scalability, app insights, Redis, patterns, traffic manager, global scale, blob, CDNs) and introduce you to the sample application. It is written 3-ways (.NET, Node.js and Java) so you can pick your platform of choice.
