@@ -11,7 +11,7 @@ This guide use Visual Studio on Windows as the IDE. You can use [Visual Studio c
 
 
 ## Objectives
-In this hands-on lab, you will learn how to:
+In this hands-on-lab, you will learn how to:
 * Use Visual Studio to connect to an API
 * Provision an Azure Web App to host the Web site
 * Modify a view to add caching
@@ -30,6 +30,9 @@ This hands-on-lab has the following exercises:
 * Exercise 1: Integrate the API
 * Exercise 2: Add a caching layer
 * Exercise 3: Write images to Azure Blob storage
+
+## Note
+In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
 
 ---
 ### Exercise 1: Integrate the API
