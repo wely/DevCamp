@@ -590,6 +590,23 @@
                                 "value": "[variables('chocoPackages')]"
                             }
                         ]
+                    },
+                    {
+                        "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-run-powershell')]",
+                        "parameters": [
+                            {
+                                "name": "scriptFileUris",
+                                "value": "[[\"https://raw.githubusercontent.com/AzureCAT-GSI/DevCamp/DTL/Shared/ARMTemplate/Scripts/InstallNodeJS.ps1\"]"   
+                            },
+                            {
+                                "name": "scriptToRun",
+                                "value": "InstallNodeJS.ps1"
+                            },
+                            {
+                                "name": "scriptArguments",
+                                "value": ""
+                            }
+                        ]
                     }
                 ]
             }
