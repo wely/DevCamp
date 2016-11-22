@@ -80,17 +80,17 @@ AzureAD can handle authentication for web applications. First we will create a n
     
     ![image](./media/image-003.png)
 
-1. Provide an application name and click **Create Application**
+1. Provide an application name and click `Create Application`
 
     ![image](./media/image-004.png)
 
-1. On the Registration page, take note of the **Application ID**. This will be used as an environment variable named `AAD_CLIENT_ID` and is used to configure the authentication library.  
+1. On the Registration page, take note of the `Application ID`. This will be used as an environment variable named `AAD_CLIENT_ID` and is used to configure the authentication library.  
 
     We also need to generate a client secret. Select the **Generate New Password** button.
 
     ![image](./media/image-006.png)
 
-1. A key is generated for you. Save this, as you will not be able to retrieve it in the future. This key will become the `AAD_CLIENT_SECRET` environment variable.
+1. A key is generated for you. ***Save this***, as you will not be able to retrieve it in the future. This key will become the `AAD_CLIENT_SECRET` environment variable.
 
     ![image](./media/image-007.png)
 
@@ -102,28 +102,35 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/image-009.png)
 
-1. After AzureAD handles the authentication, it needs a location to redirect the user. For testing locally, we'll use the local IISExpress web site `http://localhost:[YOUR LOCAL DYNAMIC PORT]/` as the **Redirect URI** and set the URL as an app setting variable named `AAD_RETURN_URL`. This URL may need to be updated to the IISExpress dynamic port that is generated while debugging. Steps to update this are provided later in the lab.  
+1. After AzureAD handles the authentication, it needs a location to redirect the user. For testing locally, we'll use the local IISExpress web site `http://localhost:[YOUR LOCAL DYNAMIC PORT]/` as the **Redirect URI** and set the URL as an app setting variable named `AAD_RETURN_URL`. This URL may need to be updated to the IISExpress dynamic port that is generated while debugging.  
 
     ![image](./media/image-010.png)
+
+1. We will need to grant our application permission to access resources on our behalf. In the Microsoft Graph Permissions section, select `Add`
+
+    ![image](./media/image-025.png)  
+
+1. Add the following permissions (you will have to scroll down to find them):
+    * Mail.ReadWrite
+    * Mail.Send
+    * User.Read
+    * User.ReadBasic.All
+
+    ![image](./media/image-026.png)
+    ![image](./media/image-027.png)
 
 1. Click the **Save** button on the bottom of the screen.
 
     ![image](./media/image-017.png)  
 
-1. Open the web.config and update the settings with the values from the app registration screen:
-
+1. In Visual Studio, open `web.config` and update the settings with the values from the app registration screen:
+    For the `AAP_APP_REDIRECTURI` value, enter the local IIS web site URL including the port and an ending `\` Example: `http://localhost:8443/`, 
     ```xml
    <!--HOL 3-->
     <add key="AAD_APP_ID" value="APPID" />
     <add key="AAD_APP_SECRET" value="SECRET" />
     <add key="AAD_APP_REDIRECTURI" value="LOCAL HTTPS IIS WEBSITE" />
     ```
-
-1. Go back to the app registration screen and update the return URL with the new port and click save.
-
-    ![image](./media/image-016.png)
-
-    ![image](./media/image-017.png)
 
 1. In Visual Studio, Add the following packages from nuget:
 
