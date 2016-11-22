@@ -31,11 +31,11 @@ This hands-on-lab has the following exercises:
 * Exercise 2: Add a caching layer
 * Exercise 3: Write images to Azure Blob storage
 
-## Note
-In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
+### Note
+> In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
 
 ---
-### Exercise 1: Integrate the API
+## Exercise 1: Integrate the API
 
 1. You should have performed a `git clone` of the DevCamp repository in the previous hands-on lab.  If you did not, please complete the developer workstation setup in that lab.
 
@@ -402,8 +402,20 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     ![image](./media/image-20.png)
 
 1. Accept the License to complete the install
-1. In Azure. navigate to the application settings for the IncidentAPI application
-1. In Visual Studio, navigate to the web.config and copy/paste the values from the app settings 
+
+1. In Azure, navigate to the `dotnet...` web application in your resource group.
+
+    ![image](./media/image-25.png)
+
+1. Navigate to the application settings
+
+    ![image](./media/image-26.png)
+
+1. App Settings Keys have values pre-populated with the values required to consume the Azure services.
+
+    ![image](./media/image-27.png)
+
+1. In Visual Studio, navigate to the web.config and copy/paste the values from the app settings that match the keys 
 
     ```xml
     <add key="REDISCACHE_HOSTNAME" value="" />
