@@ -39,7 +39,7 @@ In this lab you will create the environment that is needed for your language pre
 
 * Create O365 Developer Tenant
 * Connect an Azure subscription (Trial or other)
-* Take prepared image, walk through the tools that are available for your platform (.NET, Node.JS, Java | Windows, Linux)
+* Take prepared image, walk through the tools that are available for your platform (.NET, Node.JS, Java | Windows, MacOSx)
 * Run a custom ARM Template to scaffold out resources used during the training
 
 #### View instructions for [.NET](../HOL/dotnet/developer-environment) | [Node.JS](../HOL/node/developer-environment/) | [Java](../HOL/java/developer-environment/)

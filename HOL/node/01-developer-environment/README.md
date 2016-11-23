@@ -7,14 +7,13 @@ In this lab, you will set up an Office365 trial subscription, an Azure trial sub
 a virtual machine in the subscription to use for development of further labs.
 
 ## Objectives
-In this hands-on lab, you will set up an Office365 developer subscription, and Azure trial subscription, and an Azure-based virtual machine for the development environment for subsequent labs in the DevCamp.  To expedite the process, we've prepared Windows and Linux images that you will copy into your own environment, start the virtual machine and connect to it.  You will then configure the components for Azure development.
+In this hands-on lab, you will set up an Office365 developer subscription, and Azure trial subscription, and an Azure-based virtual machine for the development environment for subsequent labs in the DevCamp.  To expedite the process, we've prepared a Windows image that you will copy into your own environment, start the virtual machine and connect to it.  You will then configure the components for Azure development.
 * Set up an Office365 trial subscription
 * Set up an Azure trial subscription
 * Configure your Azure subscription for DevCamp
-* Create an Azure Virtual Machine for development
-* Connect to the Azure Virtual Machine and configure it for development.
+* Create an Azure Virtual Machine for remote development
+* Connect to the Azure Virtual Machine and configure it for development
 * Review the features of the Azure Portal
-* Review the Resource group that we created in Exercise 3
 
 ## Prerequisites
 
@@ -32,7 +31,7 @@ This hands-on-lab has the following exercises:
 * Exercise 8: View the resources you created
 
 ---
-### Exercise 1: Set up Office 365 trial subscription
+## Exercise 1: Set up Office 365 trial subscription
 
 1. In your browser, go to `https://products.office.com/en-us/business/office-365-enterprise-e3-business-software` 
 and click the link that says "Free Trial", which will take you to this page:
@@ -71,7 +70,7 @@ and click the link that says "Free Trial", which will take you to this page:
 > Stay on this page until the next exercise.
 
 ---
-### Exercise 2: Set up Azure trial subscription
+## Exercise 2: Set up Azure trial subscription
 
 1.  Next, we want to set up an Azure subscription, which
     can be accessed via the Azure Active Directory.  At the bottom of the screen, 
@@ -118,7 +117,7 @@ to open the Azure portal, which will look like this:
     ![image](./media/2016-10-14_18-00-54.gif)
 
 ---
-### Exercise 3: Start your VSTS trial subscription
+## Exercise 3: Start your VSTS trial subscription
 
 1. In your browser, go to `http://www.visualstudio.com/team-services`, and click on `sign in` in the upper right corner.  This should take you to a screen that looks like this:
 
@@ -131,7 +130,7 @@ to open the Azure portal, which will look like this:
     Click Accept to access your Visual Studio Dev Essentials benefits.
 
 ---
-### Exercise 4: Configure your Azure subscription for DevCamp
+## Exercise 4: Configure your Azure subscription for DevCamp
 
 1. We have created an Azure Resource Group template that will configure the resources you need in Azure for the DevCamp.  To deploy 
 these resources in your Azure subscription, do `control-click` on this button:
@@ -294,7 +293,7 @@ and click on the `Other Downloads` link under v6.9.0:
 
 ---
 
-### Exercise 7: Azure Portal walkthrough
+## Exercise 7: Azure Portal walkthrough
 
 1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, http://portal.azure.com.  Log in with the credentials you supplied in the subscription sign up exercise.  You should see the Azure portal, similar to this:
 
