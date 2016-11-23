@@ -2,13 +2,13 @@
 
 ## Overview
 
-City Power & Light is a sample application that allows citizens to to report "incidents" that have occured in their community.  It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
+City Power & Light is a sample application that allows citizens to to report "incidents" that have occurred in their community.  It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
 
 * Front end web application contains the user interface and business logic.  This component has been implemented three times in .NET, NodeJS, and Java.
 * WebAPI is shared across the front ends and exposes the backend DocumentDB
 * DocumentDB is used as the data persistence layer 
 
-In this lab, you will continue enhancing the City Power & Light application by adding authentication for users powered by [Azure Active Direcotry](https://azure.microsoft.com/en-us/services/active-directory/).  Once authenticated, you may then query the [Microsoft Office Graph](https://graph.microsoft.io) to retrieve information pertinent to the aplication.
+In this lab, you will continue enhancing the City Power & Light application by adding authentication for users powered by [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/).  Once authenticated, you may then query the [Microsoft Office Graph](https://graph.microsoft.io) to retrieve information pertinent to the application.
 
 > This guide use [Visual Studio Code](https://code.visualstudio.com/) for editing, however please feel free to use your editor of choice.  If you are interested in using full Visual Studio + [Node.js Tools for Visual Studio Extension (NTVS)](https://www.visualstudio.com/vs/node-js/), please see [here](https://github.com/Microsoft/nodejstools/wiki/Projects#create-project-from-existing-files) for instructions on wrapping existing code into a VS Project.
 
@@ -40,33 +40,33 @@ AzureAD can handle authentication for web applications. First we will create a n
 
 1. Navigate in a browser to [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com), click the button to **Register your app**, and login with your Azure credentials.
 
-    ![image](./media/image-001.png)
+    ![image](./media/image-001.gif)
 
 1. There are several types of application that can be registered.  For City Power & Light, select **Web Application**
 
-    ![image](./media/image-002.png)
+    ![image](./media/image-002.gif)
 
 1. Provide an application name and contact email address.
 
-    ![image](./media/image-003.png)
+    ![image](./media/image-003.gif)
 
 1. After AzureAD handles the authentication, it needs a route in our application to redirect the user.  For testing locally, we'll use `http://localhost:3000/auth/openid/return` as the **Redirect URI** and as an environment variable named `AAD_RETURN_URL`.  Click the **Create** button. 
 
-    ![image](./media/image-004.png)
+    ![image](./media/image-004.gif)
 
 1. The page then shows some sample code. Scroll down to the bottom and select **Go to settings**
 
-    ![image](./media/image-005.png)
+    ![image](./media/image-005.gif)
 
 1. On the Registration page, take note of the **Application ID**. This will be used as an environment variable named `AAD_CLIENT_ID` and is used to configure the authentication library.  
 
     We also need to generate a client secret. Select the **Generate New Password** button.
 
-    ![image](./media/image-006.png)
+    ![image](./media/image-006.gif)
 
 1. A key is generated for you. Save this, as you will not be able to retrieve it in the future. This key will become the `AAD_CLIENT_SECRET` environment variable. Click the **Save** button at the bottom of the page.
 
-    ![image](./media/image-007.png)
+    ![image](./media/image-007.gif)
 
 1. In VSCode, let's add those environment variables into `.vscode/launch.json`:
 
@@ -369,11 +369,11 @@ AzureAD can handle authentication for web applications. First we will create a n
 
 1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `views/navigation.pug` and remove the commented out blocks of code by deleting the `//-` characters. Now load the application in the browser and you should see the **Login** button on the top navigation.
 
-    ![image](./media/image-009.png)
+    ![image](./media/image-009.gif)
 
-    Click on the link for **Report Outage**. Since you are not currently authenticated, the application redirects you to Azure to provide a username and apssword.  Sign in, and you will be redirect back to the homescreen with a username in the top right corner. Click the name to dropdown a link for a **Profile** page and to **Sign Out**.  
+    Click on the link for **Report Outage**. Since you are not currently authenticated, the application redirects you to Azure to provide a username and password.  Sign in, and you will be redirect back to the homescreen with a username in the top right corner. Click the name to dropdown a link for a **Profile** page and to **Sign Out**.  
 
-    ![image](./media/image-010.png)
+    ![image](./media/image-010.gif)
 
 The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
 
@@ -448,7 +448,7 @@ Next, we are going to create a page to display information about the logged in u
 
 1. With the view and route created, we can now load `http://localhost:3000/profile` in the browser.
 
-    ![image](./media/image-011.png)
+    ![image](./media/image-011.gif)
 
 We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
 
@@ -587,9 +587,9 @@ In the previous exercise you read data from the Microsoft Graph, but other endpo
 
  1. Load the application in the browser, and create a new incident.  You should soon receive an email in the current user's inbox.
 
-    ![image](./media/image-012.png)       
+    ![image](./media/image-012.gif)       
 
-Sending this email did not require the setting up of a dedicated email server, but instead leveraged capabilities within the Microsfot Graph.  We could have also created a calendar event, or a task related to the incident for a given user, all via the API.
+Sending this email did not require the setting up of a dedicated email server, but instead leveraged capabilities within the Microsoft Graph.  We could have also created a calendar event, or a task related to the incident for a given user, all via the API.
 
 ## Summary
 Our application can now bifurcate anonymous and authenticated users to ensure flexibility between public and private data.  We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
