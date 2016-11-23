@@ -183,7 +183,10 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-13.gif)
 
+    > DO NOT Update the Nuget package for Microsoft.REST
+
 1. In the Utils folder, open the file called Settings.cs. This will hold our static variables and constants for the application.
+
 1. In the Settings.cs file, paste the following inside the Settings class definition:
 
     ```csharp
@@ -208,8 +211,9 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-14.gif)
 
-1. In the Utils folder, there is a class named IncidentApiHelper.cs. Open this file.
-1. Paste the following inside the IncidentApiHelper class definition and resolve the reference for `IncidentAPI`.
+1. In the `Utils` folder, there is a file named `IncidentApiHelper.cs`. Open this file.
+
+1. Paste the following inside the `IncidentApiHelper` class definition and resolve the reference for `IncidentAPI`.
 
     ```csharp
     public static IncidentAPIClient GetIncidentAPIClient()
@@ -220,7 +224,9 @@ This hands-on-lab has the following exercises:
     ```
 
 1. Open the `Controllers/Dashboardcontroller.cs` file
+
 1. Select the current comment block in the Index method and delete it. Also delete the existing return View() code.
+
 1. Paste the following:
 
     ```csharp
@@ -236,6 +242,7 @@ This hands-on-lab has the following exercises:
     ```
 
 1. Resolve the references for `Newtonsoft.Json, IncidentAPI, IncidentAPI.Models and System.Collections.Generic`. Make sure you have also added the IncidentAPI namespace, as  GetIAllIncidentsAsync() is an extension method which cannot be resolved automatically.
+
 1. Change the method to async. The code should look like the following:
 
     ```csharp
@@ -266,8 +273,10 @@ This hands-on-lab has the following exercises:
         }
     ```
 
-1. Let's add code to view Incidents. Navigate to the IncidentController.cs file and open it
+1. Let's add code to view Incidents. Navigate to the `IncidentController.cs` file and open it
+
 1. In between the comment block in the Details method, select the body of this method and delete it.
+
 1. Paste the following:
 
     ```csharp
@@ -285,7 +294,8 @@ This hands-on-lab has the following exercises:
 
         return View(incidentView);
     ```
-1. In the Mappers Folder, locate the IncidentMapper.cs file. This file will handle the mapping from the data that is returned from the API.
+1. In the `Mappers` Folder, locate the `IncidentMapper.cs` file. This file will handle the mapping from the data that is returned from the API.
+
 1. Open it and paste the following:
     
     ```csharp
@@ -329,6 +339,7 @@ This hands-on-lab has the following exercises:
     ```
 
 1. Resolve the references for `DevCamp.WebApp.Mappers, DevCamp.WebApp.Utils, DevCamp.WebApp.ViewModelsIncidentAPI, IncidentAPI.Models and Newtonsoft.Json`.
+
 1. Now let's add code to create an incident. We will add a new `Create` method to the `IncidentController` class that will handle the Create HTTP post method. Add the following code:
 
     > DO NOT delete the existing `Create` Method. This is the method that handles the default view.
@@ -365,6 +376,7 @@ This hands-on-lab has the following exercises:
     ```
 
 1. Resolve the references for `system.threading.task and system.web`
+
 1. Build the application and hit F5 to start debugging. On the home page, click on the view dashboard link. You should see a list of the sample incidents you generated in the database.
 
     ![image](./media/image-15.gif)
@@ -577,9 +589,10 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     <add key="REDISCACHE_PRIMARY_KEY" value=""/>
     ```
 1. Now that we configured the storage config values, we can add the logic to upload the images. 
+
 1. In Visual Studio, Add the `WindowsAzure.Storage` nuget package to the solution
 
-![image](./media/image-23.gif)
+    ![image](./media/image-23.gif)
 
 1. Open the `Utils\StorageHelper.cs` file and paste the following:
 
@@ -696,8 +709,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 1. Close the browser and stop debugging.
 1. Open the Azure Storage Explorer, connect it to your storage account and verify that your image and a queue entry were uploaded to Azure storage.
 
-END
-
+---
 ## Summary
 
 In this hands-on lab, you learned how to:
