@@ -29,25 +29,25 @@ An instance of Application Insights can be created in a variety of ways, includi
 
 1. Open the Resource Group that was originally deployed.  Click **Add** on the top toolbar to add a new Azure resource to this group.
 
-    ![image](./media/image-001.png)
+    ![image](./media/image-001.gif)
 
 1. Search for `Application Insights` and select the entry from the results list
 
-    ![image](./media/image-002.png)
+    ![image](./media/image-002.gif)
 
 1. In the overview blade that opens, click **Create** to open the creation settings blade. Type a name (for example, `citypower`, as we've used here), configure **Application Type** to `Java web application` and then click the **Create** button. 
 
     Creation typically takes less than a minute.
 
-    ![image](./media/image-003.png)
+    ![image](./media/image-003.gif)
 
 1. Once provisioning completes, return to your Resource Group and open the resource.  You may need to hit the refresh button within the resource group blade.
 
-    ![image](./media/image-004.png)
+    ![image](./media/image-004.gif)
 
 1.  In the **Essentials** section, take note of the **Instrumentation Key**.  We will need that in future exercises.
 
-    ![image](./media/image-005.png)
+    ![image](./media/image-005.gif)
 
 We now have an instance of Application Insights created and ready for data.  The Instrumentation Key is important, as it is the link that ties an application to the AI service. 
 
@@ -168,7 +168,7 @@ We will add both components to our application and enable the sending of telemen
 
 1. Back in the Azure Portal, refresh the browser tab (or click **Refresh** from the top toolbar) until you see data appear.  
 
-    ![image](./media/image-006.png)
+    ![image](./media/image-006.gif)
 
     > It may take 3-5 minutes for data to appear even when manually refreshing
 
@@ -176,11 +176,11 @@ We will add both components to our application and enable the sending of telemen
 
     In the portal, click the tile that says **Learn how to collect browser page load data**    
     
-    ![image](./media/image-007.png)
+    ![image](./media/image-007.gif)
 
 1. The next blade with give you a JavaScript snippet pre-loaded with the Instrumentation Key.  This snippet, when placed on an HTML page, will download the full Application Insights JavaScript library and configure itself.  Click the clipboard icon to copy the snippet.
 
-    ![image](./media/image-008.png)
+    ![image](./media/image-008.gif)
 
 1. Let's integrate the snippet into our web pages. Create a new file at `src/main/resources/templates/appinsights.html` and paste in the snippet, which will look like this (with your instrumentationKey:
 
@@ -240,7 +240,7 @@ We will add both components to our application and enable the sending of telemen
     ```
 1. Re-run the application and load several pages to generate more sample telementry. The Azure Portal should now light up data for **Page View Load Time** 
 
-    ![image](./media/image-009.png)
+    ![image](./media/image-009.gif)
 
 Our application is now providing the Application Insights service telementry data from both the server and client.
 
@@ -278,15 +278,15 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
     and returning to the profile page.  In the Azure Portal we can see the data by pressing the **Search** 
     button:
 
-    ![image](./media/image-010.png) 
+    ![image](./media/image-010.gif) 
 
     Clicking on one of the custom events gives us this:
 
-    ![image](./media/image-011.png)
+    ![image](./media/image-011.gif)
 
     For exceptions, we get the call stack and more information associated with the event:
 
-    ![image](./media/image-012.png)
+    ![image](./media/image-012.gif)
 
 These custom events (and the related concept of constom metrics) are a powerful way to integrate telemetry into our 
 application and centralize monitoring across multiple application instances.
@@ -297,34 +297,34 @@ Application Insights has the ability to do performance and availability testing 
 
 1. To show the Application Insights availability monitoring capability, we first need to make sure the application is deployed to the Azure App service.  This is done in the `04-devops-ci` hands-on-lab.  To verify the application is running in the cloud, first go to the Azure portal, open your resource group, and click on the Java app service:
 
-    ![image](./media/2016-10-25_21-12-41.png)
+    ![image](./media/2016-10-25_21-12-41.gif)
 
     then, click the `browse` link in the App service blade:
 
-    ![image](./media/2016-10-25_21-15-12.png)
+    ![image](./media/2016-10-25_21-15-12.gif)
 
     This should open another window with the City Power and Light application in it.  Make note of the URL at the top of the browser.
 
 2. In the Azure portal, click on the citypower Application Insights deployment in your resource group to open it's blade.  Availability is under `INVESTIGATE` in the scrolling pane - click on it to open the Availability tab:
 
-    ![image](./media/2016-10-25_21-18-39.png)
+    ![image](./media/2016-10-25_21-18-39.gif)
 
     Click on `+ Add web test`.  In the Create test blade, give the test a name, put the URL for your application in the URL box, and choose several
     locations to test your application from.  You can choose to receive an alert email when the availability test fails by clicking on the `Alerts` box and entering the alert configuration.  Click `OK` and `Create`.  
 
-    ![image](./media/2016-10-25_21-22-34.png)
+    ![image](./media/2016-10-25_21-22-34.gif)
 
     It may take 5-10 minutes for your web test to start running.  When it is executing and collecting data, you should see availability information on the Availability tab of the Application Insights blade, for example:
 
-    ![image](./media/2016-10-25_21-37-37.png)
+    ![image](./media/2016-10-25_21-37-37.gif)
 
     you can click on the web test to get more information:
 
-    ![image](./media/2016-10-25_21-39-05.png)
+    ![image](./media/2016-10-25_21-39-05.gif)
 
     and clicking on one of the dots on the graph will give you information about that specific test.  Clicking on the request will show you the response that was received from your application:
 
-    ![image](./media/2016-10-25_21-40-19.png)
+    ![image](./media/2016-10-25_21-40-19.gif)
 
     >With all of this testing, you may exceed the limits of the free service tier for Azure app services.  If that occurs, you can click on the App Service, and you'll see a notification that your App Service has been stopped due to it's consumption.  All you need to do is change the App service plan to basic, which will start the application again.
 
@@ -334,24 +334,24 @@ In the `Metrics Explorer`, you can create charts and grids based on the telemetr
 
 1. Here is an example of page views vs process CPU and processor time:
 
-    ![image](./media/2016-10-25_22-10-19.png)
+    ![image](./media/2016-10-25_22-10-19.gif)
 
     In `Search` you can see the raw telemetry events, you can filter on the specific events you want to see, and you can drill into more detail on those events.
     You can also search for proerties on the telemetry event.  This will be particularly useful when we add logging to the telemetry in Exercise 6.  Here is the
     basic view:
 
-    ![image](./media/2016-10-25_22-13-47.png)
+    ![image](./media/2016-10-25_22-13-47.gif)
     
     Clicking on one of the events gives you a detail blade for that event:
 
-    ![image](./media/2016-10-25_22-15-49.png)
+    ![image](./media/2016-10-25_22-15-49.gif)
 
     If there are remote dependencies, such as calls to a database or other resources, those will appear under `Calls to Remote Dependencies`.
     If there were exceptions, traces or failed calls to dependencies, you could get detail on that under `Related Items`.
 
 1. When we go to `Application map`, we can see a diagram of the monitored items that make up the application:
 
-   ![image](./media/2016-10-25_22-29-02.png)
+   ![image](./media/2016-10-25_22-29-02.gif)
 
 ### Exercise 6: Monitor logging events
 

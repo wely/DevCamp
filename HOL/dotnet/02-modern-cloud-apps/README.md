@@ -71,7 +71,16 @@ This hands-on-lab has the following exercises:
     
     ![image](./media/image-05.gif)
 
-1. Since we provisioned a new instance of DocumentDB, there are not any records to use as sample data.  To generate sample data, our API has a route that can be hit at any time to reset the documents in our collection.  In the browser, add `/incidents/sampledata` to your API's URL to generate sample documents.
+1. Since we provisioned a new instance of DocumentDB, there are no records to use as sample data. To generate sample data, the shared API has a route that can be hit at any time to reset the documents in your collection.  In the browser, add the following to your API URL to generate sample documents.
+
+    >
+    > Add `/incidents/sampledata` to the end of your API URL. 
+    >
+    > The URL should look like the following:
+    >  
+    > `http://incidentapi[YOUR_RG_NAME].azurewebsites.net/incidents/sampledata`
+    >
+    >
 
 1. After navigating to the sampledata route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade and select the DocumentDB resource.
 

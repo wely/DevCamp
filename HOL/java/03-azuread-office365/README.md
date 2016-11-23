@@ -40,32 +40,32 @@ AzureAD can handle authentication for web applications. First we will create a n
 
 1. Navigate in a browser to `https://apps.dev.microsoft.com`, click the link to **Sign in**, and login with your Azure credentials.
 
-    ![image](./media/image-001.png)
+    ![image](./media/image-001.gif)
 
 1. Click `Add an app` to being the process of adding your application
 
-    ![image](./media/image-001a.png)
+    ![image](./media/image-001a.gif)
 
     Next, give the application a name (eg. `City Power and Light` ) and press `create application`
 
-    ![image](./media/image-001b.png)
+    ![image](./media/image-001b.gif)
 
 1. On the next screen, make note of the application Id:
 
-    ![image](./media/image-001c.png)
+    ![image](./media/image-001c.gif)
 
 1. Under `Application Secrets`, click `Generate New Password`:
 
-    ![image](./media/image-001d.png)
+    ![image](./media/image-001d.gif)
 
     Make note of the application secret that was generated - this is the only
     time that you will see it.
 
-    ![image](./media/image-001e.png)
+    ![image](./media/image-001e.gif)
 
     In the Platforms section, click on `Add Platform`:
 
-    ![image](./media/image-001f.png)
+    ![image](./media/image-001f.gif)
 
     After AzureAD handles the authentication, it needs a 
     route in our application to redirect the user.  For 
@@ -75,7 +75,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     Finally click `Save` to save your configurations.
 
-    ![image](./media/image-001h.png)
+    ![image](./media/image-001h.gif)
 
 1. In Eclipse, let's add those environment variables by opening the run environment, click on the environment tab, and clicking `new` (using the values you captured above):
 
@@ -230,11 +230,11 @@ The main effort here is going to be configuring the application.  First, open yo
 
 1. Save all files, run the application and visit the application in the browser. You should see the **Login** button on the top navigation.
 
-    ![image](./media/image-009.png)
+    ![image](./media/image-009.gif)
 
     Click on the link for **Report Outage**. Since you are not currently authenticated, the application redirects you to Azure to provide a username and password.  Sign in, and you will be redirect back to the homescreen with a username in the top right corner. Click the name to dropdown a link for a **Profile** page and to **Sign Out**.  
 
-    ![image](./media/image-010.png)
+    ![image](./media/image-010.gif)
 
     The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
 
@@ -543,7 +543,7 @@ Next, we are going to create a page to display information about the logged in u
 
 1. With the view and controller created, we can now run the application, log in, and load `http://localhost:8080/profile` in the browser.
 
-    ![image](./media/image-011.png)
+    ![image](./media/image-011.gif)
 
 We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.  If there are missing fields in this page,
 those fields were likely not filled in in the Azure Active Directory user profile.
@@ -621,7 +621,7 @@ You will have to resolve the import for GraphService as well:
     > you will need to resolve the imports for `GraphService` and `OAuth2TokenUtils`
 1. You can now test the functionality by running the application, logging in, and creating a new incident.  If you go to `outlook.office365.com`, you should soon receive an email:
 
-    ![image](./media/image-012.png)
+    ![image](./media/image-012.gif)
 
 ## Summary
 Our application can now bifurcate anonymous and authenticated users to ensure flexibility between public and private data.  We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
