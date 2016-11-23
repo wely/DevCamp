@@ -18,9 +18,12 @@ This hands-on-lab has the following exercises:
 * Exercise 3: Integrate new Web App into VSTS
 * Exercise 4: Deploy City Power & Light to new Web App
 
+### Note
+> In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
+
 ### Exercise 1: Create an ARM Template in Visual Studio Code
 
-Visual Studio Code includes a sizable ecosystem of extensions.  One such extension is the [Azure Resource Manager Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools).
+Visual Studio Code includes a sizable ecosystem of extensions. One such extension is the [Azure Resource Manager Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools).
 
 1. Install the ARM Tools extension in Visual Studio Code by using the [Command Palette](https://code.visualstudio.com/Docs/editor/codebasics#_command-palette).  With VSCode open, press `CTRL` + `P` and enter `ext install azurerm-vscode-tools`.
 

@@ -50,6 +50,9 @@ This hands-on-lab has the following exercises:
 * Exercise 2: Create a user profile page
 * Exercise 3: Send a confirmation email to the user on incident creation
 
+### Note
+> In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
+
 ### Exercise 1: Register the application
 
 AzureAD can handle authentication for web applications. First we will create a new application in our AzureAD directory, and then we will extend our application code to work with an authentication flow. 

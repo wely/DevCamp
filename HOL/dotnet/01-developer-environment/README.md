@@ -142,10 +142,17 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     ![image](./media/2016-10-18_13-13-25.png)
 
-1.  Name your resource group `DevCamp`, and choose a location for your deployment. Please **DO NOT** choose the any of following regions for your deployment:
-    * US Gov
-    * Brazil South
-    * UK West or UK South 
+1.  Name your resource group `DevCamp`, and choose a location for your deployment. 
+
+    > Please **DO NOT** choose the any of following regions for your deployment (as of November 18, 2016)
+    > * US Gov
+    > * Brazil South
+    > * South India
+    > * Central India
+    > * West India
+    > * Canada East
+    > * UK West
+    > * UK South
     
 1. Check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
 
@@ -153,13 +160,13 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     ![image](./media/2016-10-18_13-19-01.png)
 
-1. This will take approximately 20 minutes to complete. Please don't continue on until the template has completed.  While it is working, it is useful to understand what this process is doing.
+1. This will take approximately 20-30 minutes to complete. Please don't continue on until the template has completed.  While it is working, it is useful to understand what this process is doing.
     In a later session, we will take a look at Azure Resource Group templates, and how to manage your infrastructure the same way 
     you manage your code.  As a short introduction, a template is a JSON file that contains definitions for the resources you want in your
     resource group.  When you apply the resource group template, Azure will apply the template to your Azure resource group, and create 
     the resources you have specified in the template.  This makes it easy to maintain the infrastructure definition in the JSON text file.
     
-    In the resource group template we have created for DevCamp, there are several types of resources including Web Apps and Virtual Machines.  The 
+    In the resource group template we have created for DevCamp, there are several types of resources including Web Apps and a Virtual Machine. The 
     complete list of resources deployed is detailed in Exercise 8 of this Hands-On-Lab.  Resource Group Templates are usually fairly quick to
     apply - the reason this one takes so long is that we are creating a Windows Virtual machine and installing all the tools you will
     need for the DevCamp including Visual Studio, the Java development kit, and other software resources.
@@ -210,7 +217,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     A dialog box pops up - choose to turn enhanced security off for administrators.
 
-1. We are going to use git to clone the DevCamp github repository to this development machine.  Click on the Start menu, and type `cmd`
+1. We are going to use git to clone the DevCamp github repository to this development machine. Click on the Start menu, and type `cmd`
 
 1. Change directory to the root using `cd c:\`
 
@@ -250,15 +257,19 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     A new browser tab will open.
 
-   > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this excercise.
+    >
+    > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this excercise.
+    >
     
     ![image](./media/2016-11-14_12-10-59.png)
 
-   > If the page looks like the image below, continue with this exercise
-       
+    >
+    > If the page looks like the image below, continue with this exercise
+    >
+         
     ![image](./media/2016-11-14_12-03-50.png)
 
-1.	In the Azure portal, select the API Application (noted with the ![image](./media/image-024.png) icon)
+1. In the Azure portal, select the API Application (noted with the ![image](./media/image-024.png) icon)
     
     ![image](./media/image-019.png)
 

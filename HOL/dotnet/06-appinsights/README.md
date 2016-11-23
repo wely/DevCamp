@@ -20,6 +20,9 @@ In this hands-on lab, you will learn how to:
 
 > Note: If you did not complete the previous labs, the project in the start folder is cumulative.
 
+### Note
+> In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
+
 ## Exercises
 This hands-on-lab has the following exercises:
 * Exercise 1: Create an Application Insights resource
