@@ -40,25 +40,25 @@ An instance of Application Insights can be created in a variety of ways, includi
 
 1. Open the Resource Group that was originally deployed.  Click **Add** on the top toolbar to add a new Azure resource to this group.
 
-    ![image](./media/image-001.png)
+    ![image](./media/image-001.gif)
 
 1. Search for `Application Insights` and select the entry from the results list
 
-    ![image](./media/image-002.png)
+    ![image](./media/image-002.gif)
 
 1. In the overview blade that opens, click **Create** to open the creation settings blade. Select a name, configure **Application Type** to `ASP.NET Web Application` and then click the **Create** button. 
 
     Creation typically takes less than a minute.
 
-    ![image](./media/image-003.png)
+    ![image](./media/image-003.gif)
 
 1. Once provisioning completes, return to your Resource Group and open the resource.
 
-    ![image](./media/image-004.png)
+    ![image](./media/image-004.gif)
 
 1.  In the **Essentials** section, take note of the **Instrumentation Key**.  We will need that in future exercises.
 
-    ![image](./media/image-005.png)
+    ![image](./media/image-005.gif)
 
 We now have an instance of Application Insights created and ready for data.  The Instrumentation Key is important, as it is the link that ties an application to the AI service. 
 
@@ -75,32 +75,32 @@ We will add both components to our application and enable the sending of telemen
 
 1. Register the Application and add the AppInsights SDK to the solution by right-clicking on the project and clicking `Add Application Insights Telemetry`
 
-    ![image](./media/image-013.png)
+    ![image](./media/image-013.gif)
 
 1. The Application Insights page appears. Login to you Azure subscription.
 
-    ![image](./media/image-014.png)
+    ![image](./media/image-014.gif)
 
 1. Select your AppInsights resource you created above. You can choose from the drop down or click on Configure Settings.
 
-    ![image](./media/image-015.png)
+    ![image](./media/image-015.gif)
 
-    ![image](./media/image-016.png)
+    ![image](./media/image-016.gif)
 
 1. Click Get Started for free. This will download the nuget packages and add an applicationtioninsights.config to your solution.
 
 1. Click on Configure Exception collection and configure trace collection. This will enable additional trace listeners.
     
-    ![image](./media/image-017.png)
+    ![image](./media/image-017.gif)
     > The snipet above was taken from the Application Insights Configuration window. You can access it by right-clicking the project in your solution and choosing 'Application Insights > Configure Application Insights...'. If you aren't seing this option, make sure you are using an updated version of the 'Developer Analytics Tools' extension. By the time of this writing, this is 7.12.
 
 1. Your Application Insights page should appear like below.
 
-    ![image](./media/image-018.png)
+    ![image](./media/image-018.gif)
 
 1. By default, the `ApplicationInsights.config` is excluded from source control due to the fact that it contains the Instrumentation key. We will remove this from the config file and inject it at runttime. Remove the following key from the config file:
 
-    ![image](./media/image-020.png)
+    ![image](./media/image-020.gif)
 
 1. Open the Web.config file and add the following entry, below the other keys. Replace the value with your AppInisghts key:
 
@@ -124,19 +124,19 @@ We will add both components to our application and enable the sending of telemen
     ```
 1.  Resolve the references in this file. If you recieve an error related to the FilterConfig class, check to see if a duplicate FilterConfig.cs was created. If so remove it.
 
-    ![image](./media/image-021.png)
+    ![image](./media/image-021.gif)
 
 1. Build and run your application and in the navigate around several pages to generate sample telementry.
 
 1. You can view telemetry in the Azure Portal or directly in Visual Studio from the menu item. 
     
-    ![image](./media/image-022.png)
+    ![image](./media/image-022.gif)
 
-    ![image](./media/image-023.png)
+    ![image](./media/image-023.gif)
 
 1. Back in the Azure Portal, refresh the browser tab (or click **Refresh** from the top toolbar) until you see data appear.  
 
-    ![image](./media/image-006.png)
+    ![image](./media/image-006.gif)
 
     > It may take 3-5 minutes for data to appear even when manually refreshing
 
@@ -144,11 +144,11 @@ We will add both components to our application and enable the sending of telemen
 
     In the portal, click the tile that says **Learn how to collect browser page load data**    
     
-    ![image](./media/image-007.png)
+    ![image](./media/image-007.gif)
 
 1. The next blade with give you a JavaScript snippet pre-loaded with the Instrumentation Key.  This snippet, when place on an HTML page, will download the full Application Insights JavaScript library and configure itself.  Click the clipboard icon to copy the snippet.
 
-    ![image](./media/image-008.png)
+    ![image](./media/image-008.gif)
 
 1. Let's integrate the snippet into our views. Open the Views > Shared > _Layout.cshtml file. This file controls the outer layout for all of the pages.
 
@@ -175,7 +175,7 @@ We will add both components to our application and enable the sending of telemen
     ```
 1. Redeploy the application and load several pages to generate more sample telementry. The Azure Portal should now light up data for **Page View Load Time** 
 
-    ![image](./media/image-009.png)
+    ![image](./media/image-009.gif)
 
 Our application is now providing the Application Insights service telementry data from both the server and client.
 
@@ -215,7 +215,7 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
 
 1. Hit F5 to begin debugging. Sign in, view your profile and Sign out a few times. Notice the custom events in the portal.
 
-    ![image](./media/image-011.png)
+    ![image](./media/image-011.gif)
  
 These custom events (and the related concept of custom metrics) are a powerful way to integrate telemetry into our application and centralize monitoring across multiple application instances.
 

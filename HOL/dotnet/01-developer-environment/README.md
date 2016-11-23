@@ -38,12 +38,12 @@ This hands-on-lab has the following exercises:
 1. In your browser, go to [https://products.office.com/en-us/business/office-365-enterprise-e3-business-software]() 
 and click the link that says `Free Trial`. This will navigate you to this page:
 
-    ![image](./media/2016-10-14_18-59-56.png)
+    ![image](./media/2016-10-14_18-59-56.gif)
 
 1. Enter the information requested, and click `Just one more step` which 
     will take you to the following page:
     
-    ![image](./media/2016-10-14_19-06-31.png)
+    ![image](./media/2016-10-14_19-06-31.gif)
 
 1. Choose a `user id` and a `tenant name` for your trial.  In this case I chose `devcampross`, but you 
     can choose anything you'd like, as long as it is unique.  You'll also have to choose 
@@ -51,22 +51,22 @@ and click the link that says `Free Trial`. This will navigate you to this page:
     
 1. Next you will see this page, which asks for phone verification:
 
-    ![image](./media/2016-10-14_19-07-30.png)
+    ![image](./media/2016-10-14_19-07-30.gif)
 
 1. After this process is complete, your O365 trial will be set up, and you'll see this page:
     
-    ![image](./media/2016-10-18_12-39-13.png)
+    ![image](./media/2016-10-18_12-39-13.gif)
 
     > Make note of your user id, which will be used to sign onto the Azure portal later.
 
 1. Click `You're ready to go`, which will take you to the following screen:
 
-    ![image](./media/2016-10-18_12-42-47.png)
+    ![image](./media/2016-10-18_12-42-47.gif)
 
 1. Click on the `admin` app icon, which will open the Office365 admin center page
     in your browser.  It will look like this:
 
-    ![image](./media/2016-10-14_18-38-17.png)
+    ![image](./media/2016-10-14_18-38-17.gif)
 
      If you'd like to see the welcome tour click `Next`, or simply close the dialog box.   
     
@@ -77,17 +77,17 @@ and click the link that says `Free Trial`. This will navigate you to this page:
 
 1.  Next, we want to set up an Azure subscription, which can be accessed via the Azure Active Directory link.  On the bottom, left-hand side of the screen, click `Admin centers`, and then click `Azure AD`. 
 
-    ![image](./media/image-015.png)    
+    ![image](./media/image-015.gif)    
     
     This will open up a new browser tab showing this page:
 
-    ![image](./media/2016-10-14_21-41-33.png)
+    ![image](./media/2016-10-14_21-41-33.gif)
 
 > BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass.
 
 1. Navigate to [http://www.microsoftazurepass.com/]().
 
-    ![image](./media/image-018.png)
+    ![image](./media/image-018.gif)
 
 1. Enter the code that is provided by your facilitator into the text box, then click submit
 
@@ -95,36 +95,36 @@ and click the link that says `Free Trial`. This will navigate you to this page:
 
 1. Click on the `Azure subscription` link. This will will take you to the page for creating a new trial subscription:
 
-    ![image](./media/2016-10-18_12-48-52.png)
+    ![image](./media/2016-10-18_12-48-52.gif)
 
 1. Enter the requested information and click `Next`.
 
 1. Enter the information about you, and verify your identity by phone.  Also you will need to verify via credit card.  Your credit card ***will not*** be charged unless you remove the spending cap from your subscription.
     
-    ![image](./media/2016-10-14_21-42-46.png)
+    ![image](./media/2016-10-14_21-42-46.gif)
 
 1. Finally after the verification process, you'll have to agree to the terms of the trial subscription: 
 
-    ![image](./media/2016-10-14_21-44-53.png)
+    ![image](./media/2016-10-14_21-44-53.gif)
 
 1. It will take a few moments to set up your azure subscription.  
 
-    ![image](./media/2016-10-14_21-45-32.png)
+    ![image](./media/2016-10-14_21-45-32.gif)
 
 1. When the subscription set up process is complete, you can click on `Start managing my service` to open the Azure portal, which will look like this:
 
-    ![image](./media/2016-10-14_18-00-54.png)
+    ![image](./media/2016-10-14_18-00-54.gif)
 
 ---
 ## Exercise 3: Start your VSTS trial subscription
 
 1. In your browser, go to [http://www.visualstudio.com/team-services](), and click on `sign in` in the upper right corner.  This should take you to a screen that looks like this:
 
-    ![image](./media/2016-10-18_17-30-18.png)
+    ![image](./media/2016-10-18_17-30-18.gif)
 
 1. click on `Use your benefits`, and this window will pop up:
 
-    ![image](./media/2016-10-18_17-42-01.png)
+    ![image](./media/2016-10-18_17-42-01.gif)
 
 1. Click Accept to access your Visual Studio Dev Essentials benefits.
 
@@ -135,12 +135,12 @@ and click the link that says `Free Trial`. This will navigate you to this page:
 these resources in your Azure subscription, `control + click` on the blue **Deploy to Azure** button below:
 
     <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzureCAT-GSI%2FDevCamp%2Fmaster%2FShared%2FARMTemplate%2FAzureDeploy.json" target="_blank">
-        <img src="http://azuredeploy.net/deploybutton.png"/>
+        <img src="http://azuredeploy.net/deploybutton.gif"/>
     </a>
 
 1. You should see a new tab open in your browser and open the Azure portal, with a blade that looks like this:
 
-    ![image](./media/2016-10-18_13-13-25.png)
+    ![image](./media/2016-10-18_13-13-25.gif)
 
 1.  Name your resource group `DevCamp`, and choose a location for your deployment. 
 
@@ -153,12 +153,15 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
     > * Canada East
     > * UK West
     > * UK South
+    > 
+
+
     
 1. Check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
 
     The Resource Group template will start deploying, and the portal will pin a tile to the dashboard showing the status:
 
-    ![image](./media/2016-10-18_13-19-01.png)
+    ![image](./media/2016-10-18_13-19-01.gif)
 
 1. This will take approximately 20-30 minutes to complete. Please don't continue on until the template has completed.  While it is working, it is useful to understand what this process is doing.
     In a later session, we will take a look at Azure Resource Group templates, and how to manage your infrastructure the same way 
@@ -173,11 +176,11 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     When the Resource Group creation is done, go visit the resource group by clicking `resource groups` on the left navigation pane:
 
-    ![image](./media/2016-10-18_13-36-29.png) 
+    ![image](./media/2016-10-18_13-36-29.gif) 
 
 1. Then click on your Resource group
 
-    ![image](./media/2016-10-18_13-39-10.png)
+    ![image](./media/2016-10-18_13-39-10.gif)
 
 ---
 
@@ -187,21 +190,21 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 1. Find the Windows virtual machine in your resource group. The name will start with the prefix `windev`:
 
-    ![image](./media/2016-10-18_15-32-30.png)
+    ![image](./media/2016-10-18_15-32-30.gif)
 
 1. Click the virtual machine, and then click `Connect` to connect to the machine using Remote Desktop:
 
-    ![image](./media/2016-10-18_16-37-57.png)
+    ![image](./media/2016-10-18_16-37-57.gif)
 
     This will download a remote desktop connection file, and when you open it, remote desktop on your local machine will attempt to attach to your virtual machine.   When the windows security dialog pops up, click on the `more choices link`, then choose `use a different account`
     
-    ![image](./media/2016-10-19_14-42-16.png)
+    ![image](./media/2016-10-19_14-42-16.gif)
 
     > NOTE: On some high resolution monitors (HIGH DPI), you will notice that the icons and command line windows appear small. If this is an issue, you can download [Remote Desktop Connection Manager 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44989)
 
 1. Use the following credentials to log on to the machine:
     
-    > User Name = `l-admin`
+    > User Name = `.\l-admin`
     >
     > Password = `Devc@mp2016!` 
  
@@ -209,11 +212,11 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 1. When remote desktop is connected, you will see server manager initially.  We will want to turn of IE enhanced security, to make accessing the web within the virtual machine easier.  First click `local server`;
 
-    ![image](./media/2016-10-18_16-46-33.png)
+    ![image](./media/2016-10-18_16-46-33.gif)
 
 1. Then click the `on` next to 
 
-    ![image](./media/2016-10-18_16-50-50.png)
+    ![image](./media/2016-10-18_16-50-50.gif)
 
     A dialog box pops up - choose to turn enhanced security off for administrators.
 
@@ -223,7 +226,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 1. Type `git clone https://github.com/AzureCAT-GSI/DevCamp.git` :
 
-    ![image](./media/2016-10-18_17-03-51.png)
+    ![image](./media/2016-10-18_17-03-51.gif)
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
@@ -231,15 +234,15 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 1. Use the credentials you used earlier for your Office 365 trial subscription.
 
-    ![image](./media/2016-10-18_17-59-21.png)
+    ![image](./media/2016-10-18_17-59-21.gif)
     
 1. Create a VSTS repository. Enter a repository name and click continue:
 
-    ![image](./media/2016-10-18_18-07-34.png)
+    ![image](./media/2016-10-18_18-07-34.gif)
 
 1. Create your first team project, and name it `DevCamp`:
 
-    ![image](./media/2016-10-18_18-10-39.png)
+    ![image](./media/2016-10-18_18-10-39.gif)
 
 1. Click close. You are done with the Visual Studio setup.
 
@@ -249,11 +252,11 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 1. Open a browser and navigate to [https://portal.azure.com]() Locate the app service named `incidentapi....` in the resource group blade:
     
-    ![image](./media/2016-11-14_12-00-24.png)
+    ![image](./media/2016-11-14_12-00-24.gif)
 
 1. Click on the app service, which will bring up the app service blade.  Click on `Browse` at the top:
 
-    ![image](./media/2016-11-14_12-02-26.png)
+    ![image](./media/2016-11-14_12-02-26.gif)
 
     A new browser tab will open.
 
@@ -261,35 +264,35 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
     > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this excercise.
     >
     
-    ![image](./media/2016-11-14_12-10-59.png)
+    ![image](./media/2016-11-14_12-10-59.gif)
 
     >
     > If the page looks like the image below, continue with this exercise
     >
          
-    ![image](./media/2016-11-14_12-03-50.png)
+    ![image](./media/2016-11-14_12-03-50.gif)
 
-1. In the Azure portal, select the API Application (noted with the ![image](./media/image-024.png) icon)
+1. In the Azure portal, select the API Application (noted with the ![image](./media/image-024.gif) icon)
     
-    ![image](./media/image-019.png)
+    ![image](./media/image-019.gif)
 
 1.	Select deployment options
  
-    ![image](./media/image-020.png)
+    ![image](./media/image-020.gif)
 
 1.	If the app deployment is connected, click disconnect
  
-    ![image](./media/image-021.png)
+    ![image](./media/image-021.gif)
 
 1.	Select setup
  
-    ![image](./media/image-022.png)
+    ![image](./media/image-022.gif)
 
 1.	Select external repository. 
 
 1. Paste the following in the Repository URL field `https://github.com/AzureCAT-GSI/DevCamp.git`
 
-    ![image](./media/image-023.png)
+    ![image](./media/image-023.gif)
 
 1.	Select OK
 
@@ -299,88 +302,88 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, http://portal.azure.com.  Log in with the credentials you supplied in the subscription signup exercise.  You should see the Azure portal, similar to this:
 
-    ![image](./media/2016-10-19_15-08-26.png)
+    ![image](./media/2016-10-19_15-08-26.gif)
 
     There is a lot to notice on this screen.  At the upper left corner, the icon under the `Microsoft Azure` banner allows you to shrink and expand the left bar:
 
-    ![image](./media/2016-10-19_15-15-50.png)
+    ![image](./media/2016-10-19_15-15-50.gif)
 
     Under that, clicking on the `+ New` item will allow you to create new deployments, virtual machines, databases, etc:
 
-    ![image](./media/2016-10-19_15-15-50.png)
+    ![image](./media/2016-10-19_15-15-50.gif)
     
 1. On the left you will see a list of the Azure services that you can use on the left hand side.  Notice that this list will scroll up and down to reveal more services, and finally an item that says `More Services >`:
 
-    ![image](./media/2016-10-19_15-10-45.png)
+    ![image](./media/2016-10-19_15-10-45.gif)
 
     You can click on any of these and see what items are deployed, and easily create new deployments.
 
     At the top of the window you have a search box where you can search for any resources:
 
-    ![image](./media/2016-10-19_15-22-14.png)
+    ![image](./media/2016-10-19_15-22-14.gif)
 
 1. The bell icon is for notifications, and in this screenshot, it indicates that there are two notifications pending: 
 
-    ![image](./media/2016-10-19_15-22-14a.png)
+    ![image](./media/2016-10-19_15-22-14a.gif)
 
     Clicking on the bell will show you the notifications:
 
-    ![image](./media/2016-10-19_15-49-23.png)
+    ![image](./media/2016-10-19_15-49-23.gif)
 
     If you click on one of the notifications, you can go to the list of 
     all current notifications:
 
-    ![images](./media/2016-10-19_15-51-02.png)
+    ![images](./media/2016-10-19_15-51-02.gif)
 
 1. The gear at the top of the screen lets you set the color palate for the portal, whether or not there will be animations, and other options for the portal itself:
 
-    ![image](./media/2016-10-19_15-22-14b.png)
+    ![image](./media/2016-10-19_15-22-14b.gif)
 
 1. The "smiley face" button allows you to send feedback to Microsoft:
 
-    ![image](./media/2016-10-19_15-22-14b.png)
+    ![image](./media/2016-10-19_15-22-14b.gif)
 
     Clicking on the icon will give you a form to let us know about your experience:
 
-    ![image](./media/2016-10-19_15-54-02.png)
+    ![image](./media/2016-10-19_15-54-02.gif)
 
 1. The Question icon will give you the ability to enter a support case, manage support requests, or get further information on Azure.
     
-    ![image](./media/2016-10-19_15-22-14d.png)
+    ![image](./media/2016-10-19_15-22-14d.gif)
 
 1. Your login name and company name on the upper left hand corner has two functions: 
 
-    ![image](./media/2016-10-19_15-22-14e.png)
+    ![image](./media/2016-10-19_15-22-14e.gif)
     
     If you hover the mouse over your name, you'll get information about your login, the directory and subscription:
 
-    ![image](./media/2016-10-19_16-25-54.png)
+    ![image](./media/2016-10-19_16-25-54.gif)
 
     If you click on your name, you can sign out, change your password, view your permissions, and view your bill:
 
-    ![image](./media/2016-10-19_16-28-33.png)
+    ![image](./media/2016-10-19_16-28-33.gif)
 
 1. Next we will look at the resource group we set up with the template.  Click on `Resource Groups` on the left hand side:
 
-    ![image](./media/2016-10-19_16-30-19.png)
+    ![image](./media/2016-10-19_16-30-19.gif)
 
     then, click on the resource group that you created:
 
-    ![image](./media/2016-10-19_16-32-12.png)
+    ![image](./media/2016-10-19_16-32-12.gif)
 
     A new blade will open with the overview of all of the contents of the resource group listed:
 
-    ![image](./media/2016-10-19_16-33-39.png)
+    ![image](./media/2016-10-19_16-33-39.gif)
 
     You can click on any of the items on the left hand side which will view or manipulate settings for the resource group as a whole.  If you click on any of the individual resources in the center, you will get more information on that resource.
 
 1. Azure automatically logs changes to resource group and who made those changes.  Clicking `Activity log` on the left of the blade will allow you to query the log, and clicking on any logged items will give you additional information on that entry:
 
-    ![image](./media/2016-10-19_16-40-00.png)
+    ![image](./media/2016-10-19_16-40-00.gif)
 
 1. Clicking on `Automation script` will allow you to view, edit or download the resource group template that would create this resource group.
 
-    ![image](./media/2016-10-19_16-44-51.png)
+    ![image](./media/2016-10-19_16-44-51.gif)
 
 > it is particularly useful to create resources in the Azure portal, then save or edit the resource group template.  Resource group templates will be explained further in a later lab.
 
@@ -388,7 +391,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 Going back to the list of resources in the resource group, we'll go through the list of each resource, with a description.  Feel free to click on the resource and view its detail blade.
 
-![image](./media/2016-10-19_17-13-01.png)
+![image](./media/2016-10-19_17-13-01.gif)
 
 Also, our resource group template has added a random string to the end of many of the resources.  In this description, we'll replace that string with ....
 
