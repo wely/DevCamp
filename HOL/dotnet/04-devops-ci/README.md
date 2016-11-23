@@ -28,7 +28,7 @@ This hands-on-lab has the following exercises:
 * Exercise 5: Deploy code to an Azure Web App
 
 ----
-### Exercise 1: Create VSTS online account
+## Exercise 1: Create VSTS online account
 
 1. In your browser, navigate to `https://www.visualstudio.com/`
 
@@ -37,7 +37,7 @@ This hands-on-lab has the following exercises:
 1. Log in with your Azure AD account 
 
 ----
-### Exercise 2: Create VSTS Git repository
+## Exercise 2: Create VSTS Git repository
 
 VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us/docs/tfvc/overview) as our project's repository.  For this exercise we will use Git, and then clone the repository to our dev machine. 
 
@@ -66,7 +66,7 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
 1. Click **Code** on the top toolbar to navigate to the Code screen.  Then click the **Clone in Visual Studio** button.
 
-1. **Note** if you are using Chrome, you may receive a pop-up message. The Clone in Visual Studio option uses a custom protocol handler to open in the client. Select `Launch Application`.
+    > **Note** if you are using Chrome, you may receive a pop-up message. The Clone in Visual Studio option uses a custom protocol handler to open in the client. Select `Launch Application`.
 
     ![image](./media/image-044.gif)
 
@@ -119,7 +119,7 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
     ![image](./media/image-051.gif)
 
-1. Because Git is a distributed source control system, the changes we commit are not visible to anyone else. Making our changes visible will require that we ***syncronize*** the repositories. This is process is both a Git Pull (to recieve changes from the remote repo to your local repo) and Git Push to send changes from the local repository. We will perform a sync to pull the changes and push our changes.
+1. Because Git is a distributed source control system, the changes we commit are not visible to anyone else. Making our changes visible will require that we ***synchronize*** the repositories. This is process is both a Git Pull (to receive changes from the remote repo to your local repo) and Git Push to send changes from the local repository. We will perform a sync to pull the changes and push our changes.
 
      ![image](./media/image-052.gif)
 
@@ -136,7 +136,7 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
 With application code now uploaded to VSTS, we can begin to create builds via a Build Definition.  Navigate to the **Build** tab from he top navigation.  We will use the hosted agent within VSTS to process our builds in this exercise.
 
-1. From the **Build** tab, create a new **Build Definition**
+1. From the **Build & Release** tab, create a new **Build Definition**
 
     ![image](./media/image-011.gif)
 
@@ -184,9 +184,7 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/image-019.gif)
 
-    Accept the defaults and click **OK**
-
-    Your Build will then be queued until the Hosted Build Agent can pick it up for processing.  This typically lasts less than 60 seconds to begin.
+1. Accept the defaults and click **OK**. Your Build will then be queued until the Hosted Build Agent can pick it up for processing.  This typically takes less than 60 seconds to begin.
 
 1. Once your Build completes, click each step on the left navigation bar and inspect the output.
 
@@ -198,13 +196,12 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/image-022.gif)
 
-
 1. Unzip `drop.zip` to see our files.  This artifact will be deployed to an Azure Web App in a later exercise.
 
 We now have a Build Definition that will compile the application and package it for deployment anytime code is checked into the repository, or a manual build is queued. 
 
 ----
-### Exercise 5: Deploy code to an Azure Web App
+## Exercise 5: Deploy code to an Azure Web App
 
 In the ARM Template that was originally deployed, a web app was created as a development environment to hold a deployed .NET application. We will use this web app as a deployment target from VSTS. First, we need to prepare this web app for our application code.
 
@@ -212,11 +209,11 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-056.gif)
 
-    Once the blade expands, select **Browse** from the top toolbar
+1. Once the blade expands, select **Browse** from the top toolbar
 
     ![image](./media/image-024.gif)
 
-    A new browser tab will open with a splash screen visible
+1. A new browser tab will open with a splash screen visible
 
     ![image](./media/image-031.gif)
 
@@ -232,7 +229,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-039.gif)
 
-1.  We need to connect your VS agent with your Azure subscription so it can deploy resources. Cick on ***Manage***
+1.  We need to connect your VS agent with your Azure subscription so it can deploy resources. Click on ***Manage***
 
     ![image](./media/image-041.gif)
 
@@ -247,26 +244,29 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
     format will chage to allow you to enter connection information on your subscription:    
 
-    ![image](./media/image-043a.gif)
+    ![image](./media/image-025.gif)
 
-    If you have not created a service principal for the subscription, you will have to follow the 
-    [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so.  This process will 
-    provide the information to enter in this dialog:
+    > If you have not created a service principal for the subscription, you will have to follow the 
+    > [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so.  This process will 
+    > provide the information to enter in this dialog:
+    >
+
     1. open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
     in your browser. Select all the content from the window and copy to the clipboard.
+    
     1. open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
 
-    ![image](./media/image-044a.gif)
+        ![image](./media/image-044a.gif)
 
     1. Click the green arrow to run the PowerShell script
 
-    ![image](./media/image-045a.gif)
+        ![image](./media/image-045a.gif)
 
     1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
     for the service principal only, not the password for your subscription.  So you can use whatever password 
     you would like, just remember it.    
 
-    ![image](./media/image-046a.gif)
+        ![image](./media/image-046a.gif)
 
     1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
     The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
@@ -278,13 +278,12 @@ In the ARM Template that was originally deployed, a web app was created as a dev
         Tenant ID
     Also, enter a user-friendly name to use when referring to this service endpoint connection.
 
-    ![image](./media/image-047a.gif)
+        ![image](./media/image-047a.gif)
 
-    Click **Verifiy connection*, and ensure that the window indicates that the connection was verified. 
+1. Click **Verify connection*, and ensure that the window indicates that the connection was verified. 
     Then Click **OK** and **Close**.
 
-    ![image](./media/image-048a.gif)
-    
+        ![image](./media/image-048a.gif)
 
 1. Navigate back to the VSTS build tab in the browser and click the click the **Refresh** icon to refresh the connections. The **Azure** connection that we setup should now appear.  Select it.
 
@@ -311,6 +310,8 @@ After a successful build you should see the application deployed to your web app
 ![image](./media/image-065.gif)
 
 ![image](./media/image-066.gif)
+
+---
 
 ## Summary
 
