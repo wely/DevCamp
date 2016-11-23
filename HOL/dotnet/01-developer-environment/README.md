@@ -26,7 +26,7 @@ This hands-on-lab has the following exercises:
 * Exercise 3: Start your VSTS trial subscription
 * Exercise 4: Configure your Azure subscription for DevCamp
 * Exercise 5: Use an Azure Virtual Machine for remote development
-* Exercise 6: Deploy shared API application
+* Exercise 6: Deploy Shared API application
 * Exercise 7: Azure Portal walkthrough
 * Exercise 8: View the resources you created
 
@@ -135,7 +135,7 @@ and click the link that says `Free Trial`. This will navigate you to this page:
 these resources in your Azure subscription, `control + click` on the blue **Deploy to Azure** button below:
 
     <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzureCAT-GSI%2FDevCamp%2Fmaster%2FShared%2FARMTemplate%2FAzureDeploy.json" target="_blank">
-        <img src="http://azuredeploy.net/deploybutton.gif"/>
+        <img src="http://azuredeploy.net/deploybutton.png"/>
     </a>
 
 1. You should see a new tab open in your browser and open the Azure portal, with a blade that looks like this:
@@ -155,8 +155,6 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
     > * UK South
     > 
 
-
-    
 1. Check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
 
     The Resource Group template will start deploying, and the portal will pin a tile to the dashboard showing the status:
@@ -188,27 +186,31 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 1. The Azure resource group template will have created a virtual machine that can be used for remote development on Windows. Exercise 6 describes the configuration for the Windows virtual machine, which would be appropriate for any of the languages.
 
-1. Find the Windows virtual machine in your resource group. The name will start with the prefix `windev`:
+1. In the DevCamp resource group, select the DevCamp DevTest Lab.
+
+    ![image](./media/image-007.gif)
+
+1. Find the Windows virtual machine in your DevTest lab. The name will start with the prefix `windev`:
 
     ![image](./media/2016-10-18_15-32-30.gif)
 
-1. Click the virtual machine, and then click `Connect` to connect to the machine using Remote Desktop:
+1. Select the machine name and open the virtual machine blade  then click `Connect` to connect to the machine using Remote Desktop:
 
-    ![image](./media/2016-10-18_16-37-57.gif)
+    ![image](./media/image-008.gif)
 
     This will download a remote desktop connection file, and when you open it, remote desktop on your local machine will attempt to attach to your virtual machine.   When the windows security dialog pops up, click on the `more choices link`, then choose `use a different account`
     
     ![image](./media/2016-10-19_14-42-16.gif)
 
-    > NOTE: On some high resolution monitors (HIGH DPI), you will notice that the icons and command line windows appear small. If this is an issue, you can download [Remote Desktop Connection Manager 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44989)
-
 1. Use the following credentials to log on to the machine:
     
-    > User Name = `.\l-admin`
+    > User Name = `\l-admin`
     >
     > Password = `Devc@mp2016!` 
  
-    It would be wise to change the password in the virtual machine.
+    ![image](./media/image-009.gif)
+
+    > It would be wise to change the password in the virtual machine.
 
 1. When remote desktop is connected, you will see server manager initially.  We will want to turn of IE enhanced security, to make accessing the web within the virtual machine easier.  First click `local server`;
 
@@ -222,6 +224,8 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 1. We are going to use git to clone the DevCamp github repository to this development machine. Click on the Start menu, and type `cmd`
 
+    > NOTE: On some high resolution monitors (HIGH DPI), you will notice that the icons and command line windows appear small. If this is an issue, you can download [Remote Desktop Connection Manager 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44989)
+
 1. Change directory to the root using `cd c:\`
 
 1. Type `git clone https://github.com/AzureCAT-GSI/DevCamp.git` :
@@ -230,10 +234,18 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-1. Start Visual Studio using `start experimental instance of visual studio 2015`, and in the sign in screen, click `sign in`
+1. Start Visual Studio using the `start experimental instance of visual studio 2015`.
 
-1. Use the credentials you used earlier for your Office 365 trial subscription.
+    ![image](./media/image-010.gif)
 
+1. On the sign in screen, click `sign in`. Use the credentials you used earlier for your Office 365 trial subscription.
+
+    > Depending on the version of the Windows image and Visual Studio, your start experience may vary:
+
+    ![image](./media/image-011.gif)
+    
+    OR
+    
     ![image](./media/2016-10-18_17-59-21.gif)
     
 1. Create a VSTS repository. Enter a repository name and click continue:
@@ -367,7 +379,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     ![image](./media/2016-10-19_16-30-19.gif)
 
-    then, click on the resource group that you created:
+1. Click on the resource group that you created:
 
     ![image](./media/2016-10-19_16-32-12.gif)
 
@@ -385,7 +397,27 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     ![image](./media/2016-10-19_16-44-51.gif)
 
-> it is particularly useful to create resources in the Azure portal, then save or edit the resource group template.  Resource group templates will be explained further in a later lab.
+1. The Windows VM uses DevTest labs to manage the start up and shut down of the machine. To change the start up schedule, click on the DevTest Lab icon and select `Policy Settings`
+
+    ![image](./media/image-012.gif)
+
+1. Select `Auto-shutdown`
+
+    ![image](./media/image-013.gif)
+
+1. Modify the Auto-shutdown schedule based on your time zone
+
+    ![image](./media/image-014.gif)
+
+1. The machine does not automatically turn on. To enable this, in the Policy Settings blade, select `Auto-Start`
+
+    ![image](./media/image-016.gif)
+
+1. Change the schedule based on your time zone.
+
+    ![image](./media/image-017.gif)
+
+> It is particularly useful to create resources in the Azure portal, then save or edit the resource group template.  Resource group templates will be explained further in a later lab.
 
 ## Exercise 8: View the resources you created
 
@@ -393,25 +425,27 @@ Going back to the list of resources in the resource group, we'll go through the 
 
 ![image](./media/2016-10-19_17-13-01.gif)
 
-Also, our resource group template has added a random string to the end of many of the resources.  In this description, we'll replace that string with ....
+Also, our resource group template has added a random string to the end of many of the resources.  In this description, we'll replace that string with .... (order of resources may vary)
 
 1. `incidentcache....:`  This is the Redis cache that we use from the application to make data access faster.  The modern-cloud-apps hands on lab adds support to the application to be able to leverage the cache.
 
-1. `windev....:` This is the Windows server virtual machine that we are using as a development machine for these hands-on-labs. You can delete this machine after the developer-environment lab if you are using an on-premises/local machine for development. 
+1. ` DevCamp` This is the DevTest lab that is used to manage the VM images and artifacts
 
 1. `incidentdb....:` This is the documentDB database that will hold the JSON incident documents stored by the application.
 
-1. `windev...NetworkInterface:`  This is a public network interface that will allow the Windows development virtual machine to communicate on the network.  If you delete the Windows virtual machine, you can safely delete this.
-
-1. `WindowsDevPip:`  This is a public IP that will allow the Windows development virtual machine to communicate with the Internet (eg. via Remote Desktop).  If you delete the Windows virtual machine, you can safely delete this.
+1. ` DevCamp....` This is the Azure Key Vault that is used to manage secure credentials
 
 1. `DevCampVnet:`  This is an Azure Virtual Network, which will allow components of the resource group to communicate as they were on the same physical network.
+
+1. `addevcamp....:` Storage account for storing artifacts for the DevTest labs.
+
+1. `ddevcamp....:` Storage account for storing the VHDs for images used the DevTest labs..
+
+1. `dpdevcamp....:` Storage account for storing for VHDs for the machines DevTest labs..
 
 1. `incidentblobstg....:` Storage account for storing the uploaded images and the Azure Queue, from the modern-cloud-apps lab.
 
 1. `incidentdiagstg....:` Storage account for storing diagnostics from the services in the resource group.
-
-1. `vmstorage....:` Storage account for storing the virtual hard disk images for the virtual machines in the resource group.
 
 1. `incidentappplan....:` App Service Plan, which defines how the app services in the resource group will be configured.
 
@@ -422,6 +456,18 @@ Also, our resource group template has added a random string to the end of many o
 1. `javaapp....:` App service for running the Java application when deployed to the cloud.  If you are not using Java in the labs, you can safely delete this.
 
 1. `nodejsapp....:` App service for running the Node.js application when deployed to the cloud.  If you are not using Node.js in the labs, you can safely delete this.
+
+    In the second Resource group, there additional resources created
+
+   ![image](./media/image-026.gif)
+
+   ![image](./media/image-025.gif)
+
+1. `windev....:` This is the Windows server virtual machine that we are using as a development machine for these hands-on-labs. You can delete this machine after the developer-environment lab if you are using an on-premises/local machine for development. 
+
+1. `WindowsDevPip:`  This is a public IP that will allow the Windows development virtual machine to communicate with the Internet (eg. via Remote Desktop).  If you delete the Windows virtual machine, you can safely delete this.
+
+1. `windev...NetworkInterface:`  This is a public network interface that will allow the Windows development virtual machine to communicate on the network.  If you delete the Windows virtual machine, you can safely delete this.
 
 ---
 # Summary
