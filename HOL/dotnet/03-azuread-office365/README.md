@@ -53,7 +53,8 @@ This hands-on-lab has the following exercises:
 ### Note
 > In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
 
-### Exercise 1: Register the application
+---
+## Exercise 1: Register the application
 
 AzureAD can handle authentication for web applications. First we will create a new application in our AzureAD directory, and then we will extend our application code to work with an authentication flow. 
 
@@ -568,7 +569,8 @@ AzureAD can handle authentication for web applications. First we will create a n
 
 1. Click on the `Report Outage` button. The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
 
-### Exercise 2: Create a user profile page with Graph Data
+---
+## Exercise 2: Create a user profile page with Graph Data
 Next, we are going to create a page to display information about the logged in user.  While AzureAD returns a name and email address, we can query the Microsoft Graph for extended details about a given user.  We will query the Graph for user information.
 
 1. In the `profile` folder, create a new View named `Index.cshtml`. This view will display a set of attributes in a simple table where each row corresponds to an attribute. Paste the following code in the view:
@@ -806,12 +808,12 @@ Next, we are going to create a page to display information about the logged in u
 
     ```
 
-1. Click Save ALL, resolve any missing references and hit F5 to see the resulting profie page. We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
+1. Click Save ALL, resolve any missing references and hit F5 to see the resulting profile page. We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
 
     ![image](./media/image-021.gif)
 
-
-### Exercise 3: Interact with the Microsoft Graph
+---
+## Exercise 3: Interact with the Microsoft Graph
 In the previous exercise you read data from the Microsoft Graph, but there are other endpoints can be used for more sophisticated tasks.  In this exercise we will use the Graph to send an email message whenever a new incident is reported.
 
 1. Add a method to `setting.cs` generate the HTML body content for the email. We will be setting 2 placeholders `{0} and {1}` for the first name and last name of the person reporting the incident.
@@ -1013,6 +1015,7 @@ In the previous exercise you read data from the Microsoft Graph, but there are o
 
 Sending this email did not require the setting up of a dedicated email server, but instead leveraged capabilities within the Microsoft Graph.  We could have also created a calendar event, or a task related to the incident for a given user, all via the API.
 
+---
 ## Summary
 Our application can now distinguish between anonymous and authenticated users to ensure flexibility between public and private data.  We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
 
