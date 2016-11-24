@@ -12,7 +12,12 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-The source for the starter app is located in the [TODO:ADD REF](#) folder. 
+* The source for the starter app is located in the [start](start) folder. 
+* There will be no code changes required so the the end folder will remain empty. 
+* Deployed the starter ARM Template HOL 1
+* Completion of the [azuread-office365](../03-azuread-office365)
+
+> Note: If you did not complete the previous labs, the project in the start folder is cumulative.
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -21,25 +26,25 @@ This hands-on-lab has the following exercises:
 * Exercise 3: Add application to VSTS Git
 * Exercise 4: Create a Continuous Integration pipeline
 
-### Exercise 1: Create VSTS online account
+---
+## Exercise 1: Create VSTS online account
 
-1. In your browser, browser to `https://www.visualstudio.com/team-services/`
+1. In your browser, navigate to [https://www.visualstudio.com/]()
 
     ![image](./media/image-000.gif)
 
-1. Click "sign in" and log in with your account
+1. Log in with your Azure AD account 
 
-### Exercise 2: Create VSTS Git repository
+---
+## Exercise 2: Create VSTS Git repository
 
 VSTS gives us the option to use Git or 
 [TFVC](https://www.visualstudio.com/en-us/docs/tfvc/overview) as our 
 project's repository. For this exercise we will use Git, and then clone 
 the repository to our dev machine. 
 
-> Note that if you acquired these lab materials via a `git clone` of 
-the workshop repo then you should select a folder somewhere else on your 
-dev machine. This will minimize conflicts between the two separate 
-repositories 
+> Note that if you acquired these lab materials via a `git clone` of the workshop repo then you should select a folder somewhere else on your dev machine. 
+> This will minimize conflicts between the two separate repositories 
 
 1. Starting at your account's landing page, locate the section entitled **Recent projects & teams** and click **New**.
 
@@ -71,19 +76,30 @@ repositories
 
 You have now created a project in VSTS with a Git repository, and cloned the repository locally to your developer machine.  Next we'll upload code from our machine to VSTS.
 
-### Exercise 3: Add application to VSTS Git
+----
+## Exercise 3: Add application to VSTS Git
 
 1. When we cloned our repository it was empty.  Take the code that you have developed in the earlier labs (or the `start` folder bundled with this readme) and paste it into our new directory.  This can be done via the command line, or with good old copy/paste in an Explorer or Finder window.
 
     ![image](./media/image-007.gif)
 
-    > Depending on how your environment is setup, there may be a hidden folder `.git` in your orignating directory. Do not copy this folder into the destination directory linked to VSTS
+    > Depending on how your environment is setup, there may be a hidden folder `.git` in your originating directory. Do not copy this folder into the destination directory linked to VSTS
 
 1. Back in the console, execute a `git status` to ensure the files are picked up by git.
+
+    ```CMD
+    git status
+    ```
 
     ![image](./media/image-008.gif)
 
 1. Execute `git add *` to track the files, then a `git commit -m "initial upload"` to commit the files to the repository. Finally, execute `git push origin master` to push the files up to VSTS.
+
+    ```CMD
+    git add *
+    git commit -m "initial upload"
+    git push origin master
+    ```
 
     ![image](./media/image-009.gif)
 
@@ -93,12 +109,11 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
 1. Now, any changes you make to the local repository can be pushed up to VSTS.  Other team members may also begin interacting with the code base via their own clones and pushes.
 
-> Note that we did not include the `build` or `.gradle` folders. These 
-components are typically not added to source control, as they bloat the 
-size of the repository.  These files should have been excluded from your 
-respository due to settings in the `.gitignore` file
+    > Note that we did not include the `build` or `.gradle` folders. These components are typically not added to source control, as they bloat the size of the repository.  These files should have been excluded from your 
+    > repository due to settings in the `.gitignore` file
 
-### Exercise 4: Create Continuous Integration pipeline
+---
+## Exercise 4: Create a Continuous Integration pipeline
 
 With application code now uploaded to VSTS, we can begin to create builds via a 
 Build Definition.  Navigate to the **Build** tab from he top navigation.  
@@ -115,7 +130,7 @@ exercise.
 
 1. Confirm the Repository Source is set to your VSTS Project, that the repository is set the repo that was earlier created, and that the Agent Queue is set to **Hosted**.  
 
-    Check the box next to **Contiuous Integration** to automatically run this build anytime code is checked into the repository.
+    Check the box next to **Continuous Integration** to automatically run this build anytime code is checked into the repository.
 
     ![image](./media/image-013.gif)
 
@@ -223,6 +238,7 @@ artifact will be deployed to an Azure Web App in a later lab.
 
     ![image](./media/image-028.gif)
 
+---
 ### Exercise 5: Deploy code to an Azure Web App
 
 In the ARM Template that was originally deployed, a web app was created as a development 
@@ -331,13 +347,13 @@ to open a new browser tab holding configuration options.
 
     ![image](./media/image-041.gif)
 
-    The modal window should automatically determinine your subscription information. 
+    The modal window should automatically determine your subscription information. 
     Provide a name such as **Azure**, select **OK**, and a close the browser tab.
 
     ![image](./media/image-042.gif)
 
     If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
-    format will chage to allow you to enter connection information on your subscription:    
+    format will change to allow you to enter connection information on your subscription:    
 
     ![image](./media/image-043.gif)
 
@@ -372,7 +388,7 @@ to open a new browser tab holding configuration options.
 
     ![image](./media/image-047.gif)
 
-    Click **Verifiy connection*, and ensure that the window indicates that the connection was verified. 
+    Click **Verify connection*, and ensure that the window indicates that the connection was verified. 
     Then Click **OK** and **Close**.
 
     ![image](./media/image-048.gif)
@@ -412,7 +428,8 @@ to open a new browser tab holding configuration options.
     If you make changes to the application and `git push` back to the VSTS server, this will
     automatically trigger a build and deployment.  Try to make a small change to the application and verify that the 
     application is re-deployed to the test environment.
-    
+
+--- 
 ## Summary
 
 In this hands-on lab, you learned how to:

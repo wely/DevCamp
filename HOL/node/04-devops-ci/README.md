@@ -12,7 +12,10 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-The source for the starter app is located in the [TODO:ADD REF](#) folder. 
+* The source for the starter app is located in the [start](start) folder. 
+* There will be no code changes required so the the `end` folder will remain empty. 
+* Deployed the starter ARM Template [HOL 1](../01-developer-environment)
+* Completion of the [03-azuread-ofice365](../03-azuread-office365)  
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -22,15 +25,17 @@ This hands-on-lab has the following exercises:
 * Exercise 4: Create a Continuous Integration pipeline
 * Exercise 5: Deploy code to an Azure Web App
 
+---
 ### Exercise 1: Create VSTS online account
 
-1. In your browser, browser to `https://www.visualstudio.com/team-services/`
+1. In your browser, browser to [https://www.visualstudio.com/team-services/]()
 
     ![image](./media/image-000.gif)
 
 1. Log in with your account 
 
-### Exercise 2: Create VSTS Git repository
+---
+## Exercise 2: Create VSTS Git repository
 
 VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us/docs/tfvc/overview) as our project's repository.  For this exercise we will use Git, and then clone the repository to our dev machine. 
 
@@ -58,15 +63,20 @@ VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us
 
 1. Next, select the **Copy** icon to copy the HTTPS URL for the repository.
 
-1. In a console window, navigate to a spot on your dev machine and execute a `git clone https://yourrepo.com/DefaultCollection/_git/Repo.git`
+1. In a console window, navigate to a spot on your dev machine and execute the following (Replace the value for your repo):
+
+    ```CMD
+    git clone https://[yourvstsrepo].com/DefaultCollection/_git/Repo.git    
+    ```
 
     ![image](./media/image-006.gif)
 
-    Depending on your environment setup you may need to authenticate with VSTS
+    > Depending on your environment setup you may need to authenticate with VSTS
 
 You have now created a project in VSTS with a Git repository, and cloned the repository locally to your developer machine.  Next we'll upload code from our machine to VSTS.
 
-### Exercise 3: Add application to VSTS Git
+---
+## Exercise 3: Add application to VSTS Git
 
 1. When we cloned our repository it was empty.  Take the code that you have developed in the earlier labs (or the `start` folder bundled with this readme) and paste it into our new directory.  This can be done via the command line, or with good old copy/paste in an Explorer or Finder window.
 
@@ -76,9 +86,19 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
 1. Back in the console, execute a `git status` to ensure the files are picked up by git.
 
+    ```CMD
+    git status    
+    ```
+
     ![image](./media/image-008.gif)
 
 1. Execute `git add *` to track the files, then a `git commit -m "initial upload"` to commit the files to the repository. Finally, execute `git push origin master` to push the files up to VSTS.
+
+    ```CMD
+    git add *
+    git commit -m "initial upload"
+    git push origin master
+    ```
 
     ![image](./media/image-009.gif)
 
@@ -90,7 +110,8 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
 > Note that we did not include the `node_modules` or `.vscode` folders. These components are typically not added to source control, as they bloat the size of the repository.  These files should have been excluded from your repository due to settings in the `.gitignore` file
 
-### Exercise 4: Create Continuous Integration pipeline
+---
+## Exercise 4: Create a Continuous Integration pipeline
 
 With application code now uploaded to VSTS, we can begin to create builds via a Build Definition.  Navigate to the **Build** tab from he top navigation.  We will use the hosted agent within VSTS to process our builds in this exercise.
 
@@ -104,7 +125,7 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
 1. Confirm the Repository Source is set to your VSTS Project, that the repository is set the repo that was earlier created, and that the Agent Queue is set to **Hosted**.  
 
-    Check the box next to **Continuous Integration** to automatically run this build anytime code is checked into the repository.
+1. Check the box next to **Continuous Integration** to automatically run this build anytime code is checked into the repository.
 
     ![image](./media/image-013.gif)
 
@@ -123,9 +144,9 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/image-015.gif)
 
-    Configure the step **Tool** to `node` and the **Argument** to `-v`
+1. Configure the step **Tool** to `node` and the **Argument** to `-v`
 
-    Also click the pencil icon to name this build step to **Echo Node Version**
+1. Click the pencil icon to name this build step to **Echo Node Version**
 
     ![image](./media/image-017.gif)
 
@@ -133,7 +154,7 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/image-018.gif)
 
-    Configure **Command** for `install` and name the step **Install Dependencies**
+1. Configure **Command** for `install` and name the step **Install Dependencies**
 
     ![image](./media/image-019.gif)
 
@@ -143,11 +164,11 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/image-020.gif)
 
-    In configuration boxes, we can use variables in addition to string literals.  Configure **Root Folder** to use the directory on the Build Agent that contains our sources files by inserting `$(Build.SourcesDirectory)`. 
+1. In configuration boxes, we can use variables in addition to string literals.  Configure **Root Folder** to use the directory on the Build Agent that contains our sources files by inserting `$(Build.SourcesDirectory)`. 
     
-    For **Archive file to create** insert `$(Build.SourcesDirectory)/archive/$(Build.BuildId).zip`. This will dynamically name our zip file of code with the build number.
+1. For **Archive file to create** insert `$(Build.SourcesDirectory)/archive/$(Build.BuildId).zip`. This will dynamically name our zip file of code with the build number.
 
-    Uncheck the box for **Prefix root folder name to archive paths** to avoid an unnecessary nesting within the .zip file.
+1. Uncheck the box for **Prefix root folder name to archive paths** to avoid an unnecessary nesting within the .zip file.
 
     ![image](./media/image-021.gif)
 
@@ -157,11 +178,12 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/image-022.gif)
 
-    Configure **Path to Publish** as `$(Build.SourcesDirectory)/archive/$(Build.BuildId).zip` to target the zip file created in the previous Build Step.
+1. Configure **Path to Publish** as `$(Build.SourcesDirectory)/archive/$(Build.BuildId).zip` to target the zip file created in the previous Build Step.
 
-    For **Artifact Name** enter `drop`
-
-    Set **Artifact Type** to `Server`
+    > For **Artifact Name** enter `drop`
+    >
+    > Set **Artifact Type** to `Server`
+    >
 
     ![image](./media/image-023.gif)
 
@@ -173,7 +195,7 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/image-024.gif)
 
-    Accept the defaults and click **OK**
+1. Accept the defaults and click **OK**
 
     ![image](./media/image-025.gif)
 
@@ -193,7 +215,8 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
 We now have a Build Definition that will construct our NodeJS application and package it for deployment anytime code is checked into the repository, or a manual build is queued. 
 
-### Exercise 5: Deploy code to an Azure Web App
+---
+## Exercise 5: Deploy code to an Azure Web App
 
 In the ARM Template that was originally deployed in the lab setup, a web app was created as a development environment to hold a NodeJS application. We will use this web app as a deployment target from VSTS. First, we need to prepare this web app for our application code and then create a Release Definition.
 
@@ -201,7 +224,7 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-029.gif)
 
-    Once the blade expands, select **Browse** from the top toolbar
+1. Once the blade expands, select **Browse** from the top toolbar
 
     ![image](./media/image-030.gif)
 
@@ -215,17 +238,17 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-032.gif)
 
-    In the section for **Platforms**, click **Add Url** to add the URL of your Azure Web App from Step 1.  Remember to append the `/auth/openid/return` route at the end, since that is the route that will process the return data from AzureAD. Ensure this address is using **https**.
+1. In the section for **Platforms**, click **Add Url** to add the URL of your Azure Web App from Step 1.  Remember to append the `/auth/openid/return` route at the end, since that is the route that will process the return data from AzureAD. Ensure this address is using **https**.
 
     ![image](./media/image-033.gif)
 
-    Make sure you click **Save** at the bottom of the screen to add the URL to your AzureAD app.
+1. Make sure you click **Save** at the bottom of the screen to add the URL to your AzureAD app.
 
 1. Now that AzureAD is configured, we need to add our AzureAD related environment variables to the Azure Web App.  Back in the **nodejsapp** blade where you hit **Browse** earlier, open **Application Settings** from the left navigation.
 
     ![image](./media/image-034.gif)
 
-    Find the **App Settings** section containing a table of settings.  In the ARM Template we auto-generated the majority of these settings, however we need to add a few additional environment variables to match the `.vscode/launch.json` file that we have been using locally.
+1. Find the **App Settings** section containing a table of settings.  In the ARM Template we auto-generated the majority of these settings, however we need to add a few additional environment variables to match the `.vscode/launch.json` file that we have been using locally.
 
     * **AAD_RETURN_URL** should be set to the same URL that we just configured for our AzureAD application. Should be similar to `https://nodejsappmm6lqhplzxjp2.azurewebsites.net/auth/openid/return`. Ensure this is using **https**.
 
@@ -243,11 +266,11 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-045.gif)
 
-    Then select the **Empty** template 
+1. Then select the **Empty** template 
 
     ![image](./media/image-046.gif)
 
-    Ensure the **Source** is set to the Build Definition name used in the earlier exercise and that **Queue** is set to the **Hosted** option. Then click **Create** to finish creating the Release Definition
+1. Ensure the **Source** is set to the Build Definition name used in the earlier exercise and that **Queue** is set to the **Hosted** option. Then click **Create** to finish creating the Release Definition
 
     ![image](./media/image-047.gif)
 
@@ -265,39 +288,39 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-037.gif)
 
-    In the new tab, select **New Service Endpoint** and from the dropdown choose **Azure Resource Manager**
+1. In the new tab, select **New Service Endpoint** and from the dropdown choose **Azure Resource Manager**
 
     ![image](./media/image-038.gif)
 
-    The modal window should automatically determine your subscription information.  Provide a name such as **Azure**, select **OK*, and a close the tab.
+1. The modal window should automatically determine your subscription information.  Provide a name such as **Azure**, select **OK*, and a close the tab.
 
     ![image](./media/image-039.gif)
 
-    If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
-    format will change to allow you to enter connection information on your subscription:    
+    > If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
+    > format will change to allow you to enter connection information on your subscription:    
 
     ![image](./media/image-043a.gif)
 
-    If you have not created a service principal for the subscription, you will have to follow the 
+1. If you have not created a service principal for the subscription, you will have to follow the 
     [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so.  This process will 
     provide the information to enter in this dialog:
-    1. open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
+1. open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
     in your browser. Select all the content from the window and copy to the clipboard.
-    1. open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
+1. open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
 
     ![image](./media/image-044a.gif)
 
-    1. Click the green arrow to run the PowerShell script
+1. Click the green arrow to run the PowerShell script
 
     ![image](./media/image-045a.gif)
 
-    1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
+1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
     for the service principal only, not the password for your subscription.  So you can use whatever password 
     you would like, just remember it.    
 
     ![image](./media/image-046a.gif)
 
-    1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
+1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
     The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
     window.  Copy and paste these values from the PowerShell window:
         Subscription ID
@@ -305,11 +328,12 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
         Service Principal Client ID
         Service Principal Key
         Tenant ID
-    Also, enter a user-friendly name to use when referring to this service endpoint connection.
+
+1. Enter a user-friendly name to use when referring to this service endpoint connection.
 
     ![image](./media/image-047a.gif)
 
-    Click **Verify connection*, and ensure that the window indicates that the connection was verified. 
+1. Click **Verify connection*, and ensure that the window indicates that the connection was verified. 
     Then Click **OK** and **Close**.
 
     ![image](./media/image-048a.gif)
@@ -320,7 +344,7 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-040.gif)
 
-    Next, for **App Service Name** choose the name of the Node Azure Web App. It may take a moment to populate.
+1. Next, for **App Service Name** choose the name of the Node Azure Web App. It may take a moment to populate.
 
     ![image](./media/image-041.gif)
 
@@ -328,22 +352,23 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-042.gif)
 
-    Select the latest completed Build, and then click **Create**
+1. Select the latest completed Build, and then click **Create**
 
     ![image](./media/image-049.gif)
 
-    Click on the **Release 1** link to view details of the release
+1. Click on the **Release 1** link to view details of the release
    
     ![image](./media/image-050.gif)
 
-    On the release details screen, click **Logs** from the top toolbar to get details about each release step and following the release progress
+1. On the release details screen, click **Logs** from the top toolbar to get details about each release step and following the release progress
 
     ![image](./media/image-051.gif)
 
-    After a successful release you should see the application deployed to your web app
+1. After a successful release you should see the application deployed to your web app
 
     ![image](./media/image-043.gif)
 
+---
 ## Summary
 
 In this hands-on lab, you learned how to:
@@ -353,4 +378,5 @@ In this hands-on lab, you learned how to:
 * Create a Continuous Integration pipeline
 * Deploy a built application to an Azure Web App from VSTS
 
+---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

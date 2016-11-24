@@ -30,9 +30,12 @@ This hands-on-lab has the following exercises:
 ----
 ## Exercise 1: Create VSTS online account
 
-1. In your browser, navigate to `https://www.visualstudio.com/`
+1. In your browser, navigate to [https://www.visualstudio.com/]()
 
     ![image](./media/image-000.gif)
+
+1. Click `Get started for free`
+
 
 1. Log in with your Azure AD account 
 
@@ -132,7 +135,7 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
      ![image](./media/image-054.gif)
 
 ----
-## Exercise 4: Create Continuous Integration pipeline ##
+## Exercise 4: Create a Continuous Integration pipeline ##
 
 With application code now uploaded to VSTS, we can begin to create builds via a Build Definition.  Navigate to the **Build** tab from he top navigation.  We will use the hosted agent within VSTS to process our builds in this exercise.
 
@@ -146,15 +149,11 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
 1. Confirm the Repository Source is set to your VSTS Project, that the repository is set the repo that was earlier created, and that the Agent Queue is set to **Hosted**.  
 
-    Check the box next to **Continuous Integration** to automatically run this build anytime code is checked into the repository.
+1. Check the box next to **Continuous Integration** to automatically run this build anytime code is checked into the repository.
 
     ![image](./media/image-013.gif)
 
-1. The build steps are created for us as part of the VSTS integration.
-    
-    ![image](./media/image-036.gif)
-
-1. Navigate to the ***Build Solution*** step.
+1. The build tasks are created for us as part of the template. Navigate to the ***Build Solution*** step.
 
     ![image](./media/image-036.gif)
 
@@ -239,10 +238,10 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
 1. Provide a connection name and select your subscription then click OK
 
-    ![image](./media/image-056.gif)
+    ![image](./media/image-025.gif)
 
-    If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
-    format will chage to allow you to enter connection information on your subscription:    
+    > If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
+    > format will change to allow you to enter connection information on your subscription:    
 
     ![image](./media/image-025.gif)
 
@@ -251,24 +250,24 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     > provide the information to enter in this dialog:
     >
 
-    1. open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
+1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
     in your browser. Select all the content from the window and copy to the clipboard.
     
-    1. open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
+1. Open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
 
-        ![image](./media/image-044a.gif)
+    ![image](./media/image-044a.gif)
 
-    1. Click the green arrow to run the PowerShell script
+1. Click the green arrow to run the PowerShell script
 
-        ![image](./media/image-045a.gif)
+    ![image](./media/image-045a.gif)
 
-    1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
+1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
     for the service principal only, not the password for your subscription.  So you can use whatever password 
     you would like, just remember it.    
 
-        ![image](./media/image-046a.gif)
+    ![image](./media/image-046a.gif)
 
-    1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
+1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
     The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
     window.  Copy and paste these values from the PowerShell window:
         Subscription ID
@@ -276,18 +275,16 @@ In the ARM Template that was originally deployed, a web app was created as a dev
         Service Principal Client ID
         Service Principal Key
         Tenant ID
-    Also, enter a user-friendly name to use when referring to this service endpoint connection.
 
-        ![image](./media/image-047a.gif)
+1. Also, enter a user-friendly name to use when referring to this service endpoint connection.
+    ![image](./media/image-047a.gif)
 
-1. Click **Verify connection*, and ensure that the window indicates that the connection was verified. 
+1. Click **Verify connection**, and ensure that the window indicates that the connection was verified. 
     Then Click **OK** and **Close**.
 
-        ![image](./media/image-048a.gif)
+    ![image](./media/image-048a.gif)
 
 1. Navigate back to the VSTS build tab in the browser and click the click the **Refresh** icon to refresh the connections. The **Azure** connection that we setup should now appear.  Select it.
-
-    ![image](./media/image-058.gif)
 
 1. Next, for **App Service Name** choose the name of the .NET Azure Web App. It may take a moment to populate.
 
@@ -305,11 +302,11 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     
     ![image](./media/image-064.gif)
 
-After a successful build you should see the application deployed to your web app
+1. After a successful build you should see the application deployed to your web app
 
-![image](./media/image-065.gif)
+    ![image](./media/image-065.gif)
 
-![image](./media/image-066.gif)
+    ![image](./media/image-066.gif)
 
 ---
 
