@@ -118,7 +118,7 @@ and click the link that says `Free Trial`. This will navigate you to this page:
 ---
 ## Exercise 3: Start your VSTS trial subscription
 
-1. In your browser, go to <a href="http://www.visualstudio.com/team-services">http://www.visualstudio.com/team-services</a> and click on `sign in` in the upper right corner.  This should take you to a screen that looks like this:
+1. In your browser, go to <a href="http://www.visualstudio.com/team-services" target="_blank">http://www.visualstudio.com/team-services</a> and click on `sign in` in the upper right corner.  This should take you to a screen that looks like this:
 
     ![image](./media/2016-10-18_17-30-18.gif)
 
