@@ -338,7 +338,7 @@ This hands-on-lab has the following exercises:
     }
     ```
 
-1. Resolve the references for `DevCamp.WebApp.Mappers, DevCamp.WebApp.Utils, DevCamp.WebApp.ViewModelsIncidentAPI, IncidentAPI.Models and Newtonsoft.Json`.
+1. Resolve the references for `DevCamp.WebApp.Mappers, DevCamp.WebApp.Utils, DevCamp.WebApp.ViewModels and IncidentAPI, IncidentAPI.Models and Newtonsoft.Json`.
 
 1. Now let's add code to create an incident. We will add a new `Create` method to the `IncidentController` class that will handle the Create HTTP post method. Add the following code:
 
