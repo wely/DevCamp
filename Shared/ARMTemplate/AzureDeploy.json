@@ -82,23 +82,7 @@
                     "capacity": "[variables('redisCacheSKUCapacity')]"
                 },
                 "redisVersion": "[variables('redisCacheRedisVersion')]"
-            },
-            "resources": [
-                {
-                    "apiVersion": "2015-07-01",
-                    "type": "Microsoft.Cache/redis/providers/diagnosticsettings",
-                    "name": "[concat(variables('redisCacheName'), '/Microsoft.Insights/service')]",
-                    "location": "[resourceGroup().location]",
-                    "dependsOn": [
-                        "[concat('Microsoft.Storage/storageAccounts/', variables('storageName'))]",
-                        "[concat('Microsoft.Cache/Redis/', variables('redisCacheName'))]"
-                    ],
-                    "properties": {
-                        "status": "ON",
-                        "storageAccountName": "[variables('diagStorageName')]"
-                    }
-                }
-            ]
+            }
         },
         {
             "apiVersion": "2015-04-08",
