@@ -11,7 +11,7 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-The source for the starter app is located in the [TODO:ADD REF](#) folder. 
+The source for this lab is located in the [start](start) folder. 
 
 ## Exercises
 This hands-on-lab has the following exercises:

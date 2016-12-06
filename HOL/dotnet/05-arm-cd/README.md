@@ -1,7 +1,5 @@
 # ARM 
 
-> This lab is using Visual Studio Code rather than Visual Studio. Please ensure you have VSCode [installed](https://code.visualstudio.com), and have [installed the latest version of 32 bit NodeJS](https://nodejs.org/dist/v7.1.0/node-v7.1.0-x86.msi)
-
 ## Overview
 In this lab, you will learn to provision and manage resources in Azure with the new Azure Resource Manager.  Then we will deploy our sample application into newly created infrastructure.
 
@@ -11,202 +9,191 @@ In this hands-on lab, you will learn how to:
 * Deploy ARM Templates to Azure
 * Integrate environments into VSTS Release pipelines
 
+## Prerequisites
+
+The source for this lab is located in the [start](start) folder. 
+
 ## Exercises
 This hands-on-lab has the following exercises:
-* Exercise 1: Create an ARM Template in Visual Studio Code
-* Exercise 2: Deploy ARM Template to Azure via the XPlat CLI
+* Exercise 1: Create an ARM Template in Visual Studio
+* Exercise 2: Deploy ARM Template to Azure
 * Exercise 3: Integrate new Web App into VSTS
 * Exercise 4: Deploy City Power & Light to new Web App
 
 ### Note
 > In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
 
-### Exercise 1: Create an ARM Template in Visual Studio Code
+---
+## Exercise 1: Create an ARM Template in Visual Studio
 
-Visual Studio Code includes a sizable ecosystem of extensions. One such extension is the [Azure Resource Manager Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools).
+1. Open Visual Studio 2015
 
-1. Install the ARM Tools extension in Visual Studio Code by using the [Command Palette](https://code.visualstudio.com/Docs/editor/codebasics#_command-palette).  With VSCode open, press `CTRL` + `P` and enter `ext install azurerm-vscode-tools`.
+1. Select `File > New > Project`
+  
+    ![image](./media/image-01.gif)
 
-    ![image](./media/image-001.gif)
+1. Select `Cloud > Azure Resource Group` and provide a name for the Solution. In the screenshot, we choose ***DevCampWebApp***. Select a location. Create a new folder if you wish.
 
-    This extension gives intellisense and schema support for ARM Templates.  
-    
-1. Next, let's install a pack of code snippets to make creating resources easier. In VS Code, you can open the JSON snippets file by either navigating to **File** -> **Preferences** -> **User Snippets** -> **JSON**, or by selecting F1 and typing `preferences` until you can select **Preferences: Snippets**.
+    ![image](./media/image-02.gif)
 
-    ![image](./media/image-002.gif)
+1. In the `Select Azure Template` window, find the `Web App` template and select it. Click `Ok`. This will create an Azure Resource project and add a web application resource.
 
-    From the options, select **JSON**
+    ![image](./media/image-03.gif)
 
-    ![image](./media/image-003.gif)
+1. Open `Solution Explorer` and review the assets. Select the `WebSite.json` file and open it in the editor.
 
-    The json file that opens can be extended to hold custom snippets.  
-    
-    ![image](./media/image-004.gif)
-    
-    From the [azure-xplat-arm-tooling](https://github.com/Azure/azure-xplat-arm-tooling/) repo, open the [raw snippets file](https://raw.githubusercontent.com/Azure/azure-xplat-arm-tooling/master/VSCode/armsnippets.json) and copy the entire contents to your clipboard.
+    ![image](./media/image-04.gif)
 
-    Then, paste the contents into VSCode in between the `{}` of the json file. 
+1. The `JSON Editor` tool pane will open and provide an outline of the ARM Template. Expand each section to view the content.
 
-    ![image](./media/image-005.gif)
+    ![image](./media/image-05.gif)
 
-    Save and close the file. You will now be able to use snippets in the creation of ARM files.
+    > Note: If the tool pane does not open, ensure that you have the latest Azure SKD installed. At the time of this writing, the latest version is 2.9.
 
-1. Now that we have our tooling setup, open `start/armdeploy.json`. This is a skeleton ARM Template, including the four sections Parameters, Variables, Resources, and Outputs. Click into the brackets next to Resources and create a linebreak.  In the new line, type `arm-p` and hit enter to select **arm-plan**.  This will create a new App Service Plan, which controls the features and performance of assoicated Azure Web Apps.
+1. Our new web application will need a globally unique DNS name. Locate the `webSiteName` variable. This will syncronize the editor view with the outline view. In the editor, replace the existing name ***dotnetapptest**.
 
-    ![image](./media/image-006.gif)
-
-    Tap the right arrow key, then hit backspace to remove the `1` from the resource name. 
-
-    ![image](./media/image-007.gif)
-
-    Next to our resource's ending `}` add a `,` and a line break. Then repeat the process above to create a Web App by typing `arm-w` and selecting `arm-webapp`.
-
-    ![image](./media/image-008.gif) 
-
-    This web app name needs to be globally unique, as it will be used for the https://***.azurewebsites.net DNS entry and cannot be the same as an existing webapp.  Use `nodejsapptest` plus 4-5 random characters.
-
-    The webapp resource has stubbed in 3 instances of `APP_SERVICE_PLAN_NAME`. Replace this value with the `AppServicePlan` name value that you gave the App Service Plan earlier.
-
-    ![image](./media/image-009.gif)
+     ![image](./media/image-06.gif)
 
 1. The web application needs to be configured to work with the AzureAD, Azure Storage, Azure Redis Cache, and ASP.NET WebAPI that we configured earlier. 
 
-    In earlier exercises we have configured these settings as environment variables on our local machines, and in the Azure Portal for our "Dev" Azure Web App.  
+    In earlier exercises we have configured these settings as web.config variables on our local machines, and in the Azure Portal for our "Dev" Azure Web App.  
 
-    ARM Templates can include `resources`, which define numerous options for a given resource.  For a web app, we can use `appsettings` to adjust the environment variables present on our app.  Here is an extended web app with the `resources` array filled in.  Paste the `resources` content into your ARM Template, updating the `dependsOn` attribute to match your website's `name`, and the environment variables to match your values. 
+    ARM Templates can include child `resources`, which define options for a given parent resource.  For a web app, we can add `appsettings` to adjust the environment variables present on our app, instead of or in addition to using web.config.
+    
+1. In the JSON outline tool pane, select the `Website` parent resource. Right-click and select `Add New Resource`
 
-    > If you are using VSCode and have been debugging locally with `.vscode/launch.json` then you can copy/paste the values into the template to override the `properties` sample values below. If you have been using .NET in Visual Studio, please map the web.config values into the JSON object for `properties`.
+     ![image](./media/image-07.gif)
 
-    ```json
-    {
-        "apiVersion": "2015-08-01",
-        "name": "citypowertest581951",
-        "type": "Microsoft.Web/sites",
-        "location": "[resourceGroup().location]",
-        "tags": {
-            "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/AppServicePlan')]": "Resource",
-            "displayName": "citypowertest581951"
-        },
-        "dependsOn": [
-            "Microsoft.Web/serverfarms/AppServicePlan"
-        ],
-        "properties": {
-            "name": "citypowertest581951",
-            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', 'AppServicePlan')]"
-        },
-        "resources": [
-            {
-                "name": "appsettings",
-                "type": "config",
-                "apiVersion": "2015-08-01",
-                "dependsOn": [
-                    "[concat('Microsoft.Web/sites/', 'citypowertest581951')]"
-                ],
-                "tags": {
-                    "displayName": "AppSettings"
-                },
-                "properties": {
-                    "WEBSITE_NODE_DEFAULT_VERSION": "6.7.0",
-                    "AZURE_STORAGE_ACCOUNT": "incidentblobstgmm6lqhplz",
-                    "AZURE_STORAGE_ACCESS_KEY": "A3HFnKZPzGWzQl7z/UzCev32QE6aCecbbQ4qAmmyKwjCYGBjzHXT3d2CmgX7NUR6+fMZsk2VUlaSE7x4nzW5hg==",
-                    "AZURE_STORAGE_BLOB_CONTAINER": "images",
-                    "AZURE_STORAGE_QUEUE": "thumbnails",
-                    "INCIDENT_API_URL": "https://incidentapimm6lqhplzxjp2.azurewebsites.net",
-                    "REDISCACHE_HOSTNAME": "incidentcachemm6lqhplzxjp2.redis.cache.windows.net",
-                    "REDISCACHE_PORT": "6379",
-                    "REDISCACHE_SSLPORT": "6380",
-                    "REDISCACHE_PRIMARY_KEY": "ofiGLn8mowbVJ9/egFQ2+opdel4FQw7yWMFhxZclfPo=",
-                    "AAD_CLIENT_ID": "2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6",
-                    "AAD_CLIENT_SECRET": "JjrKfgDyo5peQ4xJa786e8z",
-                    "AAD_RETURN_URL": "[concat('https://', reference('citypowertest581951', '2015-08-01').defaultHostName, '/auth/openid/return')]"
-                }
-            }
-        ]
+1. Locate the `Application Settings for Web Apps` resource and select it. Enter a name and click `Add`.
+
+     ![image](./media/image-08.gif)
+
+1. Locate the `Properties` node in the Application Settings resource.
+
+     ![image](./media/image-09.gif)
+
+1. Replace the properties node with the following:
+
+    ```JSON
+    "properties": {
+        "AZURE_STORAGE_ACCOUNT": "{YOUR STORAGE ACCOUNT NAME}",
+        "AZURE_STORAGE_ACCESS_KEY": "{YOUR STORAGE ACCOUNT KEY}",
+        "AZURE_STORAGE_BLOB_CONTAINER": "images",
+        "AZURE_STORAGE_QUEUE": "thumbnails",
+        "INCIDENT_API_URL": "https://{YOUR API APPLICATION NAME}.azurewebsites.net",
+        "REDISCACHE_HOSTNAME": "{YOUR REDIS CACHE NAME}.redis.cache.windows.net",
+        "REDISCACHE_PORT": "6379",
+        "REDISCACHE_SSLPORT": "6380",
+        "REDISCACHE_PRIMARY_KEY": "{YOUR REDIS CACHE KEY}",
+        "AAD_APP_ID": "{YOUR APP ID}",
+        "AAD_APP_SECRET": "{YOUR CLIENT SECRET}",
+        "AAD_APP_REDIRECTURI": "[concat('https://', variables('webSiteName'), '.azurewebsites.net/')]",
+        "AAD_INSTANCE": "https://login.microsoftonline.com/{0}/{1}",
+        "AAD_AUTHORITY": "https://login.microsoftonline.com/common/",
+        "AAD_LOGOUT_AUTHORITY": "https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=",
+        "AAD_GRAPH_SCOPES": "openid email profile offline_access Mail.ReadWrite Mail.Send User.Read User.ReadBasic.All",
+        "GRAPH_API_URL": "https://graph.microsoft.com"
     }
     ```
 
-    > For the `AAD_RETURN_URL` we are dynamically resolving the value by using a `reference()` lookup for a given app name. Ensure that `citypowertest581951`   matches whatever name you choose for your web app
+1. Locate the values surrounded by `{YOUR ...}`. We will need to replace these values with the correct settings for your web application. You can get these values from the web.config created in the previous labs.
+
+1. If you do not have the values from the previous labs, open the Azure portal and find the web application in your resource group that starts with `dotnetapp...`
+
+    ![image](./media/image-12.gif)
+
+1. Select `application settings` from the settings blade
+
+    ![image](./media/image-13.gif)
+
+1. Copy the values by double-clicking in the cell and copying the values. Paste them into the ARM template in the correct location that matches the key name.
+
+    ![image](./media/image-14.gif)
 
 We are now ready to deploy our ARM Template containing an App Service Plan, and a Web App with environment variables to Azure. 
 
-### Exercise 2: Deploy ARM Template to Azure via the XPlat CLI
+---
+## Exercise 2: Deploy ARM Template to Azure using Visual Studio
 
-For deploying the ARM Template we will use the Azure Xplat CLI.  Please Ensure you have [installed](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/#option-1-install-an-npm-package) the Azure XPlat CLI package from NPM before proceeding.
+1. In Visual Studio, select the ARM Project. `Right-click` and select `Deploy > New`
 
-> Before continuing, please execute `azure login` and follow the prompt to authenticate your account
+    ![image](./media/image-10.gif)
 
-1. From the command line, `cd` to the `start` directory containing our ARM Template
+1. Select your resource group from the drop down and select `Ok`
 
-    ```bash
-    azure group create -n DevCampTest -l "West US"
-    azure group deployment create -f .\azuredeploy.json -g DevCampTest
-    ```
-    
-    > Feel free to swap out "West US" with another region
+    ![image](./media/image-11.gif)
 
-    ![image](./media/image-011.gif)
+1. A pop up will appear where you can enter a name for your app service and select the App Service plan. Enter a name, and select `B1`. This is a basic plan.
+
+     ![image](./media/image-15.gif)
+
+     ![image](./media/image-16.gif)
+
+1. Click `Save`
 
 1. Open the [Azure Portal](https://portal.azure.com) and verify that the Resource Group was created with the defined resources.
 
-    ![image](./media/image-010.gif)
+    ![image](./media/image-17.gif)
 
     Also check the **Application Settings** blade to verify that the environment variables were created as expected
 
-    ![image](./media/image-012.gif)
+    ![image](./media/image-18.gif)
 
-1. To use authentication with this app, we need to update our AzureAD app registration to whitelist its URL. In the browser, head back to the [Application Registration Portal](https://apps.dev.microsoft.com/#/appList) and select your application.  Under the **Platforms** heading, select **Add Url** and paste in the URL of your newly created Azure Web App plus the `/auth/openid/return` suffix. Also, since two of our applications share the same *.azurewebsites.net domain we need to add an entry for `https://azurewebsites.net` into the list. 
+1. To use authentication with this new web app, we need to update our AzureAD app registration to whitelist its URL. In the browser, head back to the [Application Registration Portal](https://apps.dev.microsoft.com/#/appList) and select your application.  Under the **Platforms** heading, select **Add Url** and paste in the URL of your newly created Azure Web App. Click Save
 
-    ![image](./media/image-021.gif)
+    ![image](./media/image-19.gif)
 
     > See [here](https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-limitations/#restrictions-on-redirect-uris) for more information about redirect URIs
 
 The new resource group is now holding our "Test" environment web app and has been added to our app registration.
 
-### Exercise 3: Integrate new Web App into VSTS
+---
+## Exercise 3: Integrate new Web App into VSTS
 
-Back in VSTS, open the **Release Definition** that we started in a previous lab.  You should be be able to find this by navigating to **Releases** on the top navigation. We need to create a second environment to serve as our test web app.
+1. In VSTS, open the **Release Definition** that we started in a previous lab.  You should be be able to find this by navigating to **Releases** on the top navigation. We need to create a second environment to serve as our test web app.
 
-![image](./media/image-013.gif)
+    ![image](./media/image-22.gif)
 
-1. In the Release Definition, select **Add environment** and select **Clone a selected environment**. 
+1. In the Release Definition, select **Add environment** and select **Clone a selected environment**. We will use our existing Dev web app configuration as the template for the new test web app configuration.
 
-    ![image](./media/image-014.gif)
+    ![image](./media/image-23.gif)
 
 1. VSTS allows us to control and govern how releases happen between environments.  Instead of automatically deploying our test environment after our dev environment, let's add an approval step.  A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test envrionment. 
 
     For the **Pre-deployment approval** option, select **Specific users** and enter your account name. Then click the **Create** button
 
-    ![image](./media/image-015.gif)
+    ![image](./media/image-24.gif)
 
 1. Rename the environment from **Dev copy** to **Test** and click the the **Deploy AzureRM App Service** task. Update the **App Service Name** to match the web app that you just deployed via the ARM Template. The task now targets the test environment web app, rather than the dev environment web app.
 
-    ![image](./media/image-016.gif)
+    ![image](./media/image-25.gif)
 
 1. Save your Release Definition to finish adding the additional environment.
 
-### Exercise 4: Deploy City Power & Light to new Web App
+---
+## Exercise 4: Deploy City Power & Light to new Web App
 
 With the updated Release Definition, we can now execute a release.
 
 1. Click on the **Release** button and in the dropdown choose **Create Release**.
 
-    ![image](./media/image-017.gif)
+    ![image](./media/image-26.gif)
 
 1. Select a Build to release into the environments. This is likely the largest numbered Build. Then click the **Create** button
 
-    ![image](./media/image-018.gif)
+    ![image](./media/image-27.gif)
 
 1. Click the Release number to navigate to the Release Details screen
 
-    ![image](./media/image-019.gif)
+    ![image](./media/image-28.gif)
 
 1. On the top toolbar, select **Logs** to monitor the release process.  When the release for the dev environment finishes, you will be prompted to approve the release to the test environment.  Click **Approve** to continue the release.
 
-    ![image](./media/image-020.gif)
+    ![image](./media/image-29.gif)
 
 1. Once the test environment app has finished its release, open the app in the browser and login.
 
-    ![image](./media/image-022.gif)
+    ![image](./media/image-30.gif)
 
 We have now created a new "test" environment web app and app service plan via an ARM Template, and integrated the new environment into our VSTS Release Definition.
 
