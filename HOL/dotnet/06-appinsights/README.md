@@ -34,7 +34,7 @@ This hands-on-lab has the following exercises:
 ----
 ### Exercise 1: Create an Application Insights resource
 
-An instance of Application Insights can be created in a variety of ways, including ARM Templates or CLI commands.  For this execise we will use the Azure Portal to create and configure our instance.
+An instance of Application Insights can be created in a variety of ways, including ARM Templates or CLI commands.  For this exercise we will use the Azure Portal to create and configure our instance.
 
 1. In a browser, navigate to the [Azure Portal](https://portal.azure.com)
 
@@ -69,7 +69,7 @@ App Insights works with 2 components:
 1. A server side SDK that integrates into the ASP.NET processes
 2. A snippet of JavaScript sent down to the client's browser to monitor behavior
 
-We will add both components to our application and enable the sending of telementry into the AppInsights service.
+We will add both components to our application and enable the sending of telemetry into the AppInsights service.
 
 1. Navigate to the `appinsights` folder and open the starter solution in Visual Studio. 
 
@@ -92,13 +92,13 @@ We will add both components to our application and enable the sending of telemen
 1. Click on Configure Exception collection and configure trace collection. This will enable additional trace listeners.
     
     ![image](./media/image-017.gif)
-    > The snipet above was taken from the Application Insights Configuration window. You can access it by right-clicking the project in your solution and choosing 'Application Insights > Configure Application Insights...'. If you aren't seing this option, make sure you are using an updated version of the 'Developer Analytics Tools' extension. By the time of this writing, this is 7.12.
+    > The snippet above was taken from the Application Insights Configuration window. You can access it by right-clicking the project in your solution and choosing 'Application Insights > Configure Application Insights...'. If you aren't seeing this option, make sure you are using an updated version of the 'Developer Analytics Tools' extension. By the time of this writing, this is 7.12.
 
 1. Your Application Insights page should appear like below.
 
     ![image](./media/image-018.gif)
 
-1. By default, the `ApplicationInsights.config` is excluded from source control due to the fact that it contains the Instrumentation key. We will remove this from the config file and inject it at runttime. Remove the following key from the config file:
+1. By default, the `ApplicationInsights.config` is excluded from source control due to the fact that it contains the Instrumentation key. We will remove this from the config file and inject it at runtime. Remove the following key from the config file:
 
     ![image](./media/image-020.gif)
 
@@ -122,11 +122,11 @@ We will add both components to our application and enable the sending of telemen
     //Add the telemetry key from config
     TelemetryConfiguration.Active.InstrumentationKey = Settings.APPINSIGHTS_KEY;
     ```
-1.  Resolve the references in this file. If you recieve an error related to the FilterConfig class, check to see if a duplicate FilterConfig.cs was created. If so remove it.
+1.  Resolve the references in this file. If you receive an error related to the FilterConfig class, check to see if a duplicate FilterConfig.cs was created. If so remove it.
 
     ![image](./media/image-021.gif)
 
-1. Build and run your application and in the navigate around several pages to generate sample telementry.
+1. Build and run your application and in the navigate around several pages to generate sample telemetry.
 
 1. You can view telemetry in the Azure Portal or directly in Visual Studio from the menu item. 
     
@@ -152,7 +152,7 @@ We will add both components to our application and enable the sending of telemen
 
 1. Let's integrate the snippet into our views. Open the Views > Shared > _Layout.cshtml file. This file controls the outer layout for all of the pages.
 
-1. Paste the following snippet below the existing script tags. Notice that we replaced the static instrumentaiton key with the constant from our settings.cs class :
+1. Paste the following snippet below the existing script tags. Notice that we replaced the static instrumentation key with the constant from our settings.cs class :
 
     ```html
     <!-- 
@@ -173,18 +173,18 @@ We will add both components to our application and enable the sending of telemen
         appInsights.trackPageView();
     </script>
     ```
-1. Redeploy the application and load several pages to generate more sample telementry. The Azure Portal should now light up data for **Page View Load Time** 
+1. Redeploy the application and load several pages to generate more sample telemetry. The Azure Portal should now light up data for **Page View Load Time** 
 
     ![image](./media/image-009.gif)
 
-Our application is now providing the Application Insights service telementry data from both the server and client.
+Our application is now providing the Application Insights service telemetry data from both the server and client.
 
 ----
 ### Exercise 3: Monitor custom events
 
 Up until this point the telemetry provided has been an automatic, out-of-the-box experience.  For custom events we need to use the SDK. Let's create an event where any time a user views their Profile page, we record their name and AzureAD tenant ID.
 
-1. Open the Profilecontroller.cs file
+1. Open the `Profilecontroller.cs` file
 
 1. Add the following to the top of the class:
 
@@ -193,17 +193,17 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
     private TelemetryClient telemetryClient = new TelemetryClient();
     ```
 
-1. In the SignIn() Method, add the following:
+1. In the `SignIn()` Method, add the following as the first call:
     
     ```csharp
     telemetryClient.TrackEvent("Sign in");
     ```
-1. Add the following to the SignOut method()
+1. In the `SignOut` method(), add the following as the first call:
 
     ```csharp
     telemetryClient.TrackEvent("Sign out");
     ```
-1. In the Index() Method, add the following before the call to the GraphAPI:
+1. In the Index() Method, add the following **AFTER** the call to the GraphAPI to capture the token:
 
     ```csharp
     //#### TRACK A CUSTOM EVENT ####
@@ -211,7 +211,7 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
     telemetryClient.TrackEvent("View Profile", profileProperties);
     //#### TRACK A CUSTOM EVENT ####
     ```
-1. Resolve the references in this class and save the open files
+1. Resolve the references in this class and save the open files.
 
 1. Hit F5 to begin debugging. Sign in, view your profile and Sign out a few times. Notice the custom events in the portal.
 

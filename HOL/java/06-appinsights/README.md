@@ -1,4 +1,4 @@
-# Monitoring with Application Insights (NodeJS)
+# Monitoring with Application Insights (Java)
 
 ## Overview
 In this lab, you will create and integrate an instance of Application Insights with your application to provide a 360* view of your app performance. 
@@ -11,7 +11,7 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-The source for the starter app is located in the `c:\DevCamp\HOL\java\06-appinsights\start` folder. 
+The source for the starter app is located in the [start](start) folder. 
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -21,9 +21,10 @@ This hands-on-lab has the following exercises:
 * Exercise 4: Create a global web test
 * Exercise 5: Interact with your telemetry data
 
-### Exercise 1: Create an Application Insights resource
+---
+## Exercise 1: Create an Application Insights resource ##
 
-An instance of Application Insights can be created in a variety of ways, including ARM Templates or CLI commands.  For this execise we will use the Azure Portal to create and configure our instance.
+An instance of Application Insights can be created in a variety of ways, including ARM Templates or CLI commands.  For this exercise we will use the Azure Portal to create and configure our instance.
 
 1. In a browser, navigate to the [Azure Portal](https://portal.azure.com)
 
@@ -51,13 +52,14 @@ An instance of Application Insights can be created in a variety of ways, includi
 
 We now have an instance of Application Insights created and ready for data.  The Instrumentation Key is important, as it is the link that ties an application to the AI service. 
 
-### Exercise 2: Add server and client side SDK's 
+--
+## Exercise 2: Add server and client side SDK's ##
 
 App Insights works with 2 components: 
 1. A server side SDK that integrates into the Java processes
 2. A snippet of JavaScript sent down to the client's browser to monitor behavior
 
-We will add both components to our application and enable the sending of telementry into the AppInsights service.
+We will add both components to our application and enable the sending of telemetry into the AppInsights service.
 
 1. Open the application in Eclipse. Feel free to use the folder you've been using throughout the hands on labs, or feel free to use the `start` folder. 
 
@@ -71,7 +73,7 @@ We will add both components to our application and enable the sending of telemen
     gradle will automatically retrieve and include these libraries when the application is built or run. 
     
     To make sure that Eclipse knows about the new packages we added to
-    the buld, run the `ide/eclipse` gradle task in the `gradle tasks`
+    the build, run the `ide/eclipse` gradle task in the `gradle tasks`
     window. Then right-click on the project in the project explorer,
     close the project, and then open it again.
 
@@ -164,7 +166,7 @@ We will add both components to our application and enable the sending of telemen
     > This file allows you to configure what is tracked by ApplicationInsights and how it is communicated to Azure.  There is documentation on [the .NET version](https://azure.microsoft.com/en-us/documentation/articles/app-insights-configuration-with-applicationinsights-config/), but this should be checked against the [Java SDK repository](https://github.com/Microsoft/ApplicationInsights-Java)
     >
 
-1. Run your application and in the navigate around several pages to generate sample telementry.  
+1. Run your application and in the navigate around several pages to generate sample telemetry.  
 
 1. Back in the Azure Portal, refresh the browser tab (or click **Refresh** from the top toolbar) until you see data appear.  
 
@@ -238,14 +240,14 @@ We will add both components to our application and enable the sending of telemen
  	<div th:include="appinsights"></div>   
      ...
     ```
-1. Re-run the application and load several pages to generate more sample telementry. The Azure Portal should now light up data for **Page View Load Time** 
+1. Re-run the application and load several pages to generate more sample telemetry. The Azure Portal should now light up data for **Page View Load Time** 
 
     ![image](./media/image-009.gif)
 
-Our application is now providing the Application Insights service telementry data from both the server and client.
+Our application is now providing the Application Insights service telemetry data from both the server and client.
 
-
-### Exercise 3: Monitor custom events
+---
+## Exercise 3: Monitor custom events ##
 
 Up until this point the telemetry provided has been an automatic, out-of-the-box experience.  For custom events we need to use the SDK. Let's create an event where any time a user views their Profile page, we record their name and AzureAD tenant ID.
 
@@ -288,10 +290,11 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
 
     ![image](./media/image-012.gif)
 
-These custom events (and the related concept of constom metrics) are a powerful way to integrate telemetry into our 
+These custom events (and the related concept of custom metrics) are a powerful way to integrate telemetry into our 
 application and centralize monitoring across multiple application instances.
 
-### Exercise 4: Create a global web test
+---
+## Exercise 4: Create a global web test ##
 
 Application Insights has the ability to do performance and availability testing of your application from multiple locations around the world, all configured from the Azure portal.  
 
@@ -328,9 +331,10 @@ Application Insights has the ability to do performance and availability testing 
 
     >With all of this testing, you may exceed the limits of the free service tier for Azure app services.  If that occurs, you can click on the App Service, and you'll see a notification that your App Service has been stopped due to it's consumption.  All you need to do is change the App service plan to basic, which will start the application again.
 
-### Exercise 5: Interact with your telemetry data
+---
+## Exercise 5: Interact with your telemetry data ##
 
-In the `Metrics Explorer`, you can create charts and grids based on the telemetry data recieved, and you can relate data points over time.  These charts and graphs are very configurable, so you can see the metrics that matter to you.
+In the `Metrics Explorer`, you can create charts and grids based on the telemetry data received, and you can relate data points over time.  These charts and graphs are very configurable, so you can see the metrics that matter to you.
 
 1. Here is an example of page views vs process CPU and processor time:
 
@@ -353,7 +357,8 @@ In the `Metrics Explorer`, you can create charts and grids based on the telemetr
 
    ![image](./media/2016-10-25_22-29-02.gif)
 
-### Exercise 6: Monitor logging events
+---
+## Exercise 6: Monitor logging events ##
 
 Application Insights can also integrate with the Java logging frameworks such as Log4J and 
 Logback.  To acomplish this, we need to add the proper Application Insights logging library 
@@ -391,7 +396,8 @@ project, and configure the logging implementation to send logs to AI.
     >The include and logger lines at the bottom are examples of other logging tasks you can
     do within the logback environment.  Please refer to the [logback documentation](http://logback.qos.ch/) for more information. 
 
-## Summary
+---
+## Summary ##
 
 In this hands-on lab, you learned how to:
 * Exercise 1: Create an Application Insights resource
@@ -401,4 +407,5 @@ In this hands-on lab, you learned how to:
 * Exercise 5: Interact with your telemetry data
 * Exercise 6: Monitor logging events
 
+---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

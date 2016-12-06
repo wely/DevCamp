@@ -11,7 +11,7 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-The source for the starter app is located in the [TODO:ADD REF](#) folder. 
+The source for the starter app is located in the [start](start) folder. 
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -21,9 +21,10 @@ This hands-on-lab has the following exercises:
 * Exercise 4: Create a global web test
 * Exercise 5: Interact with your telemetry data
 
-### Exercise 1: Create an Application Insights resource
+---
+## Exercise 1: Create an Application Insights resource ##
 
-An instance of Application Insights can be created in a variety of ways, including ARM Templates or CLI commands.  For this execise we will use the Azure Portal to create and configure our instance.
+An instance of Application Insights can be created in a variety of ways, including ARM Templates or CLI commands.  For this exercise we will use the Azure Portal to create and configure our instance.
 
 1. In a browser, navigate to the [Azure Portal](https://portal.azure.com)
 
@@ -51,7 +52,8 @@ An instance of Application Insights can be created in a variety of ways, includi
 
 We now have an instance of Application Insights created and ready for data.  The Instrumentation Key is important, as it is the link that ties an application to the AI service. 
 
-### Exercise 2: Add server and client side SDK's 
+---
+## Exercise 2: Add server and client side SDK's ##
 
 App Insights works with 2 components: 
 1. A server side SDK that integrates into the NodeJS processes
@@ -196,7 +198,8 @@ We will add both components to our application and enable the sending of telemet
 
 Our application is now providing the Application Insights service telemetry data from both the server and client.
 
-### Exercise 3: Monitor custom events
+---
+## Exercise 3: Monitor custom events ##
 
 Up until this point the telemetry provided has been an automatic, out-of-the-box experience.  For custom events we need to use the SDK. Let's create an event where any time a user views their Profile page, we record their name and AzureAD tenant ID.
 
@@ -253,11 +256,8 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
 
 These custom events (and the related concept of custom metrics) are a powerful way to integrate telemetry into our application and centralize monitoring across multiple application instances.
 
-### Exercise 4: Create a global web test
-
-### Exercise 5: Interact with your telemetry data
-
-## Summary
+---
+## Summary ##
 
 In this hands-on lab, you learned how to:
 * Create a Visual Studio Team Services online account
