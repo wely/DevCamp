@@ -61,7 +61,15 @@ introduction to the 2-day interactive workshop.
 
 **Goal:** This deck is marketing focused and is designed to provide a high-level overview of Azure. It is geared towards newcomers to the Microsoft cloud offerings.
 
-**Demos:** You can show the Azure portal, and show the DevCamp application
+**Demos:** 
+* You can show the Azure portals
+    * [US Azure](http://portal.azure.com)
+    * [China (Mooncake) playbook](http://mncplaybook.azurewebsites.net/)
+* Show the DevCamp application
+* Show the trust centers 
+    * [US Trust Center](https://www.trustcenter.com/)
+    * [Trust Center Downloads](http://aka.ms/stp) **Must be a global admin**
+    * [China Trust Center](https://www.trustcenter.cn/zh-cn/compliance/)
 
 **Session prep tips:** 
 * Review the latest Azure features.  Explain that there may be Azure changes since this content has been created.
@@ -136,7 +144,7 @@ We will provide an overview of the developer tools available for developing on y
 ### HOL Proctoring ###
 * Potential subscription setup issues - order of steps is important
 * If there are problems, we can use the azure passes we've allocated
-* If the attendee wants to use their own Azure subscription, that's ok but be aware of potential issues with O365 integration  
+* If the attendee wants to use their own Azure subscription, that's ok but be aware of potential issues with O365 integration (they must be a Global Admin)
 
 **Tasks to complete**
 * Set up development environment
@@ -148,6 +156,8 @@ We will provide an overview of the developer tools available for developing on y
 * No cell phone and/or Credit card for verification - these are required for trial subscriptions.  If the attendee doesn't have them, let them use one of the Azure Passes.
 * If trials have already been created using that phone or credit card, the process may fail.  If so, give them an azure pass. 
 * If they have an existing subscription they'd like to use, that's fine but there may be issues with connectivity to O365.
+
+**If you have an issue setting the Azure Pass or trial, but some students are working, have that user set up a new user(s) account. Make the test user accounts Global Admin. Also grant the user account access to Azure to the subscription.**
 
 > The ARM Template may not deploy successfully in all regions. As of Nov 18 2016 the following regions will fail: brazilsouth, westindia, uksouth, ukwest (lack of DocumentDB) and southindia, centralindia, and canadaeast (lack of VM tier). Please have attendees select one of the other Azure regions.
 
