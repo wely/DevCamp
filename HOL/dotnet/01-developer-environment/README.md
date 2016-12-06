@@ -234,7 +234,10 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-1. Start Visual Studio using the `start experimental instance of visual studio 2015`.
+1. Start Visual Studio using the `Visual studio 2015` shortcut.
+
+> Note, there are 2 Visual Studio shortcuts. Make sure you **DO NOT** use using the `start experimental instance of visual studio 2015` shortcut.
+
 
     ![image](./media/image-010.gif)
 
