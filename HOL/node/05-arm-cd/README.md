@@ -169,7 +169,7 @@ Back in VSTS, open the **Release Definition** that we started in a previous lab.
 
     ![image](./media/image-014.gif)
 
-1. VSTS allows us to control and govern how releases happen between environments.  Instead of automatically deploying our test environment after our dev environment, let's add an approval step.  A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test envrionment. 
+1. VSTS allows us to control and govern how releases happen between environments.  Instead of automatically deploying our test environment after our dev environment, let's add an approval step.  A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test environment. 
 
     For the **Pre-deployment approval** option, select **Specific users** and enter your account name. Then click the **Create** button
 

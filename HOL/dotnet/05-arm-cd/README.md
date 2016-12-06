@@ -1,4 +1,4 @@
-# ARM 
+# ARM (.NET)
 
 ## Overview
 In this lab, you will learn to provision and manage resources in Azure with the new Azure Resource Manager.  Then we will deploy our sample application into newly created infrastructure.
@@ -11,7 +11,7 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-The source for this lab is located in the [start](start) folder. 
+* You should have completed the previous Continuous Integration HOL
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -48,9 +48,9 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-05.gif)
 
-    > Note: If the tool pane does not open, ensure that you have the latest Azure SKD installed. At the time of this writing, the latest version is 2.9.
+    > Note: If the tool pane does not open, ensure that you have the latest Azure SDK installed. At the time of this writing, the latest version is 2.9.
 
-1. Our new web application will need a globally unique DNS name. Locate the `webSiteName` variable. This will syncronize the editor view with the outline view. In the editor, replace the existing name ***dotnetapptest**.
+1. Our new web application will need a globally unique DNS name. Locate the `webSiteName` variable. This will synchronize the editor view with the outline view. In the editor, replace the existing name ***dotnetapptest**.
 
      ![image](./media/image-06.gif)
 
@@ -96,11 +96,9 @@ This hands-on-lab has the following exercises:
     }
     ```
 
-1. Locate the values surrounded by `{YOUR ...}`. We will need to replace these values with the correct settings for your web application. You can get these values from the web.config created in the previous labs.
+1. Locate the values surrounded by `{YOUR ...}`. We will need to replace these values with the correct settings for your web application. You can get these values from the `web.config` created in the previous labs.
 
 1. If you do not have the values from the previous labs, open the Azure portal and find the web application in your resource group that starts with `dotnetapp...`
-
-    ![image](./media/image-12.gif)
 
 1. Select `application settings` from the settings blade
 
@@ -109,6 +107,8 @@ This hands-on-lab has the following exercises:
 1. Copy the values by double-clicking in the cell and copying the values. Paste them into the ARM template in the correct location that matches the key name.
 
     ![image](./media/image-14.gif)
+
+    ![image](./media/image-31.gif)
 
 We are now ready to deploy our ARM Template containing an App Service Plan, and a Web App with environment variables to Azure. 
 
@@ -139,7 +139,7 @@ We are now ready to deploy our ARM Template containing an App Service Plan, and 
 
     ![image](./media/image-18.gif)
 
-1. To use authentication with this new web app, we need to update our AzureAD app registration to whitelist its URL. In the browser, head back to the [Application Registration Portal](https://apps.dev.microsoft.com/#/appList) and select your application.  Under the **Platforms** heading, select **Add Url** and paste in the URL of your newly created Azure Web App. Click Save
+1. To use authentication with this new web app, we need to update our AzureAD app registration to whitelist its URL. In the browser, navigate to the <a href="https://apps.dev.microsoft.com/#/appList" target="_blank">Application Registration Portal</a> and select your application.  Under the **Platforms** heading, select **Add Url** and paste in the URL of your newly created Azure Web App. Click Save
 
     ![image](./media/image-19.gif)
 
@@ -158,7 +158,7 @@ The new resource group is now holding our "Test" environment web app and has bee
 
     ![image](./media/image-23.gif)
 
-1. VSTS allows us to control and govern how releases happen between environments.  Instead of automatically deploying our test environment after our dev environment, let's add an approval step.  A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test envrionment. 
+1. VSTS allows us to control and govern how releases happen between environments.  Instead of automatically deploying our test environment after our dev environment, let's add an approval step.  A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test environment. 
 
     For the **Pre-deployment approval** option, select **Specific users** and enter your account name. Then click the **Create** button
 
