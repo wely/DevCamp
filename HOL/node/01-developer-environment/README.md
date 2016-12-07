@@ -199,30 +199,46 @@ The Azure resource group template will have created a virtual machine that can b
 
     > It would be wise to change the password in the virtual machine.
 
-1. When remote desktop is connected, you will see server manager initially.  We will want to turn of IE enhanced security, to make accessing the web within the virtual machine easier.  First click `local server`;
+1. When Remote Desktop is connected, you will see the Server Manager initially.  We will want to turn of IE Enhanced Security to make accessing the web within the VM easier.  First click `Local Server`;
 
     ![image](./media/2016-10-18_16-46-33.gif)
 
-1. Then click the `on` next to 
+    Then click `On` next to "IE Enhanced Security Configuration"
 
     ![image](./media/2016-10-18_16-50-50.gif)
 
     A dialog box pops up - choose to turn enhanced security off for administrators.
 
-1. We are going to use git to clone the DevCamp github repository to this development machine. Click on the Start menu, and type `cmd`
+1. All code needed for the hands on labs are stored in a repository in GitHub.  To clone the DevCamp GitHub repository to this development machine, open a terminal window. On Windows, click on the Start menu, and type `cmd`
 
-    > NOTE: On some high resolution monitors (HIGH DPI), you will notice that the icons and command line windows appear small. If this is an issue, you can download [Remote Desktop Connection Manager 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44989)
+    > NOTE: On some high resolution monitors (High DPI), you will notice that the icons and command line windows appear small. If this is an issue, you can download [Remote Desktop Connection Manager 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44989)
 
-1. Change directory to the root using `cd c:\`
+    Change directory to the root using `cd c:\`
 
-1. Type `git clone https://github.com/AzureCAT-GSI/DevCamp.git` :
+    Type `git clone https://github.com/AzureCAT-GSI/DevCamp.git` :
 
     ![image](./media/2016-10-18_17-03-51.gif)
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
-    
-1. In a browser windows inside your development Virtual Machine, open a browser window and go to `http://nodejs.org`, 
-and click on the `Other Downloads` link under v6.9.0:
+
+1. We will use the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) to interact with our subscription.  The CLI installs via Node.js; open to a terminal window and run:
+   
+    ```CMD
+    node -v
+    ```
+
+    Verify that the version is v6 or greater. Install the Azure CLI
+
+    > If you are running the labs on your local machine, please also ensure that the verison of Node.js installed is v6 or greater
+
+    Then run the Node.js command to install the CLI
+
+    ```CMD
+    npm install azure-cli -g
+    ````
+
+1. If the Node version on your machine is less than v6, we will need to update the version. In a browser window inside your development Virtual Machine, load `http://nodejs.org`, 
+and click on the `Other Downloads` link under the **Latest Features** tile on the right side of the page:
 
     ![image](./media/2016-10-19_10-15-22.gif)
 
@@ -230,18 +246,6 @@ and click on the `Other Downloads` link under v6.9.0:
 
     ![image](./media/2016-10-19_10-20-21.gif)
 
-    > Please do not skip this step, because we will need node.js to install the Azure cross platform command line interface in the next step.
-
-1. Install the azure command line interface.  Go to a terminal window and do this command:
-    ```CMD
-    node -v
-    ```
-
-    Verify that the version is v6 or greater. Install the Azure CLI
-
-    ```CMD
-    npm install azure-cli -g
-    ````
 ---
 ## Exercise 6: Deploy shared API application ##
 
