@@ -243,46 +243,50 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     > If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
     > format will change to allow you to enter connection information on your subscription:    
 
-    ![image](./media/image-025.gif)
+1. Another option is to create a service principal. The steps to create a service principal is below.
 
     > If you have not created a service principal for the subscription, you will have to follow the 
     > [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so.  This process will 
     > provide the information to enter in this dialog:
     >
 
-1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
-    in your browser. Select all the content from the window and copy to the clipboard.
-    
-1. Open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
+    1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
+        in your browser. Select all the content from the window and copy to the clipboard.
+        
+    1. Open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
 
-    ![image](./media/image-044a.gif)
+        ![image](./media/image-044a.gif)
 
-1. Click the green arrow to run the PowerShell script
+    1. Click the green arrow to run the PowerShell script
 
-    ![image](./media/image-045a.gif)
+        ![image](./media/image-045a.gif)
 
-1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
-    for the service principal only, not the password for your subscription.  So you can use whatever password 
-    you would like, just remember it.    
+    1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
+        for the service principal only, not the password for your subscription.  So you can use whatever password 
+        you would like, just remember it.    
 
-    ![image](./media/image-046a.gif)
+        ![image](./media/image-046a.gif)
 
-1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
-    The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
-    window.  Copy and paste these values from the PowerShell window:
-        Subscription ID
-        Subscription Name
-        Service Principal Client ID
-        Service Principal Key
-        Tenant ID
+    1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
+        The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
+        window.  Copy and paste these values from the PowerShell window:
+            Subscription ID
+            Subscription Name
+            Service Principal Client ID
+            Service Principal Key
+            Tenant ID
 
-1. Also, enter a user-friendly name to use when referring to this service endpoint connection.
-    ![image](./media/image-047a.gif)
+    1. Also, enter a user-friendly name to use when referring to this service endpoint connection.
+        ![image](./media/image-047a.gif)
 
-1. Click **Verify connection**, and ensure that the window indicates that the connection was verified. 
-    Then Click **OK** and **Close**.
+    1. Click **Verify connection**, and ensure that the window indicates that the connection was verified. 
+        Then Click **OK** and **Close**.
 
-    ![image](./media/image-048a.gif)
+        ![image](./media/image-048a.gif)
+
+ 1. If this is the first time you are connecting to this subscription, you will need to authorize VSTS to have access to deploy to Azure. After you select your subscription, click `Authorize`.
+
+    ![image](./media/image-067.gif) 
 
 1. Navigate back to the VSTS build tab in the browser and click the click the **Refresh** icon to refresh the connections. The **Azure** connection that we setup should now appear.  Select it.
 
