@@ -20,6 +20,7 @@ This hands-on-lab has the following exercises:
 * Exercise 3: Monitor custom events
 * Exercise 4: Create a global web test
 * Exercise 5: Interact with your telemetry data
+* Exercise 6: Monitor logging events
 
 ---
 ## Exercise 1: Create an Application Insights resource ##
@@ -276,7 +277,7 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
     
     This code will send the users `UserPrincipalName` and `DisplayName` to AppInsights. It also demonstrates how to send exceptions to AppInsights.
 
-1. Save the file, restart the application, and generate sample telemetry by visitng the profile page, leaving, 
+1. Save the file, restart the application, and generate sample telemetry by visiting the profile page, leaving, 
     and returning to the profile page.  In the Azure Portal we can see the data by pressing the **Search** 
     button:
 
@@ -341,7 +342,7 @@ In the `Metrics Explorer`, you can create charts and grids based on the telemetr
     ![image](./media/2016-10-25_22-10-19.gif)
 
     In `Search` you can see the raw telemetry events, you can filter on the specific events you want to see, and you can drill into more detail on those events.
-    You can also search for proerties on the telemetry event.  This will be particularly useful when we add logging to the telemetry in Exercise 6.  Here is the
+    You can also search for properties on the telemetry event.  This will be particularly useful when we add logging to the telemetry in Exercise 6.  Here is the
     basic view:
 
     ![image](./media/2016-10-25_22-13-47.gif)
@@ -361,7 +362,7 @@ In the `Metrics Explorer`, you can create charts and grids based on the telemetr
 ## Exercise 6: Monitor logging events ##
 
 Application Insights can also integrate with the Java logging frameworks such as Log4J and 
-Logback.  To acomplish this, we need to add the proper Application Insights logging library 
+Logback.  To accomplish this, we need to add the proper Application Insights logging library 
 project, and configure the logging implementation to send logs to AI.  
 
 1. Open the build.gradle file for your project and add this line to the dependencies section: 
@@ -372,7 +373,7 @@ project, and configure the logging implementation to send logs to AI.
     built or run. 
     
     To make sure that Eclipse knows about the new packages we added to
-    the buld, run the `ide/eclipse` gradle task in the `gradle tasks`
+    the build, run the `ide/eclipse` gradle task in the `gradle tasks`
     window. Then right-click on the project in the project explorer,
     close the project, and then open it again.
 

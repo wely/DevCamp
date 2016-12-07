@@ -18,8 +18,6 @@ This hands-on-lab has the following exercises:
 * Exercise 1: Create an Application Insights resource
 * Exercise 2: Add server and client side SDK's 
 * Exercise 3: Monitor custom events
-* Exercise 4: Create a global web test
-* Exercise 5: Interact with your telemetry data
 
 ---
 ## Exercise 1: Create an Application Insights resource ##
