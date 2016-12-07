@@ -73,7 +73,7 @@ We will add both components to our application and enable the sending of telemet
     var appInsights = require("applicationinsights");
     var client = appInsights.getClient();
 
-    module.export.setup = function (app) {
+    module.exports.setup = function (app) {
 
         console.log('App Insights Key Found. Starting AI');
 
