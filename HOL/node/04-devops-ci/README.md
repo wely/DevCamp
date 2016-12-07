@@ -348,7 +348,7 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-041.gif)
 
-1. **Save** the Release Definition, and **Queue a new Build**
+1. **Save** the Release Definition, and **Create Release**
 
     ![image](./media/image-042.gif)
 
