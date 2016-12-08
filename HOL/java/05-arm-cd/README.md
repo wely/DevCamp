@@ -161,9 +161,13 @@ The new resource group is now holding our "Test" environment web app and has bee
 
 ### Exercise 3: Integrate new Web App into VSTS
 
-Back in VSTS, open the **Release Definition** that we started in a previous lab.  You should be be able to find this by navigating to **Releases** on the top navigation. We need to create a second environment to serve as our test web app.
+We need to create a second environment to serve as our test web app. Back in VSTS, open the Release Definition that we started in a previous lab by hovering on **Build & Release** from the top navigation bar, and selecting **Releases**.
 
 ![image](./media/image-013.gif)
+
+1. Click the dropdown arrow next to the existing Release Definition, and select **Edit**
+
+    ![image](./media/image-023.gif)
 
 1. In the Release Definition, select **Add environment** and select **Clone a selected environment**. 
 

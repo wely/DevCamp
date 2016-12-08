@@ -154,6 +154,10 @@ The new resource group is now holding our "Test" environment web app and has bee
 
     ![image](./media/image-22.gif)
 
+1. Click the dropdown arrow next to the existing Release Definition, and select **Edit**
+
+    ![image](./media/image-32.gif)
+
 1. In the Release Definition, select **Add environment** and select **Clone a selected environment**. We will use our existing Dev web app configuration as the template for the new test web app configuration.
 
     ![image](./media/image-23.gif)
