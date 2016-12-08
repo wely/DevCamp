@@ -259,16 +259,12 @@ and click on the `Other Downloads` link under the **Latest Features** tile on th
 
     A new browser tab will open.
 
-    >
     > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this excercise.
-    >
-    
+        
     ![image](./media/2016-11-14_12-10-59.gif)
 
-    >
-    > If the page looks like the image below, continue with this exercise
-    >
-         
+    If the page looks like the image below, continue with this exercise
+            
     ![image](./media/2016-11-14_12-03-50.gif)
 
 1. In the Azure portal, select the API Application (noted with the ![image](./media/image-024.gif) icon)
@@ -455,6 +451,23 @@ Also, our resource group template has added a random string to the end of many o
 1. `WindowsDevPip:`  This is a public IP that will allow the Windows development virtual machine to communicate with the Internet (eg. via Remote Desktop).  If you delete the Windows virtual machine, you can safely delete this.
 
 1. `windev...NetworkInterface:`  This is a public network interface that will allow the Windows development virtual machine to communicate on the network.  If you delete the Windows virtual machine, you can safely delete this.
+
+---
+## Clean Up
+
+> Please refer back to this section after the DevCamp concludes
+
+To clean up a Resource Group, we typically simply delete the Resource Group. However, since we are using an Azure DevTest Lab to manage our Virtual Machine, we have an additional step.
+
+Azure DevTest Labs create a series of [Resource Locks](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-lock-resources) that prevent accidental deletion of resources. Locks allow us to safeguard against accidental deltion of critical resources, and to delete the Resource Group we first need to delete the locks.
+
+Open your DevCamp Resource Group, and in the navigation pane select **Locks**. You should see the 5 locks created by the DevTest Lab. To delete, select the three dots to the right of the Notes column, and select **Delete**.
+
+![image](./media/image-027.png)
+
+After all 5 locks have been deleted you are able to delete the resource group. Navigate to the **Overview** tab and select **Delete**. The Resource Group will take several minutes to remove, but when finished all resources will no longer accrue charges in your subscription.
+
+![image](./media/image-028.png)
 
 ---
 ## Summary
