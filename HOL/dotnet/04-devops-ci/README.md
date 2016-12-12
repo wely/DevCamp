@@ -304,7 +304,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-061.gif)
 
-1. Enter the release information and select the build to deploy. Click Create
+1. Enter the release information and select the build to deploy. Ensure that the latest successful build is selected from the dropdown box. Click Create
 
     ![image](./media/image-063.gif)
 
