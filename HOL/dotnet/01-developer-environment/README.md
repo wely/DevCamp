@@ -264,7 +264,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 ## Exercise 6: Deploy shared API application ##
 
-1. Open a browser and navigate to [https://portal.azure.com]() Locate the app service named `incidentapi....` in the resource group blade:
+1. Open a browser and navigate to [https://portal.azure.com](https://portal.azure.com) Locate the app service named `incidentapi....` in the resource group blade:
     
     ![image](./media/2016-11-14_12-00-24.gif)
 
@@ -314,7 +314,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 ## Exercise 7: Azure Portal walkthrough
 
-1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, http://portal.azure.com.  Log in with the credentials you supplied in the subscription signup exercise.  You should see the Azure portal, similar to this:
+1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, [http://portal.azure.com](https://portal.azure.com).  Log in with the credentials you supplied in the subscription signup exercise.  You should see the Azure portal, similar to this:
 
     ![image](./media/2016-10-19_15-08-26.gif)
 
