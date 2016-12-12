@@ -30,7 +30,7 @@ This hands-on-lab has the following exercises:
 ----
 ## Exercise 1: Create VSTS online account
 
-1. In your browser, navigate to [https://www.visualstudio.com/]()
+1. In your browser, navigate to [https://www.visualstudio.com/](https://www.visualstudio.com/)
 
     ![image](./media/image-000.gif)
 
