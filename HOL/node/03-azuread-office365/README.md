@@ -367,7 +367,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     > Please ensure you declare the `2.0.3` version, as `3.0.0` has breaking changes with this code
 
-1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `views/navigation.pug` and remove the commented out blocks of code by deleting the `//-` characters. Now load the application in the browser and you should see the **Login** button on the top navigation.
+1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `views/navigation.pug` and remove the entire commented out line `//- Begin Login Dropdown Block` to make the Login dropdown visible. Now load the application in the browser and you should see the **Login** button on the top navigation.
 
     ![image](./media/image-009.gif)
 
