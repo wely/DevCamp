@@ -28,7 +28,7 @@ This hands-on-lab has the following exercises:
 ---
 ### Exercise 1: Create VSTS online account
 
-1. In your browser, browser to [https://www.visualstudio.com/team-services/]()
+1. In your browser, browser to [https://www.visualstudio.com/team-services/](https://www.visualstudio.com/team-services/)
 
     ![image](./media/image-000.gif)
 
