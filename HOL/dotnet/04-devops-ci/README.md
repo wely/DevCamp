@@ -166,14 +166,16 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
 1. In the build step `Copy Files to: $(build.artifactstagingdirectory)`, the default setting uses build definition folders. We are not using custom build configurations so we need to update the contents value.
 
-    ### Previous setting ###
-    ![image](./media/image-023.gif)
+    > ***Previous setting***
+    >
+    >![image](./media/image-023.gif)
 
-     ```xml
-     **\bin\**
-     ```
-     ### New setting ###
-     ![image](./media/image-017.gif)
+    ```xml
+    **\bin\**
+    ```
+    > ***New setting***
+    >
+    > ![image](./media/image-017.gif)
 
 1. Save your Build Definition named **DotNet Build**
 
@@ -227,6 +229,10 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 1. Select ***Azure App Service Deployment*** and click Next.
 
     ![image](./media/image-039.gif)
+
+1. Ensure the **Source** is set to the Build Definition name used in the earlier exercise and that **Queue** is set to the **Hosted** option. Then click **Create** to finish creating the Release Definition
+
+    ![image](./media/image-027.gif)
 
 1.  We need to connect your VS agent with your Azure subscription so it can deploy resources. Click on ***Manage***
 
