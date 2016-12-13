@@ -246,6 +246,8 @@ The Azure resource group template will have created a virtual machine that can b
 
 * **Visual Studio Code** - You can use any editor of your choosing, but be aware that the lab makes a heavy assumption that VSCode will be used. [Download](https://go.microsoft.com/fwlink/?LinkID=620882)
 
+* **Storage Explorer** - Grab the cross-platform [Microsoft Azure Storage Explorer](http://storageexplorer.com/) to interact with files stored in Azure Storage accounts.
+
 ![image](./media/image-029.png)
 
 ---
