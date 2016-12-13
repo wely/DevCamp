@@ -350,7 +350,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
         "AZURE_STORAGE_ACCOUNT": "incidentblobstgmm6lqhplz",
         "AZURE_STORAGE_ACCESS_KEY": "JP+YcOPBfI58bkmugEHPKKPaM5NLIrq18IBfUfC+0sCsX3V6pSV2a+GU34mD68OoMsiGf79Axu1lHf5pB98Zkw==",
         "AZURE_STORAGE_BLOB_CONTAINER": "images",
-        "AZURE_STORAGE_QUEUE": "thumbnails",
+        "AZURE_STORAGE_QUEUE": "thumbnails"
     }
     ```
 
