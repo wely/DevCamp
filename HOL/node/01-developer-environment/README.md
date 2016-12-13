@@ -79,22 +79,17 @@ and click the link that says "Free Trial", which will take you to this page:
 
     ![image](./media/2016-10-14_21-41-33.gif)
 
-> BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass.
-
-1. Navigate to [http://www.microsoftazurepass.com/]().
+    If you are using an Azure Pass, please navigate to [http://www.microsoftazurepass.com/](http://www.microsoftazurepass.com/). If you are not using an Azure Pass, please skip to the next step.
 
     ![image](./media/image-018.gif)
 
-1. Enter the code that is provided by your facilitator into the text box, then click submit
+    Enter the code that is provided by your facilitator into the text box, then click the **Submit** button
 
-> END Steps for Azure Pass redemption
-
-1. Click on `Azure subscription`, that will take you to the page for creating a new 
-    trial subscription:
+1. Click on `Azure Subscription` to be taken to the page for creating a new trial subscription
 
     ![image](./media/2016-10-18_12-48-52.gif)
 
-    Enter the requested information and click `next`.
+    Enter the requested information and click the **Next** button.
 
 1. Enter the information about you, and verify your identity by phone.  Also you'll 
     need to verify via credit card.  Your credit card will not be charged unless you
@@ -111,8 +106,7 @@ and click the link that says "Free Trial", which will take you to this page:
 
     ![image](./media/2016-10-14_21-45-32.gif)
 
-1. When the subscription set up process is done, you can click on `Start managing my service`
-to open the Azure portal, which will look like this:
+1. When the subscription set up process is done, you can click on `Start managing my service` to open the Azure portal, which will look like this:
 
     ![image](./media/2016-10-14_18-00-54.gif)
 
@@ -160,18 +154,20 @@ these resources in your Azure subscription, do `control-click` on this button:
     apply - the reason this one takes so long is that we are creating a Windows Virtual machine and installing all the tools you will
     need for the DevCamp including Visual Studio, the Java development kit, and other software resources.
 
-    When the Resource Group creation is done, go visit the resource group by clicking `resource groups on the left:
+    When the Resource Group creation is done, go visit the resource group by clicking **Resource Groups** on the left navigation
 
     ![image](./media/2016-10-18_13-36-29.gif) 
 
-    Then click your Resource group
+    Then click on your Resource Group name
 
     ![image](./media/2016-10-18_13-39-10.gif)
-
+ 
 ---
 ## Exercise 5: Use an Azure Virtual Machine for remote development
 
 The Azure resource group template will have created a virtual machine that can be used for remote development on Windows. Exercise 6 describes the configuration for the Windows virtual machine, which would be appropriate for any of the languages.
+
+> Rather use another environment such as a Macbook instead of a VM in Azure? Please see this [note](#macsetup)
 
 1. In the DevCamp resource group, select the DevCamp DevTest Lab.
 
@@ -191,9 +187,8 @@ The Azure resource group template will have created a virtual machine that can b
 
 1. Use the following credentials to log on to the machine:
     
-    > User Name = `\l-admin`
-    >
-    > Password = `Devc@mp2016!` 
+    * User Name: `\l-admin`
+    * Password: `Devc@mp2016!` 
  
     ![image](./media/image-009.gif)
 
@@ -211,7 +206,7 @@ The Azure resource group template will have created a virtual machine that can b
 
 1. All code needed for the hands on labs are stored in a repository in GitHub.  To clone the DevCamp GitHub repository to this development machine, open a terminal window. On Windows, click on the Start menu, and type `cmd`
 
-    > NOTE: On some high resolution monitors (High DPI), you will notice that the icons and command line windows appear small. If this is an issue, you can download [Remote Desktop Connection Manager 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44989)
+    > On some high resolution monitors (High DPI), you will notice that the icons and command line windows appear small. If this is an issue, you can download [Remote Desktop Connection Manager 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44989)
 
     Change directory to the root using `cd c:\`
 
@@ -221,30 +216,37 @@ The Azure resource group template will have created a virtual machine that can b
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-1. We will use the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) to interact with our subscription.  The CLI installs via Node.js; open to a terminal window and run:
+1. We will use the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) ("Azure XPlat CLI") to interact with our subscription.  The CLI installs via Node.js; open to a terminal window and run:
    
     ```CMD
     node -v
     ```
 
-    Verify that the version is v6 or greater. Install the Azure CLI
-
-    > If you are running the labs on your local machine, please also ensure that the verison of Node.js installed is v6 or greater
-
-    Then run the Node.js command to install the CLI
+    Verify that the version is v6 or greater. Then, install the Azure CLI
 
     ```CMD
     npm install azure-cli -g
     ````
 
-1. If the Node version on your machine is less than v6, we will need to update the version. In a browser window inside your development Virtual Machine, load `http://nodejs.org`, 
-and click on the `Other Downloads` link under the **Latest Features** tile on the right side of the page:
+    > If you are running the labs on your local machine, please also ensure that the version of Node.js installed is v6 or greater
+
+1. If the Node version on your machine is less than v6, we will need to update the version. In a browser window inside your development Virtual Machine, load `http://nodejs.org`, and click on the `Other Downloads` link under the **Latest Features** tile on the right side of the page:
 
     ![image](./media/2016-10-19_10-15-22.gif)
 
     In the next page, click on `32 bit` next to `Windows Installer (.msi)`, download the MSI and run the installation.
 
     ![image](./media/2016-10-19_10-20-21.gif)
+
+<a name="macsetup"></a>For users wanting to use a machine for the DevCamp labs other than a VM in Azure, such as a Mac laptop, please feel free to do so.  The lab instructions have been written in a way to minimize the operating system, and although many screenshots show Windows Server, all labs can be completed in Windows, OSX, or Linux on local laptops or Virtual Machines. Please have the following requirements before beginning:
+
+* **NodeJS version 6 or greater** - We make extensive use of ECMAScript 6/ECMAScript 2015 which is error on earlier versions of Node. [Download](https://nodejs.org) from the Node website, or use [NVM](https://github.com/creationix/nvm) with a recent version. To ensure this requirement is met, please run `node -v` and ensure v6+
+
+* **Azure XPlat CLI** - Install the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) by running `npm install -g azure-cli` and login to your subscription with `azure login`. [Instructions](https://github.com/Azure/azure-xplat-cli#get-started)
+
+* **Visual Studio Code** - You can use any editor of your choosing, but be aware that the lab makes a heavy assumption that VSCode will be used. [Download](https://go.microsoft.com/fwlink/?LinkID=620882)
+
+![image](./media/image-029.png)
 
 ---
 ## Exercise 6: Deploy shared API application ##
