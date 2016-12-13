@@ -267,6 +267,8 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
         ![image](./media/image-045a.gif)
 
+        > If the PowerShell gives an error at runtime regarding a missing AzureRM module, please install it by executing the following command in a PowerShell window with admin privileges: `Install-Module AzureRM`. Then run `Set-ExecutionPolicy RemoteSigned -Scope process` to adjust the execution level
+
     1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
         for the service principal only, not the password for your subscription.  So you can use whatever password 
         you would like, just remember it.    
@@ -276,11 +278,12 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
         The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
         window.  Copy and paste these values from the PowerShell window:
-            Subscription ID
-            Subscription Name
-            Service Principal Client ID
-            Service Principal Key
-            Tenant ID
+        
+        * Subscription ID
+        * Subscription Name
+        * Service Principal Client ID
+        * Service Principal Key
+        * Tenant ID
 
     1. Also, enter a user-friendly name to use when referring to this service endpoint connection.
         ![image](./media/image-047a.gif)
