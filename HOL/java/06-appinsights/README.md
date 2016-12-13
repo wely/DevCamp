@@ -291,6 +291,8 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
 
     ![image](./media/image-012.gif)
 
+View the custom events in the portal by opening the Application Insights blade, selecting **Usage** from the left navigation, and locating the **Custom Events** section.
+
 These custom events (and the related concept of custom metrics) are a powerful way to integrate telemetry into our 
 application and centralize monitoring across multiple application instances.
 
@@ -378,6 +380,7 @@ project, and configure the logging implementation to send logs to AI.
     close the project, and then open it again.
 
 1. Create a `src/main/resources/logback.xml` file, and paste in this xml code:
+
     ```XML
     <?xml version="1.0" encoding="UTF-8"?>
     <configuration>
@@ -394,7 +397,7 @@ project, and configure the logging implementation to send logs to AI.
     ```
     This sets up `ApplicationInsightsAppender` as the logback appender for all trace level messages.
 
-    >The include and logger lines at the bottom are examples of other logging tasks you can
+    > The include and logger lines at the bottom are examples of other logging tasks you can
     do within the logback environment.  Please refer to the [logback documentation](http://logback.qos.ch/) for more information. 
 
 ---
