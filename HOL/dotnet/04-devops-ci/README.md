@@ -114,6 +114,15 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
     ![image](./media/image-049.gif)
 
+    > If you made changes to the files, and you do not see them in the list, ensure that you have cloned the repository from the repo.
+    
+    ```CMD
+    cd\DevCampVSO
+    Git init
+    Git commit *
+    Git push origin master -m ‘initial commit’
+    ```
+
 1. Right click on the top level folder and select `Stage`
 
     ![image](./media/image-050.gif)
@@ -191,13 +200,19 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/image-021.gif)
 
-1. Let's inspect the output artifacts that were published.  Click the **Build XXX** header in the left pane to view the build's landing page.  Then select **Artifacts** from the horizontal toolbar, and **Download** the **drop** artifact.
+1. Let's inspect the output artifacts that were published.  Click the **Build XXX** header in the left pane to view the build's landing page. 1. Select **Artifacts** from the horizontal toolbar, and click **Explore**.
 
     ![image](./media/image-055.gif)
 
+1. Expand the drop folder and view the build artifacts. Click `Close` when complete.
+
     ![image](./media/image-022.gif)
 
-1. Unzip `drop.zip` to see our files.  This artifact will be deployed to an Azure Web App in a later exercise.
+1. Select **Artifacts** from the horizontal toolbar, and click **Download**. Save the build locally.
+
+    ![image](./media/image-035.gif)
+
+1. Unzip `drop.zip` to see the application files created by the build agent.  This artifact will be deployed to an Azure Web App in a later exercise.
 
 We now have a Build Definition that will compile the application and package it for deployment anytime code is checked into the repository, or a manual build is queued. 
 
@@ -319,10 +334,35 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-065.gif)
 
+1. Update the application configuration to match the current settings you have deployed. Copy the values from the web.config to the Application configuration in Azure. Open the Azure portal and find the .NET web application.
+
+    ![image](./media/image-028.gif) 
+
+1. Open the Application Settings
+
+     ![image](./media/image-029.gif)
+
+1. Copy the values from the web.config into the application settings. If you do not have values for these settings, please review the previous labs for the correct values.
+
+     ![image](./media/image-030.gif)
+
+1. Click `Save`. If you need additional space in the UI, you can expand the window.
+
+    ![image](./media/image-032.gif) 
+    
+1. Navigate to the <a href="https://apps.dev.microsoft.com" target="_blank">Application Registration Portal (https://apps.dev.microsoft.com)</a>. 
+
+1. Open the configuration for your application and add the Azure web application URL to the list of Redirect URLs. Click `Save`.
+
+    ![image](./media/image-033.gif) 
+
+    > Note: Be sure to include the trailing slash **\\** in the URL.
+
+1. Open a browser and navigate to the site. You should see the running site on Azure.
+    
     ![image](./media/image-066.gif)
 
 ---
-
 ## Summary
 
 In this hands-on lab, you learned how to:
