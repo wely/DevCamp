@@ -219,7 +219,7 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
     ![image](./media/image-016.gif)
 
-    On the Redis blade, note the **Host Name**, then select the **key icon** and note the **Primary Key**.
+    On the Redis blade, note the **Host Name**, then select **Show access keys** and note the **Primary Key**.
 
     ![image](./media/image-017.gif)
 
