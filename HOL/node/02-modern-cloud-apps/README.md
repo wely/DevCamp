@@ -550,7 +550,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
     When a new incident comes in, the Formidable library parses the data fields and image. Fields get POSTed to our Incidents API, while the image is uploaded to Blob Storage and a new message is added to our queue.
 
-1. In the terminal, execute a `npm install formidable azure-storage --save` to install the dependencies.
+1. In the terminal, execute a `npm install formidable azure-storage mime --save` to install the dependencies.
 
 1. Open a browser window and navigate to `http://localhost:3000/new`.  Fill out the form and hit the **Submit** button.
 
