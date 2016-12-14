@@ -275,7 +275,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
     A new browser tab will open.
 
     >
-    > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this excercise.
+    > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this exercise.
     >
     
     ![image](./media/2016-11-14_12-10-59.gif)
@@ -311,7 +311,6 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 1.	Select OK
 
 ---
-
 ## Exercise 7: Azure Portal walkthrough
 
 1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, [http://portal.azure.com](https://portal.azure.com).  Log in with the credentials you supplied in the subscription signup exercise.  You should see the Azure portal, similar to this:
@@ -421,6 +420,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 > It is particularly useful to create resources in the Azure portal, then save or edit the resource group template.  Resource group templates will be explained further in a later lab.
 
+---
 ## Exercise 8: View the resources you created
 
 Going back to the list of resources in the resource group, we'll go through the list of each resource, with a description.  Feel free to click on the resource and view its detail blade.
@@ -478,7 +478,7 @@ Also, our resource group template has added a random string to the end of many o
 
 To clean up a Resource Group, we typically simply delete the Resource Group. However, since we are using an Azure DevTest Lab to manage our Virtual Machine, we have an additional step.
 
-Azure DevTest Labs create a series of [Resource Locks](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-lock-resources) that prevent accidental deletion of resources. Locks allow us to safeguard against accidental deltion of critical resources, and to delete the Resource Group we first need to delete the locks.
+Azure DevTest Labs create a series of [Resource Locks](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-lock-resources) that prevent accidental deletion of resources. Locks allow us to safeguard against accidental deletion of critical resources, and to delete the Resource Group we first need to delete the locks.
 
 Open your DevCamp Resource Group, and in the navigation pane select **Locks**. You should see the 5 locks created by the DevTest Lab. To delete, select the three dots to the right of the Notes column, and select **Delete**.
 
