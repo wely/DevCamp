@@ -398,7 +398,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     ![image](./media/2016-10-19_16-44-51.gif)
 
-1. The Windows VM uses DevTest labs to manage the start up and shut down of the machine. To change the start up schedule, click on the DevTest Lab icon and select `Policy Settings`
+1. The Windows VM is managed by an [Azure DevTest lab](https://azure.microsoft.com/en-us/services/devtest-lab/) named `DevCamp` which handles the startup and shutdown of the machine. To change the start up schedule, click on the DevTest Lab icon and select `Policy Settings`
 
     ![image](./media/image-012.gif)
 
