@@ -8,12 +8,14 @@ namespace DevCamp.WebApp.Controllers
     {
         public ActionResult Index()
         {
+            //TODO: BEGIN Replace with API Data code
             //##### API DATA HERE #####
                 //##### ADD CACHING HERE #####
                 //##### ADD CACHING HERE #####
             //##### API DATA HERE #####
 
             return View();
+            //TODO: END Replace with API Data code
         }
     }
 }

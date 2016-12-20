@@ -225,7 +225,7 @@ This hands-on-lab has the following exercises:
 
 1. Open the `Controllers/Dashboardcontroller.cs` file
 
-1. Select the current comment block in the Index method and delete it. Also delete the existing return View() code.
+1. Select the current `TODO` comment block in the Index method and delete it. Also delete the existing return View() code.
 
 1. Paste the following:
 
@@ -236,6 +236,9 @@ This hands-on-lab has the following exercises:
     {
         var results = await client.Incident.GetAllIncidentsAsync();
         incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
+        //TODO: BEGIN ADD Caching
+        //##### ADD CACHING HERE #####
+        //TODO: END ADD Caching
     }
     return View(incidents);
     //##### API DATA HERE #####
@@ -266,6 +269,9 @@ This hands-on-lab has the following exercises:
                     {
                         var results = await client.Incident.GetAllIncidentsAsync();
                         incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
+                        //TODO: BEGIN ADD Caching
+                        //##### ADD CACHING HERE #####
+                        //TODO: END ADD Caching
                     }
                     return View(incidents);
                 }
@@ -521,7 +527,8 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     ````
 
 1. We will now add code to the dashboardcontroller. Open the `dashboardcontroller.cs` file
-1. Inside the `using` statement that contains the API call to the client, replace the lines with the following:
+
+1. Inside the `using` statement that contains the API call to the client, replace `//TODO: ADD Caching` comment block with the following:
 
     ```csharp
     //##### Add caching here #####
@@ -544,7 +551,8 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     ```
  
 1. Set a breakpoint on the declaration of the ***CACHE_EXPIRATION_SECONDS*** variable.
-1. Add code to invalidate the cache when a new incident is reported. Open the IncidentController and update the Create method that handles the creation (the method decorated with [HTTPPost]) with the following:
+
+1. Add code to invalidate the cache when a new incident is reported. Open the `IncidentController.cs` file and update the `Create` method that handles the adding of the new incident (the method decorated with [HTTPPost]) with the following:
 
     ```csharp
     //##### CLEAR CACHE ####
