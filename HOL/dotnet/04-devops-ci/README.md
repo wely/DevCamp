@@ -67,7 +67,13 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 ----
 ## Exercise 3: Add application to VSTS Git ##
 
-1. Click **Code** on the top toolbar to navigate to the Code screen.  Then click the **Clone in Visual Studio** button.
+1. Click **Code** on the top toolbar to navigate to the Code screen.
+
+    ![image](./media/image-068.gif)
+
+1. Click the **Clone in Visual Studio** button.
+
+    ![image](./media/image-069.gif)
 
     > **Note** if you are using Chrome, you may receive a pop-up message. The Clone in Visual Studio option uses a custom protocol handler to open in the client. Select `Launch Application`.
 
