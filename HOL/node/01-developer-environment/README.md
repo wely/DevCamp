@@ -79,22 +79,17 @@ and click the link that says "Free Trial", which will take you to this page:
 
     ![image](./media/2016-10-14_21-41-33.gif)
 
-> BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass.
-
-1. Navigate to [http://www.microsoftazurepass.com/]().
+    If you are using an Azure Pass, please navigate to [http://www.microsoftazurepass.com/](http://www.microsoftazurepass.com/). If you are not using an Azure Pass, please skip to the next step.
 
     ![image](./media/image-018.gif)
 
-1. Enter the code that is provided by your facilitator into the text box, then click submit
+    Enter the code that is provided by your facilitator into the text box, then click the **Submit** button
 
-> END Steps for Azure Pass redemption
-
-1. Click on `Azure subscription`, that will take you to the page for creating a new 
-    trial subscription:
+1. Click on `Azure Subscription` to be taken to the page for creating a new trial subscription
 
     ![image](./media/2016-10-18_12-48-52.gif)
 
-    Enter the requested information and click `next`.
+    Enter the requested information and click the **Next** button.
 
 1. Enter the information about you, and verify your identity by phone.  Also you'll 
     need to verify via credit card.  Your credit card will not be charged unless you
@@ -111,8 +106,7 @@ and click the link that says "Free Trial", which will take you to this page:
 
     ![image](./media/2016-10-14_21-45-32.gif)
 
-1. When the subscription set up process is done, you can click on `Start managing my service`
-to open the Azure portal, which will look like this:
+1. When the subscription set up process is done, you can click on `Start managing my service` to open the Azure portal, which will look like this:
 
     ![image](./media/2016-10-14_18-00-54.gif)
 
@@ -160,18 +154,20 @@ these resources in your Azure subscription, do `control-click` on this button:
     apply - the reason this one takes so long is that we are creating a Windows Virtual machine and installing all the tools you will
     need for the DevCamp including Visual Studio, the Java development kit, and other software resources.
 
-    When the Resource Group creation is done, go visit the resource group by clicking `resource groups on the left:
+    When the Resource Group creation is done, go visit the resource group by clicking **Resource Groups** on the left navigation
 
     ![image](./media/2016-10-18_13-36-29.gif) 
 
-    Then click your Resource group
+    Then click on your Resource Group name
 
     ![image](./media/2016-10-18_13-39-10.gif)
-
+ 
 ---
 ## Exercise 5: Use an Azure Virtual Machine for remote development
 
 The Azure resource group template will have created a virtual machine that can be used for remote development on Windows. Exercise 6 describes the configuration for the Windows virtual machine, which would be appropriate for any of the languages.
+
+> Rather use another environment such as a Macbook instead of a VM in Azure? Please see this [note](#macsetup)
 
 1. In the DevCamp resource group, select the DevCamp DevTest Lab.
 
@@ -191,38 +187,50 @@ The Azure resource group template will have created a virtual machine that can b
 
 1. Use the following credentials to log on to the machine:
     
-    > User Name = `\l-admin`
-    >
-    > Password = `Devc@mp2016!` 
+    * User Name: `\l-admin`
+    * Password: `Devc@mp2016!` 
  
     ![image](./media/image-009.gif)
 
     > It would be wise to change the password in the virtual machine.
 
-1. When remote desktop is connected, you will see server manager initially.  We will want to turn of IE enhanced security, to make accessing the web within the virtual machine easier.  First click `local server`;
+1. When Remote Desktop is connected, you will see the Server Manager initially.  We will want to turn of IE Enhanced Security to make accessing the web within the VM easier.  First click `Local Server`;
 
     ![image](./media/2016-10-18_16-46-33.gif)
 
-1. Then click the `on` next to 
+    Then click `On` next to "IE Enhanced Security Configuration"
 
     ![image](./media/2016-10-18_16-50-50.gif)
 
     A dialog box pops up - choose to turn enhanced security off for administrators.
 
-1. We are going to use git to clone the DevCamp github repository to this development machine. Click on the Start menu, and type `cmd`
+1. All code needed for the hands on labs are stored in a repository in GitHub.  To clone the DevCamp GitHub repository to this development machine, open a terminal window. On Windows, click on the Start menu, and type `cmd`
 
-    > NOTE: On some high resolution monitors (HIGH DPI), you will notice that the icons and command line windows appear small. If this is an issue, you can download [Remote Desktop Connection Manager 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44989)
+    > On some high resolution monitors (High DPI), you will notice that the icons and command line windows appear small. If this is an issue, you can download [Remote Desktop Connection Manager 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44989)
 
-1. Change directory to the root using `cd c:\`
+    Change directory to the root using `cd c:\`
 
-1. Type `git clone https://github.com/AzureCAT-GSI/DevCamp.git` :
+    Type `git clone https://github.com/AzureCAT-GSI/DevCamp.git` :
 
     ![image](./media/2016-10-18_17-03-51.gif)
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
-    
-1. In a browser windows inside your development Virtual Machine, open a browser window and go to `http://nodejs.org`, 
-and click on the `Other Downloads` link under v6.9.0:
+
+1. We will use the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) ("Azure XPlat CLI") to interact with our subscription.  The CLI installs via Node.js; open to a terminal window and run:
+   
+    ```CMD
+    node -v
+    ```
+
+    Verify that the version is v6 or greater. Then, install the Azure CLI
+
+    ```CMD
+    npm install azure-cli -g
+    ````
+
+    > If you are running the labs on your local machine, please also ensure that the version of Node.js installed is v6 or greater
+
+1. If the Node version on your machine is less than v6, we will need to update the version. In a browser window inside your development Virtual Machine, load `http://nodejs.org`, and click on the `Other Downloads` link under the **Latest Features** tile on the right side of the page:
 
     ![image](./media/2016-10-19_10-15-22.gif)
 
@@ -230,18 +238,18 @@ and click on the `Other Downloads` link under v6.9.0:
 
     ![image](./media/2016-10-19_10-20-21.gif)
 
-    > Please do not skip this step, because we will need node.js to install the Azure cross platform command line interface in the next step.
+<a name="macsetup"></a>For users wanting to use a machine for the DevCamp labs other than a VM in Azure, such as a Mac laptop, please feel free to do so.  The lab instructions have been written in a way to minimize the operating system, and although many screenshots show Windows Server, all labs can be completed in Windows, OSX, or Linux on local laptops or Virtual Machines. Please have the following requirements before beginning:
 
-1. Install the azure command line interface.  Go to a terminal window and do this command:
-    ```CMD
-    node -v
-    ```
+* **NodeJS version 6 or greater** - We make extensive use of ECMAScript 6/ECMAScript 2015 which is error on earlier versions of Node. [Download](https://nodejs.org) from the Node website, or use [NVM](https://github.com/creationix/nvm) with a recent version. To ensure this requirement is met, please run `node -v` and ensure v6+
 
-    Verify that the version is v6 or greater. Install the Azure CLI
+* **Azure XPlat CLI** - Install the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) by running `npm install -g azure-cli` and login to your subscription with `azure login`. [Instructions](https://github.com/Azure/azure-xplat-cli#get-started)
 
-    ```CMD
-    npm install azure-cli -g
-    ````
+* **Visual Studio Code** - You can use any editor of your choosing, but be aware that the lab makes a heavy assumption that VSCode will be used. [Download](https://go.microsoft.com/fwlink/?LinkID=620882)
+
+* **Storage Explorer** - Grab the cross-platform [Microsoft Azure Storage Explorer](http://storageexplorer.com/) to interact with files stored in Azure Storage accounts.
+
+![image](./media/image-029.png)
+
 ---
 ## Exercise 6: Deploy shared API application ##
 
@@ -255,16 +263,12 @@ and click on the `Other Downloads` link under v6.9.0:
 
     A new browser tab will open.
 
-    >
     > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this excercise.
-    >
-    
+        
     ![image](./media/2016-11-14_12-10-59.gif)
 
-    >
-    > If the page looks like the image below, continue with this exercise
-    >
-         
+    If the page looks like the image below, continue with this exercise
+            
     ![image](./media/2016-11-14_12-03-50.gif)
 
 1. In the Azure portal, select the API Application (noted with the ![image](./media/image-024.gif) icon)
@@ -451,6 +455,23 @@ Also, our resource group template has added a random string to the end of many o
 1. `WindowsDevPip:`  This is a public IP that will allow the Windows development virtual machine to communicate with the Internet (eg. via Remote Desktop).  If you delete the Windows virtual machine, you can safely delete this.
 
 1. `windev...NetworkInterface:`  This is a public network interface that will allow the Windows development virtual machine to communicate on the network.  If you delete the Windows virtual machine, you can safely delete this.
+
+---
+## Clean Up
+
+> Please refer back to this section after the DevCamp concludes
+
+To clean up a Resource Group, we typically simply delete the Resource Group. However, since we are using an Azure DevTest Lab to manage our Virtual Machine, we have an additional step.
+
+Azure DevTest Labs create a series of [Resource Locks](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-lock-resources) that prevent accidental deletion of resources. Locks allow us to safeguard against accidental deltion of critical resources, and to delete the Resource Group we first need to delete the locks.
+
+Open your DevCamp Resource Group, and in the navigation pane select **Locks**. You should see the 5 locks created by the DevTest Lab. To delete, select the three dots to the right of the Notes column, and select **Delete**.
+
+![image](./media/image-027.png)
+
+After all 5 locks have been deleted you are able to delete the resource group. Navigate to the **Overview** tab and select **Delete**. The Resource Group will take several minutes to remove, but when finished all resources will no longer accrue charges in your subscription.
+
+![image](./media/image-028.png)
 
 ---
 ## Summary

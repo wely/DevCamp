@@ -289,12 +289,16 @@ AzureAD can handle authentication for web applications. First we will create a n
     });
     ```
 
-1. The Passport middleware adds a `user` object to the `req` object. In order to use this object in our views to display user data, we need to update how we call `res.render()` in each of our routes. 
-
-    For `routes/dashboard.js` and `routes/index.js` find where `res.render()` is called and add an attribute for `user: req.user`. For example, for `dashboard.js` the updated call would look like:
+1. The Passport middleware adds a `user` object to the `req` object. In order to use this object in our views to display user data, we need to update how we call `res.render()` in each of our routes by adding an attribute:
 
     ```javascript
-    // Render view
+    `user: req.user`
+    ```
+
+    Extend `res.render()` for dashboard.js, index.js and new.js from the views folder so that they match:
+
+    dashboard.js:
+    ```javascript
     res.render('dashboard', {
         title: 'Outage Dashboard',
         incidents: incidents,
@@ -302,7 +306,24 @@ AzureAD can handle authentication for web applications. First we will create a n
     });
     ```
 
-    Simply piping the user data into our views is useful, but what if we want to make a page in our application only visible to logged in users? To do this we need to check the user's status before loading a route.  Let's make `routes/new.js` a secure page by adding some authentication.  Reference our `authUtility` file, and then pass `authUtility.ensureAuthenticated` into both our `.get` and `.post` routes.  Here's an abbreviated snippet of `routes/new.js`:
+    index.js:
+    ```javascript
+    res.render('index', {
+        title: 'City Power & Light',
+        home: true,
+        user: req.user
+    });
+    ```
+
+    new.js:
+    ```javascript
+    res.render('new', {
+        title: 'Report an Outage',
+        user: req.user
+    });
+    ```
+
+1. Simply piping the user data into our views is useful, but what if we want to make a page in our application only visible to logged in users? To do this we need to check the user's status before loading a route.  Let's make `routes/new.js` a secure page by adding some authentication.  Reference our `authUtility` file, and then pass `authUtility.ensureAuthenticated` into both our `.get` and `.post` routes.  Here's an abbreviated snippet of `routes/new.js`:
 
     ```javascript
     var fs = require('fs');
@@ -367,7 +388,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     > Please ensure you declare the `2.0.3` version, as `3.0.0` has breaking changes with this code
 
-1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `views/navigation.pug` and remove the commented out blocks of code by deleting the `//-` characters. Now load the application in the browser and you should see the **Login** button on the top navigation.
+1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `views/navigation.pug` and remove the entire commented out line `//- Begin Login Dropdown Block` to make the Login dropdown visible. Now load the application in the browser and you should see the **Login** button on the top navigation.
 
     ![image](./media/image-009.gif)
 

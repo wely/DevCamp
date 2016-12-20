@@ -219,7 +219,7 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
     ![image](./media/image-016.gif)
 
-    On the Redis blade, note the **Host Name**, then select the **key icon** and note the **Primary Key**.
+    On the Redis blade, note the **Host Name**, then select **Show access keys** and note the **Primary Key**.
 
     ![image](./media/image-017.gif)
 
@@ -350,7 +350,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
         "AZURE_STORAGE_ACCOUNT": "incidentblobstgmm6lqhplz",
         "AZURE_STORAGE_ACCESS_KEY": "JP+YcOPBfI58bkmugEHPKKPaM5NLIrq18IBfUfC+0sCsX3V6pSV2a+GU34mD68OoMsiGf79Axu1lHf5pB98Zkw==",
         "AZURE_STORAGE_BLOB_CONTAINER": "images",
-        "AZURE_STORAGE_QUEUE": "thumbnails",
+        "AZURE_STORAGE_QUEUE": "thumbnails"
     }
     ```
 
@@ -550,7 +550,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
     When a new incident comes in, the Formidable library parses the data fields and image. Fields get POSTed to our Incidents API, while the image is uploaded to Blob Storage and a new message is added to our queue.
 
-1. In the terminal, execute a `npm install formidable azure-storage --save` to install the dependencies.
+1. In the terminal, execute a `npm install formidable azure-storage mime --save` to install the dependencies.
 
 1. Open a browser window and navigate to `http://localhost:3000/new`.  Fill out the form and hit the **Submit** button.
 

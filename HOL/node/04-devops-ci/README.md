@@ -28,7 +28,7 @@ This hands-on-lab has the following exercises:
 ---
 ### Exercise 1: Create VSTS online account
 
-1. In your browser, browser to [https://www.visualstudio.com/team-services/]()
+1. In your browser, browser to [https://www.visualstudio.com/team-services/](https://www.visualstudio.com/team-services/)
 
     ![image](./media/image-000.gif)
 
@@ -282,7 +282,7 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-036.gif)
 
-    > Make sure to select the step with **RM** in the title, as it uses the newer Azure Resource Manager deployment system
+    > Avoid the similarly named `Azure App Service Classic (Deprecated)` task, as it uses the older ASM Model rather than [ARM](https://docs.microsoft.com/en-in/azure/azure-resource-manager/resource-group-overview#the-benefits-of-using-resource-manager)
 
 1. VSTS needs a connection to a target Azure Subscription. Click **Manage** to open a new tab holding configuration options.
 
@@ -292,53 +292,50 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-038.gif)
 
-1. The modal window should automatically determine your subscription information.  Provide a name such as **Azure**, select **OK*, and a close the tab.
+1. The modal window should automatically determine your subscription information.  Provide a name such as **Azure**, select **OK**, and skip the remaining instructions for this step.
 
     ![image](./media/image-039.gif)
 
-    > If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
-    > format will change to allow you to enter connection information on your subscription:    
+    However, if your subscription is not in the dropdown list, then VSTS could not automatically configure a Service Principal for your account and you will need to manually create the SP. A Service Principal is similar to a service account, in that it is a separate account within Azure Active Directory that is given permissions to activities in an Azure Subscription (such as the creation or deletion of Azure resources). 
+
+    To begin manually creating a Service Principal, click the **here** link at the bottom of the "Add Azure Resource Manager Service Endpoint" modal window.   
 
     ![image](./media/image-043a.gif)
 
-1. If you have not created a service principal for the subscription, you will have to follow the 
-    [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so.  This process will 
-    provide the information to enter in this dialog:
-1. open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
-    in your browser. Select all the content from the window and copy to the clipboard.
-1. open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
+    The window format will change to allow you to enter connection information on your subscription. 
 
-    ![image](./media/image-044a.gif)
+    ![image](./media/image-054.gif)
 
-1. Click the green arrow to run the PowerShell script
+    For **Connection Name**, enter a value of `Azure`.
 
-    ![image](./media/image-045a.gif)
+    **Subscription ID** is the GUID for your Azure Subscription. This can be found by opening the [Subscriptions Blade](https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade) from the Azure Portal, and selecting your subscription. The GUID will be in the Subscription Details blade. Next to the ID is the value for **Subscription Name**. Copy these values back in the Modal Dialog in VSTS.
 
-1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
-    for the service principal only, not the password for your subscription.  So you can use whatever password 
-    you would like, just remember it.    
+    ![image](./media/image-052.gif)
 
-    ![image](./media/image-046a.gif)
+    To create a Service Principal, open a terminal window that has the [AzureCLI installed](https://docs.microsoft.com/en-us/azure/xplat-cli-install), and execute `azure ad sp create -n DevCampSP -p Devc@mp2016!`. The returned **Service Principal Name** maps to **Service Principal Client ID** in VSTS.  The password used (`Devc@mp2016!`) maps to the **Service Principal Key** in VSTS.  Also take note of the returned **Object ID** value for the next step.
 
-1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
-    The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
-    window.  Copy and paste these values from the PowerShell window:
-        Subscription ID
-        Subscription Name
-        Service Principal Client ID
-        Service Principal Key
-        Tenant ID
+    Next, we need to grant the new SP "Contributor" permissions for our Azure subscription. Execute the following command, substituting the content between `<>` for the Object ID returned from the SP creation command, and the Subscription ID returned from the Azure Portal Blade.
+    
+    ```shell
+    azure role assignment create -o Contributor --objectId <Object ID returned in previous step> -c /subscriptions/<Subscription ID GUID retrieved earlier from portal>`
+    ```
 
-1. Enter a user-friendly name to use when referring to this service endpoint connection.
+    An example command looks like: 
 
-    ![image](./media/image-047a.gif)
+    ```shell
+    azure role assignment create -o Contributor --objectId ae5350b5-2346-4509-8184-d83f296d3cac -c /subscriptions/9f4d814b-7085-44ae-0f99-bfh8sf5a3f35
+    ```
 
-1. Click **Verify connection*, and ensure that the window indicates that the connection was verified. 
-    Then Click **OK** and **Close**.
+    The **Tenant ID** in VSTS means the GUID of your Azure Active Directory tenant.  To find the value, open the [Properties Blade](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Properties) in the Azure Portal's AAD Blade.
+
+    To visualize where each Service Endpoint value is found, please see:
+    ![image](./media/image-053.gif)
+    
+    Once each value is filled out, click **Verify Connection** to ensure the values work, then click **OK** to finish creating the Service Endpoint connection to Azure.
 
     ![image](./media/image-048a.gif)
 
-    > This pattern is used to connect to a variety of services beyond Azure such as Jenkins, Chef, and Docker
+    > This Service Endpoint pattern is used to connect to a variety of services beyond Azure such as Jenkins, Chef, and Docker
 
 1. Back on the VSTS Build window, in the Build Step we started earlier, click the **Refresh** icon. The **Azure** connection that we setup should now appear.  Select it. 
 
@@ -348,7 +345,7 @@ In the ARM Template that was originally deployed in the lab setup, a web app was
 
     ![image](./media/image-041.gif)
 
-1. **Save** the Release Definition, and **Queue a new Build**
+1. **Save** the Release Definition, and **Create Release**
 
     ![image](./media/image-042.gif)
 

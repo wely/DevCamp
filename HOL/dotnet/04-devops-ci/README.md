@@ -30,7 +30,7 @@ This hands-on-lab has the following exercises:
 ----
 ## Exercise 1: Create VSTS online account
 
-1. In your browser, navigate to [https://www.visualstudio.com/]()
+1. In your browser, navigate to [https://www.visualstudio.com/](https://www.visualstudio.com/)
 
     ![image](./media/image-000.gif)
 
@@ -120,6 +120,15 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
     ![image](./media/image-049.gif)
 
+    > If you made changes to the files, and you do not see them in the list, ensure that you have cloned the repository from the repo.
+    
+    ```CMD
+    cd\DevCampVSO
+    Git init
+    Git commit *
+    Git push origin master -m ‘initial commit’
+    ```
+
 1. Right click on the top level folder and select `Stage`
 
     ![image](./media/image-050.gif)
@@ -172,14 +181,16 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
 1. In the build step `Copy Files to: $(build.artifactstagingdirectory)`, the default setting uses build definition folders. We are not using custom build configurations so we need to update the contents value.
 
-    ### Previous setting ###
-    ![image](./media/image-023.gif)
+    > ***Previous setting***
+    >
+    >![image](./media/image-023.gif)
 
-     ```xml
-     **\bin\**
-     ```
-     ### New setting ###
-     ![image](./media/image-017.gif)
+    ```xml
+    **\bin\**
+    ```
+    > ***New setting***
+    >
+    > ![image](./media/image-017.gif)
 
 1. Save your Build Definition named **DotNet Build**
 
@@ -195,13 +206,19 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/image-021.gif)
 
-1. Let's inspect the output artifacts that were published.  Click the **Build XXX** header in the left pane to view the build's landing page.  Then select **Artifacts** from the horizontal toolbar, and **Download** the **drop** artifact.
+1. Let's inspect the output artifacts that were published.  Click the **Build XXX** header in the left pane to view the build's landing page. 1. Select **Artifacts** from the horizontal toolbar, and click **Explore**.
 
     ![image](./media/image-055.gif)
 
+1. Expand the drop folder and view the build artifacts. Click `Close` when complete.
+
     ![image](./media/image-022.gif)
 
-1. Unzip `drop.zip` to see our files.  This artifact will be deployed to an Azure Web App in a later exercise.
+1. Select **Artifacts** from the horizontal toolbar, and click **Download**. Save the build locally.
+
+    ![image](./media/image-035.gif)
+
+1. Unzip `drop.zip` to see the application files created by the build agent.  This artifact will be deployed to an Azure Web App in a later exercise.
 
 We now have a Build Definition that will compile the application and package it for deployment anytime code is checked into the repository, or a manual build is queued. 
 
@@ -233,6 +250,10 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 1. Select ***Azure App Service Deployment*** and click Next.
 
     ![image](./media/image-039.gif)
+
+1. Ensure the **Source** is set to the Build Definition name used in the earlier exercise and that **Queue** is set to the **Hosted** option. Then click **Create** to finish creating the Release Definition
+
+    ![image](./media/image-027.gif)
 
 1.  We need to connect your VS agent with your Azure subscription so it can deploy resources. Click on ***Manage***
 
@@ -267,6 +288,8 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
         ![image](./media/image-045a.gif)
 
+        > If the PowerShell gives an error at runtime regarding a missing AzureRM module, please install it by executing the following command in a PowerShell window with admin privileges: `Install-Module AzureRM`. Then run `Set-ExecutionPolicy RemoteSigned -Scope process` to adjust the execution level
+
     1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
         for the service principal only, not the password for your subscription.  So you can use whatever password 
         you would like, just remember it.    
@@ -276,11 +299,12 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
         The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
         window.  Copy and paste these values from the PowerShell window:
-            Subscription ID
-            Subscription Name
-            Service Principal Client ID
-            Service Principal Key
-            Tenant ID
+        
+        * Subscription ID
+        * Subscription Name
+        * Service Principal Client ID
+        * Service Principal Key
+        * Tenant ID
 
     1. Also, enter a user-friendly name to use when referring to this service endpoint connection.
         ![image](./media/image-047a.gif)
@@ -304,7 +328,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-061.gif)
 
-1. Enter the release information and select the build to deploy. Click Create
+1. Enter the release information and select the build to deploy. Ensure that the latest successful build is selected from the dropdown box. Click Create
 
     ![image](./media/image-063.gif)
 
@@ -316,10 +340,35 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-065.gif)
 
+1. Update the application configuration to match the current settings you have deployed. Copy the values from the web.config to the Application configuration in Azure. Open the Azure portal and find the .NET web application.
+
+    ![image](./media/image-028.gif) 
+
+1. Open the Application Settings
+
+     ![image](./media/image-029.gif)
+
+1. Copy the values from the web.config into the application settings. If you do not have values for these settings, please review the previous labs for the correct values.
+
+     ![image](./media/image-030.gif)
+
+1. Click `Save`. If you need additional space in the UI, you can expand the window.
+
+    ![image](./media/image-032.gif) 
+    
+1. Navigate to the <a href="https://apps.dev.microsoft.com" target="_blank">Application Registration Portal (https://apps.dev.microsoft.com)</a>. 
+
+1. Open the configuration for your application and add the Azure web application URL to the list of Redirect URLs. Click `Save`.
+
+    ![image](./media/image-033.gif) 
+
+    > Note: Be sure to include the trailing slash **\\** in the URL.
+
+1. Open a browser and navigate to the site. You should see the running site on Azure.
+    
     ![image](./media/image-066.gif)
 
 ---
-
 ## Summary
 
 In this hands-on lab, you learned how to:

@@ -14,7 +14,8 @@ nav.navbar.navbar-default
           li(class={active: title === 'Report an Outage'})
             a(href='/new') Report Outage
       
-        //-if user 
+      //- Begin Login Dropdown Block
+        if user 
           ul.nav.navbar-nav.navbar-right
             li.dropdown
               a(href='#', data-toggle='dropdown', role='button').dropdown-toggle Hi, #{user.displayName}
@@ -24,7 +25,7 @@ nav.navbar.navbar-default
                 li.divider(role='separator"')
                 li
                   a(href='/logout') Logout
-        //-else
+        else
           ul.nav.navbar-nav.navbar-right
             li
-              a(href='/login') Login
+              a(href='/login') Login        

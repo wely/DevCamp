@@ -3,7 +3,7 @@
 ## Overview
 In this lab, you will create and integrate an instance of Application Insights with your application to provide a 360* view of your app performance. 
 
-> This guide use Visual Studio on Windows as the IDE. You can use [Visual Studio community Edition](https://www.visualstudio.com/post-download-vs/?sku=community&clcid=0x409&downloadrename=true).
+> This guide use Visual Studio on Windows as the IDE. You can use [Visual Studio Community Edition](https://www.visualstudio.com/post-download-vs/?sku=community&clcid=0x409&downloadrename=true).
 
 ## Objectives
 In this hands-on lab, you will learn how to:
@@ -211,7 +211,7 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
     ```
 1. Resolve the references in this class and save the open files.
 
-1. Hit F5 to begin debugging. Sign in, view your profile and Sign out a few times. Notice the custom events in the portal.
+1. Hit F5 to begin debugging. Sign in, view your profile and Sign out a few times. Then view the custom events in the portal by opening the Application Insights blade, selecting **Usage** from the left navigation, and locating the **Custom Events** section.
 
     ![image](./media/image-011.gif)
  

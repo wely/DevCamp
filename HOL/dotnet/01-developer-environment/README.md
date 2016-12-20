@@ -234,10 +234,9 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-1. Start Visual Studio using the `Visual studio 2015` shortcut.
+1. Start Visual Studio using the `Visual Studio 2015` shortcut.
 
-> Note, there are 2 Visual Studio shortcuts. Make sure you **DO NOT** use using the `start experimental instance of visual studio 2015` shortcut.
-
+    > Note, there are 2 Visual Studio shortcuts. Make sure you **DO NOT** use the "start experimental instance of visual studio 2015" shortcut.
 
     ![image](./media/image-010.gif)
 
@@ -265,7 +264,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 ## Exercise 6: Deploy shared API application ##
 
-1. Open a browser and navigate to [https://portal.azure.com]() Locate the app service named `incidentapi....` in the resource group blade:
+1. Open a browser and navigate to [https://portal.azure.com](https://portal.azure.com) Locate the app service named `incidentapi....` in the resource group blade:
     
     ![image](./media/2016-11-14_12-00-24.gif)
 
@@ -276,7 +275,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
     A new browser tab will open.
 
     >
-    > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this excercise.
+    > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this exercise.
     >
     
     ![image](./media/2016-11-14_12-10-59.gif)
@@ -312,10 +311,9 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 1.	Select OK
 
 ---
-
 ## Exercise 7: Azure Portal walkthrough
 
-1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, http://portal.azure.com.  Log in with the credentials you supplied in the subscription signup exercise.  You should see the Azure portal, similar to this:
+1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, [http://portal.azure.com](https://portal.azure.com).  Log in with the credentials you supplied in the subscription signup exercise.  You should see the Azure portal, similar to this:
 
     ![image](./media/2016-10-19_15-08-26.gif)
 
@@ -400,7 +398,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
     ![image](./media/2016-10-19_16-44-51.gif)
 
-1. The Windows VM uses DevTest labs to manage the start up and shut down of the machine. To change the start up schedule, click on the DevTest Lab icon and select `Policy Settings`
+1. The Windows VM is managed by an [Azure DevTest lab](https://azure.microsoft.com/en-us/services/devtest-lab/) named `DevCamp` which handles the startup and shutdown of the machine. To change the start up schedule, click on the DevTest Lab icon and select `Policy Settings`
 
     ![image](./media/image-012.gif)
 
@@ -422,6 +420,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 > It is particularly useful to create resources in the Azure portal, then save or edit the resource group template.  Resource group templates will be explained further in a later lab.
 
+---
 ## Exercise 8: View the resources you created
 
 Going back to the list of resources in the resource group, we'll go through the list of each resource, with a description.  Feel free to click on the resource and view its detail blade.
@@ -471,6 +470,23 @@ Also, our resource group template has added a random string to the end of many o
 1. `WindowsDevPip:`  This is a public IP that will allow the Windows development virtual machine to communicate with the Internet (eg. via Remote Desktop).  If you delete the Windows virtual machine, you can safely delete this.
 
 1. `windev...NetworkInterface:`  This is a public network interface that will allow the Windows development virtual machine to communicate on the network.  If you delete the Windows virtual machine, you can safely delete this.
+
+---
+## Clean Up
+
+> Please refer back to this section after the DevCamp concludes
+
+To clean up a Resource Group, we typically simply delete the Resource Group. However, since we are using an Azure DevTest Lab to manage our Virtual Machine, we have an additional step.
+
+Azure DevTest Labs create a series of [Resource Locks](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-lock-resources) that prevent accidental deletion of resources. Locks allow us to safeguard against accidental deletion of critical resources, and to delete the Resource Group we first need to delete the locks.
+
+Open your DevCamp Resource Group, and in the navigation pane select **Locks**. You should see the 5 locks created by the DevTest Lab. To delete, select the three dots to the right of the Notes column, and select **Delete**.
+
+![image](./media/image-027.png)
+
+After all 5 locks have been deleted you are able to delete the resource group. Navigate to the **Overview** tab and select **Delete**. The Resource Group will take several minutes to remove, but when finished all resources will no longer accrue charges in your subscription.
+
+![image](./media/image-028.png)
 
 ---
 # Summary

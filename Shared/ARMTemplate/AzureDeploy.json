@@ -30,8 +30,8 @@
         "dtlVnetName": "DevCampVnet",
         "dtlVnetId": "[resourceId('Microsoft.DevTestLab/labs/virtualNetworks', variables('dtlName'), variables('dtlVnetName'))]",
         "dtlVmName": "[concat('Dev', '-', take(uniqueString(resourceGroup().id), 4))]",
-        "dtlVmSizes": "\"Standard_DS1_v2\", \"Standard_DS3_v2\", \"Standard_DS11_v2\"",
-        "dtlVmSize": "Standard_DS1_v2",
+        "dtlVmSizes": "\"Standard_DS1_v2\", \"Standard_DS2_v2\", \"Standard_DS11_v2\"",
+        "dtlVmSize": "Standard_DS2_v2",
         "dtlVmStorage": "Premium",
         "dtlShutdownTime": "21:00",
         "dtlTimeZoneId": "UTC",
@@ -580,7 +580,7 @@
                         "parameters": [
                             {
                                 "name": "scriptFileUris",
-                                "value": "[[\"https://raw.githubusercontent.com/AzureCAT-GSI/DevCamp/DTL/Shared/ARMTemplate/Scripts/InstallNodeJS.ps1\"]"   
+                                "value": "[[\"https://raw.githubusercontent.com/AzureCAT-GSI/DevCamp/master/Shared/ARMTemplate/Scripts/InstallNodeJS.ps1\"]"
                             },
                             {
                                 "name": "scriptToRun",
