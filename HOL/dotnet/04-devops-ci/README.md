@@ -79,11 +79,17 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
 
     ![image](./media/image-044.gif)
 
-1. Create a local folder outside of the GIT folder you have been using for the other HOLS. In the example below, the folder was created as `DevCampVSO`
+1. When Visual Studio launches, you will be prompted to create a local folder to clone into. Select the `ellipses`
 
-     ![image](./media/image-045.gif)
+    ![image](./media/image-070.gif)
 
-1. Open Windows Explorer and copy the files from the `start` folder into the folder you created above.
+1. Create a new local folder ***outside*** of the GIT folder you have been using for the other HOLS. In the example below, the folder was created as `DevCampVSO`
+
+    ![image](./media/image-071.gif)
+
+1. Click Ok and Clone.
+
+1. Open Windows Explorer and copy the files from the `start` folder in this HOL and copy the contents into the folder you created above.
 
       ![image](./media/image-046.gif)
 
