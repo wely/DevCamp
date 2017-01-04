@@ -44,12 +44,10 @@ This hands-on-lab has the following exercises:
     ![image](./media/image-01.gif)
 
 1. Open the DevCamp.SLN solution file
-1. Build the solution by right-clicking on the DevCamp.WebApp project and choosing `build`:
+1. Build the solution by right-clicking on the DevCamp.WebApp project and choosing `build`. This process should also pull the necessary packages from Nuget:
     ![image](./media/2016-11-14_12-42-51.gif)
 
-    Then run the solution by typing `F5`.
-
-    Visual Studio should run IIS Express and launch the application. You should see the home page
+1. Once the build is complete, run the solution by typing `F5`. Visual Studio should run IIS Express and launch the application. You should see the home page
 
     ![image](./media/image-02.gif)
 
@@ -71,7 +69,7 @@ This hands-on-lab has the following exercises:
     
     ![image](./media/image-05.gif)
 
-1. Since we provisioned a new instance of DocumentDB, there are no records to use as sample data. To generate sample data, the shared API has a route that can be hit at any time to reset the documents in your collection.  In the browser, add the following to your API URL to generate sample documents.
+1. Since we provisioned a new instance of DocumentDB, there are no records in the database. We will generate some sample data using the shared API. It has a route that can be accessed at any time to create or reset the documents in your collection.  In the browser, add the following to your API URL to generate sample documents.
 
     >
     > Add `/incidents/sampledata` to the end of your API URL. 
@@ -82,7 +80,7 @@ This hands-on-lab has the following exercises:
     >
     >
 
-1. After navigating to the sampledata route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade and select the DocumentDB resource.
+1. After navigating to the `sampledata` route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade and select the DocumentDB resource.
 
     ![image](./media/image-06.gif)
 
@@ -246,7 +244,7 @@ This hands-on-lab has the following exercises:
 
 1. Resolve the references for `Newtonsoft.Json, IncidentAPI, IncidentAPI.Models and System.Collections.Generic`. Make sure you have also added the IncidentAPI namespace, as  GetIAllIncidentsAsync() is an extension method which cannot be resolved automatically.
 
-1. Change the method to async. The code should look like the following:
+1. Change the method to be async and have the method return a Task by changing the return type to `async Task<ActionResult>`. The code should look like the following:
 
     ```csharp
         using DevCamp.WebApp.Utils;
@@ -361,7 +359,7 @@ This hands-on-lab has the following exercises:
 
     ```csharp
     [HttpPost]
-    public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
+    public ActionResult Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
     {
         try
         {
@@ -562,10 +560,15 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     return RedirectToAction("Index", "Dashboard");
     ``` 
 1. Hit F5 to start debugging. Select the dashboard page. You should hit the breakpoint. Hit F10 to step over the call. The cache is empty so it fall to the else condition
+
 1. Hit F5 to continue stepping. The data should be added to the cache
+
 1. Hit refresh in the browser and hit the breakpoint again. This time when you hit F10, you should be getting the data from cache.
+
 1. Create a new incident from the Report Outage page. Enter some details and click `Create`
+
 1. Your new incident should be first in the dashboard.
+
 1. Close the browser and stop debugging
 
 ---
@@ -701,7 +704,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     }
     ```
 
-1. In the `IncidentController.cs` file, add the following inside the `Create` method, after clearing the cache, to process the image file.
+1. In the `IncidentController.cs` file, add the following inside of the `Create` method decorated with `[HttpPost]`. This will handle the clearing of the cache, after we process the image file.
 
     ```csharp
     //Now upload the file if there is one
@@ -721,9 +724,21 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     }
     ```
 
+1. Becuase we are using Awaitable methods, we need to change the Create method to async and have the method return a Task. Change the return type to `async Task<ActionResult>`. The code should look like the following:
+
+    ```csharp
+    public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)
+    {
+        ...OMMITED
+    }
+    ```
+
 1. Save the files and hit F5 to debug.
+
 1. Add a new incident with a picture and it will get uploaded to Azure storage.
+
 1. Close the browser and stop debugging.
+
 1. Open the Azure Storage Explorer, connect it to your storage account and verify that your image and a queue entry were uploaded to Azure storage.
 
 ---
