@@ -233,8 +233,8 @@ The Azure resource group template will have created a virtual machine that can b
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-1. In a browser windows inside your development Virtual Machine, open a browser window and go to `http://nodejs.org`, 
-and click on the `Other Downloads` link under v6.9.0:
+1. In a browser window inside your development Virtual Machine, open a browser window and go to `http://nodejs.org`, 
+and click on the `Other Downloads` link under v6.9.3 LTS:
 
     ![image](./media/2016-10-19_10-15-22.gif)
 
@@ -244,7 +244,7 @@ and click on the `Other Downloads` link under v6.9.0:
 
     > Please do not skip this step, because we will need node.js to install the Azure cross platform command line interface in the next step.
 
-1. Install the azure command line interface.  Go to a terminal window and do this command:
+1. Install the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli).  *There is a new python-based command line interface in preview - we are not going to use that one.  Please follow these instructions to install the node-based command line interface* Open a *NEW* terminal window and do this command:
     `node -v` 
     Verify that the version is v6 or greater.
 

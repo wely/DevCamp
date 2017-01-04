@@ -243,7 +243,8 @@ The Azure resource group template will have created a virtual machine that can b
 * **NodeJS version 6 or greater** - We make extensive use of ECMAScript 6/ECMAScript 2015 which is error on earlier versions of Node. [Download](https://nodejs.org) from the Node website, or use [NVM](https://github.com/creationix/nvm) with a recent version. To ensure this requirement is met, please run `node -v` and ensure v6+
 
 * **Azure XPlat CLI** - Install the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) by running `npm install -g azure-cli` and login to your subscription with `azure login`. [Instructions](https://github.com/Azure/azure-xplat-cli#get-started)
-
+ > *There is a new python-based command line interface in preview - we are not going to use that one.  Please follow these instructions to install the node-based command line interface* 
+ 
 * **Visual Studio Code** - You can use any editor of your choosing, but be aware that the lab makes a heavy assumption that VSCode will be used. [Download](https://go.microsoft.com/fwlink/?LinkID=620882)
 
 * **Storage Explorer** - Grab the cross-platform [Microsoft Azure Storage Explorer](http://storageexplorer.com/) to interact with files stored in Azure Storage accounts.
