@@ -39,8 +39,7 @@
         "dtlVmPassword": "Devc@mp2016!",
         "chocoPackages": "git-credential-winstore,webpicmd,eclipse,jre8,javaruntime"
     },
-    "resources": [
-        {
+    "resources": [{
             "name": "[variables('storageName')]",
             "type": "Microsoft.Storage/storageAccounts",
             "location": "[resourceGroup().location]",
@@ -135,8 +134,7 @@
                 "name": "[variables('apiAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
             },
-            "resources": [
-                {
+            "resources": [{
                     "name": "appsettings",
                     "type": "config",
                     "apiVersion": "2015-08-01",
@@ -230,8 +228,7 @@
                 "name": "[variables('dotnetAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
             },
-            "resources": [
-                {
+            "resources": [{
                     "name": "appsettings",
                     "type": "config",
                     "apiVersion": "2015-08-01",
@@ -304,8 +301,7 @@
                 "name": "[variables('nodejsAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
             },
-            "resources": [
-                {
+            "resources": [{
                     "name": "appsettings",
                     "type": "config",
                     "apiVersion": "2015-08-01",
@@ -379,8 +375,7 @@
                 "name": "[variables('javaAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
             },
-            "resources": [
-                {
+            "resources": [{
                     "apiVersion": "2015-08-01",
                     "name": "web",
                     "type": "config",
@@ -455,8 +450,7 @@
             "type": "Microsoft.DevTestLab/labs",
             "name": "[variables('dtlName')]",
             "location": "[resourceGroup().location]",
-            "resources": [
-                {
+            "resources": [{
                     "apiVersion": "2016-05-15",
                     "name": "[variables('dtlVnetName')]",
                     "type": "virtualnetworks",
@@ -553,8 +547,7 @@
                 "isAuthenticationWithSshKey": false,
                 "disallowPublicIpAddress": false,
                 "allowClaim": false,
-                "artifacts": [
-                    {
+                "artifacts": [{
                         "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-chrome')]"
                     },
                     {
@@ -568,17 +561,14 @@
                     },
                     {
                         "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-chocolatey')]",
-                        "parameters": [
-                            {
-                                "name": "packages",
-                                "value": "[variables('chocoPackages')]"
-                            }
-                        ]
+                        "parameters": [{
+                            "name": "packages",
+                            "value": "[variables('chocoPackages')]"
+                        }]
                     },
                     {
                         "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-run-powershell')]",
-                        "parameters": [
-                            {
+                        "parameters": [{
                                 "name": "scriptFileUris",
                                 "value": "[[\"https://raw.githubusercontent.com/AzureCAT-GSI/DevCamp/master/Shared/ARMTemplate/Scripts/InstallNodeJS.ps1\"]"
                             },
@@ -595,5 +585,57 @@
                 ]
             }
         }
-    ]
+    ],
+    "outputs": {
+        "AZURE_STORAGE_ACCOUNT": {
+            "type": "string",
+            "value": "[variables('storageName')]"
+        },
+        "AZURE_STORAGE_ACCESS_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts/', variables('storageName')), '2016-01-01').keys[0].value]"
+        },
+        "AZURE_STORAGE_BLOB_CONTAINER": {
+            "type": "string",
+            "value": "[variables('imgContainerName')]"
+        },
+        "AZURE_STORAGE_QUEUE": {
+            "type": "string",
+            "value": "[variables('queueName')]"
+        },
+        "INCIDENT_API_URL": {
+            "type": "string",
+            "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites/', variables('apiAppName')),'2015-08-01').defaultHostName)]"
+        },
+        "REDISCACHE_HOSTNAME": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').hostName]"
+        },
+        "REDISCACHE_PORT": {
+            "type": "int",
+            "value": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').port]"
+        },
+        "REDISCACHE_SSLPORT": {
+            "type": "int",
+            "value": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').sslPort]"
+        },
+        "REDISCACHE_PRIMARY_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').primaryKey]"
+        },
+        "env": {
+            "type": "object",
+            "value": {
+                "AZURE_STORAGE_ACCOUNT": "[variables('storageName')]",
+                "AZURE_STORAGE_ACCESS_KEY": "[listKeys(resourceId('Microsoft.Storage/storageAccounts/', variables('storageName')), '2016-01-01').keys[0].value]",
+                "AZURE_STORAGE_BLOB_CONTAINER": "[variables('imgContainerName')]",
+                "AZURE_STORAGE_QUEUE": "[variables('queueName')]",
+                "INCIDENT_API_URL": "[concat('https://', reference(resourceId('Microsoft.Web/sites/', variables('apiAppName')),'2015-08-01').defaultHostName)]",
+                "REDISCACHE_HOSTNAME": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').hostName]",
+                "REDISCACHE_PORT": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').port]",
+                "REDISCACHE_SSLPORT": "[reference(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').sslPort]",
+                "REDISCACHE_PRIMARY_KEY": "[listKeys(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2014-04-01').primaryKey]"
+            }
+        }
+    }
 }
