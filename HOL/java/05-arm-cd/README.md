@@ -137,7 +137,7 @@ You can use any editor you like to create Azure resource group templates, but bo
         }
     ```
 
-    > For the `AAD_RETURN_URL` we are dynamically resolving the value by using a `reference()` lookup for a given app name. Ensure that `citypowertest581951`   matches whatever name you choose for your web app
+    > For the `AAD_RETURN_URL` we are dynamically resolving the value by using a `reference()` lookup for a given app name. Ensure that you replace `javaapptest0298374`  with whatever name you choose for your web app
 
 We are now ready to deploy our ARM Template containing an App Service Plan, and a Web App with environment variables to Azure. 
 
