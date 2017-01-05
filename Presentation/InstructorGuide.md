@@ -159,7 +159,7 @@ We will provide an overview of the developer tools available for developing on y
 
 **If you have an issue setting the Azure Pass or trial, but some students are working, have that user set up a new user(s) account. Make the test user accounts Global Admin. Also grant the user account access to Azure to the subscription.**
 
-> The ARM Template may not deploy successfully in all regions. As of Nov 18 2016 the following regions will fail: brazilsouth, westindia, uksouth, ukwest (lack of DocumentDB) and southindia, centralindia, and canadaeast (lack of VM tier). Please have attendees select one of the other Azure regions.
+> The ARM Template may not deploy successfully in all regions due to a lack of DocumentDB or a VM Size deployed in that region. As of 5 Jan 2017 the following regions will fail: westindia. Please have attendees select one of the other Azure regions.
 
 ----
 ##  Module 2 - Modern Cloud Apps Overview ####
