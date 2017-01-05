@@ -50,7 +50,7 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
 
     Save and close the file. You will now be able to use snippets in the creation of ARM files.
 
-1. Now that we have our tooling setup, open `start/armdeploy.json`. This is a skeleton ARM Template, including the four sections Parameters, Variables, Resources, and Outputs. Click into the brackets next to Resources and create a linebreak.  In the new line, type `arm-p` and hit enter to select **arm-plan**.  This will create a new App Service Plan, which controls the features and performance of associated Azure Web Apps.
+1. Now that we have our tooling setup, open `start/azuredeploy.json `. This is a skeleton ARM Template, including the four sections Parameters, Variables, Resources, and Outputs. Click into the brackets next to Resources and create a linebreak.  In the new line, type `arm-p` and hit enter to select **arm-plan**.  This will create a new App Service Plan, which controls the features and performance of associated Azure Web Apps.
 
     ![image](./media/image-006.gif)
 

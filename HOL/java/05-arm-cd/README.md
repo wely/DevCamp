@@ -1,4 +1,4 @@
-# ARM (NodeJS)
+# ARM (Java)
 
 ## Overview
 In this lab, you will learn to provision and manage resources in Azure with the new Azure Resource Manager.  Then we will deploy our sample application into newly created infrastructure.
@@ -11,7 +11,7 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-The source for the starter app is located in the [TODO:ADD REF](#) folder. 
+The source for the starter app is located in the [start](start) folder. 
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -22,7 +22,7 @@ This hands-on-lab has the following exercises:
 
 ### Exercise 1: Create an ARM Template in Visual Studio Code
 
-Visual Studio Code includes a sizable ecosystem of extensions.  One such extension is the [Azure Resource Manager Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools).
+You can use any editor you like to create Azure resource group templates, but both Visual Studio and Visual Studio Code have convenient mechanisms for this process.  In this example, we are going to use Visual Studio Code, and we are going to leverage the e [Azure Resource Manager Tools] extension(https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools).
 
 1. Install the ARM Tools extension in Visual Studio Code by using the [Command Palette](https://code.visualstudio.com/Docs/editor/codebasics#_command-palette).  With VSCode open, press `CTRL` + `P` and enter `ext install azurerm-vscode-tools`.
 
@@ -50,7 +50,7 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
 
     Save and close the file. You will now be able to use snippets in the creation of ARM files.
 
-1. Now that we have our tooling setup, open `start/armdeploy.json`. This is a skeleton ARM Template, including the four sections Parameters, Variables, Resources, and Outputs. Click into the brackets next to Resources and create a linebreak.  In the new line, type `arm-p` and hit enter to select **arm-plan**.  This will create a new App Service Plan, which controls the features and performance of assoicated Azure Web Apps.
+1. Now that we have our tooling setup, open `start/azuredeploy.json `. This is a skeleton ARM Template, including the four sections Parameters, Variables, Resources, and Outputs. Click into the brackets next to Resources and create a linebreak.  In the new line, type `arm-p` and hit enter to select **arm-plan**.  This will create a new App Service Plan, which controls the features and performance of assoicated Azure Web Apps.
 
     ![image](./media/image-006.gif)
 
@@ -62,7 +62,7 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
 
     ![image](./media/image-008.gif) 
 
-    This web app name needs to be globally unique, as it will be used for the https://***.azurewebsites.net DNS entry and cannot be the same as an existing webapp.  Use `nodejsapptest` plus 4-5 random characters.
+    This web app name needs to be globally unique, as it will be used for the https://***.azurewebsites.net DNS entry and cannot be the same as an existing webapp.  Use `javaapptest` plus 4-5 random characters.
 
     The webapp resource has stubbed in 3 instances of `APP_SERVICE_PLAN_NAME`. Replace this value with the `AppServicePlan` name value that you gave the App Service Plan earlier.
 
@@ -77,54 +77,67 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
     > If you are using VSCode and have been debugging locally with `.vscode/launch.json` then you can copy/paste the values into the template to override the sample values below
 
     ```json
-    {
-        "apiVersion": "2015-08-01",
-        "name": "citypowertest581951",
-        "type": "Microsoft.Web/sites",
-        "location": "[resourceGroup().location]",
-        "tags": {
-            "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/AppServicePlan')]": "Resource",
-            "displayName": "citypowertest581951"
-        },
-        "dependsOn": [
-            "Microsoft.Web/serverfarms/AppServicePlan"
-        ],
-        "properties": {
-            "name": "citypowertest581951",
-            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', 'AppServicePlan')]"
-        },
-        "resources": [
             {
-                "name": "appsettings",
-                "type": "config",
-                "apiVersion": "2015-08-01",
-                "dependsOn": [
-                    "[concat('Microsoft.Web/sites/', 'citypowertest581951')]"
-                ],
-                "tags": {
-                    "displayName": "AppSettings"
+            "apiVersion": "2015-08-01",
+            "name": "javaapptest0298374",
+            "type": "Microsoft.Web/sites",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/AppServicePlan')]": "Resource",
+                "displayName": "javaapptest0298374"
+            },
+            "dependsOn": [
+                "Microsoft.Web/serverfarms/AppServicePlan"
+            ],
+            "properties": {
+                "name": "javaapptest0298374",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', 'AppServicePlan')]"
+            },
+            "resources": [{
+                    "apiVersion": "2015-08-01",
+                    "name": "web",
+                    "type": "config",
+                    "dependsOn": [
+                        "[concat('Microsoft.Web/sites/', 'javaapptest0298374')]"
+                    ],
+                    "properties": {
+                        "javaVersion": "1.8",
+                        "javaContainer": "TOMCAT",
+                        "javaContainerVersion": "8.0"
+                    }
                 },
-                "properties": {
-                    "WEBSITE_NODE_DEFAULT_VERSION": "6.7.0",
-                    "AZURE_STORAGE_ACCOUNT": "incidentblobstgmm6lqhplz",
-                    "AZURE_STORAGE_ACCESS_KEY": "A3HFnKZPzGWzQl7z/UzCev32QE6aCecbbQ4qAmmyKwjCYGBjzHXT3d2CmgX7NUR6+fMZsk2VUlaSE7x4nzW5hg==",
-                    "AZURE_STORAGE_BLOB_CONTAINER": "images",
-                    "AZURE_STORAGE_QUEUE": "thumbnails",
-                    "INCIDENT_API_URL": "https://incidentapimm6lqhplzxjp2.azurewebsites.net",
-                    "REDISCACHE_HOSTNAME": "incidentcachemm6lqhplzxjp2.redis.cache.windows.net",
-                    "REDISCACHE_PORT": "6379",
-                    "REDISCACHE_SSLPORT": "6380",
-                    "REDISCACHE_PRIMARY_KEY": "ofiGLn8mowbVJ9/egFQ2+opdel4FQw7yWMFhxZclfPo=",
-                    "AAD_CLIENT_ID": "2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6",
-                    "AAD_CLIENT_SECRET": "JjrKfgDyo5peQ4xJa786e8z",
-                    "AAD_RETURN_URL": "[concat('https://', reference('citypowertest581951', '2015-08-01').defaultHostName, '/auth/openid/return')]"
+                {
+                    "name": "appsettings",
+                    "type": "config",
+                    "apiVersion": "2015-08-01",
+                    "dependsOn": [
+                        "[concat('Microsoft.Web/sites/', 'javaapptest0298374')]"
+                    ],
+
+                    "tags": {
+                        "displayName": "AppSettings"
+                    },
+                    "properties": {
+                        "WEBSITE_NODE_DEFAULT_VERSION": "6.7.0",
+                        "AZURE_STORAGE_ACCOUNT": "incidentblobstg32csxy6h3",
+                        "AZURE_STORAGE_ACCESS_KEY": "JUv0Ii0ZH59z/VuloHVVf0jIwU+g2bfVb76dg0XQo+m0ne+PL8S7eFcZdNqkUbBj4EmQrAW673bhhXdDUfiNRQ==",
+                        "AZURE_STORAGE_BLOB_CONTAINER": "images",
+                        "AZURE_STORAGE_QUEUE": "thumbnails",
+                        "INCIDENT_API_URL": "http://incidentapi32csxy6h3sbku.azurewebsites.net/",
+                        "REDISCACHE_HOSTNAME": "incidentcache32csxy6h3sbku.redis.cache.windows.net",
+                        "REDISCACHE_PORT": "6379",
+                        "REDISCACHE_SSLPORT": "6380",
+                        "REDISCACHE_PRIMARY_KEY": "ofiGLn8mowbVJ9/egFQ2+opdel4FQw7yWMFhxZclfPo=",
+                        "AAD_CLIENT_ID": "31959d66-08a7-49b1-8f03-7e64d55045f5",
+                        "AAD_CLIENT_SECRET": "oxE2XRnjyBkuz24saKuqN22",
+                        "AAD_RETURN_URL": "[concat('https://', reference('javaapptest0298374', '2015-08-01').defaultHostName, '/auth/openid/return')]"
+                    }
                 }
-            }
-        ]
-    }
+            ]
+        }
     ```
 
-    > For the `AAD_RETURN_URL` we are dynamically resolving the value by using a `reference()` lookup for a given app name. Ensure that `citypowertest581951`   matches whatever name you choose for your web app
+    > For the `AAD_RETURN_URL` we are dynamically resolving the value by using a `reference()` lookup for a given app name. Ensure that you replace `javaapptest0298374`  with whatever name you choose for your web app
 
 We are now ready to deploy our ARM Template containing an App Service Plan, and a Web App with environment variables to Azure. 
 
