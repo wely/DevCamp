@@ -494,6 +494,8 @@ AzureAD can handle authentication for web applications. First we will create a n
 
 1. Enter `ProfileController` and `Add` to create a new controller that handle signins.
 
+    ![image](./media/image-034.gif)
+
 1. Paste the following:
 
     ```csharp
