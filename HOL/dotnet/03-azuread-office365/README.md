@@ -482,7 +482,18 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/image-020.gif)
 
-1. Add a new controller called `ProfileController` to handle signins
+1. Go to the `Controllers` folder
+
+1. Right-click and select `Add > New Scaffolded Item`
+
+    ![image](./media/image-032.gif)
+
+1. Select `MVC 5 Controller - Empty` and `Add`
+
+    ![image](./media/image-033.gif)
+
+1. Enter `ProfileController` and `Add` to create a new controller that handle signins.
+
 1. Paste the following:
 
     ```csharp
