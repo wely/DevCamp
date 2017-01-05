@@ -212,7 +212,9 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/image-021.gif)
 
-1. Let's inspect the output artifacts that were published.  Click the **Build XXX** header in the left pane to view the build's landing page. 1. Select **Artifacts** from the horizontal toolbar, and click **Explore**.
+1. Let's inspect the output artifacts that were published.  Click the **Build XXX** header in the left pane to view the build's landing page. 
+
+1. Select **Artifacts** from the horizontal toolbar, and click **Explore**.
 
     ![image](./media/image-055.gif)
 
@@ -226,7 +228,7 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
 1. Unzip `drop.zip` to see the application files created by the build agent.  This artifact will be deployed to an Azure Web App in a later exercise.
 
-We now have a Build Definition that will compile the application and package it for deployment anytime code is checked into the repository, or a manual build is queued. 
+We now have a Build Definition that will compile the application and create a package for deployment anytime code is checked into the repository, or a manual build is queued.
 
 ----
 ## Exercise 5: Deploy code to an Azure Web App
