@@ -22,6 +22,10 @@ Internet.
 
     Install the DevCamp Resource Group template, and deploy one of the `end` applications to one of the App services. 
 
+    The application depends on a series of Environment Variables to be set. As a jumpstart, the ARM Template's Outputs section provides individual variables and an all-up object with all variables related to the services that were provisioned.  Note that you may need to add variables specific to the labs, such as AzureAD information, in addition to the ARM Template related variables provided.
+
+    ![image](./media/image-001.png)
+
     Set up monitoring in AppInsights, so there will be some monitoring data by the time you show this feature
 
     Create an OMS portal - you can set up a trial here: `https://www.microsoft.com/en-us/cloud-platform/operations-management-suite-trial`
