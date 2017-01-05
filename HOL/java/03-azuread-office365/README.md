@@ -67,11 +67,19 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/image-001f.gif)
 
+    1. In the box that pops up, Select Web:
+
+    ![image](./media/image-009a.gif)
+
     After AzureAD handles the authentication, it needs a 
     route in our application to redirect the user.  For 
     testing locally, we'll use `http://localhost:8080/auth/openid/return` as the **Redirect URI** and 
     as an environment variable named `AAD_RETURN_URL`.  Click the **Create** button. 
     paste that URI in the redirect URI box.
+
+    ![image](./media/image-010.gif)
+
+    Click the `Add Url` button, and add `http://localhost:8080/login` also.
 
     Finally click `Save` to save your configurations.
 

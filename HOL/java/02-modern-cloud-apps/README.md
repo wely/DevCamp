@@ -171,14 +171,14 @@ This hands-on-lab has the following exercises:
 
     ```
 
-    You'll notice a red line under `ReflectionToStringBuilder`. this is because we have to add `org.apache.commons.lang3` as a dependency.  Open up the `build.gradle` file, and add this line to the dependencies section:
+    You'll notice a red line under `ReflectionToStringBuilder`. This is because we have to add `org.apache.commons.lang3` as a dependency.  Open up the `build.gradle` file, and add this line to the dependencies section:
     ```java
     compile('org.apache.commons:commons-lang3:3.5')
     ```
 
     To make sure that Eclipse knows about the new packages we added to
     the buld, go to the `gradle tasks` tab in the bottom pane, navigate to the `ide/eclipse` gradle task and right click on it and choose `Run gradle tasks`.  Then right-click on the project in the project explorer,
-    close the project, and then open it again.  We will do this several times over the course of the DevCamp.
+    close the project, and then open it again.  Open `ApplicationProperties.java` and verify that `ReflectionToStringBuilder` no longer has the red line under it, indicating that the import is resolved properly.  We will do this process several times over the course of the DevCamp.
 
     Let's take a look at `src/main/resources/application.yml`.  This is a configuration file that sets up the parameters that we want to import into the application.  For example, this line:
     ```java

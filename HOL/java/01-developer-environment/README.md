@@ -301,7 +301,7 @@ and click on the `Other Downloads` link under v6.9.3 LTS:
     ![image](./media/2016-10-19_10-55-30.gif)
 
     In the window that pops up, choose `All Available Sites` for the `Work with` dropdown,
-    type `gradle` in the search box, and when the search is complete, 
+    type `gradle` in the search box, and when the search is complete (which sometimes takes a minute or two), 
     choose `Buildshop: Eclipse Plug-ins for Gradle`
 
     ![image](./media/2016-10-19_10-58-48.gif)
@@ -318,7 +318,7 @@ and click on the `Other Downloads` link under v6.9.3 LTS:
     ![image](./media/2016-10-19_11-28-28.gif)
 
     Also, install the spring tool suite package by using the menu item `Help/Eclipse Marketplace...`, type `spring` in the Find: box and choose `Go`.
-    in the list of packages, scroll down to `Spring Tool Suite (STS) for Eclipse 3.8.2.RELEASE` and click `Install`.
+    in the list of packages, scroll down to `Spring Tool Suite (STS) for Eclipse 3.8.3.RELEASE` and click `Install`.
 
     ![image](./media/2016-10-24_14-29-53.gif)
 
