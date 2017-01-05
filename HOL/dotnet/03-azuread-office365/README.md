@@ -420,7 +420,15 @@ AzureAD can handle authentication for web applications. First we will create a n
     }
     ```
 
-1. Add links that will handle Signing in/out and profile pages. Create a new partial that will handle our login navigation. In the `Views/shared` folder, create a new partial page named `_LoginPartial` and paste the following:
+1. Create a new partial page that will handle our login navigation. In the `Views/shared` folder, create a new partial page named `_LoginPartial`
+
+    ![image](./media/image-029.gif)
+
+    ![image](./media/image-030.gif)
+
+    ![image](./media/image-031.gif)
+
+1. Paste the following to add links that will handle Signing in/out and profile pages:
 
     ```html
     @if (Request.IsAuthenticated)
@@ -474,7 +482,18 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/image-020.gif)
 
-1. Add a new controller called `ProfileController` to handle signins
+1. Go to the `Controllers` folder
+
+1. Right-click and select `Add > New Scaffolded Item`
+
+    ![image](./media/image-032.gif)
+
+1. Select `MVC 5 Controller - Empty` and `Add`
+
+    ![image](./media/image-033.gif)
+
+1. Enter `ProfileController` and `Add` to create a new controller that handle signins.
+
 1. Paste the following:
 
     ```csharp

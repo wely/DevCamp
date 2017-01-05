@@ -223,7 +223,7 @@ This hands-on-lab has the following exercises:
 
 1. Open the `Controllers/Dashboardcontroller.cs` file
 
-1. Select the current `TODO` comment block in the Index method and delete it. Also delete the existing return View() code.
+1. Select the current `//TODO: BEGIN Replace with API Data code` comment block in the Index method and delete it. Also delete the existing return View() code.
 
 1. Paste the following:
 
@@ -279,7 +279,7 @@ This hands-on-lab has the following exercises:
 
 1. Let's add code to view Incidents. Navigate to the `IncidentController.cs` file and open it
 
-1. In between the comment block in the Details method, select the body of this method and delete it.
+1. In between the `//### ADD DETAILS VIEW CODE HERE ###` comment block in the `Details` method, select the body of this method and delete it.
 
 1. Paste the following:
 
@@ -300,7 +300,9 @@ This hands-on-lab has the following exercises:
     ```
 1. In the `Mappers` Folder, locate the `IncidentMapper.cs` file. This file will handle the mapping from the data that is returned from the API.
 
-1. Open it and paste the following:
+1. Open it and locate the `///TODO: Add Incident Mapper Code` comment block
+
+1. Paste the following:
     
     ```csharp
     public class IncidentMappers
@@ -353,7 +355,9 @@ This hands-on-lab has the following exercises:
     using Newtonsoft.Json;
     ```
 
-1. Now let's add code to create an incident. We will add a new `Create` method to the `IncidentController` class that will handle the Create HTTP post method. Add the following code:
+1. Now let's add code to create an incident. Open the `Controllers\IncidentController.cs` file
+
+1. Add a new `Create` method to the `IncidentController` class that will handle the Create HTTP post method. Add the following code:
 
     > DO NOT delete the existing `Create` Method. This is the method that handles the default view.
 
@@ -375,6 +379,10 @@ This hands-on-lab has the following exercises:
                         incidentToSave = JsonConvert.DeserializeObject<Incident>(result);
                     }
                 }
+                
+                //TODO: ADD CODE TO UPLOAD THE BLOB
+
+                //TODO: ADD CODE TO CLEAR THE CACHE
 
                 return RedirectToAction("Index", "Dashboard");
             }
@@ -526,7 +534,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
 
 1. We will now add code to the dashboardcontroller. Open the `dashboardcontroller.cs` file
 
-1. Inside the `using` statement that contains the API call to the client, replace `//TODO: ADD Caching` comment block with the following:
+1. Inside the `using` statement that contains the API call to the client, replace `//##### ADD CACHING HERE #####` comment block with the following:
 
     ```csharp
     //##### Add caching here #####
@@ -550,7 +558,9 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
  
 1. Set a breakpoint on the declaration of the ***CACHE_EXPIRATION_SECONDS*** variable.
 
-1. Add code to invalidate the cache when a new incident is reported. Open the `IncidentController.cs` file and update the `Create` method that handles the adding of the new incident (the method decorated with [HTTPPost]) with the following:
+1. Add code to invalidate the cache when a new incident is reported. Open the `IncidentController.cs` file
+
+1. Locate the `Create` method that handles the adding of the new incident (the method decorated with [HTTPPost]) and replace the the `//TODO: ADD CODE TO CLEAR THE CACHE` with the following:
 
     ```csharp
     //##### CLEAR CACHE ####
@@ -704,7 +714,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     }
     ```
 
-1. In the `IncidentController.cs` file, add the following inside of the `Create` method decorated with `[HttpPost]`. This will handle the clearing of the cache, after we process the image file.
+1. In the `IncidentController.cs` file, locate the `//TODO: ADD CODE TO UPLOAD THE BLOB` add the following inside of the `Create` method decorated with `[HttpPost]`. This will handle the upload of the image file.
 
     ```csharp
     //Now upload the file if there is one
@@ -720,8 +730,10 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
         //Add a message to the queue to process this image
         await StorageHelper.AddMessageToQueue(incidentToSave.ID, imageFile.FileName);
         //### Add Queue code here #####
-
     }
+
+    //TODO: ADD CODE TO CLEAR CACHE
+
     ```
 
 1. Becuase we are using Awaitable methods, we need to change the Create method to async and have the method return a Task. Change the return type to `async Task<ActionResult>`. The code should look like the following:

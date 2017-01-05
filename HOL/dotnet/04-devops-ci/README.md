@@ -247,11 +247,13 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-031.gif)
 
-1.  Now that we have a build being created and a website to deploy into, let's connect them. In VSTS, navigate to the release tab.
+1.  Now that we have a build being created and a website to deploy into, let's connect them. In VSTS, navigate to the **Build & Release** tab.
 
     ![image](./media/image-037.gif)
 
-1. Click the `+` sign and Create a new ***Release Definition***
+1. Click on **Releases**.
+
+1. Click the `+ New Definition` button to Create a new release refinition
 
     ![image](./media/image-038.gif)
 
