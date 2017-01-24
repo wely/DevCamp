@@ -137,7 +137,7 @@ these resources in your Azure subscription, do `control-click` on this button:
 
     ![image](./media/2016-10-18_13-13-25.gif)
 
-    Name your resource group `DevCamp`, choose a location for your deployment (please do **NOT** choose USGov, Brazil South, UK West or UK South - they don't have all the services we'll need), check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
+    Name your resource group `DevCamp`, choose a location for your deployment (please do **NOT** choose USGov or West India - they don't have all the services we'll need), check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
 
     The Resource Group template will start deploying, and the portal will pin a tile to the dashboard showing the status:
 
