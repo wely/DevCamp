@@ -292,7 +292,7 @@ This hands-on-lab has the following exercises:
             if (!string.IsNullOrEmpty(result))
             {
                 Incident incident = JsonConvert.DeserializeObject<Incident>(result);
-                incidentView = IncidentMappers.MapIncidentModelToView(incident);
+                incidentView = IncidentMapper.MapIncidentModelToView(incident);
             }
         }
 
@@ -305,7 +305,7 @@ This hands-on-lab has the following exercises:
 1. Paste the following:
     
     ```csharp
-    public class IncidentMappers
+    public class IncidentMapper
     {
         public static Incident MapIncidentViewModel(IncidentViewModel incident)
         {
@@ -369,7 +369,7 @@ This hands-on-lab has the following exercises:
         {
             if (ModelState.IsValid)
             {
-                Incident incidentToSave = IncidentMappers.MapIncidentViewModel(incident);
+                Incident incidentToSave = IncidentMapper.MapIncidentViewModel(incident);
 
                 using (IncidentAPIClient client = IncidentApiHelper.GetIncidentAPIClient())
                 {

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace DevCamp.WebApp.Mappers
 {
-    public class IncidentMappers
+    public class IncidentMapper
     {
         public static Incident MapIncidentViewModel(IncidentViewModel incident)
         {
