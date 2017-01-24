@@ -137,7 +137,7 @@ these resources in your Azure subscription, do `control-click` on this button:
 
     ![image](./media/2016-10-18_13-13-25.gif)
 
-    Name your resource group `DevCamp`, choose a location for your deployment (please do **NOT** choose USGov, Brazil South, UK West or UK South - they don't have all the services we'll need), check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
+    Name your resource group `DevCamp`, choose a location for your deployment (please do **NOT** choose USGov or West India - they don't have all the services we'll need), check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
 
     The Resource Group template will start deploying, and the portal will pin a tile to the dashboard showing the status:
 
@@ -264,11 +264,13 @@ The Azure resource group template will have created a virtual machine that can b
 
     A new browser tab will open.
 
-    > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this excercise.
-        
+    >
+    > If the page looks like the image displayed below, this means the API was automatically deployed from GitHub, and you can skip the rest of this exercise.
+    >
+
     ![image](./media/2016-11-14_12-10-59.gif)
 
-    If the page looks like the image below, continue with this exercise
+    > If the page looks like the image below, continue with this exercise
             
     ![image](./media/2016-11-14_12-03-50.gif)
 

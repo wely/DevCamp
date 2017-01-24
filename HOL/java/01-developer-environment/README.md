@@ -145,16 +145,9 @@ these resources in your Azure subscription, do `control-click` on this button:
 
 1. Name your resource group `DevCamp`, choose a location for your deployment.
 
-    > Please **DO NOT** choose the any of following regions for your deployment (as of November 18, 2016)
+    > Please **DO NOT** choose the any of following regions for your deployment (as of January 24, 2017)
     > * US Gov
-    > * Brazil South
-    > * South India
-    > * Central India
     > * West India
-    > * Canada East
-    > * UK West
-    > * UK South
-    > 
 
 1. check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.    
 The Resource Group template will start deploying, and the portal will pin a tile to the dashboard showing the status:
@@ -336,7 +329,7 @@ and click on the `Other Downloads` link under v6.9.3 LTS:
     A new browser tab will open.
 
     >
-    > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this excercise.
+    > If the page looks like the image displayed below, this means the API was automatically deployed from GitHub, and you can skip the rest of this exercise.
     >
     
     ![image](./media/2016-11-14_12-10-59.gif)

@@ -144,16 +144,9 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 1.  Name your resource group `DevCamp`, and choose a location for your deployment. 
 
-    > Please **DO NOT** choose the any of following regions for your deployment (as of November 18, 2016)
+    > Please **DO NOT** choose the any of following regions for your deployment (as of January 24, 2017)
     > * US Gov
-    > * Brazil South
-    > * South India
-    > * Central India
     > * West India
-    > * Canada East
-    > * UK West
-    > * UK South
-    > 
 
 1. Check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
 
@@ -275,7 +268,7 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
     A new browser tab will open.
 
     >
-    > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this exercise.
+    > If the page looks like the image displayed below, this means the API was automatically deployed from GitHub, and you can skip the rest of this exercise.
     >
     
     ![image](./media/2016-11-14_12-10-59.gif)
