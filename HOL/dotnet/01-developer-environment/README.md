@@ -144,16 +144,9 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 1.  Name your resource group `DevCamp`, and choose a location for your deployment. 
 
-    > Please **DO NOT** choose the any of following regions for your deployment (as of November 18, 2016)
+    > Please **DO NOT** choose the any of following regions for your deployment (as of January 24, 2017)
     > * US Gov
-    > * Brazil South
-    > * South India
-    > * Central India
     > * West India
-    > * Canada East
-    > * UK West
-    > * UK South
-    > 
 
 1. Check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
 
