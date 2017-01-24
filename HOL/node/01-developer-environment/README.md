@@ -264,11 +264,13 @@ The Azure resource group template will have created a virtual machine that can b
 
     A new browser tab will open.
 
-    > If the page looks like the above below, this means the API was automatically deployed from GitHub, and you can skip the rest of this excercise.
-        
+    >
+    > If the page looks like the image displayed below, this means the API was automatically deployed from GitHub, and you can skip the rest of this exercise.
+    >
+
     ![image](./media/2016-11-14_12-10-59.gif)
 
-    If the page looks like the image below, continue with this exercise
+    > If the page looks like the image below, continue with this exercise
             
     ![image](./media/2016-11-14_12-03-50.gif)
 
