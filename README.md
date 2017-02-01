@@ -13,13 +13,11 @@ These labs and content will kickstart your Azure knowledge with a combination of
 ## Module 0 - Introduction, roadmap and course overview ##
 In this session, we will provide a brief history of Azure, a quick overview of the capabilities available and introduction to the 2-day interactive workshop.
 
-[View PowerPoint](Presentation/Module00-Overview.pptx?raw=true)
+[View PowerPoint](Presentation/Module00-Introduction.pptx?raw=true)
 
 ---
 ## [Hands on Labs overview](HOL/README.md) ####
-This provides and overview of each hands on lab exercise.
-
-[View PowerPoint](Presentation/Module00-Hols.pptx?raw=true)
+This provides an overview of each hands on lab exercise.
 
 ---
 
