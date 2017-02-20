@@ -35,7 +35,7 @@ This hands-on-lab has the following exercises:
 
 > If you already have an Office 365 subscription, please use an alternate browser or use private mode. This will help avoid any issues with conflicting accounts.
 
-1. In your browser, go to [https://products.office.com/en-us/business/office-365-enterprise-e3-business-software]() 
+1. In your browser, go to [https://products.office.com/en-us/business/office-365-enterprise-e3-business-software](https://products.office.com/en-us/business/office-365-enterprise-e3-business-software) 
 and click the link that says `Free Trial`. This will navigate you to this page:
 
     ![image](./media/2016-10-14_18-59-56.gif)
