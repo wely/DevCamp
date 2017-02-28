@@ -32,7 +32,7 @@ This hands-on-lab has the following exercises:
 * Exercise 3: Write images to Azure Blob storage
 
 ### Note
-> In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
+> ***In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages.*** 
 
 ---
 ## Exercise 1: Integrate the API
@@ -181,7 +181,9 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-13.gif)
 
-    > DO NOT Update the Nuget package for Microsoft.REST
+    > ***DO NOT Update the Nuget package for Microsoft.Rest.ClientRuntime. There is a dependency issue with the updated package.***
+
+    ![image](./media/image-28.gif)
 
 1. In the Utils folder, open the file called Settings.cs. This will hold our static variables and constants for the application.
 

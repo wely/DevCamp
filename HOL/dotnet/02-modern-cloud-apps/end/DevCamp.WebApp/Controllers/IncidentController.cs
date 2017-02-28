@@ -22,7 +22,7 @@ namespace DevCamp.WebApp.Controllers
                 if (!string.IsNullOrEmpty(result))
                 {
                     Incident incident = JsonConvert.DeserializeObject<Incident>(result);
-                    incidentView = IncidentMappers.MapIncidentModelToView(incident);
+                    incidentView = IncidentMapper.MapIncidentModelToView(incident);
                 }
             }
 
@@ -43,7 +43,7 @@ namespace DevCamp.WebApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Incident incidentToSave = IncidentMappers.MapIncidentViewModel(incident);
+                    Incident incidentToSave = IncidentMapper.MapIncidentViewModel(incident);
 
                     using (IncidentAPIClient client = IncidentApiHelper.GetIncidentAPIClient())
                     {

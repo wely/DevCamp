@@ -51,7 +51,7 @@ This hands-on-lab has the following exercises:
 * Exercise 3: Send a confirmation email to the user on incident creation
 
 ### Note
-> In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
+> ***In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages.*** 
 
 ---
 ## Exercise 1: Register the application
@@ -150,9 +150,9 @@ AzureAD can handle authentication for web applications. First we will create a n
     >
     > `Microsoft.Owin.Host.SystemWeb`
 
-1. We need add code to handle the authentication and cache the sessions tokens so we don't have to get them all time. Navigate to the Utils folder and create two new helper class files. Create `AuthHelper.cs` and `SessionTokenCache.cs`. The corresponding code for these classes will be added later.
+1. First let's update the `Settings.cs` class with the additional constants. 
 
-1. First let's update the Settings.cs class with the additional constants. Paste these values below the existing entries from HOL2.
+1. Open the `Settings.cs` file and Paste these values below the existing entries from HOL2.
 
     ```csharp
         // --- OMITTED ---
@@ -176,6 +176,8 @@ AzureAD can handle authentication for web applications. First we will create a n
         public static string SESSIONKEY_USERINFO = "userinfo";
         //####    HOL 3    ######
     ```
+
+1. Navigate to the `Utils` folder and create **two** new helper class files. Create a file called `AuthHelper.cs` and another called `SessionTokenCache.cs`.
 
 1. Open `AuthHelper.cs` and paste the following code. This code will obtain a token from Azure AD for users:
 
