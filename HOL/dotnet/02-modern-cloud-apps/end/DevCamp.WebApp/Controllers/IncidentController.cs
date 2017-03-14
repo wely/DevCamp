@@ -12,18 +12,21 @@ namespace DevCamp.WebApp.Controllers
 {
     public class IncidentController : Controller
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         public ActionResult Details(string Id)
         {
             IncidentViewModel incidentView = null;
 
             using (IncidentAPIClient client = IncidentApiHelper.GetIncidentAPIClient())
             {
-                var result = client.Incident.GetById(Id);
-                if (!string.IsNullOrEmpty(result))
-                {
-                    Incident incident = JsonConvert.DeserializeObject<Incident>(result);
-                    incidentView = IncidentMapper.MapIncidentModelToView(incident);
-                }
+                var result = client.IncidentOperations.GetById(Id);
+                Newtonsoft.Json.Linq.JObject jobj = (Newtonsoft.Json.Linq.JObject)result;
+                Incident incident = jobj.ToObject<Incident>();
+                incidentView = IncidentMapper.MapIncidentModelToView(incident);
             }
 
             return View(incidentView);
@@ -47,27 +50,25 @@ namespace DevCamp.WebApp.Controllers
 
                     using (IncidentAPIClient client = IncidentApiHelper.GetIncidentAPIClient())
                     {
-                        var result = client.Incident.CreateIncident(incidentToSave);
-                        if (!string.IsNullOrEmpty(result))
-                        {
-                            incidentToSave = JsonConvert.DeserializeObject<Incident>(result);
-                        }
+                        var result = client.IncidentOperations.CreateIncident(incidentToSave);
+                        Newtonsoft.Json.Linq.JObject jobj = (Newtonsoft.Json.Linq.JObject)result;
+                        incidentToSave = jobj.ToObject<Incident>();
                     }
 
+                    //TODO: ADD CODE TO UPLOAD THE BLOB
                     //Now upload the file if there is one
                     if (imageFile != null && imageFile.ContentLength > 0)
                     {
                         //### Add Blob Upload code here #####
                         //Give the image a unique name based on the incident id
-                        var imageUrl = await StorageHelper.UploadFileToBlobStorage(incidentToSave.ID, imageFile);
+                        var imageUrl = await StorageHelper.UploadFileToBlobStorage(incidentToSave.Id, imageFile);
                         //### Add Blob Upload code here #####
 
 
                         //### Add Queue code here #####
                         //Add a message to the queue to process this image
-                        await StorageHelper.AddMessageToQueue(incidentToSave.ID, imageFile.FileName);
+                        await StorageHelper.AddMessageToQueue(incidentToSave.Id, imageFile.FileName);
                         //### Add Queue code here #####
-
                     }
 
                     //##### CLEAR CACHE ####
