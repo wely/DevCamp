@@ -17,7 +17,9 @@ In this hands-on lab, you will set up an Office365 developer subscription, and A
 
 ## Prerequisites
 
-You will need a cell phone and credit card for identity verification.  The credit card ***will not*** be charged unless you remove the spending limit on the subscription you will create.
+You will need a cell phone and credit card for identity verification.  
+
+The credit card ***will not*** be charged unless you remove the spending limit on the subscription you will create.
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -36,11 +38,15 @@ This hands-on-lab has the following exercises:
 > If you already have an Office 365 subscription, please use an alternate browser or use private mode. This will help avoid any issues with conflicting accounts.
 
 1. In your browser, go to [https://products.office.com/en-us/business/office-365-enterprise-e3-business-software](https://products.office.com/en-us/business/office-365-enterprise-e3-business-software) 
-and click the link that says `Free Trial`. This will navigate you to this page:
+and click the link that says `Free Trial`. 
 
-    ![image](./media/2016-10-14_18-59-56.gif)
+    ![image](./media/2017-03-14_08_28_44.png)
 
-1. Enter the information requested, and click `Just one more step` which 
+    This will navigate you to this page:
+
+    ![image](./media/2017-03-14_08_38_22.png)
+
+1. Enter the information requested, and click **Next** which 
     will take you to the following page:
     
     ![image](./media/2016-10-14_19-06-31.gif)
@@ -61,29 +67,31 @@ and click the link that says `Free Trial`. This will navigate you to this page:
 
 1. Click `You're ready to go`, which will take you to the following screen:
 
-    ![image](./media/2016-10-18_12-42-47.gif)
+    ![image](./media/2017-03-14_08_49_17.png)
 
-1. Click on the `admin` app icon, which will open the Office365 admin center page
+1. Click on the `Admin` app icon, which will open the Office365 admin center page
     in your browser.  It will look like this:
 
     ![image](./media/2016-10-14_18-38-17.gif)
 
      If you'd like to see the welcome tour click `Next`, or simply close the dialog box.   
     
-> Stay on this page until the next exercise.
+Stay on this page until the next exercise.
 
 ---
 ## Exercise 2: Set up Azure trial subscription
 
-1.  Next, we want to set up an Azure subscription, which can be accessed via the Azure Active Directory link.  On the bottom, left-hand side of the screen, click `Admin centers`, and then click `Azure AD`. 
+Next, we want to set up an Azure subscription, which can be accessed via the Azure Active Directory link.  On the bottom, left-hand side of the screen, click `Admin centers`, and then click `Azure AD`. 
 
-    ![image](./media/image-015.gif)    
-    
-    This will open up a new browser tab showing this page:
+![image](./media/2017-03-14_08_58_09.png)    
 
-    ![image](./media/2016-10-14_21-41-33.gif)
+This will open up a new browser tab showing this page:
 
-> BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass.
+![image](./media/2016-10-14_21-41-33.gif)
+
+Click the hyperlink **Azure Subscription** to begin the Azure Trial signup process.
+
+> BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass. If you are not using an Azure Pass, please skip ahead to **END Steps for Azure Pass redemption**
 
 1. Navigate to [http://www.microsoftazurepass.com/]().
 
@@ -93,40 +101,62 @@ and click the link that says `Free Trial`. This will navigate you to this page:
 
 > END Steps for Azure Pass redemption
 
-1. Click on the `Azure subscription` link. This will will take you to the page for creating a new trial subscription:
+1. After clicking on the `Azure Subscription` link you will be taken to the page for creating a new trial subscription:
 
     ![image](./media/2016-10-18_12-48-52.gif)
 
 1. Enter the requested information and click `Next`.
 
-1. Enter the information about you, and verify your identity by phone.  Also you will need to verify via credit card.  Your credit card ***will not*** be charged unless you remove the spending cap from your subscription.
+1. Enter the information about you, and verify your identity by phone.  
+
+1. Next, you will need to verify via credit card.  Your credit card ***will not*** be charged unless you remove the spending cap from your subscription. Supported cards must be either a Credit or Debit card, from vendors Visa, Mastercard, American Express, or Discover.
     
     ![image](./media/2016-10-14_21-42-46.gif)
 
-1. Finally after the verification process, you'll have to agree to the terms of the trial subscription: 
+1. Finally after the verification process, you'll have to agree to the terms of the trial subscription and click the **Sign up** button.
 
-    ![image](./media/2016-10-14_21-44-53.gif)
+    ![image](./media/2017-03-14_09_12_14.png)
 
-1. It will take a few moments to set up your azure subscription.  
+1. It will take a few moments to set up your Azure subscription.  
 
     ![image](./media/2016-10-14_21-45-32.gif)
 
-1. When the subscription set up process is complete, you can click on `Start managing my service` to open the Azure portal, which will look like this:
+1. When the subscription set up process is complete, click on **Get started with your Azure subscription** button:
 
-    ![image](./media/2016-10-14_18-00-54.gif)
+    ![image](./media/2017-03-14_09_15_01.png)
+
+You should now be taken to the [Azure Portal](http://portal.azure.com) where you can explore your new Azure Trial Subscription.
+
+![image](./media/2016-10-14_18-00-54.gif)
 
 ---
 ## Exercise 3: Start your VSTS trial subscription
 
-1. In your browser, go to <a href="http://www.visualstudio.com/team-services" target="_blank">http://www.visualstudio.com/team-services</a> and click on `sign in` in the upper right corner.  This should take you to a screen that looks like this:
+In a future lab we will use [Visual Studio Team Services](https://www.visualstudio.com/team-services/), or "VSTS" for short. In this exercise we will enable a free trial subscription.
+
+1. In your browser, go to [http://www.visualstudio.com/team-services](http://www.visualstudio.com/team-services) and click on **Sign in** in the upper right corner.  
+
+    ![image](./media/2017-03-14_09_21_21.png)
+
+    Complete the sign in process if needed, and you should be taken to a screen that looks like this:
+
+    ![image](./media/2017-03-14_09_25_15.png)
+
+    Add your name and email address (if not already populated) and click **Continue**.
+
+1. On the My Benefits screen, slick **Use your benefits** under the heading **Visual Studio Dev Essentials**
 
     ![image](./media/2016-10-18_17-30-18.gif)
 
-1. click on `Use your benefits`, and this window will pop up:
+1. Click the **Accept** button to access your Visual Studio Dev Essentials benefits
 
     ![image](./media/2016-10-18_17-42-01.gif)
 
-1. Click Accept to access your Visual Studio Dev Essentials benefits.
+    **Confirm** in the modal dialogue
+
+    ![image](./media/2017-03-14_09_34_13.png)
+
+You have now activated a Visual Studio Team Services Trial Subscription, which will be used in a future lab.
 
 ---
 ## Exercise 4: Configure your Azure subscription for DevCamp
