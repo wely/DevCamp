@@ -174,17 +174,20 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
 
 1.  Name your resource group `DevCamp`, and choose a location for your deployment. 
 
-    > Please **DO NOT** choose the any of following regions for your deployment (as of January 24, 2017)
-    > * US Gov
-    > * West India
+    > Please **do not** choose the region West India for your deployment. It is missing a resource that is needed for the labs
 
 1. Check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
 
-    The Resource Group template will start deploying, and the portal will pin a tile to the dashboard showing the status:
+    The Resource Group template will start deploying, and the portal may pin a tile to the dashboard showing the status:
 
     ![image](./media/2016-10-18_13-19-01.gif)
 
-1. This will take approximately 20-30 minutes to complete. Please don't continue on until the template has completed.  While it is working, it is useful to understand what this process is doing.
+    Or be visible in the **Notifications** dropdown
+
+    ![image](./media/2017-03-14_09_43_44.png)
+
+1. This will take approximately 20-30 minutes to complete. Please do not continue on until the template has completed.
+
     In a later session, we will take a look at Azure Resource Group templates, and how to manage your infrastructure the same way 
     you manage your code.  As a short introduction, a template is a JSON file that contains definitions for the resources you want in your
     resource group.  When you apply the resource group template, Azure will apply the template to your Azure resource group, and create 
@@ -195,7 +198,11 @@ these resources in your Azure subscription, `control + click` on the blue **Depl
     apply - the reason this one takes so long is that we are creating a Windows Virtual machine and installing all the tools you will
     need for the DevCamp including Visual Studio, the Java development kit, and other software resources.
 
-    When the Resource Group creation is done, go visit the resource group by clicking `resource groups` on the left navigation pane:
+1. You will know when the Resource Group finishes provisioning either by the Notification dropdown, or by navigation on the lefthand bar to **Resource Groups** -> **DevCamp** and check the "Deployments" status for **Succeeded**
+
+    ![image](./media/2017-03-14_10_14_41.png)
+
+    When the Resource Group creation is done, go visit the resource group by clicking `Resource Groups` on the left navigation pane:
 
     ![image](./media/2016-10-18_13-36-29.gif) 
 
