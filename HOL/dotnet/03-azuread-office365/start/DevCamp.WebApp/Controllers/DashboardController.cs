@@ -12,10 +12,12 @@ namespace DevCamp.WebApp.Controllers
     {
         public async Task<ActionResult> Index()
         {
+
             //##### API DATA HERE #####
             List<Incident> incidents;
             using (var client = IncidentApiHelper.GetIncidentAPIClient())
             {
+
                 //##### Add caching here #####
                 int CACHE_EXPIRATION_SECONDS = 60;
 
@@ -28,12 +30,14 @@ namespace DevCamp.WebApp.Controllers
                 else
                 {
                     //If stale refresh
-                    var results = await client.Incident.GetAllIncidentsAsync();
-                    incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
+                    var results = await client.IncidentOperations.GetAllIncidentsAsync();
+                    Newtonsoft.Json.Linq.JArray ja = (Newtonsoft.Json.Linq.JArray)results;
+                    incidents = ja.ToObject<List<Incident>>();
                     RedisCacheHelper.AddtoCache(Settings.REDISCCACHE_KEY_INCIDENTDATA, incidents, CACHE_EXPIRATION_SECONDS);
                 }
                 //##### Add caching here #####
             }
+
             //##### API DATA HERE #####
             return View(incidents);
         }

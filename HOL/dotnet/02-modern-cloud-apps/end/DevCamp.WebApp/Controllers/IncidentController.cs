@@ -12,11 +12,7 @@ namespace DevCamp.WebApp.Controllers
 {
     public class IncidentController : Controller
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
+
         public ActionResult Details(string Id)
         {
             IncidentViewModel incidentView = null;
@@ -55,7 +51,6 @@ namespace DevCamp.WebApp.Controllers
                         incidentToSave = jobj.ToObject<Incident>();
                     }
 
-                    //TODO: ADD CODE TO UPLOAD THE BLOB
                     //Now upload the file if there is one
                     if (imageFile != null && imageFile.ContentLength > 0)
                     {
