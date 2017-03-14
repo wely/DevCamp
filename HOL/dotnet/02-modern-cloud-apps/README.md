@@ -98,18 +98,17 @@ This hands-on-lab has the following exercises:
 
     We can see that several incidents have been created and are now available to the API.
 
-1. Go back to Visual Studio
-
-1. Open the Dashboard view page
+1. Back to Visual Studio, open the Dashboard View located at **DevCamp.WebApp** -> **Views** -> **Dashboard** -> **Index.cshtml**
 
     ![image](./media/image-24.gif)
 
-1. On the Dashboard page, notice how the sample incidents are stubbed in between the  `<!--TEMPLATE CODE -->` comment block.   
+1. On the Dashboard page, notice how the static sample incidents are stubbed in between the  `<!--TEMPLATE CODE -->` comment block.   
 
     ![image](./media/image-10.gif)
 
     As part of the original ARM template we deployed an ASP.NET WebAPI that queries a DocumentDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
-1. In Visual Studio, select the code between the `<!--TEMPLATE CODE -->` comment block and delete it.
+
+1. In Visual Studio, delete the entirety of the `<!--TEMPLATE CODE -->` comment block.
 
 1. Between the `<!--INSERT VIEW CODE -->` comment block paste the following. This block handles the display of the incident dashboard:
 
@@ -163,24 +162,29 @@ This hands-on-lab has the following exercises:
     ![image](./media/image-11.gif)
 
 1. Copy the URL of the API app to the clipboard
+
 1. Add the URL to the 'INCIDENT_API_URL' setting in the `web.config`
 
     ```xml
     <add key="INCIDENT_API_URL" value="PASTE URL HERE" />
+
+    // Example
+    <add key="INCIDENT_API_URL" value="http://incidentapi32csxy6h3s7bku.azurewebsites.net" />
     ```
 
-    >the URL should not have a `/` on the end.  For example:
-    >    <add key="INCIDENT_API_URL" value="http://incidentapi32csxy6h3s7bku.azurewebsites.net" />
-1. In Visual Studio, select the project and right-click.
+    > The URL should not have a `/` on the end
+
+1. To use the API in our application, right click on the **DevCamp.WebApp** project in the Solution Explorer, select **Add** -> **REST API Client**
 
     ![image](./media/image-12.gif)
 
-1. Select Add > Rest API client
-1. In the Swagger URL field paste the value for the `INCIDENT_API_URL`
-1. Append `/swagger/docs/v1` to the URL
-1. For the Client Namespace, enter **IncidentAPI** and click OK. This will download the definition for the API and install nuget packages for Microsoft.Rest. It will also create the IncidentAPI client proxy classes and models.
+1. In the Swagger URL field paste the value for the `INCIDENT_API_URL`, appending `/swagger/docs/v1` to the end of the URL
+
+1. For the Client Namespace, enter **IncidentAPI** and click OK. 
 
     ![image](./media/image-13.gif)
+
+    This will download the definition for the API and install nuget packages for Microsoft.Rest. It will also create the IncidentAPI client proxy classes and models.
 
     > ***DO NOT Update the Nuget package for Microsoft.Rest.ClientRuntime. There is a dependency issue with the updated package.***
 
@@ -225,7 +229,7 @@ This hands-on-lab has the following exercises:
     }
     ```
 
-1. Open the `Controllers/Dashboardcontroller.cs` file
+1. Open the `Controllers/DashboardController.cs` file
 
 1. Select the current `//TODO: BEGIN Replace with API Data code` comment block in the Index method and delete it. Also delete the existing return View() code.
 
