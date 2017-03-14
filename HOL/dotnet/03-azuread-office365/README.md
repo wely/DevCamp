@@ -106,11 +106,11 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/image-009.gif)
 
-1. After AzureAD handles the authentication, it needs a location to redirect the user. For testing locally, we'll use the local IISExpress web site `http://localhost:[YOUR LOCAL DYNAMIC PORT]/` as the **Redirect URI** and set the URL as an app setting variable named `AAD_RETURN_URL`. This URL may need to be updated to the IISExpress dynamic port that is generated while debugging.  
+1. After AzureAD handles the authentication, it needs a location to redirect the user. For testing locally, we'll use the local IISExpress web site `http://localhost:[YOUR LOCAL DYNAMIC PORT]/` as the **Redirect URI** and set the URL as an app setting variable named `AAD_APP_REDIRECTURI`. This URL may need to be updated to the IISExpress dynamic port that is generated while debugging.  
 
     ![image](./media/image-010.gif)
 
-1. We will need to grant our application permission to access resources on our behalf. In the Microsoft Graph Permissions section, select `Add`
+1. We will need to grant our application permission to access resources on our behalf. In the Microsoft Graph Permissions section for "Delegated Permissions", select `Add`
 
     ![image](./media/image-025.gif)  
 
@@ -128,7 +128,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     ![image](./media/image-017.gif)  
 
 1. In Visual Studio, open `web.config` and update the settings with the values from the app registration screen:
-    For the `AAP_APP_REDIRECTURI` value, enter the local IIS web site URL including the port and an ending `\` Example: `http://localhost:8443/`, 
+    For the `AAD_APP_REDIRECTURI` value, enter the local IIS web site URL including the port and an ending `\` Example: `http://localhost:8443/`, 
     ```xml
    <!--HOL 3-->
     <add key="AAD_APP_ID" value="APPID" />
@@ -579,12 +579,14 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ```
 1. Compile and hit F5 to start debuggging. 
-    > If the main page of the application doesn't load using HTTPS, there are three steps to perform:
+    > If the main page of the application doesn't load using HTTPS, there are some steps to perform:
     > 1. go to the control panel on your machine, programs and features, find `IIS 10.0 Express`.  Right click on it, and choose `repair`.  
     > 1. in Visual Studio, click on the DevCamp.WebApp project in the solution explorer.  In the properties window at the bottom, ensure that `SSL Enabled` is True.  Also make note of the URL and SSL URL: 
     >
     >![image](./media/2016-11-14_16-31-07.gif)
-    > 1. Right-click on the DevCamp.WebApp project in the solution explorer and choose `Properties`.  This should open the properties page in the middle window of Visual Studio.  In the left hand list of pages choose `Web`, and ensure that the Project Url in the center is the SSL URL from above.  Make sure your browsers are closed, then re-run your application.
+    > 1. Right-click on the DevCamp.WebApp project in the solution explorer and choose `Properties`.  This should open the properties page in the middle window of Visual Studio.  In the left hand list of pages choose `Web`, and ensure that the Project Url in the center is the SSL URL from above.  
+    > 1. go back to the apps.dev.microsoft.com page, and add the Project URL under the `platforms` section of the form.  Remove any other URLs that were already there,  and save. 
+    > 1. Make sure your browsers are closed, then re-run your application.
     
 1. When you login for the first time, you will be prompted to allow permission for the app to access your data. Click Accept
 
@@ -839,7 +841,7 @@ Next, we are going to create a page to display information about the logged in u
 ## Exercise 3: Interact with the Microsoft Graph
 In the previous exercise you read data from the Microsoft Graph, but there are other endpoints can be used for more sophisticated tasks.  In this exercise we will use the Graph to send an email message whenever a new incident is reported.
 
-1. Add a method to `setting.cs` generate the HTML body content for the email. We will be setting 2 placeholders `{0} and {1}` for the first name and last name of the person reporting the incident.
+1. Add a method to `Settings.cs` that will generate the HTML body content for the email. We will be setting 2 placeholders `{0} and {1}` for the first name and last name of the person reporting the incident.
 
     ```csharp
     static string getEmailMessageBody()
@@ -868,7 +870,7 @@ In the previous exercise you read data from the Microsoft Graph, but there are o
     public static string EMAIL_MESSAGE_SUBJECT = "New Incident Reported";
     public static string EMAIL_MESSAGE_TYPE = "HTML"; 
     ```
-1. Create a new model names to represent the MailMessage in the ***Models*** folder. This represents a subset of the [message](https://graph.microsoft.io/en-us/docs/api-reference/v1.0/resources/message) resource. 
+1. Create a new C# file named `models/MailMessage.cs` to represent the MailMessage - this is located in the ***Models*** folder. This represents a subset of the [message](https://graph.microsoft.io/en-us/docs/api-reference/v1.0/resources/message) resource. 
 
 1. Add the following to the class. 
 

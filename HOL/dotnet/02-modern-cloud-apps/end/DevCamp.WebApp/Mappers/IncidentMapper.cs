@@ -1,9 +1,13 @@
-﻿using DevCamp.WebApp.ViewModels;
-using IncidentAPI.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DevCamp.WebApp.Mappers;
+using DevCamp.WebApp.Utils;
+using DevCamp.WebApp.ViewModels;
+using IncidentAPI;
+using IncidentAPI.Models;
+using Newtonsoft.Json;
 
 namespace DevCamp.WebApp.Mappers
 {
@@ -28,7 +32,7 @@ namespace DevCamp.WebApp.Mappers
         public static IncidentViewModel MapIncidentModelToView(Incident incident)
         {
             IncidentViewModel newIncidentView = new IncidentViewModel();
-            newIncidentView.Id = incident.ID;
+            newIncidentView.Id = incident.Id;
             newIncidentView.FirstName = incident.FirstName;
             newIncidentView.LastName = incident.LastName;
             newIncidentView.Street = incident.Street;
@@ -39,10 +43,11 @@ namespace DevCamp.WebApp.Mappers
             newIncidentView.Description = incident.Description;
             newIncidentView.OutageType = incident.OutageType;
             newIncidentView.IsEmergency = incident.IsEmergency.Value;
-            newIncidentView.Created = incident.Created.Value.UtcDateTime;
-            newIncidentView.LastModified = incident.LastModified.Value.UtcDateTime;
+            newIncidentView.Created = incident.Created.Value.ToUniversalTime();
+            //newIncidentView.Created = incident.Created.Value.UtcDateTime;
+            newIncidentView.LastModified = incident.LastModified.Value.ToUniversalTime();
+            //newIncidentView.LastModified = incident.LastModified.Value.UtcDateTime;
             return newIncidentView;
         }
-
     }
 }

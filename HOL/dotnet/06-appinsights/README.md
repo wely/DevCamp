@@ -85,12 +85,12 @@ We will add both components to our application and enable the sending of telemet
 
     ![image](./media/image-016.gif)
 
-1. Click Get Started for free. This will download the nuget packages and add an applicationtioninsights.config to your solution.
+1. Click the `Add` button. This will download the nuget packages and add an applicationtioninsights.config to your solution.
 
 1. Click on Configure Exception collection and configure trace collection. This will enable additional trace listeners.
     
     ![image](./media/image-017.gif)
-    > The snippet above was taken from the Application Insights Configuration window. You can access it by right-clicking the project in your solution and choosing 'Application Insights > Configure Application Insights...'. If you aren't seeing this option, make sure you are using an updated version of the 'Developer Analytics Tools' extension. By the time of this writing, this is 7.12.
+    > The snippet above was taken from the Application Insights Configuration window. You can access it by right-clicking the project in your solution and choosing 'Application Insights > Configure Application Insights...'. If you aren't seeing this option, make sure you are using an updated version of the 'Developer Analytics Tools' extension. You can check this by going to tools/Extensions and Updates and click Updates/Visual Studio Gallery.  (if available) choose `Developer Analytics Tools`. By the time of this writing, this is 7.18.  The version of the `Application Insights Tools for Visual Studio Package` can be seen under `Help/About Microsoft Visual Studio`.
 
 1. Your Application Insights page should appear like below.
 

@@ -98,18 +98,17 @@ This hands-on-lab has the following exercises:
 
     We can see that several incidents have been created and are now available to the API.
 
-1. Go back to Visual Studio
-
-1. Open the Dashboard view page
+1. Back to Visual Studio, open the Dashboard View located at **DevCamp.WebApp** -> **Views** -> **Dashboard** -> **Index.cshtml**
 
     ![image](./media/image-24.gif)
 
-1. On the Dashboard page, notice how the sample incidents are stubbed in between the  `<!--TEMPLATE CODE -->` comment block.   
+1. On the Dashboard page, notice how the static sample incidents are stubbed in between the  `<!--TEMPLATE CODE -->` comment block.   
 
     ![image](./media/image-10.gif)
 
     As part of the original ARM template we deployed an ASP.NET WebAPI that queries a DocumentDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
-1. In Visual Studio, select the code between the `<!--TEMPLATE CODE -->` comment block and delete it.
+
+1. In Visual Studio, delete the entirety of the `<!--TEMPLATE CODE -->` comment block.
 
 1. Between the `<!--INSERT VIEW CODE -->` comment block paste the following. This block handles the display of the incident dashboard:
 
@@ -122,7 +121,7 @@ This hands-on-lab has the following exercises:
                 {
                 <div class="col-sm-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Outage: @Html.ActionLink(string.Format("{0}", item.ID), "Details", "Incident", new { ID = item.ID }, new { })</div>
+                        <div class="panel-heading">Outage: @Html.ActionLink(string.Format("{0}", item.Id), "Details", "Incident", new { ID = item.Id }, new { })</div>
                         <table class="table">
                             <tr>
                                 <th>Type</th>
@@ -163,23 +162,29 @@ This hands-on-lab has the following exercises:
     ![image](./media/image-11.gif)
 
 1. Copy the URL of the API app to the clipboard
+
 1. Add the URL to the 'INCIDENT_API_URL' setting in the `web.config`
 
     ```xml
     <add key="INCIDENT_API_URL" value="PASTE URL HERE" />
+
+    // Example
+    <add key="INCIDENT_API_URL" value="http://incidentapi32csxy6h3s7bku.azurewebsites.net" />
     ```
 
-    >the URL should not have a `/` on the end.
-1. In Visual Studio, select the project and right-click.
+    > The URL should not have a `/` on the end
+
+1. To use the API in our application, right click on the **DevCamp.WebApp** project in the Solution Explorer, select **Add** -> **REST API Client**
 
     ![image](./media/image-12.gif)
 
-1. Select Add > Rest API client
-1. In the Swagger URL field paste the value for the `INCIDENT_API_URL`
-1. Append `/swagger/docs/v1` to the URL
-1. For the Client Namespace, enter **IncidentAPI** and click OK. This will download the definition for the API and install nuget packages for Microsoft.Rest. It will also create the IncidentAPI client proxy classes and models.
+1. In the Swagger URL field paste the value for the `INCIDENT_API_URL`, appending `/swagger/docs/v1` to the end of the URL
+
+1. For the Client Namespace, enter **IncidentAPI** and click OK. 
 
     ![image](./media/image-13.gif)
+
+    This will download the definition for the API and install nuget packages for Microsoft.Rest. It will also create the IncidentAPI client proxy classes and models.
 
     > ***DO NOT Update the Nuget package for Microsoft.Rest.ClientRuntime. There is a dependency issue with the updated package.***
 
@@ -218,12 +223,13 @@ This hands-on-lab has the following exercises:
     ```csharp
     public static IncidentAPIClient GetIncidentAPIClient()
     {
-        var client = new IncidentAPIClient(new Uri(Settings.INCIDENT_API_URL));
-        return client;
+            ServiceClientCredentials creds = new BasicAuthenticationCredentials();
+            var client = new IncidentAPIClient(new Uri(Settings.INCIDENT_API_URL),creds);
+            return client;
     }
     ```
 
-1. Open the `Controllers/Dashboardcontroller.cs` file
+1. Open the `Controllers/DashboardController.cs` file
 
 1. Select the current `//TODO: BEGIN Replace with API Data code` comment block in the Index method and delete it. Also delete the existing return View() code.
 
@@ -234,8 +240,9 @@ This hands-on-lab has the following exercises:
     List<Incident> incidents;
     using (var client = IncidentApiHelper.GetIncidentAPIClient())
     {
-        var results = await client.Incident.GetAllIncidentsAsync();
-        incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
+        var results = await client.IncidentOperations.GetAllIncidentsAsync();
+        Newtonsoft.Json.Linq.JArray ja = (Newtonsoft.Json.Linq.JArray)results;
+        incidents = ja.ToObject<List<Incident>>();
         //TODO: BEGIN ADD Caching
         //##### ADD CACHING HERE #####
         //TODO: END ADD Caching
@@ -267,8 +274,9 @@ This hands-on-lab has the following exercises:
                     List<Incident> incidents;
                     using (var client = IncidentApiHelper.GetIncidentAPIClient())
                     {
-                        var results = await client.Incident.GetAllIncidentsAsync();
-                        incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
+                        var results = await client.IncidentOperations.GetAllIncidentsAsync();
+                        Newtonsoft.Json.Linq.JArray ja = (Newtonsoft.Json.Linq.JArray)results;
+                        incidents = ja.ToObject<List<Incident>>();
                         //TODO: BEGIN ADD Caching
                         //##### ADD CACHING HERE #####
                         //TODO: END ADD Caching
@@ -290,12 +298,10 @@ This hands-on-lab has the following exercises:
 
         using (IncidentAPIClient client = IncidentApiHelper.GetIncidentAPIClient())
         {
-            var result = client.Incident.GetById(Id);
-            if (!string.IsNullOrEmpty(result))
-            {
-                Incident incident = JsonConvert.DeserializeObject<Incident>(result);
-                incidentView = IncidentMapper.MapIncidentModelToView(incident);
-            }
+            var result = client.IncidentOperations.GetById(Id);
+            Newtonsoft.Json.Linq.JObject jobj = (Newtonsoft.Json.Linq.JObject)result;
+            Incident incident = jobj.ToObject<Incident>();
+            incidentView = IncidentMapper.MapIncidentModelToView(incident);
         }
 
         return View(incidentView);
@@ -328,7 +334,7 @@ This hands-on-lab has the following exercises:
         public static IncidentViewModel MapIncidentModelToView(Incident incident)
         {
             IncidentViewModel newIncidentView = new IncidentViewModel();
-            newIncidentView.Id = incident.ID;
+            newIncidentView.Id = incident.Id;
             newIncidentView.FirstName = incident.FirstName;
             newIncidentView.LastName = incident.LastName;
             newIncidentView.Street = incident.Street;
@@ -339,8 +345,8 @@ This hands-on-lab has the following exercises:
             newIncidentView.Description = incident.Description;
             newIncidentView.OutageType = incident.OutageType;
             newIncidentView.IsEmergency = incident.IsEmergency.Value;
-            newIncidentView.Created = incident.Created.Value.UtcDateTime;
-            newIncidentView.LastModified = incident.LastModified.Value.UtcDateTime;
+            newIncidentView.Created = incident.Created.Value.ToUniversalTime();
+            newIncidentView.LastModified = incident.LastModified.Value.ToUniversalTime();
             return newIncidentView;
         }
     }
@@ -375,11 +381,9 @@ This hands-on-lab has the following exercises:
 
                 using (IncidentAPIClient client = IncidentApiHelper.GetIncidentAPIClient())
                 {
-                    var result = client.Incident.CreateIncident(incidentToSave);
-                    if (!string.IsNullOrEmpty(result))
-                    {
-                        incidentToSave = JsonConvert.DeserializeObject<Incident>(result);
-                    }
+                    var result = client.IncidentOperations.CreateIncident(incidentToSave);
+                    Newtonsoft.Json.Linq.JObject jobj = (Newtonsoft.Json.Linq.JObject)result;
+                    incidentToSave = jobj.ToObject<Incident>();
                 }
                 
                 //TODO: ADD CODE TO UPLOAD THE BLOB
@@ -534,7 +538,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     }
     ````
 
-1. We will now add code to the dashboardcontroller. Open the `dashboardcontroller.cs` file
+1. We will now add code to the dashboardcontroller. Open the `DashboardController.cs` file
 
 1. Inside the `using` statement that contains the API call to the client, replace `//##### ADD CACHING HERE #####` comment block with the following:
 
@@ -551,8 +555,9 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     else
     {
         //If stale refresh
-        var results = await client.Incident.GetAllIncidentsAsync();
-        incidents = JsonConvert.DeserializeObject<List<Incident>>(results);
+        var results = await client.IncidentOperations.GetAllIncidentsAsync();
+        Newtonsoft.Json.Linq.JArray ja = (Newtonsoft.Json.Linq.JArray)results;
+        incidents = ja.ToObject<List<Incident>>();
         RedisCacheHelper.AddtoCache(Settings.REDISCCACHE_KEY_INCIDENTDATA, incidents, CACHE_EXPIRATION_SECONDS);
     }
     //##### Add caching here #####
@@ -724,13 +729,13 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     {
         //### Add Blob Upload code here #####
         //Give the image a unique name based on the incident id
-        var imageUrl = await StorageHelper.UploadFileToBlobStorage(incidentToSave.ID, imageFile);
+        var imageUrl = await StorageHelper.UploadFileToBlobStorage(incidentToSave.Id, imageFile);
         //### Add Blob Upload code here #####
 
 
         //### Add Queue code here #####
         //Add a message to the queue to process this image
-        await StorageHelper.AddMessageToQueue(incidentToSave.ID, imageFile.FileName);
+        await StorageHelper.AddMessageToQueue(incidentToSave.Id, imageFile.FileName);
         //### Add Queue code here #####
     }
 
@@ -738,7 +743,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
     ```
 
-1. Becuase we are using Awaitable methods, we need to change the Create method to async and have the method return a Task. Change the return type to `async Task<ActionResult>`. The code should look like the following:
+1. Because we are using Awaitable methods, we need to change the Create method to async and have the method return a Task. Change the return type to `async Task<ActionResult>`. The code should look like the following:
 
     ```csharp
     public async Task<ActionResult> Create([Bind(Include = "City,Created,Description,FirstName,ImageUri,IsEmergency,LastModified,LastName,OutageType,PhoneNumber,Resolved,State,Street,ZipCode")] IncidentViewModel incident, HttpPostedFileBase imageFile)

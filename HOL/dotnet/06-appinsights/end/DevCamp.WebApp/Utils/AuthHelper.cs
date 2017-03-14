@@ -38,14 +38,14 @@ namespace DevCamp.WebApp.Utils
             try
             {
                 AuthenticationResult authResult = await authContext.AcquireTokenSilentAsync("https://graph.microsoft.com", credential,
-                  new UserIdentifier(TokenCache.UserObjectId, UserIdentifierType.UniqueId));
+                new UserIdentifier(TokenCache.UserObjectId, UserIdentifierType.UniqueId));
                 return authResult.AccessToken;
             }
             catch (AdalSilentTokenAcquisitionException)
             {
                 HttpContext.Current.Request.GetOwinContext().Authentication.Challenge(
-                  new AuthenticationProperties() { RedirectUri = redirectUri },
-                  OpenIdConnectAuthenticationDefaults.AuthenticationType);
+                new AuthenticationProperties() { RedirectUri = redirectUri },
+                OpenIdConnectAuthenticationDefaults.AuthenticationType);
 
                 return null;
             }
