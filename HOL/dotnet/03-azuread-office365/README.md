@@ -841,7 +841,7 @@ Next, we are going to create a page to display information about the logged in u
 ## Exercise 3: Interact with the Microsoft Graph
 In the previous exercise you read data from the Microsoft Graph, but there are other endpoints can be used for more sophisticated tasks.  In this exercise we will use the Graph to send an email message whenever a new incident is reported.
 
-1. Add a method to `Settings.cs` generate the HTML body content for the email. We will be setting 2 placeholders `{0} and {1}` for the first name and last name of the person reporting the incident.
+1. Add a method to `Settings.cs` that will generate the HTML body content for the email. We will be setting 2 placeholders `{0} and {1}` for the first name and last name of the person reporting the incident.
 
     ```csharp
     static string getEmailMessageBody()
