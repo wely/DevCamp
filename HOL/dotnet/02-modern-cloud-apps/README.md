@@ -627,17 +627,16 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
     ![image](./media/image-21.gif)
 
-    Select **Access Keys** and note the **key1** for the storage account.
+    Select **Access Keys** and note the **Storage account name** and **key1** for the storage account.
 
     ![image](./media/image-22.gif)
 
-1. Update the web.config with the following values from the Azure storage account:
+1. Update the web.config with the following values from the Azure storage account.  The `AZURE_STORAGE_ACCOUNT` should be the storage account name, retrieved above. 
 
     ```xml
     <add key="AZURE_STORAGE_ACCOUNT" value="" />
     <add key="AZURE_STORAGE_ACCESS_KEY" value="" />
-    <add key="AZURE_STORAGE_BLOB_CONTAINER" value="images" />
-    <add key="AZURE_STORAGE_QUEUE" value="thumbnails" />
+
     ```
 
 1. The web.config appSettings node should now contain the following entries with your values replaced:
