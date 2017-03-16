@@ -39,7 +39,7 @@ This hands-on-lab has the following exercises:
 
 1. You should have performed a `git clone` of the DevCamp repository in the previous hands-on lab.  If you did not, please complete the developer workstation setup in that lab.
 
-1. Open the Visual Studio and navigate to the directory `C:\DevCamp\HOL\dotnet\02-modern-cloud-apps\start`
+1. Open Visual Studio and navigate to the directory `C:\DevCamp\HOL\dotnet\02-modern-cloud-apps\start`
 
     ![image](./media/image-01.gif)
 
@@ -221,7 +221,7 @@ This hands-on-lab has the following exercises:
 
 1. In the `Utils` folder, there is a file named `IncidentApiHelper.cs`. Open this file.
 
-1. Paste the following inside the `IncidentApiHelper` class definition and resolve the reference for `IncidentAPI`.
+1. Paste the following inside the `IncidentApiHelper` class definition and resolve the references for `IncidentAPI` and `Microsoft.Rest`.
 
     ```csharp
     public static IncidentAPIClient GetIncidentAPIClient()
@@ -236,7 +236,7 @@ This hands-on-lab has the following exercises:
 
 1. Select the current `//TODO: BEGIN Replace with API Data code` comment block in the Index method and delete it. Also delete the existing return View() code.
 
-1. Paste the following:
+1. Paste the following inside the `Index()` function:
 
     ```csharp
     //##### API DATA HERE #####
@@ -256,13 +256,18 @@ This hands-on-lab has the following exercises:
     >This code will use the API call `GetAllIncidentsAsync` to retrieve an array of Json objects, and then will convert that to a list of `Incident` objects that we can use in our subsequent code.
     >
 
-1. Resolve the references for `Newtonsoft.Json, IncidentAPI, IncidentAPI.Models and System.Collections.Generic`. Make sure you have also added the IncidentAPI namespace with 
-    ```csharp
-    using IncidentAPI;
-    ```
-    because GetIAllIncidentsAsync() is an extension method which cannot be resolved automatically.
+1. Resolve the references for `Newtonsoft.Json, IncidentAPI, IncidentAPI.Models and System.Collections.Generic`. Make sure you have a `using` line for the IncidentAPI namespace.  Here are all the `using` entries you should have:
 
-1. Change the method to be async and have the method return a Task by changing the return type to `async Task<ActionResult>`. The code should look like the following:
+    ```csharp
+    using DevCamp.WebApp.Utils;
+    using IncidentAPI;
+    using IncidentAPI.Models;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+    ```
+
+1. You will still see the call to GetAllIncidentsAsync underlined in red - that is because it is an async operation, and we need the Index method to be async as well.  Change the method to be async and have the method return a Task by changing the return type to `async Task<ActionResult>`. The code should look like the following:
 
     ```csharp
         using DevCamp.WebApp.Utils;
@@ -295,6 +300,8 @@ This hands-on-lab has the following exercises:
         }
     ```
 
+    This should resolve all the errors in `DashboardController.cs`.
+
 1. Let's add code to view Incidents. Navigate to the `IncidentController.cs` file and open it
 
 1. In between the `//### ADD DETAILS VIEW CODE HERE ###` comment block in the `Details` method, select the body of this method and delete it.
@@ -314,6 +321,9 @@ This hands-on-lab has the following exercises:
 
         return View(incidentView);
     ```
+
+    As usual, resolve the references to `IncidentAPI`, `IncidentAPI.Models`, `DevCamp.WebApp.Utils` and `DevCamp.WebApp.ViewModels`.
+
 1. In the `Mappers` Folder, locate the `IncidentMapper.cs` file. This file will handle the mapping from the data that is returned from the API.
 
 1. Open it and locate the `///TODO: Add Incident Mapper Code` comment block
@@ -363,19 +373,15 @@ This hands-on-lab has the following exercises:
 1. Resolve the references for the following (or you can simply paste this in at the top of the file):
     
     ```C#
-    using DevCamp.WebApp.Mappers;
-    using DevCamp.WebApp.Utils;
     using DevCamp.WebApp.ViewModels;
-    using IncidentAPI;
     using IncidentAPI.Models;
-    using Newtonsoft.Json;
     ```
 
 1. Now let's add code to create an incident. Open the `Controllers\IncidentController.cs` file
 
 1. Add a new `Create` method to the `IncidentController` class that will handle the Create HTTP post method. Add the following code:
 
-    > DO NOT delete the existing `Create` Method. This is the method that handles the default view.
+    > DO NOT delete the existing `Create` method which handles the default view (eg. HTTP Get).
 
     ```csharp
     [HttpPost]
@@ -410,9 +416,9 @@ This hands-on-lab has the following exercises:
     } 
     ```
 
-1. Resolve the references for `system.threading.task and system.web`
+1. Resolve the references for `DevCamp.WebApp.Mappers` and `System.Web`.
 
-1. Build the application and hit F5 to start debugging. On the home page, click on the view dashboard link. You should see a list of the sample incidents you generated in the database.
+1. Build the application and hit F5 to start debugging. On the home page, click on the view dashboard link. You should see a list of the sample incidents you generated in the database.  This shows that the backend API is being called to retrieve the list of all Incidents from the database.
 
     ![image](./media/image-15.gif)
 
@@ -453,13 +459,15 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
 
     ![image](./media/image-19.gif)
 
-1. Add the Microsoft.Extensions.Caching.Redis package by highlighting the name and selecting install
+1. Before we do anything with the NuGet package manager, we would like to point out that we have developed the DevCamp application with specific versions of all the included NuGet packages.  For this reason, please ***DO NOT** update the modules in this tool. 
+
+1. Click `Browse` and enter `Microsoft.Extensions.Caching.Redis` in the search box.  Add the Microsoft.Extensions.Caching.Redis package by highlighting the name and selecting install
 
     ![image](./media/image-20.gif)
 
 1. Accept the License to complete the install
 
-1. In Azure, navigate to the `dotnet...` web application in your resource group.
+1. IBack in the Azure portal, navigate to the `dotnet...` web application in your resource group.
 
     ![image](./media/image-25.gif)
 
@@ -562,7 +570,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
 
     ```csharp
     //TODO: BEGIN ADD Caching
-    int CACHE_EXPIRATION_SECONDS = 60;
+    int CACHE_EXPIRATION_SECONDS = 300;
 
     //Check Cache
     string cachedData = string.Empty;
@@ -581,7 +589,9 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
     //TODO: END ADD Caching
     ```
 
-1. Set a breakpoint on the declaration of the ***CACHE_EXPIRATION_SECONDS*** variable.
+    Resolve the `Newtonsoft.Json` reference.
+
+1. Set a breakpoint on the declaration of the ***CACHE_EXPIRATION_SECONDS*** variable, in preparation for when we run the application later.
 
 1. If a new incident is reported, that will make the cached data stale.  We can ensure that the newest data is retrieved in this case by clearing the cache when a new incident is reported. Open the `IncidentController.cs` file
 
@@ -594,7 +604,7 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
 
     return RedirectToAction("Index", "Dashboard");
     ``` 
-1. Hit F5 to start debugging. Select the dashboard page. You should hit the breakpoint. Hit F10 to step over the call. The cache is empty so it fall to the else condition
+1. Hit F5 to start debugging. Select the dashboard page. You should hit the breakpoint. Hit F10 to step over the call. The cache is empty so the application execution falls to the else condition, thus calling the API.
 
 1. Hit F5 to continue stepping. The data should be added to the cache
 
@@ -602,9 +612,9 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
 
 1. Create a new incident from the Report Outage page. Enter some details and click `Create`
 
-1. Your new incident should be first in the dashboard.
+1. Your new incident should be first in the dashboard, showing that the cache was cleared and the newest list of Incidents was loaded from the API.
 
-1. Close the browser and stop debugging
+1. Close the browser and stop debugging.  You will also want to delete the breakpoint you set in `DashboardController.cs`
 
 ---
 ## Exercise 3: Write images to Azure Blob Storage
