@@ -78,6 +78,9 @@ This hands-on-lab has the following exercises:
     >  
     > `http://incidentapi[YOUR_RG_NAME].azurewebsites.net/incidents/sampledata`
     >
+    > You can also do this using the swagger pages which will be available at this URL:
+    >
+    >`http://incidentapi[YOUR_RG_NAME].azurewebsites.net/swagger`
     >
 
 1. After navigating to the `sampledata` route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade and select the DocumentDB resource.
@@ -240,18 +243,24 @@ This hands-on-lab has the following exercises:
     List<Incident> incidents;
     using (var client = IncidentApiHelper.GetIncidentAPIClient())
     {
+        //TODO: BEGIN ADD Caching
         var results = await client.IncidentOperations.GetAllIncidentsAsync();
         Newtonsoft.Json.Linq.JArray ja = (Newtonsoft.Json.Linq.JArray)results;
         incidents = ja.ToObject<List<Incident>>();
-        //TODO: BEGIN ADD Caching
-        //##### ADD CACHING HERE #####
         //TODO: END ADD Caching
     }
     return View(incidents);
     //##### API DATA HERE #####
     ```
 
-1. Resolve the references for `Newtonsoft.Json, IncidentAPI, IncidentAPI.Models and System.Collections.Generic`. Make sure you have also added the IncidentAPI namespace, as  GetIAllIncidentsAsync() is an extension method which cannot be resolved automatically.
+    >This code will use the API call `GetAllIncidentsAsync` to retrieve an array of Json objects, and then will convert that to a list of `Incident` objects that we can use in our subsequent code.
+    >
+
+1. Resolve the references for `Newtonsoft.Json, IncidentAPI, IncidentAPI.Models and System.Collections.Generic`. Make sure you have also added the IncidentAPI namespace with 
+    ```csharp
+    using IncidentAPI;
+    ```
+    because GetIAllIncidentsAsync() is an extension method which cannot be resolved automatically.
 
 1. Change the method to be async and have the method return a Task by changing the return type to `async Task<ActionResult>`. The code should look like the following:
 
@@ -274,11 +283,10 @@ This hands-on-lab has the following exercises:
                     List<Incident> incidents;
                     using (var client = IncidentApiHelper.GetIncidentAPIClient())
                     {
+                        //TODO: BEGIN ADD Caching
                         var results = await client.IncidentOperations.GetAllIncidentsAsync();
                         Newtonsoft.Json.Linq.JArray ja = (Newtonsoft.Json.Linq.JArray)results;
                         incidents = ja.ToObject<List<Incident>>();
-                        //TODO: BEGIN ADD Caching
-                        //##### ADD CACHING HERE #####
                         //TODO: END ADD Caching
                     }
                     return View(incidents);
@@ -352,7 +360,7 @@ This hands-on-lab has the following exercises:
     }
     ```
 
-1. Resolve the references for the following:
+1. Resolve the references for the following (or you can simply paste this in at the top of the file):
     
     ```C#
     using DevCamp.WebApp.Mappers;
@@ -540,10 +548,20 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
 
 1. We will now add code to the dashboardcontroller. Open the `DashboardController.cs` file
 
-1. Inside the `using` statement that contains the API call to the client, replace `//##### ADD CACHING HERE #####` comment block with the following:
+1. We are going to change the code to first check whether the incident data is in the cache, and if it is, use the cached version.  Of course if the incident data is not in the cache, we need to call the API as we did before, and then put the retrieved incident data in the cache.  So we're going to wrap the code that calls the API with an `if` statement.
+
+    Inside the `using` statement that contains the API call to the client, ***replace*** the `//TODO: BEGIN ADD Caching` comment block:
+    ```csharp
+        //TODO: BEGIN ADD Caching
+        var results = await client.IncidentOperations.GetAllIncidentsAsync();
+        Newtonsoft.Json.Linq.JArray ja = (Newtonsoft.Json.Linq.JArray)results;
+        incidents = ja.ToObject<List<Incident>>();
+        //TODO: END ADD Caching
+    ```
+    with the following:
 
     ```csharp
-    //##### Add caching here #####
+    //TODO: BEGIN ADD Caching
     int CACHE_EXPIRATION_SECONDS = 60;
 
     //Check Cache
@@ -560,12 +578,12 @@ On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port 
         incidents = ja.ToObject<List<Incident>>();
         RedisCacheHelper.AddtoCache(Settings.REDISCCACHE_KEY_INCIDENTDATA, incidents, CACHE_EXPIRATION_SECONDS);
     }
-    //##### Add caching here #####
+    //TODO: END ADD Caching
     ```
- 
+
 1. Set a breakpoint on the declaration of the ***CACHE_EXPIRATION_SECONDS*** variable.
 
-1. Add code to invalidate the cache when a new incident is reported. Open the `IncidentController.cs` file
+1. If a new incident is reported, that will make the cached data stale.  We can ensure that the newest data is retrieved in this case by clearing the cache when a new incident is reported. Open the `IncidentController.cs` file
 
 1. Locate the `Create` method that handles the adding of the new incident (the method decorated with [HTTPPost]) and replace the the `//TODO: ADD CODE TO CLEAR THE CACHE` with the following:
 
