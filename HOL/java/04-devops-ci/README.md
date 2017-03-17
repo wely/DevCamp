@@ -360,7 +360,7 @@ to open a new browser tab holding configuration options.
     If you have not created a service principal for the subscription, you will have to follow the 
     [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so.  This process will 
     provide the information to enter in this dialog:
-    1. open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
+    1. open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vsts-rm-documentation/master/Azure/SPNCreation.ps1) 
     in your browser. Select all the content from the window and copy to the clipboard.
     1. open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
 
