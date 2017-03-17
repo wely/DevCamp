@@ -287,7 +287,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     > provide the information to enter in this dialog:
     >
 
-    1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
+    1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vsts-rm-documentation/master/Azure/SPNCreation.ps1) 
         in your browser. Select all the content from the window and copy to the clipboard.
         
     1. Open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
