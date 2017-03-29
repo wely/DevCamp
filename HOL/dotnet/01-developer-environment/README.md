@@ -162,11 +162,9 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 ## Exercise 4: Configure your Azure subscription for DevCamp
 
 1. We have created an Azure Resource Group template that will configure the resources you need in Azure for the DevCamp.  To deploy 
-these resources in your Azure subscription, `control + click` on the blue **Deploy to Azure** button below:
+these resources in your Azure subscription, `control + click` on the blue ***Deploy to Azure*** button below (on a MAC, use `Apple Key + click`):
 
-    <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzureCAT-GSI%2FDevCamp%2Fmaster%2FShared%2FARMTemplate%2FAzureDeploy.json" target="_blank">
-        <img src="http://azuredeploy.net/deploybutton.png"/>
-    </a>
+    :point_right:    <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzureCAT-GSI%2FDevCamp%2Fmaster%2FShared%2FARMTemplate%2FAzureDeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>    :point_left:
 
 1. You should see a new tab open in your browser and open the Azure portal, with a blade that looks like this:
 
