@@ -322,8 +322,6 @@ This hands-on-lab has the following exercises:
         return View(incidentView);
     ```
 
-    As usual, resolve the references to `IncidentAPI`, `IncidentAPI.Models`, `DevCamp.WebApp.Utils` and `DevCamp.WebApp.ViewModels`.
-
 1. In the `Mappers` Folder, locate the `IncidentMapper.cs` file. This file will handle the mapping from the data that is returned from the API.
 
 1. Open it and locate the `///TODO: Add Incident Mapper Code` comment block
@@ -370,11 +368,13 @@ This hands-on-lab has the following exercises:
     }
     ```
 
-1. Resolve the references for the following (or you can simply paste this in at the top of the file):
+1. Resolve the references in the `IncidentMapper.cs` and the `IncidentController.cs` file for the following namespaces `IncidentAPI`, `IncidentAPI.Models`, `DevCamp.WebApp.Utils` and `DevCamp.WebApp.ViewModels` (or you can simply paste this in to the top of each file:
     
     ```C#
     using DevCamp.WebApp.ViewModels;
-    using IncidentAPI.Models;
+    using IncidentAPI;
+    using IncidentAPI.Models; 
+    using DevCamp.WebApp.Utils;
     ```
 
 1. Now let's add code to create an incident. Open the `Controllers\IncidentController.cs` file
