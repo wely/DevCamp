@@ -144,13 +144,17 @@ We will add both components to our application and enable the sending of telemet
     
     ![image](./media/image-007.gif)
 
-1. The next blade with give you a JavaScript snippet pre-loaded with the Instrumentation Key.  This snippet, when place on an HTML page, will download the full Application Insights JavaScript library and configure itself.  Click the clipboard icon to copy the snippet.
+1. The next blade with give you a JavaScript snippet pre-loaded with the Instrumentation Key.  This snippet, when placed on an HTML page, will download the full Application Insights JavaScript library and configure itself. The HTML snippet in the portal integrate the App Insights key into the markup. We will replace the key with a value from our settings class to allow for dynamic configuration of the App Insights resource. By doing this, we can configure the specific setting using a configuration value.
 
     ![image](./media/image-008.gif)
 
-1. Let's integrate the snippet into our views. Open the Views > Shared > _Layout.cshtml file. This file controls the outer layout for all of the pages.
+1. Let's integrate the snippet into our views. Open the `Views > Shared > _Layout.cshtml` file. This file controls the outer layout for all of the pages.
 
-1. Paste the following snippet below the existing script tags. Notice that we replaced the static instrumentation key with the constant from our settings.cs class :
+1. Paste the following snippet below the existing script tags. 
+
+    >**Notice that we replaced the static instrumentation key with the constant from our settings.cs class**:
+    >instrumentationKey: "@DevCamp.WebApp.Utils.Settings.APPINSIGHTS_KEY"
+    >
 
     ```html
     <!-- 
