@@ -2,15 +2,15 @@
 
 ## Overview
 
-City Power & Light is a sample application that allows citizens to to report "incidents" that have occurred in their community.  It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
+City Power & Light is a sample application that allows citizens to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
 
-* Front end web application contains the user interface and business logic.  This component has been implemented three times in .NET, NodeJS, and Java.
-* WebAPI is shared across the front ends and exposes the backend DocumentDB
-* DocumentDB is used as the data persistence layer 
+* Front end web application contains the user interface and business logic. This component has been implemented three times in .NET, NodeJS, and Java.
+* WebAPI is shared across the front ends and exposes the backend DocumentDB.
+* DocumentDB is used as the data persistence layer.
 
 In this lab, you will work with an existing API to connect to the web application front end. This will allow you perform CRUD operations for incidents. You will also configure additional Azure features for Redis Cache, Azure Storage Queues, and Azure Blob Storage.
 
-> This guide use [Visual Studio Code](https://code.visualstudio.com/) for editing, however please feel free to use your editor of choice.  If you are interested in using full Visual Studio + [Node.js Tools for Visual Studio Extension (NTVS)](https://www.visualstudio.com/vs/node-js/), please see [here](https://github.com/Microsoft/nodejstools/wiki/Projects#create-project-from-existing-files) for instructions on wrapping existing code into a VS Project.
+> This guide use [Visual Studio Code](https://code.visualstudio.com/) for editing, however please feel free to use your editor of choice. If you are interested in using full Visual Studio + [Node.js Tools for Visual Studio Extension (NTVS)](https://www.visualstudio.com/vs/node-js/), please see [here](https://github.com/Microsoft/nodejstools/wiki/Projects#create-project-from-existing-files) for instructions on wrapping existing code into a VS Project.
 
 ## Objectives
 
@@ -23,9 +23,9 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-* The source for the starter app is located in the `HOL\node\modern-cloud-apps\start` folder. 
-* The finished project is located in the `HOL\node\modern-cloud-apps\end` folder. 
-* Deployed the starter ARM Template
+* The source for the starter app is located in the [start](start) folder. 
+* The finished project is located in the [end](end) folder. 
+* Deployed the starter ARM Template.
 
 ## Exercises
 
