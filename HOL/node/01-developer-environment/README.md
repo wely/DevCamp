@@ -367,7 +367,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
 1. The `>_` icon opens the Azure Cloud Shell which gives you authenticated shell access to Azure within the browser. It opens at the bottom of the window.
  
-  ![image](./media/2017-06-15_16_46_00.png)
+    ![image](./media/2017-06-15_16_46_00.png)
 
 1. The gear at the top of the screen lets you set the color palate for the portal, whether or not there will be animations, and other options for the portal itself:
 
