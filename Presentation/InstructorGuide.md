@@ -38,12 +38,15 @@ Internet.
     use the free PowerPoint viewer available here: `https://www.microsoft.com/en-us/download/details.aspx?id=13`
 
     1. Install `Windows Subsystem for Linux`, which supplies the bash command processor on windows.  
-    Go to control `panel/software/Turn Windows Features on or off`, and select `Windows Subsystem for Linux`:
+    Go to `control panel/software/Turn Windows Features on or off`, and select `Windows Subsystem for Linux`:
 
         ![image](./media/2016-10-28_14-51-30.png)
 
     1. Install Visual Studio community edition from here: `https://www.visualstudio.com/vs/`.  
-    1. Install the Azure SDK from here: `https://azure.microsoft.com/en-us/downloads/`
+	
+		![image](./media/VS-Community-Edition-Azure-SDK.png)
+	
+    1. If you did not install the Azure SDK during the installation of Visual Studio community edition install the Azure SDK from here: `https://azure.microsoft.com/en-us/downloads/`
 
         ![image](./media/2016-10-28_14-58-13.png)
 
@@ -53,7 +56,9 @@ Internet.
         * On Windows
             * Make sure you have the Anniversary edition
             * Activate the containers feature in Windows
-            * Download the beta tools [Windows](https://docs.docker.com/docker-for-windows/)
+            * Download [Docker for Windows](https://docs.docker.com/docker-for-windows/) from the stable channel
+			
+		![image](./media/Windows-10-Containers-Feature.png)
 
 
 ---
