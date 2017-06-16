@@ -254,33 +254,94 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-1. Start Visual Studio using the `Visual Studio 2015` shortcut.
+1. In a browser window inside your development Virtual Machine, open a browser window and go to `http://nodejs.org`, 
+and click on the `Other Downloads` link under v6.9.3 LTS:
 
-    > Note, there are 2 Visual Studio shortcuts. Make sure you **DO NOT** use the "start experimental instance of visual studio 2015" shortcut.
+    ![image](./media/2016-10-19_10-15-22.gif)
 
-    ![image](./media/2017-06-15_16_55_00.png)
+    In the next page, click on `32 bit` next to `Windows Installer (.msi)`, download the MSI and run the installation.
 
-1. On the sign in screen, click `sign in`. Use the credentials you used earlier for your Office 365 trial subscription.
+    ![image](./media/2016-10-19_10-20-21.gif)
 
-    > Depending on the version of the Windows image and Visual Studio, your start experience may vary:
+    > Please do not skip this step, because we will need node.js to install the Azure cross platform command line interface in the next step.
 
-    ![image](./media/image-011.gif)
+1. Install the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli).  *There is a new python-based command line interface in preview - we are not going to use that one.  Please follow these instructions to install the node-based command line interface* Open a *NEW* terminal window and do this command:
+    `node -v` 
+    Verify that the version is v6 or greater.
+
+    ```CMD
+    npm install azure-cli -g
+    ```
+
+1. If you are not developing in Java for the DevCamp, you can skip this step. We have already installed the Java JDK, but we will install gradle and Eclipse.  We will be using the gradle build manager - to install that using the [chocolatey package manager](http://www.chocolatey.org), open a command window as administrator and type:
+
+    ```CMD
+    choco install -y gradle
+    ```
+
+    Also install maven with:
+
+    ```CMD
+    choco install -y maven
+    ```
+
+    Go to the root directory using `cd \`, and perform
+
+    ```CMD
+    refreshenv
+    git clone https://github.com/swagger-api/swagger-codegen.git
+    cd swagger-codegen
+    mvn clean package
+    ```
+
+    Also Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.  
+    If you would like to download a newer version (eg. Neon), Eclipse is available here:
+
+    [http://www.eclipse.org/downloads/]()
+
+    and Spring Tool Suite is available here:
+
+    [http://spring.io/tools/sts]()
+
+    For example, after downloading the Eclipse install, run it and you'll get this screen:
+
+    ![image](./media/2016-10-19_10-44-11.gif)
+
+    choose `Eclipse IDE for Java EE developers`.  In the next screen, 
+    leave the defaults and choose `Install`:
+
+    ![image](./media/2016-10-19_10-46-30.gif)
+
+    When that is done, click `Launch` to start the IDE and choose a directory
+    for your workspace. You will end up with the initial Eclipse screen:
+
+    ![image](./media/2016-10-19_10-53-32.gif)
+
+    Click `Help` in the menu bar, and choose `install new software`:
+
+    ![image](./media/2016-10-19_10-55-30.gif)
+
+    In the window that pops up, choose `All Available Sites` for the `Work with` dropdown,
+    type `gradle` in the search box, and when the search is complete (which sometimes takes a minute or two), 
+    choose `Buildshop: Eclipse Plug-ins for Gradle`
+
+    ![image](./media/2016-10-19_10-58-48.gif)
     
-    or
-    
-    ![image](./media/2016-10-18_17-59-21.gif)
-    
-1. Create a VSTS repository. Enter a repository name and click continue:
+    click through the dialog and install the package.
+    Go back to `help/install new software`, and click the `Add..` button
+    next to the `work with` dropdown.  In the Add Repository dialog box, git the
+    repository a name, and type `http://dl.microsoft.com/eclipse` for the Location, and click `OK`:
 
-    ![image](./media/2016-10-18_18-07-34.gif)
+    ![image](./media/2016-10-19_11-26-29.gif)
 
-1. Create your first team project, and name it `DevCamp`:
+    Choose both of the packages in the list, and complete the package installation:
 
-    ![image](./media/2016-10-18_18-10-39.gif)
+    ![image](./media/2016-10-19_11-28-28.gif)
 
-1. Click close. You are done with the Visual Studio setup.
+    Also, install the spring tool suite package by using the menu item `Help/Eclipse Marketplace...`, type `spring` in the Find: box and choose `Go`.
+    in the list of packages, scroll down to `Spring Tool Suite (STS) for Eclipse 3.8.3.RELEASE` and click `Install`.
 
-1. Close the remote desktop connection.
+    ![image](./media/2016-10-24_14-29-53.gif)
 
 ----
 
