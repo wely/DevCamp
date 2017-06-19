@@ -16,10 +16,10 @@ In this lab, you will work with an existing API to connect to the web applicatio
 
 In this hands-on lab, you will learn how to:
 
-* Use Eclipse to connect to an API
-* Deploy the application to an Azure Web App
-* Modify a view to add caching
-* Modify code to add queuing and blob storage
+* Use Eclipse to connect to an API.
+* Provision an Azure Web App to host the Web site.
+* Modify a view to add caching.
+* Modify code to add queuing and blob storage.
 
 ## Prerequisites
 
@@ -31,7 +31,6 @@ In this hands-on lab, you will learn how to:
 ## Exercises
 
 This hands-on-lab has the following exercises:
-
 * Exercise 1: Integrate the API
 * Exercise 2: Add a caching layer
 * Exercise 3: Write images to Azure Blob storage
@@ -39,21 +38,22 @@ This hands-on-lab has the following exercises:
 ---
 ### Exercise 1: Integrate the API
 
-1. In your development virtual machine, open a command prompt window and navigate to the `c:\DevCamp\HOL\java\02-modern-cloud-apps\start` folder 
+1. In your development virtual machine, open a command prompt window and navigate to the `C:\DevCamp\HOL\java\02-modern-cloud-apps\start` folder.
+
 1. Run `gradle eclipse` in the terminal window to restore all dependencies and configure the
-   project paths for Eclipse
+   project paths for Eclipse:
 
-    ![image](./media/image-001.gif)
+    ![image](./media/2017-06-19_11_42_00.png)
 
-1. Once package restoration completes, open Eclipse 
+1. Once package restoration completes, open Eclipse.
 
-    ![image](./media/image-002.gif)
+    ![image](./media/2017-06-19_11_29_00.png)
 
-    Import the HOL Start folder using the menu item `File/import`, and choose the Gradle project wizard and click `Next`:
+    Import the HOL Start folder using the menu item `File` -> `Import...`, and choose the Gradle project wizard and click `Next`:
 
     ![image](./media/2016-10-24_14-35-05.gif)
 
-    On the gradle welcome page click next, and on the `Import Gradle Project` page, choose the `c:\DevCamp\HOL\java\02-modern-cloud-apps\start` directory.  Click 'Finish`:
+    On the gradle `Welcome` page click `Next`, and on the `Import Gradle Project` page, choose the `C:\DevCamp\HOL\java\02-modern-cloud-apps\start` directory.  Click `Finish`:
 
     ![image](./media/2016-10-24_14-38-30.gif)
 
@@ -62,88 +62,98 @@ This hands-on-lab has the following exercises:
     ![image](./media/2016-10-24_14-41-33.gif)
   
 
-1. Let's run the application in Debug Mode.  Click the Debug icon on
-   the top toolbar, then select "Debug Configurations...".
+1. Let's run the application in Debug Mode. Click the Debug icon on the top toolbar, then select "Debug Configurations...".
 
     ![image](./media/image-003.gif)
+    
+    > If you do not have a toolbar you can activate it via the menu: `Window` -> `Appearance` -> `Show Toolbar`.
 
-   Click on "Spring Boot App" and click the + icon in the top left to create a new run configuration.  
+   ![image](./media/2017-06-19_11_47_00.png)
+
+   Click on `Spring Boot App` and click the `+` icon in the top left to create a new run configuration.  
    
    ![image](./media/2016-10-24_14-46-43.gif)
    
-   Give the run configuration a name, such as `Run DevCamp App`, choose the Start project, click `Search` and choose devCamp.WebApp.DevcampApplication for the main type.
+   Give the run configuration a name, such as `Run DevCamp App`, choose the `start` project, click `Search...` and choose devCamp.WebApp.DevcampApplication for the main type.
 
     ![image](./media/2016-10-24_14-51-00.gif)
 
-   Click "Apply" and "Debug".  In the console pane you should see
-   something like this:
+   Click `Apply` and `Debug`.  In the console pane you should see something like this:
 
     ![image](./media/image-003b.gif)
 
-1. Open a browser and navigate to `http://localhost:8080`. You should now see the running application
+1. Open a browser and navigate to `http://localhost:8080`. You should see the home page of the running application:
 
-    ![image](./media/image-004.gif)
+    ![image](./media/2017-06-19_12_01_00.png)
 
-1. On the Dashboard page, notice how the incidents are stubbed in.
+1. Click on `Dashboard` to see some sample incidents hard-coded in the solution:
 
-    ![image](./media/image-005.gif)
+    ![image](./media/2017-06-19_12_01_30.png)
 
     As part of the original ARM template we deployed an ASP.NET WebAPI that queries a DocumentDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
 
-1. In the [Azure Portal](https://portal.azure.com) navigate to the resource group that you created with the original ARM template.  Resource Groups can be found on the left hand toolbar -> More Services -> Resource Groups.
+1. In the [Azure Portal](https://portal.azure.com) navigate to the resource group `DevCamp` that you created with the original ARM template. Resource groups can be found on the left hand toolbar.
 
-    Select the API app that begins with the name **incidentsapi** followed by a random string of characters.
+    Select the API app that begins with the name `incidentapi` followed by a random string of characters.
 
-    ![image](./media/image-006.gif)
+    ![image](./media/2017-06-16_11_29_00.png)
 
-1. The window that slides out is called a **blade** and contains information and configuration options for the resource.
+1. The window that slides out is called a **blade** and contains information and configuration options for the resource.  
 
-    On the top toolbar, select **Browse** to open the API in a new browser window.
+    On the top toolbar, select `Browse` to open the API in a new browser window.
 
-    ![image](./media/image-007.gif)
+    ![image](./media/2017-06-16_11_33_00.png)
 
-    You should be greeted by the default ASP.NET landing page. Capture
-    the URL in notepad or other text editor.
-    ![image](./media/image-008.gif)
+    You should be greeted by the default ASP.NET landing page
+    
+    ![image](./media/image-05.gif)
 
-1. Since we provisioned a new instance of DocumentDB, there are not any records to use as sample data.  To generate sample data, our API has a route that can be hit at any time to reset the documents in our collection.  In the browser, add `/incidents/sampledata` to your API's URL to generate sample documents.  The API will respond with a block of JSON that looks like this:
-    ```JSON
-    {"Version":{"_Major":1,"_Minor":1,"_Build":-1,"_Revision":-1},"Content":{"Message":"Initialized sample data","Id":"187a8c66-dae6-406a-9d6e-7654459689c4","Timestamp":"2016-10-24T19:55:02.9495008Z","Headers":[{"Key":"Content-Type","Value":["application/json; charset=utf-8"]}]},"StatusCode":200,"ReasonPhrase":"OK","Headers":[],"RequestMessage":null,"IsSuccessStatusCode":true}
-    ```
+1. Since we provisioned a new instance of DocumentDB, there are no records in the database. We will generate some sample data using the shared API. It has a route that can be accessed at any time to create or reset the documents in your collection.  In the browser, add the following to your API URL to generate sample documents.
 
-1. After navigating to the sampledata route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade and select the DocumentDB resource.
+    >
+    > Add `/incidents/sampledata` to the end of your API URL. 
+    >
+    > The URL should look like the following:
+    >  
+    > `http://incidentapi[YOUR_RG_NAME].azurewebsites.net/incidents/sampledata`
+    >
+    > You can also do this using the swagger pages which will be available at this URL:
+    >
+    >`http://incidentapi[YOUR_RG_NAME].azurewebsites.net/swagger`
+    >
 
-    ![image](./media/image-010.gif)
+1. After navigating to the `sampledata` route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade, select the `DevCamp` and then select the DocumentDB resource which starts with `incidentdb`.
 
-    Select the one database, and then select the **incidents** collection.
+    ![image](./media/2017-06-16_11_39_00.png)
 
-    ![image](./media/image-011.gif)
+    Select the DocumentDB database. This will open the DocumentDB blade. Scroll to the Collections section.
 
-    In the Collection blade, select **Document Explorer** from the top toolbar.
-
-    ![image](./media/image-012.gif)
+    In the Collections section, select `Document Explorer`.
+    
+    ![image](./media/2017-06-16_11_42_00.png)
 
     The Document Explorer is an easy way to view the documents inside of a collection via the browser. Select the first record to see the JSON body of the document.
 
-    ![image](./media/image-013.gif)
+    ![image](./media/2017-06-16_11_44_00.png)
+
+    ![image](./media/2017-06-16_11_45_00.png)
 
     We can see that several incidents have been created and are now available to the API.
 
-1. Back in Eclipse, let's begin integrating the API into our code.  We will need to query the API's endpoint URL, and we have options of where to store that string.  While we could insert it directly into our code, a better practice is to abstract such a configuration setting into an environment variable.
+1. Back in Eclipse, let's begin integrating the API into our code. We will need to query the API's endpoint URL, and we have options of where to store that string. While we could insert it directly into our code, a better practice is to abstract such a configuration setting into an environment variable.
 
-    Stop the debugger by pressing the red "stop" square, and open the
-    run configuration you created earlier.  Click the "Environment"
-    tab.  This section defines key/value pairs that will be passed
-    into environment variables whenever the debugger is launched. Add
-    an entry for `INCIDENT_API_URL` and set the value to the ASP.NET
-    WebAPI that we earlier loaded into the browser (and captured in
-    notepad). It should look like this: `http://incidentapib6prykosg3fjk.azurewebsites.net/`, but with your own website name.  Click OK to save the
-    environment variable, then apply and close.
+    Stop the debugger by pressing the red `stop` square, and open the run configuration you created earlier. Click the `Environment` tab.
+    
+    ![image](./media/2017-06-19_12_11_00.png)
+    
+    This section defines key/value pairs that will be passed into environment variables whenever the debugger is launched. Add an entry for `INCIDENT_API_URL` and set the value to the ASP.NET WebAPI that we earlier loaded into the browser and noted. It should look something like this: `http://incidentapi3oszghr6hgets.azurewebsites.net`, but with your own website name. Click `OK` to save the environment variable, then `Apply` and `Close`.
 
-    ![image](./media/image-009.gif)
+    ![image](./media/2017-06-19_12_16_00.png)
 
-    Now that the URL is loaded as an environment variable, we can
-    access it from our application by creating a configuration object to hold configuration variables, and setting those variables within the application.yml file.  First, let's create the java class `devCamp.WebApp.properties.ApplicationProperties`, and paste in this code:
+    Now that the URL is loaded as an environment variable, we can access it from our application by creating a configuration object to hold configuration variables, and setting those variables within the `application.yml` file.
+    
+    First, let's create the java class `devCamp.WebApp.properties.ApplicationProperties`, and paste in this code:
+    
     ```java
     package devCamp.WebApp.properties;
 
@@ -171,31 +181,49 @@ This hands-on-lab has the following exercises:
 
     ```
 
-    You'll notice a red line under `ReflectionToStringBuilder`. This is because we have to add `org.apache.commons.lang3` as a dependency.  Open up the `build.gradle` file, and add this line to the dependencies section:
+    You'll notice a red line under `ReflectionToStringBuilder`. This is because we have to add `org.apache.commons.lang3` as a dependency.
+    
+    ![image](./media/2017-06-19_12_42_00.png)
+    
+    Open up the `build.gradle` file, and add this line to the dependencies section:
+    
     ```java
     compile('org.apache.commons:commons-lang3:3.5')
     ```
 
-    To make sure that Eclipse knows about the new packages we added to
-    the buld, go to the `gradle tasks` tab in the bottom pane, navigate to the `ide/eclipse` gradle task and right click on it and choose `Run gradle tasks`.  Then right-click on the project in the project explorer,
-    close the project, and then open it again.  Open `ApplicationProperties.java` and verify that `ReflectionToStringBuilder` no longer has the red line under it, indicating that the import is resolved properly.  We will do this process several times over the course of the DevCamp.
+    ![image](./media/2017-06-19_12_33_00.png)
+
+    To make sure that Eclipse knows about the new packages we added to the build, go to the `gradle tasks` tab in the bottom pane.
+    
+    If Eclipse does not show the `gradle tasks` tab you can activate it via the menu. Click `Window` -> `Show View` -> `Other...`.
+    
+    ![image](./media/2017-06-19_12_49_00.png)
+    
+    ![image](./media/2017-06-19_12_48_00.png)
+    
+    Navigate to the `ide` -> `eclipse` gradle task and right-click on it and choose `Run Gradle Tasks`.
+    
+    ![image](./media/2017-06-19_12_53_00.png)
+    
+    Then right-click on the project in the project explorer, close the project, and then open it again.
+    
+    ![image](./media/2017-06-19_12_56_00.png)
+    
+    Open `ApplicationProperties.java` and verify that `ReflectionToStringBuilder` no longer has the red line under it, indicating that the import is resolved properly.  We will do this process several times over the course of the DevCamp.
+    
+    ![image](./media/2017-06-19_13_01_00.png)
 
     Let's take a look at `src/main/resources/application.yml`.  This is a configuration file that sets up the parameters that we want to import into the application.  For example, this line:
     ```java
     incidentApiUrl: ${INCIDENT_API_URL}
     ```
-    tells spring boot to get the INCIDENT_API_URL environment variable, and place it into the ApplicationProperties object that we just created.  This file has several other setings that we will be using later.
+    tells spring boot to get the `INCIDENT_API_URL` environment variable, and place it into the ApplicationProperties object that we just created. This file has several other setings that we will be using later.
 
-    > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application
+    > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application.
 
-1. Several components will work together to call and display the
-   incidents in the database.  We will need an object to hold
-   the data associated with each incident.  We've supplied that object
-   in devCamp.WebApp.models.IncedentBean.Java.  Open
-   that file and look at its properties and methods.
+1. Several components will work together to call and display the incidents in the database. We will need an object to hold the data associated with each incident. We've supplied that object in `devCamp.WebApp.models.IncedentBean.Java`. Open that file and look at its properties and methods.
 
-1. Create the interface `devCamp.WebApp.services.IncidentService.java` with the
-   following code:
+1. Create the interface `devCamp.WebApp.services.IncidentService.java` with the following code:
 
     ```java
     package devCamp.WebApp.services;
@@ -344,23 +372,15 @@ This hands-on-lab has the following exercises:
     }    
     ```
 
-    This class uses the 
-    [RestTemplate](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) library
-    to generate a HTTP GET to the API endpoint, and to convert the
-    return javascript into a java object.  In this case, we've
-    specified that it should return a `List<IncidentBean>`.
+    This class uses the [RestTemplate](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) library to generate a HTTP GET to the API endpoint, and to convert the return javascript into a java object. In this case, we've specified that it should return a `List<IncidentBean>`.
 
-    It also uses the `CompletableFuture` object to allow the API calls to run asynchronously.  This will 
-    make pages load faster, because back-end calls don't have to be done synchronously.  A couple of the functions 
-    we will use later are not asyncronous, for reasons we'll see later.
-    The class also contains functions to create a new incident, update an incident, and get a single incident by ID.  These invoke the appropriate REST api call.
+    It also uses the `CompletableFuture` object to allow the API calls to run asynchronously. This will make pages load faster, because back-end calls don't have to be done synchronously. A couple of the functions we will use later are not asyncronous, for reasons we'll see later. The class also contains functions to create a new incident, update an incident, and get a single incident by ID.  These invoke the appropriate REST api call.
 
     Notice this class uses the `applicationProperties` object that we created earlier, to get the incident URL.
 
-1. Open `DevCamp.WebApp.Controllers.DashboardController.java`. The dashboard function in this class is called when the user hits the `/dashboard` url.  In the function we are currently populating some dummy data to display on the dashboard.  We are going to change this to call the API, and display the retrieved data in the dashboard.
+1. Open `DevCamp.WebApp.Controllers.DashboardController.java`. The dashboard function in this class is called when the user hits the `/dashboard` url.  In the function we are currently populating some dummy data to display on the dashboard. We are going to change this to call the API, and display the retrieved data in the dashboard.
 
-    In the dashboard function,
-    comment out the whole dashboard function:
+    In the dashboard function, comment out the whole dashboard function:
 
     ```java
  	@RequestMapping("/dashboard")
@@ -377,8 +397,7 @@ This hands-on-lab has the following exercises:
 		}
     ```
 
-    Insert this code to call the GetAllIncidents API and put the
-    resulting list of IncidentBean in the model.
+    Insert this code to call the GetAllIncidents API and put the resulting list of IncidentBean in the model.
 
     ```java
     @Autowired
@@ -393,9 +412,13 @@ This hands-on-lab has the following exercises:
 
     ```
 
-    You will notice that the `@Autowired` annotation is underlined in red - you have to resolve the import for it by hovering the mouse pointer over it, and choose the `import Autowired` quck fix.  You can also do this by clicking on the red `x` next to that line, and choosing the `import Autowired` quick fix.  you will have to do this for IncidentService and List.  For list, choose the `import java.util.List` option.  This simply adds the appropriate imports to the top of the class.  You will have to do this many times during the DevCamp to make sure the proper imports are included.
+    You will notice that the `@Autowired` annotation is underlined in red - you have to resolve the import for it by hovering the mouse pointer over it, and choose the `import Autowired` quck fix.
+    
+    ![import](./media/2017-06-19_13_16_00.png)    
+    
+    You can also do this by clicking on the red `x` next to that line, and choosing the `import Autowired` quick fix.  You will have to do this for `IncidentService` and `List`. For `List`, choose the `import java.util.List` option.  This simply adds the appropriate imports to the top of the class. You will have to do this many times during the DevCamp to make sure the proper imports are included.
 
-1. We will need to create two configuration classes.  The first is `devCamp.WebApp.configurations.ApplicationConfig`, with this code:
+1. We will need to create two configuration classes. The first is `devCamp.WebApp.configurations.ApplicationConfig`, with this code:
     ```java
     package devCamp.WebApp.configurations;
 
@@ -441,7 +464,7 @@ This hands-on-lab has the following exercises:
         }
     }    
     ```
-    >this class simply makes sure the application configuration is read in, and also configures the RestTemplate library to use the proper message converters.
+    > This class simply makes sure the application configuration is read in, and also configures the RestTemplate library to use the proper message converters.
 
     The other configuration class is `devCamp.WebApp.configurations.AsyncConfig`, which sets up a pool of threads for asynchronous processing of calls.  This is the code to paste into that class:
 
@@ -483,9 +506,7 @@ This hands-on-lab has the following exercises:
     ```
 
 
-1. In addition to displaying incidents, the application also provides a form to enter in new Incidents.  
-The POST from the form is handled by the `IncidentController.java` class.  
-Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.java` and comment the function out. After the commented out function, add the following code:
+1. In addition to displaying incidents, the application also provides a form to enter in new incidents. The POST from the form is handled by the `IncidentController.java` class. Scroll to the `Create` function of `devCamp.WebApp.Controllers.IncidentController.java` and comment the function out. After the commented out function, add the following code:
     ```java
 
 	@Autowired
@@ -494,7 +515,7 @@ Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.
 	@PostMapping("/new")
 	public String Create(@ModelAttribute IncidentBean incident, @RequestParam("file") MultipartFile imageFile) {
 		LOG.info("creating incident");
-		graphService.sendMail(OAuth2TokenUtils.getGivenName(),OAuth2TokenUtils.getMail());
+		//graphService.sendMail(OAuth2TokenUtils.getGivenName(),OAuth2TokenUtils.getMail());
 		IncidentBean result = incidentService.createIncident(incident);
 		String incidentID = result.getId();
 
@@ -525,13 +546,10 @@ Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.
     
     ```
  
-     > you will have to resolve the imports for `@Autowired`, `@Async`, `IncidentService`, etc.  as explained above.
+     > You will have to resolve the imports for `@Autowired`, `IncidentService`, etc. as explained above.
 
-    Before we test this code, lets take a look at the HTML template for the dashboard
-    page, located in
-    `src/main/resources/templates/Dashboard/index.html`. The following
-    section loops through all of the incidents in the allIncidents
-    object in the model, and formats them nicely for the display.
+    Before we test this code, lets take a look at the HTML template for the dashboard page, located in
+    `src/main/resources/templates/Dashboard/index.html`. The following section loops through all of the incidents in the `allIncidents` object in the model, and formats them nicely for the display.
 
     ```HTML
     <div th:each="incident : ${allIncidents}">
@@ -562,14 +580,13 @@ Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.
     </div>
     ```
 
-    >We aren't making any changes to this file at this point, we are just verifying that the dashboard display simply pulls all the incidents in the model object, and formats them for HTML display.
+    > We aren't making any changes to this file at this point, we are just verifying that the dashboard display simply pulls all the incidents in the model object, and formats them for HTML display.
 
-1. Run the application via the Debug Tab in Eclipse and check the
-   dashboard page at http://localhost:8080/dashboard.
+1. Run the application via the Debug Tab in Eclipse and check the dashboard page at `http://localhost:8080/dashboard`.
 
-    ![image](./media/image-015.gif)
+    ![image](./media/2017-06-19_15_12_00.png)
 
-The cards now represent data returned from our API, replacing the static mockup code.  You can also click on `Report Outage`, enter the information requested, then come back to the dashboard display to verify that your outage was saved.
+The cards now represent data returned from our API, replacing the static mockup code. You can also click on `Report Outage`, enter the information requested, then come back to the dashboard display to verify that your outage was saved.
 
 ---
 ## Exercise 2: Add a caching layer
@@ -582,17 +599,32 @@ need to add application logic. Spring has great support for caching,
 and can easily use Azure Redis Cache to hold the data.
 
 
-1. First, let's add our Redis information to local environment variables. In the [Azure Portal](https://portal.azure.com) navigate to the Resource Group and select the Redis instance.
+1. First, let's add our Redis information to local environment variables. In the [Azure Portal](https://portal.azure.com) navigate to the resource group `DevCamp` and select the Redis Cache instance named `incidentcache...`:
 
-    ![image](./media/image-016.gif)
+    ![image](./media/2017-06-16_13_14_00.png)
 
-    On the Redis blade, note the **Host Name**, then select the **key icon** and note the **Primary Key**.
+1. On the Redis blade, note the **Host Name**.
 
-    ![image](./media/image-017.gif)
+    ![image](./media/2017-06-16_13_18_00.png)
 
-    On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port of 6380.
+1. Then select `Show access keys` and note the **Primary Key**.
 
-    ![image](./media/image-018.gif)
+1. Return to the `Overview` blade and expand **Ports** by selecting `Non-SSL port (6379) disabled` and note the Non-SSL port 6379 and SSL Port of 6380 on the port details blade.
+
+    ![image](./media/2017-06-16_13_29_00.png)
+
+1. Navigate to the `dotnetapp...` web application in your `DevCamp` resource group:
+
+    ![image](./media/2017-06-16_13_49_00.png)
+
+1. Navigate to the application settings:
+
+    ![image](./media/image-26.gif)
+
+1. Note that the App Settings Keys have values pre-populated with the values required to consume the Azure services matching the values you found in the details of the Redis Cache instance:
+
+    ![image](./media/2017-06-16_13_53_00.png)
+
 
     While you are in the Redis blade, go to `Advanced Settings` and set `Allow access only via SSL` to `No`.  At the time of this writing, the Spring support for Redis does not support 
     SSL communication, however it is coming in the near future.
