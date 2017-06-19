@@ -90,7 +90,7 @@ Click the hyperlink **Azure Subscription** to begin the Azure Trial signup proce
 
 1. Navigate to [http://www.microsoftazurepass.com/]().
 
-    ![image](./media/2017-06-15_10_39_00)
+    ![image](./media/2017-06-15_10_39_00.png)
 
 1. Enter the code that is provided by your facilitator into the text box, then click `Submit`.
 
@@ -254,40 +254,45 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-1. We will use the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) ("Azure XPlat CLI") to interact with our subscription.  The CLI installs via Node.js; open to a terminal window and run:
-   
+1. **NodeJS version 6 or greater** - We make extensive use of ECMAScript 6/ECMAScript 2015 which causes errors on earlier versions of node. Inside your development Virtual Machine, open a *NEW* terminal window and execute this command to verify that the node version is v6 or greater:
+
     ```CMD
     node -v
     ```
+    
+    If the Node version on your machine is less than v6, we will need to update the version. In a browser window open a browser window and go to `http://nodejs.org`, and click on the `Other Downloads` link under the current version LTS:
 
-    Verify that the version is v6 or greater. Then, install the Azure CLI
+    ![image](./media/2017-06-19_08_48_00.png)
+
+    In the next page, click on `32-bit` next to `Windows Installer (.msi)`, download the MSI and run the installation.
+
+    ![image](./media/2017-06-19_08_51_00.png)
+
+    > Please do not skip this step, because we will need node.js to install the Azure cross platform command line interface in the next step.
+
+1. We will use the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) to interact with our subscription.
+
+   > *There is a new python-based command line interface in preview - we are not going to use that one. Please follow these instructions to install the node-based command line interface.* 
+    
+    Then install the Microsoft Azure Cross Platform Command Line by executing:
 
     ```CMD
     npm install azure-cli -g
-    ````
+    ```
 
-    > If you are running the labs on your local machine, please also ensure that the version of Node.js installed is v6 or greater
+1. <a name="macsetup"></a>For users wanting to use a machine for the DevCamp labs other than a VM in Azure, such as a Mac laptop, please feel free to do so.  The lab instructions have been written in a way to minimize the operating system, and although many screenshots show Windows Server, all labs can be completed in Windows, OSX, or Linux on local laptops or Virtual Machines. Please have the following requirements before beginning:
 
-1. If the Node version on your machine is less than v6, we will need to update the version. In a browser window inside your development Virtual Machine, load `http://nodejs.org`, and click on the `Other Downloads` link under the **Latest Features** tile on the right side of the page:
+    * **NodeJS version 6 or greater** - We make extensive use of ECMAScript 6/ECMAScript 2015 which is error on earlier versions of Node. [Download](https://nodejs.org) from the Node website, or use [NVM](https://github.com/creationix/nvm) with a recent version. To ensure this requirement is met, please run `node -v` and ensure v6+.
 
-    ![image](./media/2016-10-19_10-15-22.gif)
-
-    In the next page, click on `32 bit` next to `Windows Installer (.msi)`, download the MSI and run the installation.
-
-    ![image](./media/2016-10-19_10-20-21.gif)
-
-<a name="macsetup"></a>For users wanting to use a machine for the DevCamp labs other than a VM in Azure, such as a Mac laptop, please feel free to do so.  The lab instructions have been written in a way to minimize the operating system, and although many screenshots show Windows Server, all labs can be completed in Windows, OSX, or Linux on local laptops or Virtual Machines. Please have the following requirements before beginning:
-
-* **NodeJS version 6 or greater** - We make extensive use of ECMAScript 6/ECMAScript 2015 which is error on earlier versions of Node. [Download](https://nodejs.org) from the Node website, or use [NVM](https://github.com/creationix/nvm) with a recent version. To ensure this requirement is met, please run `node -v` and ensure v6+
-
-* **Azure XPlat CLI** - Install the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) by running `npm install -g azure-cli` and login to your subscription with `azure login`. [Instructions](https://github.com/Azure/azure-xplat-cli#get-started)
- > *There is a new python-based command line interface in preview - we are not going to use that one.  Please follow these instructions to install the node-based command line interface* 
+    * **Azure XPlat CLI** - Install the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) by running `npm install -g azure-cli` and login to your subscription with `azure login` ([Instructions](https://github.com/Azure/azure-xplat-cli#get-started)).
  
-* **Visual Studio Code** - You can use any editor of your choosing, but be aware that the lab makes a heavy assumption that VSCode will be used. [Download](https://go.microsoft.com/fwlink/?LinkID=620882)
+    > *There is a new python-based command line interface in preview - we are not going to use that one.  Please follow these instructions to install the node-based command line interface.* 
+ 
+    * **Visual Studio Code** - You can use any editor of your choosing, but be aware that the lab makes a heavy assumption that [VSCode](https://go.microsoft.com/fwlink/?LinkID=620882)  will be used.
 
-* **Storage Explorer** - Grab the cross-platform [Microsoft Azure Storage Explorer](http://storageexplorer.com/) to interact with files stored in Azure Storage accounts.
+    * **Storage Explorer** - Grab the cross-platform [Microsoft Azure Storage Explorer](http://storageexplorer.com/) to interact with files stored in Azure Storage accounts.
 
-![image](./media/image-029.png)
+    ![image](./media/image-029.png)
 
 1. Close the remote desktop connection.
 

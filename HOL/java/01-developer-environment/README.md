@@ -90,7 +90,7 @@ Click the hyperlink **Azure Subscription** to begin the Azure Trial signup proce
 
 1. Navigate to [http://www.microsoftazurepass.com/]().
 
-    ![image](./media/2017-06-15_10_39_00)
+    ![image](./media/2017-06-15_10_39_00.png)
 
 1. Enter the code that is provided by your facilitator into the text box, then click `Submit`.
 
@@ -254,8 +254,13 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-1. Inside your development Virtual Machine, open a browser window and go to `http://nodejs.org`, 
-and click on the `Other Downloads` link under the current version LTS:
+1. Inside your development Virtual Machine, open a *NEW* terminal window and execute this command to verify that the node version is v6 or greater:
+
+    ```CMD
+    node -v
+    ```
+
+1. If the Node version on your machine is less than v6, we will need to update the version. In a browser window open a browser window and go to `http://nodejs.org`, and click on the `Other Downloads` link under the current version LTS:
 
     ![image](./media/2017-06-19_08_48_00.png)
 
@@ -265,11 +270,9 @@ and click on the `Other Downloads` link under the current version LTS:
 
     > Please do not skip this step, because we will need node.js to install the Azure cross platform command line interface in the next step.
 
-1. Install the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli).  *There is a new python-based command line interface in preview - we are not going to use that one.  Please follow these instructions to install the node-based command line interface* Open a *NEW* terminal window and execute this command to verify that the node version is v6 or greater:
+1. We will use the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) to interact with our subscription.
 
-    ```CMD
-    node -v
-    ```
+    > *There is a new python-based command line interface in preview - we are not going to use that one. Please follow these instructions to install the node-based command line interface.* 
     
     Then install the Microsoft Azure Cross Platform Command Line by executing:
 

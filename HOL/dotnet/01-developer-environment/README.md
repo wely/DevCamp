@@ -90,7 +90,7 @@ Click the hyperlink **Azure Subscription** to begin the Azure Trial signup proce
 
 1. Navigate to [http://www.microsoftazurepass.com/]().
 
-    ![image](./media/2017-06-15_10_39_00)
+    ![image](./media/2017-06-15_10_39_00.png)
 
 1. Enter the code that is provided by your facilitator into the text box, then click `Submit`.
 
