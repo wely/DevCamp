@@ -254,26 +254,30 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-1. In a browser window inside your development Virtual Machine, open a browser window and go to `http://nodejs.org`, 
-and click on the `Other Downloads` link under v6.9.3 LTS:
+1. Inside your development Virtual Machine, open a browser window and go to `http://nodejs.org`, 
+and click on the `Other Downloads` link under the current version LTS:
 
-    ![image](./media/2016-10-19_10-15-22.gif)
+    ![image](./media/2017-06-19_08_48_00.png)
 
-    In the next page, click on `32 bit` next to `Windows Installer (.msi)`, download the MSI and run the installation.
+    In the next page, click on `32-bit` next to `Windows Installer (.msi)`, download the MSI and run the installation.
 
-    ![image](./media/2016-10-19_10-20-21.gif)
+    ![image](./media/2017-06-19_08_51_00.png)
 
     > Please do not skip this step, because we will need node.js to install the Azure cross platform command line interface in the next step.
 
-1. Install the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli).  *There is a new python-based command line interface in preview - we are not going to use that one.  Please follow these instructions to install the node-based command line interface* Open a *NEW* terminal window and do this command:
-    `node -v` 
-    Verify that the version is v6 or greater.
+1. Install the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli).  *There is a new python-based command line interface in preview - we are not going to use that one.  Please follow these instructions to install the node-based command line interface* Open a *NEW* terminal window and execute this command to verify that the node version is v6 or greater:
+
+    ```CMD
+    node -v
+    ```
+    
+    Then install the Microsoft Azure Cross Platform Command Line by executing:
 
     ```CMD
     npm install azure-cli -g
     ```
 
-1. If you are not developing in Java for the DevCamp, you can skip this step. We have already installed the Java JDK, but we will install gradle and Eclipse.  We will be using the gradle build manager - to install that using the [chocolatey package manager](http://www.chocolatey.org), open a command window as administrator and type:
+1. If you are not developing in Java for the DevCamp, you can skip this step. We have already installed the Java JDK, but we will install gradle and Eclipse. We will be using the gradle build manager - to install that using the [chocolatey package manager](http://www.chocolatey.org), open a command window as administrator and type:
 
     ```CMD
     choco install -y gradle
@@ -285,7 +289,7 @@ and click on the `Other Downloads` link under v6.9.3 LTS:
     choco install -y maven
     ```
 
-    Go to the root directory using `cd \`, and perform
+    Go to the root directory using `cd \`, and perform these commands in sequence:
 
     ```CMD
     refreshenv
@@ -305,43 +309,37 @@ and click on the `Other Downloads` link under v6.9.3 LTS:
 
     For example, after downloading the Eclipse install, run it and you'll get this screen:
 
-    ![image](./media/2016-10-19_10-44-11.gif)
+    ![image](./media/2017-06-19_09_10_00.png)
 
-    choose `Eclipse IDE for Java EE developers`.  In the next screen, 
-    leave the defaults and choose `Install`:
+    choose `Eclipse IDE for Java EE developers`.  In the next screen, leave the defaults and choose `INSTALL`:
 
-    ![image](./media/2016-10-19_10-46-30.gif)
+    ![image](./media/2017-06-19_09_11_00.png)
 
-    When that is done, click `Launch` to start the IDE and choose a directory
-    for your workspace. You will end up with the initial Eclipse screen:
+    When that is done, click `LAUNCH` to start the IDE and choose a directory for your workspace. You will end up with the initial Eclipse screen:
 
     ![image](./media/2016-10-19_10-53-32.gif)
 
-    Click `Help` in the menu bar, and choose `install new software`:
+    Click `Help` in the menu bar, and choose `Install New Software...`:
 
     ![image](./media/2016-10-19_10-55-30.gif)
 
-    In the window that pops up, choose `All Available Sites` for the `Work with` dropdown,
-    type `gradle` in the search box, and when the search is complete (which sometimes takes a minute or two), 
-    choose `Buildshop: Eclipse Plug-ins for Gradle`
+    In the window that pops up, choose `All Available Sites` for the `Work with` dropdown, type `gradle` in the search box, and when the search is complete (which sometimes takes a minute or two), choose `Buildshop: Eclipse Plug-ins for Gradle`:
 
-    ![image](./media/2016-10-19_10-58-48.gif)
+    ![image](./media/2017-06-19_09_22_00.png)
     
-    click through the dialog and install the package.
-    Go back to `help/install new software`, and click the `Add..` button
-    next to the `work with` dropdown.  In the Add Repository dialog box, git the
-    repository a name, and type `http://dl.microsoft.com/eclipse` for the Location, and click `OK`:
+    Click through the dialog, install the package and let Eclipse restart.
+    
+    Again select `Help` -> `Install New Software...`, and click the `Add..` button next to the `Work with` dropdown.  In the `Add Repository` dialog box, give the repository a name, and type `http://dl.microsoft.com/eclipse` for the Location, and click `OK`:
 
     ![image](./media/2016-10-19_11-26-29.gif)
 
-    Choose both of the packages in the list, and complete the package installation:
+    This will load a list of available packages. Choose the `Azure Toolkit for Java` package and the `Team Explorer Everywhere` package in the list, and complete the package installation as before:
 
-    ![image](./media/2016-10-19_11-28-28.gif)
+    ![image](./media/2017-06-19_09_29_00.png)
 
-    Also, install the spring tool suite package by using the menu item `Help/Eclipse Marketplace...`, type `spring` in the Find: box and choose `Go`.
-    in the list of packages, scroll down to `Spring Tool Suite (STS) for Eclipse 3.8.3.RELEASE` and click `Install`.
+    Also, install the `Spring Tool Suite (STS) for Eclipse` package by using the menu item `Help` -> `Eclipse Marketplace...`, type `spring` in the `Find:` box and choose `Go`. In the list of packages, scroll down to `Spring Tool Suite (STS) for Eclipse X.X.X.RELEASE` and click `Install`.
 
-    ![image](./media/2016-10-24_14-29-53.gif)
+    ![image](./media/2017-06-19_09_34_00.png)
 
 ----
 

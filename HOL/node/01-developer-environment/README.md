@@ -254,31 +254,40 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     All of the content for this DevCamp will now be located in `c:\DevCamp\`.
 
-1. Start Visual Studio using the `Visual Studio 2015` shortcut.
+1. We will use the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) ("Azure XPlat CLI") to interact with our subscription.  The CLI installs via Node.js; open to a terminal window and run:
+   
+    ```CMD
+    node -v
+    ```
 
-    > Note, there are 2 Visual Studio shortcuts. Make sure you **DO NOT** use the "start experimental instance of visual studio 2015" shortcut.
+    Verify that the version is v6 or greater. Then, install the Azure CLI
 
-    ![image](./media/2017-06-15_16_55_00.png)
+    ```CMD
+    npm install azure-cli -g
+    ````
 
-1. On the sign in screen, click `sign in`. Use the credentials you used earlier for your Office 365 trial subscription.
+    > If you are running the labs on your local machine, please also ensure that the version of Node.js installed is v6 or greater
 
-    > Depending on the version of the Windows image and Visual Studio, your start experience may vary:
+1. If the Node version on your machine is less than v6, we will need to update the version. In a browser window inside your development Virtual Machine, load `http://nodejs.org`, and click on the `Other Downloads` link under the **Latest Features** tile on the right side of the page:
 
-    ![image](./media/image-011.gif)
-    
-    or
-    
-    ![image](./media/2016-10-18_17-59-21.gif)
-    
-1. Create a VSTS repository. Enter a repository name and click continue:
+    ![image](./media/2016-10-19_10-15-22.gif)
 
-    ![image](./media/2016-10-18_18-07-34.gif)
+    In the next page, click on `32 bit` next to `Windows Installer (.msi)`, download the MSI and run the installation.
 
-1. Create your first team project, and name it `DevCamp`:
+    ![image](./media/2016-10-19_10-20-21.gif)
 
-    ![image](./media/2016-10-18_18-10-39.gif)
+<a name="macsetup"></a>For users wanting to use a machine for the DevCamp labs other than a VM in Azure, such as a Mac laptop, please feel free to do so.  The lab instructions have been written in a way to minimize the operating system, and although many screenshots show Windows Server, all labs can be completed in Windows, OSX, or Linux on local laptops or Virtual Machines. Please have the following requirements before beginning:
 
-1. Click close. You are done with the Visual Studio setup.
+* **NodeJS version 6 or greater** - We make extensive use of ECMAScript 6/ECMAScript 2015 which is error on earlier versions of Node. [Download](https://nodejs.org) from the Node website, or use [NVM](https://github.com/creationix/nvm) with a recent version. To ensure this requirement is met, please run `node -v` and ensure v6+
+
+* **Azure XPlat CLI** - Install the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) by running `npm install -g azure-cli` and login to your subscription with `azure login`. [Instructions](https://github.com/Azure/azure-xplat-cli#get-started)
+ > *There is a new python-based command line interface in preview - we are not going to use that one.  Please follow these instructions to install the node-based command line interface* 
+ 
+* **Visual Studio Code** - You can use any editor of your choosing, but be aware that the lab makes a heavy assumption that VSCode will be used. [Download](https://go.microsoft.com/fwlink/?LinkID=620882)
+
+* **Storage Explorer** - Grab the cross-platform [Microsoft Azure Storage Explorer](http://storageexplorer.com/) to interact with files stored in Azure Storage accounts.
+
+![image](./media/image-029.png)
 
 1. Close the remote desktop connection.
 
