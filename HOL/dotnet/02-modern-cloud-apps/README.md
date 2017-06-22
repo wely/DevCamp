@@ -21,25 +21,25 @@ In this hands-on-lab, you will learn how to:
 * Modify a view to add caching.
 * Modify code to add queuing and blob storage.
 
-
 ## Prerequisites
 
 * The source for the starter app is located in the [start](start) folder. 
 * The finished project is located in the [end](end) folder.
 * Deployed the starter ARM Template in HOL 1.
+* Established a development machine either on-premises or in Azure.
 
 ## Exercises
 
 This hands-on-lab has the following exercises:
-* Exercise 1: Integrate the API
-* Exercise 2: Add a caching layer
-* Exercise 3: Write images to Azure Blob storage
+* [Exercise 1: Integrate the API](#ex1)
+* [Exercise 2: Add a caching layer](#ex2)
+* [Exercise 3: Write images to Azure Blob storage](#ex3)
 
 ### Note
 > ***In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages.*** 
 
 ---
-## Exercise 1: Integrate the API
+## Exercise 1: Integrate the API<a name="ex1"></a>
 
 1. You should have performed a `git clone` of the DevCamp repository in the previous hands-on lab. If you did not, please complete the developer workstation setup in that lab.
 
@@ -53,7 +53,7 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/2017-06-16_11_26_00.png)
 
-1. Once the build is complete, run the solution by typing `F5`. Visual Studio should run IIS Express and launch the application. You should see the home page:
+1. Once the build is complete, run the solution by typing `F5`. Visual Studio should run IIS Express and launch the application. You should see the home page of the running application:
 
     ![image](./media/2017-06-16_11_24_00.png)
 
@@ -61,7 +61,7 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/2017-06-16_11_50_00.png)
     
-    Next we are going to replace these samples with live data retrieved via the API from the DocumentDB.
+	As part of the original ARM template we deployed an ASP.NET WebAPI that queries a DocumentDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
 
 1. Close the browser, which will also stop the debugging process.
 
@@ -441,7 +441,7 @@ This hands-on-lab has the following exercises:
     ![image](./media/2017-06-16_13_10_00.png)
 
 ---
-## Exercise 2: Add a caching layer
+## Exercise 2: Add a caching layer<a name="ex2"></a>
 Querying our API is a big step forward, but querying a cache would increase performance and limit the load on our API.  Azure offers a managed (PaaS) service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
 
 We deployed an instance of Azure Redis Cache in the ARM Template, but need to add the following application logic:
@@ -627,7 +627,7 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 1. Close the browser and stop debugging.  You will also want to delete the breakpoint you set in `DashboardController.cs` file.
 
 ---
-## Exercise 3: Write images to Azure Blob Storage
+## Exercise 3: Write images to Azure Blob Storage<a name="ex3"></a>
 
 When a new incident is reported, the user can attach a photo.  In this exercise we will process that image and upload it into an Azure Blob Storage Container.
 
