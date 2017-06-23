@@ -25,7 +25,7 @@ In this hands-on-lab, you will learn how to:
 
 * The source for the starter app is located in the [start](start) folder. 
 * The finished project is located in the [end](end) folder.
-* Deployed the starter ARM Template in HOL 1.
+* Deployed the starter ARM Template in [HOL 1](../01-developer-environment).
 * Established a development machine either on-premises or in Azure.
 
 ## Exercises
