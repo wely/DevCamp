@@ -5,38 +5,38 @@ In this lab, you will learn to provision and manage resources in Azure with the 
 
 ## Objectives
 In this hands-on lab, you will learn how to:
-* Author Azure Resource Manager templates
-* Deploy ARM Templates to Azure
-* Integrate environments into VSTS Release pipelines
+* Author Azure Resource Manager templates.
+* Deploy ARM Templates to Azure.
+* Integrate environments into VSTS Release pipelines.
 
 ## Prerequisites
 
-* You should have completed the previous Continuous Integration HOL
+* You should have completed the previous Continuous Integration HOL.
 
 ## Exercises
 This hands-on-lab has the following exercises:
-* Exercise 1: Create an ARM Template in Visual Studio
-* Exercise 2: Deploy ARM Template to Azure
-* Exercise 3: Integrate new Web App into VSTS
-* Exercise 4: Deploy City Power & Light to new Web App
+* [Exercise 1: Create an ARM Template in Visual Studio](#ex1)
+* [Exercise 2: Deploy ARM Template to Azure](#ex2)
+* [Exercise 3: Integrate new Web App into VSTS](#ex3)
+* [Exercise 4: Deploy City Power & Light to new Web App](#ex4)
 
 ### Note
 > In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
 
 ---
-## Exercise 1: Create an ARM Template in Visual Studio
+## Exercise 1: Create an ARM Template in Visual Studio<a name="ex1"></a>
 
-1. Open Visual Studio 2015
+1. Open Visual Studio 2015.
 
-1. Select `File > New > Project`
+1. Select `File` -> `New` > `Project...`.
   
     ![image](./media/image-01.gif)
 
-1. Select `Cloud > Azure Resource Group` and provide a name for the Solution. In the screenshot, we choose ***DevCampWebApp***. Select a location. Create a new folder if you wish.
+1. Select the `Cloud` -> `Azure Resource Group` project template and provide a name for the new solution. In the screenshot, we choose ***DevCampWebApp***. Select a location. Create a new folder if you wish.
 
     ![image](./media/image-02.gif)
 
-1. In the `Select Azure Template` window, find the `Web App` template and select it. Click `Ok`. This will create an Azure Resource project and add a web application resource.
+1. In the `Select Azure Template` window, find the `Web App` template and select it. Click `OK`. This will create an Azure Resource project and add a web application resource.
 
     ![image](./media/image-03.gif)
 
@@ -50,17 +50,17 @@ This hands-on-lab has the following exercises:
 
     > Note: If the tool pane does not open, ensure that you have the latest Azure SDK installed. At the time of this writing, the latest version is 2.9.
 
-1. Our new web application will need a globally unique DNS name. Locate the `webSiteName` variable. This will synchronize the editor view with the outline view. In the editor, replace the existing name ***dotnetapptest**.
+1. Our new web application will need a globally unique DNS name. Locate the `webSiteName` variable. This will synchronize the editor view with the outline view. In the editor, replace the existing value ***webSite*** with ***dotnetapptest***.
 
      ![image](./media/image-06.gif)
 
 1. The web application needs to be configured to work with the AzureAD, Azure Storage, Azure Redis Cache, and ASP.NET WebAPI that we configured earlier. 
 
-    In earlier exercises we have configured these settings as web.config variables on our local machines, and in the Azure Portal for our "Dev" Azure Web App.  
+    In earlier exercises we have configured these settings as `Web.config` variables on our local machines, and in the Azure Portal for our `DevCamp` Azure Web App.  
 
-    ARM Templates can include child `resources`, which define options for a given parent resource.  For a web app, we can add `appsettings` to adjust the environment variables present on our app, instead of or in addition to using web.config.
+    ARM Templates can include child `resources`, which define options for a given parent resource. For a web app, we can add `appsettings` to adjust the environment variables present on our app, instead of or in addition to using web.config.
     
-1. In the JSON outline tool pane, select the `Website` parent resource. Right-click and select `Add New Resource`
+1. In the JSON outline tool pane, select the `Website` parent resource. Right-click and select `Add New Resource`.
 
      ![image](./media/image-07.gif)
 
@@ -96,11 +96,11 @@ This hands-on-lab has the following exercises:
     }
     ```
 
-1. Locate the values surrounded by `{YOUR ...}`. We will need to replace these values with the correct settings for your web application. You can get these values from the `web.config` created in the previous labs.
+1. Locate the values surrounded by `{YOUR ...}`. We will need to replace these values with the correct settings for your web application. You can get these values from the `Web.config` created in the previous labs.
 
-1. If you do not have the values from the previous labs, open the Azure portal and find the web application in your resource group that starts with `dotnetapp...`
+1. If you do not have the values from the previous labs, open the Azure portal and find the web application in your resource group that starts with `dotnetapp...`.
 
-1. Select `application settings` from the settings blade
+1. Select `Application Settings` from the settings blade:
 
     ![image](./media/image-13.gif)
 
@@ -113,100 +113,98 @@ This hands-on-lab has the following exercises:
 We are now ready to deploy our ARM Template containing an App Service Plan, and a Web App with environment variables to Azure. 
 
 ---
-## Exercise 2: Deploy ARM Template to Azure using Visual Studio
+## Exercise 2: Deploy ARM Template to Azure using Visual Studio<a name="ex2"></a>
 
-1. In Visual Studio, select the ARM Project. `Right-click` and select `Deploy > New`
+1. In Visual Studio, select the ARM Project. `Right-click` and select `Deploy` -> `New...`:
 
-    ![image](./media/image-10.gif)
+    ![image](./media/2017-06-22_16_58_00.png)
 
-1. Select your resource group from the drop down and select `Ok`
+1. Select your subscription and resource group from the drop-downs and click `Deploy`.
 
-    ![image](./media/image-11.gif)
+    ![image](./media/2017-06-23_08_48_00.png)
 
 1. A pop up will appear where you can enter a name for your app service and select the App Service plan. Enter a name, and select `B1`. This is a basic plan.
 
-     ![image](./media/image-15.gif)
+     ![image](./media/2017-06-23_08_50_00.png)
 
-     ![image](./media/image-16.gif)
+1. Click `Save`.
 
-1. Click `Save`
+1. Open the [Azure Portal](https://portal.azure.com) and verify that the app has been created in your resource group with the defined resources.
 
-1. Open the [Azure Portal](https://portal.azure.com) and verify that the Resource Group was created with the defined resources.
+    ![image](./media/2017-06-23_09_04_00.png)
 
-    ![image](./media/image-17.gif)
+    Also check the `Application Settings` blade to verify that the environment variables were created as expected:
 
-    Also check the **Application Settings** blade to verify that the environment variables were created as expected
+    ![image](./media/2017-06-23_09_30_00.png)
 
-    ![image](./media/image-18.gif)
+1. To use authentication with this new web app, we need to update our AzureAD app registration to whitelist its URL. In the browser, navigate to the [Application Registration Portal](https://apps.dev.microsoft.com/#/appList) and select your application. Under the `Platforms` heading, select `Add Url` and paste in the URL of your newly created Azure Web App. You may have to remove the URL from the previous HOL first. Click `Save`.
 
-1. To use authentication with this new web app, we need to update our AzureAD app registration to whitelist its URL. In the browser, navigate to the <a href="https://apps.dev.microsoft.com/#/appList" target="_blank">Application Registration Portal</a> and select your application.  Under the **Platforms** heading, select **Add Url** and paste in the URL of your newly created Azure Web App. Click Save
+    ![image](./media/2017-06-23_09_26_00.png)
 
-    ![image](./media/image-19.gif)
+    > See [here](https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-limitations/#restrictions-on-redirect-uris) for more information about redirect URIs.
 
-    > See [here](https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-limitations/#restrictions-on-redirect-uris) for more information about redirect URIs
-
-The new resource group is now holding our "Test" environment web app and has been added to our app registration.
+The resource group is now holding our "Test" environment web app and has been added to our app registration.
 
 ---
-## Exercise 3: Integrate new Web App into VSTS
+## Exercise 3: Integrate new Web App into VSTS<a name="ex3"></a>
 
-1. In VSTS, open the **Release Definition** that we started in a previous lab.  You should be be able to find this by navigating to **Releases** on the top navigation. We need to create a second environment to serve as our test web app.
+1. In [VSTS](https://www.visualstudio.com/), open the **Release Definition** that we started in a previous lab. You should be be able to find this by navigating to `Releases` in the `Build & Release` menu on the top navigation. We need to create a second environment to serve as our test web app.
 
-    ![image](./media/image-22.gif)
+    ![image](./media/2017-06-23_10_07_00.png)
 
-1. Click the dropdown arrow next to the existing Release Definition, and select **Edit**
+1. Click the drop-down arrow next to the existing Release Definition, and select `Edit`:
 
-    ![image](./media/image-32.gif)
+    ![image](./media/2017-06-23_10_09_00.png)
 
-1. In the Release Definition, select **Add environment** and select **Clone a selected environment**. We will use our existing Dev web app configuration as the template for the new test web app configuration.
+1. In the Release Definition, select `Add environment` and select `Clone a selected environment`. We will use our existing Dev web app configuration as the template for the new test web app configuration.
 
-    ![image](./media/image-23.gif)
+    ![image](./media/2017-06-23_10_11_00.png)
 
 1. VSTS allows us to control and govern how releases happen between environments.  Instead of automatically deploying our test environment after our dev environment, let's add an approval step.  A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test environment. 
 
-    For the **Pre-deployment approval** option, select **Specific users** and enter your account name. Then click the **Create** button
+    For the `Pre-deployment approval` option, select `Specific users` and enter your account name. Then click the `Create` button:
 
-    ![image](./media/image-24.gif)
+    ![image](./media/2017-06-23_10_34_00.png)
 
-1. Rename the environment from **Dev copy** to **Test** and click the the **Deploy AzureRM App Service** task. Update the **App Service Name** to match the web app that you just deployed via the ARM Template. The task now targets the test environment web app, rather than the dev environment web app.
+1. Rename the environment from **Copy of...** to **Test** by clicking on it's title and click the the `Deploy AzureRM App Service` task. Update the `App Service Name` to match the web app that you just deployed via the ARM Template. The task now targets the test environment web app, rather than the dev environment web app.
 
-    ![image](./media/image-25.gif)
+    ![image](./media/2017-06-23_10_39_00.png)
 
 1. Save your Release Definition to finish adding the additional environment.
 
 ---
-## Exercise 4: Deploy City Power & Light to new Web App
+## Exercise 4: Deploy City Power & Light to new Web App<a name="ex4"></a>
 
 With the updated Release Definition, we can now execute a release.
 
-1. Click on the **Release** button and in the dropdown choose **Create Release**.
+1. Click on the `Release` button and in the drop-down choose `Create Release`.
 
-    ![image](./media/image-26.gif)
+    ![image](./media/2017-06-23_10_41_00.png)
 
-1. Select a Build to release into the environments. This is likely the largest numbered Build. Then click the **Create** button
+1. Select a Build to release into the environments. This is likely the largest numbered Build. Then click the `Create` button.
 
-    ![image](./media/image-27.gif)
+    ![image](./media/2017-06-23_10_42_00.png)
 
 1. Click the Release number to navigate to the Release Details screen
 
-    ![image](./media/image-28.gif)
+    ![image](./media/2017-06-23_10_43_00.png)
 
-1. On the top toolbar, select **Logs** to monitor the release process.  When the release for the dev environment finishes, you will be prompted to approve the release to the test environment.  Click **Approve** to continue the release.
+1. On the top toolbar, select `Logs` to monitor the release process. When the release for the dev environment finishes, you will be prompted to approve the release to the test environment. Click `Approve` to continue the release.
 
-    ![image](./media/image-29.gif)
+    ![image](./media/2017-06-23_10_45_00.png)
 
 1. Once the test environment app has finished its release, open the app in the browser and login.
 
-    ![image](./media/image-30.gif)
+    ![image](./media/2017-06-23_10_50_00.png)
 
 We have now created a new "test" environment web app and app service plan via an ARM Template, and integrated the new environment into our VSTS Release Definition.
 
 ## Summary
 
 In this hands-on lab, you learned how to:
-* Create an ARM Template in Visual Studio Code
-* Deploy ARM Template to Azure via the XPlat CLI
-* Integrate new Web App into VSTS
-* Deploy City Power & Light to new Web App
+* Create an ARM Template in Visual Studio Code.
+* Deploy ARM Template to Azure via the XPlat CLI.
+* Integrate new Web App into VSTS.
+* Deploy City Power & Light to new Web App.
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

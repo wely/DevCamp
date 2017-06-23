@@ -273,3 +273,4 @@ Temporary Items
 .apdisk
 
 .vscode
+*.db
