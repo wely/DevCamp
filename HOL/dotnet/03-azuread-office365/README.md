@@ -846,7 +846,7 @@ Next, we are going to create a page to display information about the logged in u
 
 1. Resolve any missing references to `System`, `System.Security.Claims`, `System.Net.Http` and `System.Net.Http.Headers` and hit `F5` to see the resulting profile page. We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
 
-    ![image](./media/2017-21-06_11_42_00.png)
+    ![image](./media/2017-21-06_11_42_00.jpg)
 	
     ![image](./media/2017-21-06_11_43_00.png)
 

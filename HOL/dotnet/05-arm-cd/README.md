@@ -195,7 +195,7 @@ With the updated Release Definition, we can now execute a release.
 
 1. Once the test environment app has finished its release, open the app in the browser and login.
 
-    ![image](./media/2017-06-23_10_50_00.png)
+    ![image](./media/2017-06-23_10_50_00.jpg)
 
 We have now created a new "test" environment web app and app service plan via an ARM Template, and integrated the new environment into our VSTS Release Definition.
 

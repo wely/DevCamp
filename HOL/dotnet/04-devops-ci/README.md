@@ -375,7 +375,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
 1. Open a browser and navigate to the site. You should see the running site on Azure.
     
-    ![image](./media/2017-06-22_12_12_00.png)
+    ![image](./media/2017-06-22_12_12_00.jpg)
 
 ---
 ## Summary

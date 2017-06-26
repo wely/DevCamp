@@ -39,7 +39,7 @@ This hands-on-lab has the following exercises:
 1. In your browser, go to [https://products.office.com/en-us/business/office-365-enterprise-e3-business-software](https://products.office.com/en-us/business/office-365-enterprise-e3-business-software) 
 and click the link that says `Free Trial`. 
 
-    ![image](./media/2017-03-14_08_28_44.png)
+    ![image](./media/2017-03-14_08_28_44.jpg)
 
     This will navigate you to this page:
 

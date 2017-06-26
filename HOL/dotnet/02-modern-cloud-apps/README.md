@@ -55,7 +55,7 @@ This hands-on-lab has the following exercises:
 
 1. Once the build is complete, run the solution by typing `F5`. Visual Studio should run IIS Express and launch the application. You should see the home page of the running application:
 
-    ![image](./media/2017-06-16_11_24_00.png)
+    ![image](./media/2017-06-16_11_24_00.jpg)
 
 1. Click on `Dashboard` to see some sample incidents hard-coded in the solution:
 
