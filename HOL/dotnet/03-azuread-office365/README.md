@@ -85,7 +85,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/2017-21-06_08_12_00.png)
 
-1. A key is generated for you. ***save this key***, as you will not be able to retrieve it in the future. This key will become the `AAD_CLIENT_SECRET` environment variable.
+1. A key is generated for you. ***Save this key***, as you will not be able to retrieve it in the future. This key will become the `AAD_CLIENT_SECRET` environment variable.
 
     ![image](./media/image-007.gif)
 
@@ -1052,7 +1052,7 @@ In the previous exercise you read data from the Microsoft Graph, but there are o
 	
 1. Resolve the missing reference to `DevCamp.WebApp.Models`.
 
-1. Click `Save` -> `Build` and `F5` to start debugging. Now when you add a new incident via the `Report outage` link, you should recieve an email. Go to [outlook.office365.com/owa/](https://outlook.office365.com/owa/) to see it. Use the credentials you used to create your Azure subscribtion.
+1. Click `Save` -> `Build` and `F5` to start debugging. Now when you add a new incident via the `Report outage` link, you should recieve an email. Go to [outlook.office365.com/owa/](https://outlook.office365.com/owa/) to see it. Use the credentials you used to create your Azure subscription.
     
     ![image](./media/2017-21-06_12_48_00.png)
 
