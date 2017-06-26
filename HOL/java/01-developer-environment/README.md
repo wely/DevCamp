@@ -7,12 +7,12 @@ In this lab, you will set up an Office365 trial subscription, an Azure trial sub
 
 ## Objectives
 In this hands-on lab, you will set up an Office365 developer subscription, and Azure trial subscription, and an Azure-based virtual machine for the development environment for subsequent labs in the DevCamp.  To expedite the process, we've prepared a Windows image that you will copy into your own environment, start the virtual machine and connect to it.  You will then configure the components for Azure development.
-* Set up an Office365 trial subscription
-* Set up an Azure trial subscription
-* Configure your Azure subscription for DevCamp
-* Create an Azure Virtual Machine for remote development
-* Connect to the Azure Virtual Machine and configure it for development
-* Review the features of the Azure Portal
+* Set up an Office365 trial subscription.
+* Set up an Azure trial subscription.
+* Configure your Azure subscription for DevCamp.
+* Create an Azure Virtual Machine for remote development.
+* Connect to the Azure Virtual Machine and configure it for development.
+* Review the features of the Azure Portal.
 
 ## Prerequisites
 
@@ -574,16 +574,16 @@ After all 3 locks have been deleted you are able to delete the resource group. N
 # Summary
 
 In this hands-on lab, you learned how to:
-* Set up an Office365 developer subscription
-* Set up an Azure trial subscription
-* Configure your Azure subscription for DevCamp
-* Create an Azure Virtual Machine for development
-* Connect to the Azure Virtual Machine and configure it for development
-* Use the Azure portal to view the resources that you created
+* Set up an Office365 developer subscription.
+* Set up an Azure trial subscription.
+* Configure your Azure subscription for DevCamp.
+* Create an Azure Virtual Machine for development.
+* Connect to the Azure Virtual Machine and configure it for development.
+* Use the Azure portal to view the resources that you created.
 
 After completing this module, you can continue on to Module 2: Building modern cloud apps.
 
-#### View Module 2 instructions for [Java](../../../HOL/java/02-modern-cloud-apps)
+### View Module 2 instructions for [Java](../02-modern-cloud-apps).
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

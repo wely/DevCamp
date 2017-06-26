@@ -1064,4 +1064,13 @@ Sending this email did not require the setting up of a dedicated email server, b
 ## Summary
 Our application can now distinguish between anonymous and authenticated users to ensure flexibility between public and private data. We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
 
+In this hands-on lab, you learned how to:
+* Take an anonymous application and add user authentication via AzureAD.
+* Query data from the Microsoft Graph.
+* Manipulate data in the Microsoft Graph.
+
+After completing this module, you can continue on to Module 4: DevOps with Visual Studio Team Services.
+
+### View Module 4 instructions for [.NET](../04-devops-ci).
+
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

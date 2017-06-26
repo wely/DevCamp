@@ -1144,11 +1144,11 @@ In this hands-on lab, you learned how to:
 * Use Eclipse to connect to an API.
 * Provision an Azure Web App to host the Web site.
 * Modify a view to add caching.
-* Modify code to add queuing and blob storage.* 
+* Modify code to add queuing and blob storage.
 
 After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs.
 
-#### View Module 3 instructions for [Java](../03-azuread-office365).
+### View Module 3 instructions for [Java](../03-azuread-office365).
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
