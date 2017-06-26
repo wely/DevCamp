@@ -22,17 +22,17 @@ The credit card ***will not*** be charged unless you remove the spending limit o
 
 ## Exercises
 This hands-on-lab has the following exercises:
-* Exercise 1: Set up Office 365 trial subscription
-* Exercise 2: Set up Azure trial subscription
-* Exercise 3: Start your VSTS trial subscription
-* Exercise 4: Configure your Azure subscription for DevCamp
-* Exercise 5: Use an Azure Virtual Machine for remote development
-* Exercise 6: Deploy Shared API application
-* Exercise 7: Azure Portal walkthrough
-* Exercise 8: View the resources you created
+* [Exercise 1: Set up Office 365 trial subscription](#ex1)
+* [Exercise 2: Set up Azure trial subscription](#ex2)
+* [Exercise 3: Start your VSTS trial subscription](#ex3)
+* [Exercise 4: Configure your Azure subscription for DevCamp](#ex4)
+* [Exercise 5: Use an Azure Virtual Machine for remote development](#ex5)
+* [Exercise 6: Deploy Shared API application](#ex6)
+* [Exercise 7: Azure Portal walkthrough](#ex7)
+* [Exercise 8: View the resources you created](#ex8)
 
 ---
-## Exercise 1: Set up Office 365 trial subscription
+## Exercise 1: Set up Office 365 trial subscription<a name="ex1"></a>
 
 > If you already have an Office 365 subscription, please use an alternate browser or use private mode. This will help avoid any issues with conflicting accounts.
 
@@ -74,7 +74,7 @@ and click the link that says `Free Trial`.
 Stay on this page until the next exercise.
 
 ---
-## Exercise 2: Set up Azure trial subscription
+## Exercise 2: Set up Azure trial subscription<a name="ex2"></a>
 
 Next, we want to set up an Azure subscription, which can be accessed via the Azure Active Directory link.  On the bottom, left-hand side of the screen, click `Admin centers`, and then click `Azure AD`. 
 
@@ -125,7 +125,7 @@ You should now be taken to the [Azure Portal](http://portal.azure.com) where you
 ![image](./media/2017-06-15_10_44_00.png)
 
 ---
-## Exercise 3: Start your VSTS trial subscription
+## Exercise 3: Start your VSTS trial subscription<a name="ex3"></a>
 
 In a future lab we will use [Visual Studio Team Services](https://www.visualstudio.com/team-services/), or "VSTS" for short. In this exercise we will enable a free trial subscription.
 
@@ -154,7 +154,7 @@ In a future lab we will use [Visual Studio Team Services](https://www.visualstud
 You have now activated a Visual Studio Team Services Trial Subscription, which will be used in a future lab.
 
 ---
-## Exercise 4: Configure your Azure subscription for DevCamp
+## Exercise 4: Configure your Azure subscription for DevCamp<a name="ex4"></a>
 
 1. We have created an Azure Resource Group template that will configure the resources you need in Azure for the DevCamp.  To deploy these resources in your Azure subscription, `control + click` on the blue ***Deploy to Azure*** button below (on a MAC, use `Apple Key + click`):
 
@@ -198,7 +198,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
 ---
 
-## Exercise 5: Use an Azure Virtual Machine for remote development
+## Exercise 5: Use an Azure Virtual Machine for remote development<a name="ex5"></a>
 
 1. The Azure resource group template will have created a virtual machine that can be used for remote development on Windows. Exercise 5 describes the configuration for the Windows virtual machine, which would be appropriate for any of the languages.
 
@@ -298,7 +298,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
 ----
 
-## Exercise 6: Deploy shared API application ##
+## Exercise 6: Deploy shared API application ##<a name="ex6"></a>
 
 1. The API application has been prepared for you to be available as a communication partner during different exercises and just needs to be deployed once. It will be first used in the second hands on lab.
 
@@ -345,7 +345,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 1. Select `OK`.
 
 ---
-## Exercise 7: Azure Portal walkthrough
+## Exercise 7: Azure Portal walkthrough<a name="ex7"></a>
 
 1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, [http://portal.azure.com](https://portal.azure.com).  Log in with the credentials you supplied in the subscription signup exercise.  You should see the Azure portal, similar to this:
 
@@ -457,7 +457,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 > Resource group templates will be explained further in a later lab.
 
 ---
-## Exercise 8: View the resources you created
+## Exercise 8: View the resources you created<a name="ex8"></a>
 
 Going back to the list of resources in the resource group `DevCamp`, we'll go through the list of each resource, with a description.  Feel free to click on the resource and view its detail blade.
 
