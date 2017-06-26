@@ -193,9 +193,9 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/2017-06-19_12_33_00.png)
 
-    To make sure that Eclipse knows about the new packages we added to the build, go to the `gradle tasks` tab in the bottom pane.
+    To make sure that Eclipse knows about the new packages we added to the build, go to the `Gradle Tasks` tab in the bottom pane.
     
-    If Eclipse does not show the `gradle tasks` tab you can activate it via the menu. Click `Window` -> `Show View` -> `Other...`.
+    If Eclipse does not show the `Gradle Tasks` tab you can activate it via the menu. Click `Window` -> `Show View` -> `Other...`.
     
     ![image](./media/2017-06-19_12_49_00.png)
     
@@ -414,7 +414,7 @@ This hands-on-lab has the following exercises:
 
     You will notice that the `@Autowired` annotation is underlined in red - you have to resolve the import for it by hovering the mouse pointer over it, and choose the `import Autowired` quck fix.
     
-    ![import](./media/2017-06-19_13_16_00.png)    
+    ![image](./media/2017-06-19_13_16_00.png)    
     
     You can also do this by clicking on the red `x` next to that line, and choosing the `import Autowired` quick fix.  You will have to do this for `IncidentService` and `List`. For `List`, choose the `import java.util.List` option.  This simply adds the appropriate imports to the top of the class. You will have to do this many times during the DevCamp to make sure the proper imports are included.
 
@@ -629,12 +629,11 @@ and can easily use Azure Redis Cache to hold the data.
     While you are in the Redis blade, go to `Advanced Settings` and set `Allow access only via SSL` to `No`.  At the time of this writing, the Spring support for Redis does not support 
     SSL communication, however it is coming in the near future.
     
-    In Eclipse open the run configuration, click the environment tab
-    and add four variables for `REDISCACHE_HOSTNAME`,
+    In Eclipse open the run configuration, click the environment tab and add four variables for `REDISCACHE_HOSTNAME`,
     `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and
-    `REDISCACHE_SSLPORT`.  Click apply and close.  Your environment variables should look like this:
+    `REDISCACHE_SSLPORT`.  Click `Apply` and `Close`.  Your environment variables should look like this:
 
-    ![image](./media/2016-10-24_21-33-35.gif)
+    ![image](./media/2017-06-20_12_49_00.png)
 
     We will use these variables to configure a Redis client.
 
@@ -682,9 +681,11 @@ and can easily use Azure Redis Cache to hold the data.
         }
     
     ```
+    
+    ![image](./media/2017-06-20_12_52_00.png)
 
-1. To add caching support to your Spring application, open the build.gradle
-   file and add the following entries under dependencies:
+1. To add caching support to your Spring application, open the `build.gradle` file and add the following entries under dependencies:
+
    ```java
     compile("javax.cache:cache-api")
     compile('org.springframework.data:spring-data-redis')
@@ -692,25 +693,23 @@ and can easily use Azure Redis Cache to hold the data.
     compile('org.springframework.boot:spring-boot-starter-cache')
     ```
 
-    To make sure that Eclipse knows about the new packages we added to
-    the buld, run the `ide/eclipse` gradle task in the `gradle tasks`
-    window. Then right-click on the project in the project explorer,
-    close the project, and then open it again.
+    To make sure that Eclipse knows about the new packages we added to the build, run the `ide/eclipse` gradle task in the `Gradle Tasks` window. Then right-click on the project in the project explorer, close the project, and then open it again. (See exercise 1 for further details.)
 
 1. In Spring, you can apply caching to a Spring
-   [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html), and we will be using the `devCamp.WebApp.services.IncidentService` that we created earlier.  Open that file up, and put a line with `@Cacheable("incidents")` above the getAllIncidentsAsync function declaration:
+   [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html), and we will be using the `devCamp.WebApp.services.IncidentService` that we created earlier. Open that file up, and put a line with `@Cacheable("incidents")` above the `getAllIncidentsAsync` function declaration:
+   
    ```java
 	@Cacheable("incidents")
-	List<IncidentBean> getAllIncidents();   
+	List<IncidentBean> getAllIncidents();
    ```
-    The `@Cacheable` annotation tells spring that the
-    result of the GetAllIncidents is cachable and will automatically
-    use the cached version if available.  You will have to resolve the import for this annotation.
-
-    Before the createIncident, createIncidentAsync, and updateIncidentAsync functions, add a line with `@CacheEvict(cacheNames="incidents", allEntries=true)`.  This tells the Spring framework to clear out the entire cache when those functions are called - these are the ones that make changes to the Incident database.
    
-    We still have to configure Spring caching to use Azure Redis
-    Cache. To do this, create a new class
+   ![image](./media/2017-06-20_13_53_00.png)
+   
+    The `@Cacheable` annotation tells spring that the result of the `GetAllIncidents` is cachable and will automatically use the cached version if available. You might have to resolve the import for this annotation.
+
+    Before the `createIncident`, `createIncidentAsync`, and `updateIncidentAsync` functions, add a line with `@CacheEvict(cacheNames="incidents", allEntries=true)`. This tells the Spring framework to clear out the entire cache when those functions are called - these are the ones that make changes to the Incident database.
+   
+    We still have to configure Spring caching to use Azure Redis Cache. To do this, create a new class
     `devCamp.WebApp.configurations.CacheConfig.java` with this code:
 
     ```java
@@ -799,78 +798,58 @@ and can easily use Azure Redis Cache to hold the data.
 
     ```
 
-    There is a lot going on in this class.  The `@Configuration`
-    annotation tells Spring that this class declares one or more beans
-    that will generate bean and service definitions.  The
-    `@EnableCaching` annotation enables Spring's annotation driving
-    caching mechanism for the application.
+    There is a lot going on in this class.  The `@Configuration` annotation tells Spring that this class declares one or more beans that will generate bean and service definitions. The `@EnableCaching` annotation enables Spring's annotation driving caching mechanism for the application.
 
-    The `CacheConfig` class contains beans that will configure the
-    annotation driven caching. The `redisConnectionFactory` function
-    creates a new `JedisConnectionFactory` with the appropriate
-    connection to the Azure Redis cache. It also does a test to make
-    sure it is properly communicating with the cache.
+    The `CacheConfig` class contains beans that will configure the annotation driven caching. The `redisConnectionFactory` function creates a new `JedisConnectionFactory` with the appropriate
+    connection to the Azure Redis cache. It also does a test to make sure it is properly communicating with the cache.
 
-    The `cacheManager` function configures Spring to use the
-    redisConnectionFactory function to connect to the cache.  It also
-    configures the default cache expiration time to 300 seconds.
+    The `cacheManager` function configures Spring to use the redisConnectionFactory function to connect to the cache.  It also configures the default cache expiration time to 300 seconds.
 
-    All application requests for the dashboard will now first try to
-    use Azure Redis Cache. Under high traffic, this will improve page
-    performance and decrease the API's scaling needs.
+    All application requests for the dashboard will now first try to use Azure Redis Cache. Under high traffic, this will improve page performance and decrease the API's scaling needs.
 
-1. Finally enable caching for the application.  Open `devCamp.WebApp.DevcampApplication.java`, and add the annotation `@EnableCaching` for the class. You will also have to resolve the dependency for the EnableCaching annotation by importing `org.springframework.cache.annotation.EnableCaching`.
+1. Finally enable caching for the application. Open `devCamp.WebApp.DevcampApplication.java`, and add the annotation `@EnableCaching` for the class. You will also have to resolve the dependency for the EnableCaching annotation by importing `org.springframework.cache.annotation.EnableCaching`.
 
-1. To test the application using the Azure Redis Cache, note that in
-   the IncidentServiceImpl class, the `GetAllincidents` function has
+1. To test the application using the Azure Redis Cache, note that in the `devCamp.WebApp.services.IncidentServiceImpl` class, the `GetAllincidents` function has
    this code at the top:
 
    ```java
     LOG.info("Performing get {} web service", applicationProperties.getIncidentApiUrl() +"/incidents")
    ```
 
-   This will print a log message every time the API is called. Start
-   the application and in your browser go to
-   `http://localhost:8080/dashboard`. Look at your console out window
-   in Eclipse, it should end with a line that says (with your own API URL of course)
+   This will print a log message every time the API is called. Start the application and in your browser go to `http://localhost:8080/dashboard`. Look at your console out window in Eclipse, it should end with a line that says (with your own API URL of course)
 
    ```
-   Performing get http://incidentapi32csxy6h3sbku.azurewebsites.net/incidents web service
+   Performing get http://incidentapi[...].azurewebsites.net/incidents web service
    ```
 
 If you refresh your page in the browser, you should not get another log message, since the actual API code will not be called for 300 seconds. Go back to the main page `http://localhost:8080`, and then go to `dashboard`, and verify that you **dont't** get another log message that the web service is called.  This indicates that the dashboard information is being retrieved from the cache. 
 
-> if you refresh or click `Dashboard` before the previous request has completed, you may get two log messages indicating the web service has been called.  This is expected behavior, since the write to cache will happen when the request has completed.
+> If you refresh or click `Dashboard` before the previous request has completed, you may get two log messages indicating the web service has been called.  This is expected behavior, since the write to cache will happen when the request has completed.
 
 ---
 ### Exercise 3: Write images to Azure Blob Storage
 
-When a new incident is reported, the user can attach a photo.  In this exercise we will process that image and upload it into an Azure Blob Storage Container.
+When a new incident is reported, the user can attach a photo. In this exercise we will process that image and upload it into an Azure Blob Storage Container.
 
-1. The [Azure Storage SDK](https://github.com/Azure/azure-storage-java) 
-    makes it easy to access Azure storage from within Azure applicatons.
-    First, lets establish environment variables that we can use in the applicaiton
-    for configuration.  To get the necessary values, open the [Azure Portal](https://portal.azrue.com) and open the Resource Group.  Select the Storage Account beginning with `incidentblobstg`.
+1. The [Azure Storage SDK](https://github.com/Azure/azure-storage-java)  makes it easy to access Azure storage from within Azure applications. First, lets establish environment variables that we can use in the application for configuration. To get the necessary values, open the [Azure Portal](https://portal.azrue.com) and open the Resource Group. Select the Storage Account beginning with `incidentblobstg`.
 
-    > The other storage accounts are used for diagnostics data and virtual machine disks
+    > The other storage accounts are used for diagnostics data and virtual machine disks.
 
-    ![image](./media/image-019.gif)
+    ![image](./media/2017-06-16_15_41_00.png)
 
-    Select **Access Keys** and note the **key1** for the storage account.
+    Select `Access Keys` and note the `key1` for the storage account.
 
-    ![image](./media/image-020.gif)
+    ![image](./media/2017-06-16_15_43_00.png)
 
-     In Eclipse open the run configuration, click the environment tab
-    and add the following environment variables:
-    * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource
-    * `AZURE_STORAGE_ACCESS_KEY` is **key1** from the Access Keys blade
-    * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containers to group 
-    sets of blobs together.  For this demo let's use `images` as the Container name
-    * `AZURE_STORAGE_QUEUE` is the name of the Azure Storage Queue resource.  For this demo we will use `thumbnails`.
+    In Eclipse open the run configuration, click the environment tab and add the following environment variables:
+    * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource.
+    * `AZURE_STORAGE_ACCESS_KEY` is `key1` from the Access Keys blade.
+    * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containers to group sets of blobs together. For this demo let's use `images` as the Container name.
+    * `AZURE_STORAGE_QUEUE` is the name of the Azure Storage Queue resource. For this demo we will use `thumbnails`.
 
     Your `Run configurations` window in Eclipse should contain these environment variables:
 
-    ![image](./media/2016-10-24_22-02-32.gif)
+    ![image](./media/2017-06-26_10_37_00.png)
 
     Add the following lines to the dependencies in build.gradle:
     ```java
@@ -878,11 +857,9 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     compile('com.microsoft.azure:azure-svc-mgmt-storage:0.9.5')
     ```
 
-    Run the `ide/eclipse` gradle task in the `gradle tasks`
-    window. Then right-click on the project in the project explorer,
-    close the project, and then open it again.
+    To make sure that Eclipse knows about the new packages we added to the build, run the `ide` -> `eclipse` gradle task in the `Gradle Tasks` window. Then right-click on the project in the project explorer, close the project, and then open it again. (See exercise 1 for further details.)
 
-1. To retrieve those configurations in our application, we already have variables set up in the `application.yml` file, but we still need to create a class to hold those values.  Create `devCamp.WebApp.properties.AzureStorageAccountProperties.java`, and paste in this code:
+1. To retrieve those configurations in our application, we already have variables set up in the `application.yml` file, but we still need to create a class to hold those values. Create `devCamp.WebApp.properties.AzureStorageAccountProperties.java`, and paste in this code:
     ```java
     package devCamp.WebApp.properties;
 
@@ -937,11 +914,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     
     ```
 
-1. Today we are working with Azure Storage Blobs, but in the future we may 
-decide to extend our application use Azure Stage Tables or Azure Storage 
-Queues.  To better organize our code, let's create a storage interaction 
-class with an interface.  Create the interface `devCamp.WebApp.services.AzureStorageService.java` and 
-paste in the following code: 
+1. Today we are working with Azure Storage Blobs, but in the future we may decide to extend our application use Azure Stage Tables or Azure Storage Queues. To better organize our code, let's create a storage interaction class with an interface. Create the interface `devCamp.WebApp.services.AzureStorageService.java` and paste in the following code: 
 
     ```java
         package devCamp.WebApp.services;
@@ -965,8 +938,7 @@ paste in the following code:
 
     ```
 
-    1. Now lets create the implementation for this class.  Create `devCamp.WebApp.services.AzureStorageServiceImpl.java` and 
-    paste in the following code: 
+1. Now lets create the implementation for this class. Create `devCamp.WebApp.services.AzureStorageServiceImpl.java` and paste in the following code: 
 
     ```java
         package devCamp.WebApp.services;
@@ -1074,19 +1046,18 @@ paste in the following code:
         }
     
     ```
-    >This code calls the Azure storage APIs to create either a Blob or a queue entry.  Both of the functions are using the CompletableFuture async pattern so that the application doesn't have to wait for the operations to complete before continuing on.
+    > This code calls the Azure storage APIs to create either a Blob or a queue entry. Both of the functions are using the CompletableFuture async pattern so that the application doesn't have to wait for the operations to complete before continuing on.
 
 
-1. Now lets arrange for the controller that manages new incidents to call the Storage API.  Open up 
-`devCamp.WebApp.Controllers.IncidentController.java`.  
-    Add a class variable for the storage service under the one for IncidentService:
+1. Now lets arrange for the controller that manages new incidents to call the Storage API. Open up 
+`devCamp.WebApp.Controllers.IncidentController.java`. Add a class variable for the storage service under the one for `IncidentService`:
     ```java
     @Autowired
     private AzureStorageService storageService;
     ```
     Resolve the import for `AzureStorageService`.
 
-    Find the code inside the Create function:
+    Find the code inside the `Create` function:
     ```java
     if (fileName != null) {
     ```
@@ -1108,7 +1079,7 @@ paste in the following code:
     
     ```
 
-1. Finally, lets make sure the configuration class is created when the application starts.  Open `ApplicationConfig.java`, and add a line containing `AzureStorageAccountProperties.class` in the `@EnableConfigurationProperties` annotation and resolve the import for `AzureStorageAccountProperties`:
+1. Finally, lets make sure the configuration class is created when the application starts. Open `devCamp.WebApp.configurations.ApplicationConfig.java`, and add a line containing `AzureStorageAccountProperties.class` in the `@EnableConfigurationProperties` annotation and resolve the import for `AzureStorageAccountProperties`:
     ```java
     @Configuration
     @EnableConfigurationProperties(value = {
@@ -1147,33 +1118,31 @@ paste in the following code:
 
     Resolve the imports for `CloudStorageAccount`, `InvalidKeyException`, and `URISyntaxException`.
     
-1. We should be ready to test the storage changes at this point.  Run or debug the application within Eclipse, and open a browser window.  Before you go to the application, use your favorite search engine and download an image you can post with the incident. Then, navigate to `http://localhost:8080/new` (or click on Report Outage).  Fill out the form and hit the **Submit** button.
+1. We should be ready to test the storage changes at this point. Run or debug the application within Eclipse, and open a browser window. Before you go to the application, use your favorite search engine and download an image you can post with the incident. Then, navigate to `http://localhost:8080/new` (or click on Report Outage). Fill out the form and hit the `Submit` button.
 
     ![image](./media/image-021.gif)
 
     You should be redirected to the Dashboard screen, which will contain your new Incident.  
 
-1. Let's install the Microsoft Azure Storage Explorer.  Go to `http://storageexplorer.com/`, download the appropriate version of the azure storage explorer and install it.  When you run the Azure Storage Explorer, you will
-have to configure it with your storage account or azure subscription credentials to be able to connect to your Azure storage.
+1. Within your virtual machine, open the Azure Storage Explorer. If it has not been installed automatically you can download the setup from [storageexplorer.com](http://storageexplorer.com/).
+ 
+1. Connect it to your Azure Storage using your login data.
 
 1. In the Microsoft Azure Storage Explorer, navigate to your Storage Account and ensure that the blob was created.
 
-    ![image](./media/image-022.gif)
+    ![image](./media/2017-06-16_16_29_00.png)
 
-  You can also use the Azure Storage Explorer to view the `thumbnails` queue, and verify that there is an entry for the image we uploaded.  It is also safe to delete the images and queue entries using Azure Storage Explorer, and enter new Incidents for testing.
+    You can also use the Azure Storage Explorer to view the `thumbnails` queue, and verify that there is an entry for the image we uploaded. It is also safe to delete the images and queue entries using Azure Storage Explorer, and enter new Incidents for testing.
 
-Our application can now create new incidents and upload related images to Azure Blob Storage.  It will also put an 
-entry into an Azure queue, to invoke an image resizing process, for example. In a later demo, we'll show how 
-an [Azure Function](https://azure.microsoft.com/en-us/services/functions/) can be invoked via a queue entry to 
-do tasks such as this.
+Our application can now create new incidents and upload related images to Azure Blob Storage. It will also put an entry into an Azure queue, to invoke an image resizing process, for example. In a later demo, we'll show how an [Azure Function](https://azure.microsoft.com/en-us/services/functions/) can be invoked via a queue entry to do tasks such as this.
 
 ---
 ## Summary
-Our application started as a prototype on our local machine, but now uses a variety of Azure services.  We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
+Our application started as a prototype on our local machine, but now uses a variety of Azure services. We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
 
 After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs 
 
-#### View Module 3 instructions for [Java](../03-azuread-office365)
+#### View Module 3 instructions for [Java](../03-azuread-office365).
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

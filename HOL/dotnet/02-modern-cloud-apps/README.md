@@ -809,13 +809,23 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
     ![image](./media/2017-06-16_16_29_00.png)
 
+    You can also use the Azure Storage Explorer to view the `thumbnails` queue, and verify that there is an entry for the image we uploaded. It is also safe to delete the images and queue entries using Azure Storage Explorer, and enter new Incidents for testing.
+
+Our application can now create new incidents and upload related images to Azure Blob Storage. It will also put an entry into an Azure queue, to invoke an image resizing process, for example. In a later demo, we'll show how an [Azure Function](https://azure.microsoft.com/en-us/services/functions/) can be invoked via a queue entry to 
+do tasks such as this.
+
 ---
 ## Summary
+Our application started as a prototype on our local machine, but now uses a variety of Azure services. We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
 
 In this hands-on lab, you learned how to:
 * Use Visual Studio to connect to an API.
 * Provision an Azure Web App to host the Web site.
 * Modify a view to add caching.
 * Modify code to add queuing and blob storage.
+
+After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs 
+
+#### View Module 3 instructions for [.NET](../03-azuread-office365).
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
