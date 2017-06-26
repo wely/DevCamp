@@ -824,7 +824,7 @@ In this hands-on lab, you learned how to:
 * Modify a view to add caching.
 * Modify code to add queuing and blob storage.
 
-After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs 
+After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs.
 
 #### View Module 3 instructions for [.NET](../03-azuread-office365).
 

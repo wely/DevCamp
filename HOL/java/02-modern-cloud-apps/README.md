@@ -74,7 +74,7 @@ This hands-on-lab has the following exercises:
    
    ![image](./media/2016-10-24_14-46-43.gif)
    
-   Give the run configuration a name, such as `Run DevCamp App`, choose the `start` project, click `Search...` and choose devCamp.WebApp.DevcampApplication for the main type.
+   Give the run configuration a name, such as `Run DevCamp App`, choose the `start` project, click `Search...` and choose `devCamp.WebApp.DevcampApplication` for the main type.
 
     ![image](./media/2016-10-24_14-51-00.gif)
 
@@ -1140,7 +1140,13 @@ Our application can now create new incidents and upload related images to Azure 
 ## Summary
 Our application started as a prototype on our local machine, but now uses a variety of Azure services. We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
 
-After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs 
+In this hands-on lab, you learned how to:
+* Use Eclipse to connect to an API.
+* Provision an Azure Web App to host the Web site.
+* Modify a view to add caching.
+* Modify code to add queuing and blob storage.* 
+
+After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs.
 
 #### View Module 3 instructions for [Java](../03-azuread-office365).
 
