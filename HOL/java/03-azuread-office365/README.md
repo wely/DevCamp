@@ -164,7 +164,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     }
 
     ```
-    > you will need to resolve the imports for `EnableOAuth2Sso`, `WebSecurityConfigurerAdapter`, `HttpSecurity` and `CookieCsrfTokenRepository`.
+    You will need to resolve the imports for `EnableOAuth2Sso`, `WebSecurityConfigurerAdapter`, `HttpSecurity` and `CookieCsrfTokenRepository`.
 
     This configures the `/`, `/login`, `/dashboard` and `/webjars` URLs to be public, and all others to be private. It will also automatically implement a `/logout` URL which will logout the user from the application and Azure Active Directory.
 
