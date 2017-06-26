@@ -5,85 +5,87 @@ In this lab, you will create a Visual Studio Team Services online account, check
 
 ## Objectives
 In this hands-on lab, you will learn how to:
-* Create a Visual Studio Team Services online account
-* Create a VSTS Git repository
-* Add your code to the VSTS Git repository
-* Create a Continuous Integration pipeline
+* Create a Visual Studio Team Services online account.
+* Create a VSTS Git repository.
+* Add your code to the VSTS Git repository.
+* Create a Continuous Integration pipeline.
 
 ## Prerequisites
 
 * The source for the starter app is located in the [start](start) folder. 
-* There will be no code changes required so the the end folder will remain empty. 
-* Deployed the starter ARM Template HOL 1
-* Completion of the [azuread-office365](../03-azuread-office365)
+* There will be no code changes required so the the [end](end) folder will remain empty.
+* Deployed the starter ARM Template [HOL 1](../01-developer-environment).
+* Completion of the [HOL 3](../03-azuread-office365).
 
-> Note: If you did not complete the previous labs, the project in the start folder is cumulative.
+> **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the HOL 2 and HOL 3 environment variables.
 
 ## Exercises
 This hands-on-lab has the following exercises:
-* Exercise 1: Create VSTS online account 
-* Exercise 2: Create VSTS Git repository
-* Exercise 3: Add application to VSTS Git
-* Exercise 4: Create a Continuous Integration pipeline
+* [Exercise 1: Create VSTS online account](#ex1)
+* [Exercise 2: Create VSTS Git repository](#ex2)
+* [Exercise 3: Add application to VSTS Git](#ex3)
+* [Exercise 4: Create a Continuous Integration pipeline](#ex4)
+* [Exercise 5: Deploy code to an Azure Web App](#ex5)* 
 
 ---
-## Exercise 1: Create VSTS online account
+## Exercise 1: Create VSTS online account<a name="ex1"></a>
 
-1. In your browser, navigate to [https://www.visualstudio.com/]()
+1. In your browser, navigate to [https://www.visualstudio.com/](https://www.visualstudio.com/)
 
-    ![image](./media/image-000.gif)
+    ![image](./media/2017-06-21_13_14_00.png)
 
-1. Log in with your Azure AD account 
+1. Click `Get started for free` link below `Visual Studio Team Services`.
 
----
-## Exercise 2: Create VSTS Git repository
+1. Log in with your Azure AD account.
 
-VSTS gives us the option to use Git or 
-[TFVC](https://www.visualstudio.com/en-us/docs/tfvc/overview) as our 
-project's repository. For this exercise we will use Git, and then clone 
-the repository to our dev machine. 
+1. You will be asked to choose an hosting address and if you want to use Git or Team Foundation Version Control. Select `Git` and click `Continue`.
 
-> Note that if you acquired these lab materials via a `git clone` of the workshop repo then you should select a folder somewhere else on your dev machine. 
-> This will minimize conflicts between the two separate repositories 
+1. A new project called `MyFirstProject` will be automatically created.
 
-1. Starting at your account's landing page, locate the section entitled **Recent projects & teams** and click **New**.
+----
+## Exercise 2: Create VSTS Git repository<a name="ex2"></a>
 
-    ![image](./media/image-001.gif)
+VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us/docs/tfvc/overview) as our project's repository. For this exercise we will use Git, and then clone the repository to our dev machine. 
 
-1. Enter a project name such as **DevCamp**, ensure **Version Control** is set to **Git** and then click **Create Project**.
+> Note that if you acquired these lab materials via a `git clone` of the workshop repo then you should select a folder somewhere else on your dev machine. This will minimize conflicts between the two separate repositories.
 
-    ![image](./media/image-002.gif)
+1. We will ignore the automatically created `MyFirstProject`. Starting at your TFVC account's landing page, click `New Project`.
 
-1. Wait for the project to be created. This process may take up to 60 seconds. When finished select the **Navigate to Project** button
+    ![image](./media/2017-06-21_13_56_00.png)
 
-    ![image](./media/image-003.gif)
+1. Enter a project name such as **DevCamp**, ensure `Version control` is set to `Git` and then click `Create`.
 
-1. Exit out of the Congratulations window and explore your pre-built dashboard. Familiarize yourself with the variety of widgets available, and the customization options. 
+    ![image](./media/2017-06-21_13_58_00.png)
 
-    ![image](./media/image-004.gif)
+1. Wait for the project to be created. This process may take up to 60 seconds. When finished you will be redirected to the project page
 
-1. Click **Code** on the top toolbar to navigate to the Code screen.  Then click the **Generate Git Credentials** button to set a user name, alias, and password.
+1. Click `Dashboards` and explore your pre-built dashboard. Familiarize yourself with the variety of widgets available, and the customization options. 
 
-    ![image](./media/image-005.gif)
+    ![image](./media/2017-06-21_14_01_00.png)
 
-1. Next, select the **Copy** icon to copy the HTTPS URL for the repository.
+You have now created a project in VSTS with a Git repository. Next we'll clone the repository locally to your developer machine and upload code from our machine to VSTS.
+
+----
+## Exercise 3: Add application to VSTS Git<a name="ex3"></a>
+
+1. Click `Code` on the top toolbar to navigate to the Code screen. Then click the `Generate Git Credentials` button to set a user name, alias, and password.
+
+    ![image](./media/2017-06-26_16_46_00.png)
+
+1. Next, select the `Copy` icon to copy the HTTPS URL for the repository.
 
 1. In a console window, navigate to a spot on your dev machine and execute a `git clone https://yourrepo.com/DefaultCollection/_git/Repo.git`
 
-    ![image](./media/image-006.gif)
+    ![image](./media/2017-06-26_16_52_00.png)
 
-    Depending on your environment setup you may need to authenticate with VSTS
+    Depending on your environment setup you may need to authenticate with VSTS.
 
-You have now created a project in VSTS with a Git repository, and cloned the repository locally to your developer machine.  Next we'll upload code from our machine to VSTS.
 
-----
-## Exercise 3: Add application to VSTS Git
-
-1. When we cloned our repository it was empty.  Take the code that you have developed in the earlier labs (or the `start` folder bundled with this readme) and paste it into our new directory.  This can be done via the command line, or with good old copy/paste in an Explorer or Finder window.
+1. When we cloned our repository it was empty. Take the code that you have developed in the earlier labs (or the `start` folder bundled with this readme) and paste it into our new directory. This can be done via the command line, or with good old copy/paste in an Explorer or Finder window.
 
     ![image](./media/image-007.gif)
 
-    > Depending on how your environment is setup, there may be a hidden folder `.git` in your originating directory. Do not copy this folder into the destination directory linked to VSTS
+    > Depending on how your environment is setup, there may be a hidden folder `.git` in your originating directory. Do **not** copy this folder into the destination directory linked to VSTS.
 
 1. Back in the console, execute a `git status` to ensure the files are picked up by git.
 
@@ -113,7 +115,7 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
     > repository due to settings in the `.gitignore` file
 
 ---
-## Exercise 4: Create a Continuous Integration pipeline
+## Exercise 4: Create a Continuous Integration pipeline<a name="ex4"></a>
 
 With application code now uploaded to VSTS, we can begin to create builds via a 
 Build Definition.  Navigate to the **Build** tab from he top navigation.  
@@ -239,7 +241,7 @@ artifact will be deployed to an Azure Web App in a later lab.
     ![image](./media/image-028.gif)
 
 ---
-### Exercise 5: Deploy code to an Azure Web App
+## Exercise 5: Deploy code to an Azure Web App<a name="ex5"></a>
 
 In the ARM Template that was originally deployed, a web app was created as a development 
 environment to hold a deployed Java application. We will use this web app as a deployment 
@@ -433,10 +435,15 @@ to open a new browser tab holding configuration options.
 ## Summary
 
 In this hands-on lab, you learned how to:
-* Create a Visual Studio Team Services online account
-* Create a VSTS Git repository
-* Add your code to the VSTS Git repository
-* Create a Continuous Integration pipeline
-* Deploy a built application to an Azure Web App from VSTS
+* Create a Visual Studio Team Services online account.
+* Create a VSTS Git repository.
+* Add your code to the VSTS Git repository.
+* Create a Continuous Integration pipeline.
+* Deploy a built application to an Azure Web App from VSTS.
+
+
+After completing this module, you can continue on to Module 5: ARM.
+
+### View instructions for [Module 5 for Java](../05-arm-cd).
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

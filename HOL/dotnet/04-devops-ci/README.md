@@ -64,7 +64,7 @@ VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us
 
     ![image](./media/2017-06-21_14_01_00.png)
 
-You have now created a project in VSTS with a Git repository.  Next we'll cloned the repository locally to your developer machine and upload code from our machine to VSTS.
+You have now created a project in VSTS with a Git repository. Next we'll clone the repository locally to your developer machine and upload code from our machine to VSTS.
 
 ----
 ## Exercise 3: Add application to VSTS Git<a name="ex3"></a>
