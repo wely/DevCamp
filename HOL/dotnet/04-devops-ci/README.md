@@ -382,11 +382,11 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 ## Summary
 
 In this hands-on lab, you learned how to:
-* Create a Visual Studio Team Services online account.
-* Create a VSTS Git repository.
+* Create a Visual Studio Team Services online account that you used for version control of your code, automatic compiling and deploying of your web app.
+* Create a VSTS Git repository that you utilized to synchronize your source code on your machine and in the cloud.
 * Add your code to the VSTS Git repository.
-* Create a Continuous Integration pipeline.
-* Deploy a built application to an Azure Web App from VSTS.
+* Create a Continuous Integration pipeline that you used to automatically compile your application and create packages for deployment anytime code is checked into the repository.
+* Deploy a built application to an Azure Web App from VSTS and thus automating the final steps of your deployment process.
 
 After completing this module, you can continue on to Module 5: ARM.
 
