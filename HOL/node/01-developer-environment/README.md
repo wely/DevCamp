@@ -298,7 +298,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
 ----
 
-## Exercise 6: Deploy shared API application ##<a name="ex6"></a>
+## Exercise 6: Deploy shared API application<a name="ex6"></a>
 
 1. The API application has been prepared for you to be available as a communication partner during different exercises and just needs to be deployed once. It will be first used in the second hands on lab.
 
