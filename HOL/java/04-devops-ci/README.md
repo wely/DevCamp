@@ -319,10 +319,10 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so. This process will 
     provide the information to enter in this dialog:
     
-      1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vsts-rm-documentation/master/Azure/SPNCreation.ps1) in your browser.
-      1. Select all the content from the window and copy to the clipboard.
-      1. Open a PowerShell ISE window.
-      1. In the text window, paste the PowerShell script from the clipboard.
+       1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vsts-rm-documentation/master/Azure/SPNCreation.ps1) in your browser.
+       1. Select all the content from the window and copy to the clipboard.
+       1. Open a PowerShell ISE window.
+       1. In the text window, paste the PowerShell script from the clipboard.
 
     ![image](./media/image-044.gif)
 
