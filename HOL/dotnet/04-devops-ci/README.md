@@ -251,7 +251,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-031.gif)
 
-1.  Now that we have a build being created and a website to deploy into, let's connect them. In VSTS, navigate to the `Build & Release` tab.
+1. Now that we have a build being created and a website to deploy into, let's connect them. In VSTS, navigate to the `Build & Release` tab.
 
 1. Click on `Releases`.
 
