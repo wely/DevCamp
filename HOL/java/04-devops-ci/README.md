@@ -303,38 +303,37 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/2017-06-27_13_13_00.png)
     
-    In the new tab, select `New Service Endpoint` and from the dropdown choose `Azure Resource Manager`.
+    1. In the new tab, select `New Service Endpoint` and from the drop-down choose `Azure Resource Manager`.
 
     ![image](./media/image-041.gif)
 
-    The modal window should automatically determine your subscription information. Provide a name such as **Azure**, select `OK`, and a close the browser tab.
+    2. The modal window should automatically determine your subscription information. Provide a name such as **Azure**, select `OK`, and a close the browser tab.
 
     ![image](./media/image-042.gif)
 
-    If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window format will change to allow you to enter connection information on your subscription:    
+    3. If your subscription is not in the drop-down list, click the link at the bottom of the window, and the window format will change to allow you to enter connection information on your subscription:    
 
     ![image](./media/image-043.gif)
 
-    If you have not created a service principal for the subscription, you will have to follow the 
-    [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so. This process will 
-    provide the information to enter in this dialog:
+    4. If you have not created a service principal for the subscription, you will have to follow the 
+    [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so. This process will provide the information to enter in this dialog:
     
-       1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vsts-rm-documentation/master/Azure/SPNCreation.ps1) in your browser.
-       1. Select all the content from the window and copy to the clipboard.
-       1. Open a PowerShell ISE window.
-       1. In the text window, paste the PowerShell script from the clipboard.
+        1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vsts-rm-documentation/master/Azure/SPNCreation.ps1) in your browser.
+        1. Select all the content from the window and copy to the clipboard.
+        1. Open a PowerShell ISE window.
+        1. In the text window, paste the PowerShell script from the clipboard.
 
     ![image](./media/image-044.gif)
 
-    1. Click the green arrow to run the PowerShell script.
+    5. Click the green arrow to run the PowerShell script.
 
     ![image](./media/image-045.gif)
 
-    1. The PowerShell script will ask for your `subscription name` and a `password`. This password is for the service principal only, not the password for your subscription. So you can use whatever password you would like, just remember it.    
+    6. The PowerShell script will ask for your `subscription name` and a `password`. This password is for the service principal only, not the password for your subscription. So you can use whatever password you would like, just remember it.    
 
     ![image](./media/image-046.gif)
 
-    1. You will then be asked for your Azure login credentials. Enter your Azure username and password. The script will print out several values that you will need to enter into the `Add Azure Resource Manager Service Endpoint` window. Copy and paste these values from the PowerShell window:
+    7. You will then be asked for your Azure login credentials. Enter your Azure username and password. The script will print out several values that you will need to enter into the `Add Azure Resource Manager Service Endpoint` window. Copy and paste these values from the PowerShell window:
     
         * Subscription ID
         * Subscription Name
