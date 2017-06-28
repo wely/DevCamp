@@ -137,7 +137,7 @@ We are now ready to deploy our ARM Template containing an App Service Plan, and 
 
     ![image](./media/2017-06-23_09_30_00.png)
 
-1. To use authentication with this new web app, we need to update our AzureAD app registration to whitelist its URL. In the browser, navigate to the [Application Registration Portal](https://apps.dev.microsoft.com/#/appList) and select your application. Under the `Platforms` heading, select `Add Url` and paste in the URL of your newly created Azure Web App. You may have to remove the URL from the previous HOL first. Click `Save`.
+1. To use authentication with this new web app, we need to update our AzureAD app registration to whitelist its URL. In the browser, navigate to the [Application Registration Portal](https://apps.dev.microsoft.com/#/appList) and select your application. Under the `Platforms` heading, select `Add Url` and paste in the URL of your newly created Azure Web App. Also, since two of our applications share the same `*.azurewebsites.net` domain we need to add an entry for `https://azurewebsites.net` into the list. Click `Save`.
 
     ![image](./media/2017-06-23_09_26_00.png)
 
@@ -160,7 +160,7 @@ The resource group is now holding our "Test" environment web app and has been ad
 
     ![image](./media/2017-06-23_10_11_00.png)
 
-1. VSTS allows us to control and govern how releases happen between environments.  Instead of automatically deploying our test environment after our dev environment, let's add an approval step.  A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test environment. 
+1. VSTS allows us to control and govern how releases happen between environments. Instead of automatically deploying our test environment after our dev environment, let's add an approval step. A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test environment. 
 
     For the `Pre-deployment approval` option, select `Specific users` and enter your account name. Then click the `Create` button:
 
@@ -206,5 +206,9 @@ In this hands-on lab, you learned how to:
 * Deploy ARM Template to Azure via the XPlat CLI.
 * Integrate new Web App into VSTS.
 * Deploy City Power & Light to new Web App.
+
+After completing this module, you can continue on to Module 6: Monitoring with Application Insights.
+
+### View Module 5 instructions for [.NET](../06-appinsights).
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
