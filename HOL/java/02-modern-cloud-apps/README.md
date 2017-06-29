@@ -591,14 +591,9 @@ The cards now represent data returned from our API, replacing the static mockup 
 
 ---
 ## Exercise 2: Add a caching layer<a name="ex2"></a>
-Querying our API is a big step forward, but caching the data in memory would increase 
-performance and reduce the load on our API.  Azure offers a managed (PaaS) 
-service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
+Querying our API is a big step forward, but caching the data in memory would increase performance and reduce the load on our API.  Azure offers a managed (PaaS) service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
 
-We deployed an instance of Azure Redis Cache in the ARM Template, but
-need to add application logic. Spring has great support for caching,
-and can easily use Azure Redis Cache to hold the data.
-
+We deployed an instance of Azure Redis Cache in the ARM Template, but need to add application logic. Spring has great support for caching, and can easily use Azure Redis Cache to hold the data.
 
 1. First, let's add our Redis information to local environment variables. In the [Azure Portal](https://portal.azure.com) navigate to the resource group `DevCamp` and select the Redis Cache instance named `incidentcache...`:
 
@@ -614,7 +609,7 @@ and can easily use Azure Redis Cache to hold the data.
 
     ![image](./media/2017-06-16_13_29_00.png)
 
-1. Navigate to the `dotnetapp...` web application in your `DevCamp` resource group:
+1. Navigate to the `javaapp...` web application in your `DevCamp` resource group:
 
     ![image](./media/2017-06-16_13_49_00.png)
 
