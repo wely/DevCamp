@@ -13,10 +13,10 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-* The source for the starter app is located in the [start](start) folder. 
+* The source for the starter app is located in the [start](start) folder.
 * The finished project is located in the [end](end) folder. 
 * Deployed the starter ARM Template [HOL 1](../01-developer-environment).
-* Completion of the [azuread-ofice365](../03-azuread-ofice365).
+* Completion of the [HOL 3](../03-azuread-ofice365).
 
 > **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the previous HOL's settings to the `Web.config` file.
 
@@ -28,9 +28,11 @@ This hands-on-lab has the following exercises:
 * [Exercise 1: Create an Application Insights resource](#ex1)
 * [Exercise 2: Add server and client side SDK's](#ex2)
 * [Exercise 3: Monitor custom events](#ex3)
+* [Exercise 4: Create a global web test](#ex4)
+* [Exercise 5: Interact with your telemetry data](#ex5)
 
 ----
-### Exercise 1: Create an Application Insights resource<a name="ex1"></a>
+## Exercise 1: Create an Application Insights resource<a name="ex1"></a>
 
 An instance of Application Insights can be created in a variety of ways, including ARM Templates or CLI commands. For this exercise we will use the Azure Portal to create and configure our instance.
 
@@ -44,26 +46,26 @@ An instance of Application Insights can be created in a variety of ways, includi
 
     ![image](./media/2017-06-23_11_54_00.png)
 
-1. In the overview blade that opens, click `Create` to open the creation settings blade. Enter a name, configure `Application Type` to `ASP.NET Web Application` and then click the `Create` button. 
+1. In the overview blade that opens, click `Create` to open the creation settings blade. Enter a name, configure `Application Type` to `ASP.NET Web Application` and then click the `Create` button.
 
     Creation typically takes less than a minute.
 
     ![image](./media/2017-06-23_11_56_00.png)
 
-1. Once provisioning completes, return to your Resource Group and open the resource.
+1. Once provisioning completes, return to your Resource Group and open the resource. You may need to hit the refresh button within the resource group blade.
 
     ![image](./media/2017-06-23_12_07_00.png)
 
-1.  In the `Essentials` section, take note of the `Instrumentation Key`.  We will need that in future exercises.
+1.  In the `Essentials` section, take note of the `Instrumentation Key`. We will need that in future exercises.
 
     ![image](./media/2017-06-23_12_12_00.png)
 
 We now have an instance of Application Insights created and ready for data. The Instrumentation Key is important, as it is the link that ties an application to the AI service. 
 
 ----
-### Exercise 2: Add server and client side SDK's <a name="ex2"></a>
+## Exercise 2: Add server and client side SDK's <a name="ex2"></a>
 
-App Insights works with 2 components: 
+App Insights works with 2 components:
 1. A server side SDK that integrates into the ASP.NET processes.
 2. A snippet of JavaScript sent down to the client's browser to monitor behavior.
 
@@ -136,15 +138,15 @@ We will add both components to our application and enable the sending of telemet
 
     ![image](./media/image-023.gif)
 
-1. Back in the Azure Portal, refresh the browser tab (or click `Refresh` from the top toolbar) until you see data appear.  
+1. Back in the Azure Portal, refresh the browser tab (or click `Refresh` from the top toolbar) until you see data appear.
 
     ![image](./media/2017-06-23_14_06_00.png)
 
     > It may take 3-5 minutes for data to appear even when manually refreshing.
 
-1. Our server is now sending data, but what about the client side? Let's add the JavaScript library.  
+1. Our server is now sending data, but what about the client side? Let's add the JavaScript library.
 
-    In the portal, click the tile that says `Learn how to collect browser page load data`:    
+    In the portal, click the tile that says `Learn how to collect browser page load data`:
     
     ![image](./media/2017-06-23_15_28_00.png)
 
@@ -179,14 +181,14 @@ We will add both components to our application and enable the sending of telemet
         appInsights.trackPageView();
     </script>
     ```
-1. Redeploy the application and load several pages to generate more sample telemetry. The Azure Portal should now light up data for **Page View Load Time**: 
+1. Redeploy the application and load several pages to generate more sample telemetry. The Azure Portal should now light up data for **Page View Load Time**:
 
     ![image](./media/2017-06-23_15_35_00.png)
 
 Our application is now providing the Application Insights service telemetry data from both the server and client.
 
 ----
-### Exercise 3: Monitor custom events<a name="ex3"></a>
+## Exercise 3: Monitor custom events<a name="ex3"></a>
 
 Up until this point the telemetry provided has been an automatic, out-of-the-box experience. For custom events we need to use the SDK. Let's create an event where any time a user views their Profile page, we record their name and AzureAD tenant ID.
 
@@ -209,11 +211,11 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
     ```csharp
     telemetryClient.TrackEvent("Sign out");
     ```
-1. In the Index() Method, add the following **AFTER** the call to the GraphAPI to capture the token:
+1. In the Index() Method, add the following **AFTER** the call to the GraphAPI and the parsing of the userProfile to capture the token:
 
     ```csharp
     //#### TRACK A CUSTOM EVENT ####
-    var profileProperties = new Dictionary<string, string> {{"userid", userObjId}, {"tenantid", tenantId}};
+    var profileProperties = new Dictionary<string, string> { { "userid", userObjId }, { "tenantid", tenantId }, { "DisplayName", userProfile.DisplayName }, { "Mail", userProfile.Mail } };
     telemetryClient.TrackEvent("View Profile", profileProperties);
     //#### TRACK A CUSTOM EVENT ####
     ```
@@ -224,14 +226,71 @@ Up until this point the telemetry provided has been an automatic, out-of-the-box
     
 1. Resolve the references to `Microsoft.ApplicationInsights` in this class and save the open files.
 
-1. Hit F5 to begin debugging. Sign in, view your profile and Sign out a few times. Then view the custom events in the portal by opening the Application Insights blade, selecting `Usage (Deprecated)` from the left navigation, and locating the `Custom events` section. Click on `View Profile` to filter for this event type and click on one of the `View Profile` event entries to display the custom data that you created by calling the `TrackEvent` method in the `Profilecontroller` class.
+1. Hit F5 to begin debugging. Sign in, view your profile and Sign out a few times. Then view the custom events in the portal by opening the `Application Insights` blade and pressing the `Search` button. Clicking on one of the custom events gives us more details including the custom data we defined. For exceptions, we get the call stack and more information associated with the event.
 
-    ![image](./media/2017-06-23_16_36_00.png)
+    ![image](./media/2017-06-29_13_01_00.png)
 
     > ***Note:*** If you do not see your custom events, look at the URL you are redirected to after your sign in. If you are redirected to the Azure hosted instance of your app, update your settings on [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com) to reflect your current debugging environment. Remove the Azure addresses and enter the current port number that Visual Studio uses for debugging.
 
 These custom events (and the related concept of custom metrics) are a powerful way to integrate telemetry into our application and centralize monitoring across multiple application instances.
 
+---
+## Exercise 4: Create a global web test<a name="ex4"></a>
+
+Application Insights has the ability to do performance and availability testing of your application from multiple locations around the world, all configured from the Azure portal.  
+
+1. To show the Application Insights availability monitoring capability, we first need to make sure the application is deployed to the Azure App service. This is done in the [DevOps with Visual Studio Team Services](../04-devops-ci) hands-on-lab. To verify the application is running in the cloud, first go to the Azure portal, open your resource group, and click on the dotnet app service:
+
+    ![image](./media/2017-06-29_11_54_00.png)
+
+    Then, click the `Browse` link in the App service blade:
+
+    ![image](./media/2017-06-29_11_53_00.png)
+
+    This should open another window with the City Power and Light application in it. Make note of the URL at the top of the browser.
+
+2. In the Azure portal, click on the City Power Application Insights deployment in your resource group to open its blade. Availability is under `INVESTIGATE` in the scrolling pane - click on it to open the `Availability` tab:
+
+    ![image](./media/2017-06-29_11_10_00.png)
+
+    Click on `Add test`. In the `Create test` blade, give the test a name, put the URL for your application in the URL box, and choose several
+    locations to test your application from. You can choose to receive an alert email when the availability test fails by clicking on the `Alerts` box and entering the alert configuration. Click `OK` and `Create`.  
+
+    ![image](./media/2017-06-29_11_15_00.png)
+
+    It may take 5-10 minutes for your web test to start running. When it is executing and collecting data, you should see availability information on the `Availability` tab of the Application Insights blade. You can click on the web test to get more information:
+
+    ![image](./media/2017-06-29_11_28_00.png)
+
+    And clicking on one of the dots on the graph will give you information about that specific test. Clicking on the request will show you the response that was received from your application:
+
+    ![image](./media/2017-06-29_11_32_00.png)
+
+    > With all of this testing, you may exceed the limits of the free service tier for Azure app services. If that occurs, you can click on the App Service, and you'll see a notification that your App Service has been stopped due to it's consumption. All you need to do is change the App service plan to basic, which will start the application again.
+
+---
+## Exercise 5: Interact with your telemetry data<a name="ex5"></a>
+
+In the `Metrics Explorer`, you can create charts and grids based on the telemetry data received, and you can relate data points over time. These charts and graphs are very configurable, so you can see the metrics that matter to you.
+
+1. Here is an example of page views vs process CPU and processor time:
+
+    ![image](./media/2016-10-25_22-10-19.gif)
+
+    In `Search` you can see the raw telemetry events, you can filter on the specific events you want to see, and you can drill into more detail on those events. You can also search for properties on the telemetry event. Here is the basic view:
+
+    ![image](./media/2016-10-25_22-13-47.gif)
+    
+    Clicking on one of the events gives you a detail blade for that event:
+
+    ![image](./media/2016-10-25_22-15-49.gif)
+
+    If there are remote dependencies, such as calls to a database or other resources, those will appear under `Calls to Remote Dependencies`. If there were exceptions, traces or failed calls to dependencies, you could get detail on that under `Related Items`.
+
+1. When we go to `Application map`, we can see a diagram of the monitored items that make up the application:
+
+   ![image](./media/2016-10-25_22-29-02.gif)
+  
 ----
 ## Summary
 
