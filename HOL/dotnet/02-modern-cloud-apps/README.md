@@ -77,11 +77,11 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/2017-06-16_11_33_00.png)
 
-    You should be greeted by the default ASP.NET landing page
+    You should be greeted by the default ASP.NET landing page:
     
     ![image](./media/image-05.gif)
 
-1. Since we provisioned a new instance of DocumentDB, there are no records in the database. We will generate some sample data using the shared API. It has a route that can be accessed at any time to create or reset the documents in your collection.  In the browser, add the following to your API URL to generate sample documents.
+1. Since we provisioned a new instance of DocumentDB, there are no records in the database. We will generate some sample data using the shared API. It has a route that can be accessed at any time to create or reset the documents in your collection. In the browser, add the following to your API URL to generate sample documents.
 
     >
     > Add `/incidents/sampledata` to the end of your API URL. 
@@ -93,7 +93,8 @@ This hands-on-lab has the following exercises:
     > You can also do this using the swagger pages which will be available at this URL:
     >
     >`http://incidentapi[YOUR_RG_NAME].azurewebsites.net/swagger`
-    >
+
+    > In Chrome you should see a JSON response directly in the browser tab, however in Internet Explorer you may be asked top Open or Download a file. If prompted, Open the file in Notepad or Visual Studio Code to see the return message.
 
 1. After navigating to the `sampledata` route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade, select the `DevCamp` and then select the DocumentDB resource which starts with `incidentdb`.
 

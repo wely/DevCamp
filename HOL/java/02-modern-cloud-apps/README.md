@@ -25,18 +25,18 @@ In this hands-on lab, you will learn how to:
 
 * The source for the starter app is located in the [start](start) folder.
 * The finished project is located in the [end](end) folder.
-* Deployed the starter ARM Template.
+* Deployed the starter ARM Template in [HOL 1](../01-developer-environment).
 * Established a development machine either on-premises or in Azure.
 
 ## Exercises
 
 This hands-on-lab has the following exercises:
-* Exercise 1: Integrate the API
-* Exercise 2: Add a caching layer
-* Exercise 3: Write images to Azure Blob storage
+* [Exercise 1: Integrate the API](#ex1)
+* [Exercise 2: Add a caching layer](#ex2)
+* [Exercise 3: Write images to Azure Blob storage](#ex3)
 
 ---
-### Exercise 1: Integrate the API
+## Exercise 1: Integrate the API<a name="ex1"></a>
 
 1. In your development virtual machine, open a command prompt window and navigate to the `C:\DevCamp\HOL\java\02-modern-cloud-apps\start` folder.
 
@@ -104,7 +104,7 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/2017-06-16_11_33_00.png)
 
-    You should be greeted by the default ASP.NET landing page
+    You should be greeted by the default ASP.NET landing page:
     
     ![image](./media/image-05.gif)
 
@@ -120,7 +120,8 @@ This hands-on-lab has the following exercises:
     > You can also do this using the swagger pages which will be available at this URL:
     >
     >`http://incidentapi[YOUR_RG_NAME].azurewebsites.net/swagger`
-    >
+	
+    > In Chrome you should see a JSON response directly in the browser tab, however in Internet Explorer you may be asked top Open or Download a file. If prompted, Open the file in Notepad or Visual Studio Code to see the return message.
 
 1. After navigating to the `sampledata` route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade, select the `DevCamp` and then select the DocumentDB resource which starts with `incidentdb`.
 
@@ -589,7 +590,7 @@ This hands-on-lab has the following exercises:
 The cards now represent data returned from our API, replacing the static mockup code. You can also click on `Report Outage`, enter the information requested, then come back to the dashboard display to verify that your outage was saved.
 
 ---
-## Exercise 2: Add a caching layer
+## Exercise 2: Add a caching layer<a name="ex2"></a>
 Querying our API is a big step forward, but caching the data in memory would increase 
 performance and reduce the load on our API.  Azure offers a managed (PaaS) 
 service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
@@ -827,7 +828,7 @@ If you refresh your page in the browser, you should not get another log message,
 > If you refresh or click `Dashboard` before the previous request has completed, you may get two log messages indicating the web service has been called.  This is expected behavior, since the write to cache will happen when the request has completed.
 
 ---
-### Exercise 3: Write images to Azure Blob Storage
+## Exercise 3: Write images to Azure Blob Storage<a name="ex3"></a>
 
 When a new incident is reported, the user can attach a photo. In this exercise we will process that image and upload it into an Azure Blob Storage Container.
 
