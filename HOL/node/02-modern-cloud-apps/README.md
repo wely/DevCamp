@@ -16,132 +16,147 @@ In this lab, you will work with an existing API to connect to the web applicatio
 
 In this hands-on lab, you will learn how to:
 
-* Use Visual Studio Code to connect to an API
-* Deploy the application to an Azure Web App
-* Modify a view to add caching
-* Modify code to add queuing and blob storage
+* Use Visual Studio Code to connect to an API.
+* Provision an Azure Web App to host the Web site.
+* Modify a view to add caching.
+* Modify code to add queuing and blob storage.
 
 ## Prerequisites
 
-* The source for the starter app is located in the [start](start) folder. 
-* The finished project is located in the [end](end) folder. 
-* Deployed the starter ARM Template.
+* The source for the starter app is located in the [start](start) folder.
+* The finished project is located in the [end](end) folder.
+* Deployed the starter ARM Template in [HOL 1](../01-developer-environment).
+* Established a development machine either on-premises or in Azure.
 
 ## Exercises
 
 This hands-on-lab has the following exercises:
+* [Exercise 1: Integrate the API](#ex1)
+* [Exercise 2: Add a caching layer](#ex2)
+* [Exercise 3: Write images to Azure Blob storage](#ex3)
 
-* Exercise 1: Integrate the API
-* Exercise 2: Add a caching layer
-* Exercise 3: Write images to Azure Blob storage
+---
+## Exercise 1: Integrate the API<a name="ex1"></a>
 
-### Exercise 1: Integrate the API
+1. You should have performed a `git clone` of the DevCamp repository in the previous hands-on lab. If you did not, please complete the developer workstation setup in that lab.
 
-1. Download or `git clone` the source files to your local machine
-
-1. Navigate to the `HOL\node\modern-cloud-apps\start` folder in a terminal window
+1. Navigate to the `C:\DevCamp\HOL\node\02-modern-cloud-apps\start` folder in a terminal window.
 
 1. Run `npm install` to restore all dependencies
 
-    ![image](./media/image-001.gif)
+    ![image](./media/2017-06-29_13_41_00.png)
 
-1. Once package restoration completes, open the **start** folder in VSCode
+1. Once package restoration completes, open the `start` folder in VSCode.
 
-    > If you have added `code` to your command line path you can simply run `code .` from the prompt 
+    > If you have added `code` to your command line path you can simply run `code .` from the prompt.
 
-    ![image](./media/image-002.gif)
+    ![image](./media/2017-06-29_13_50_00.png)
 
-1. Let's run the application in Debug Mode.  Click the Debug icon on the left toolbar, then select the green "start" triangle.  In the Environment dropdown select **Node.js**.  VSCode then scaffolds out the files that it needs for debugging support in a launch.json file, stored at the root of your poject folder in a `.vscode` folder.  Click the green start triangle a second time to launch the application.
+1. Let's run the application in Debug Mode.  Click the Debug icon on the left toolbar, then select the green "start" triangle.  In the Environment drop-down select `Node.js`. VSCode then scaffolds out the files that it needs for debugging support in a `launch.json` file, stored at the root of your project folder in a `.vscode` folder. Click the green start triangle a second time to launch the application.
 
-    ![image](./media/image-003.gif) 
+    ![image](./media/2017-06-29_15_10_00.png) 
 
-1. Open a browser and navigate to `http://localhost:3000`. You should now see the running application
+1. Open a browser and navigate to `http://localhost:3000`. You should see the home page of the running application:
 
-    ![image](./media/image-004.gif)
+    ![image](./media/2017-06-29_15_23_00.jpg)
 
-1. On the Dashboard page, notice how the incidents are stubbed in.  
+1. Click on `Dashboard` to see some sample incidents hard-coded in the solution:
 
-    ![image](./media/image-005.gif)
+    ![image](./media/2017-06-29_15_25_00.png)
 
     As part of the original ARM template we deployed an ASP.NET WebAPI that queries a DocumentDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
 
-1. In the [Azure Portal](https://portal.azure.com) navigate to the resource group that you created with the original ARM template.  Resource Groups can be found on the left hand toolbar -> More Services -> Resource Groups.
+1. In the [Azure Portal](https://portal.azure.com) navigate to the resource group `DevCamp` that you created with the original ARM template. Resource groups can be found on the left hand toolbar.
 
-    Select the API app that begins with the name **incidentsapi** followed by a random string of characters.
+    Select the API app that begins with the name `incidentapi` followed by a random string of characters.
 
-    ![image](./media/image-006.gif)
+    ![image](./media/2017-06-16_11_29_00.png)
 
 1. The window that slides out is called a **blade** and contains information and configuration options for the resource.  
 
-    On the top toolbar, select **Browse** to open the API in a new browser window.
+    On the top toolbar, select `Browse` to open the API in a new browser window.
 
-    ![image](./media/image-007.gif)
+    ![image](./media/2017-06-16_11_33_00.png)
 
-    You should be greeted by the default ASP.NET landing page
-    ![image](./media/image-008.gif)
+    You should be greeted by the default ASP.NET landing page:
+    
+    ![image](./media/image-05.gif)
 
-1. Since we provisioned a new instance of DocumentDB, there are not any records to use as sample data.  To generate sample data, our API has a route that can be hit at any time to reset the documents in our collection.  In the browser, add `/incidents/sampledata` to your API's URL to generate sample documents.
+1. Since we provisioned a new instance of DocumentDB, there are no records in the database. We will generate some sample data using the shared API. It has a route that can be accessed at any time to create or reset the documents in your collection. In the browser, add the following to your API URL to generate sample documents.
 
-    > In Chrome you should see a JSON response directly in the browser tab, however in Internet Explorer you may be asked top Open or Download a file. If prompted, Open the file in Notepad or Visual Studio Code to see the return message
+    >
+    > Add `/incidents/sampledata` to the end of your API URL. 
+    >
+    > The URL should look like the following:
+    >  
+    > `http://incidentapi[YOUR_RG_NAME].azurewebsites.net/incidents/sampledata`
+    >
+    > You can also do this using the swagger pages which will be available at this URL:
+    >
+    >`http://incidentapi[YOUR_RG_NAME].azurewebsites.net/swagger`
+    >
 
-1. After navigating to the sampledata route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade and select the DocumentDB resource.
+    > In Chrome you should see a JSON response directly in the browser tab, however in Internet Explorer you may be asked top Open or Download a file. If prompted, Open the file in Notepad or Visual Studio Code to see the return message.
 
-    ![image](./media/image-010.gif)
+1. After navigating to the `sampledata` route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade, select the `DevCamp` and then select the DocumentDB resource which starts with `incidentdb`.
 
-    In the left hand navigation, select **Document Explorer**
+    ![image](./media/2017-06-16_11_39_00.png)
 
-    ![image](./media/image-011.gif)
+    Select the DocumentDB database. This will open the DocumentDB blade. Scroll to the Collections section.
 
-    After the documents load, select the first entry
-
-    ![image](./media/image-012.gif)
+    In the Collections section, select `Document Explorer`.
+    
+    ![image](./media/2017-06-16_11_42_00.png)
 
     The Document Explorer is an easy way to view the documents inside of a collection via the browser. Select the first record to see the JSON body of the document.
 
-    ![image](./media/image-013.gif)
+    ![image](./media/2017-06-16_11_44_00.png)
+
+    ![image](./media/2017-06-16_11_45_00.png)
 
     We can see that several incidents have been created and are now available to the API.
 
-1. Back in VSCode, let's begin integrating the API into our code.  We will need to query the API's endpoint URL, and we have options of where to store that string.  While we could insert it directly into our code, a better practice is to abstract such a configuration setting into an environment variable.  VSCode makes it straightforward to define variables at runtime in the debugging settings.
 
-    Stop the debugger by pressing the red "stop" square, and open the `.vscode/launch.json` file that was previously generated.  Under `configurations` create an `env` object.  This section defines key/value pairs that will be passed into environment variables whenever the debugger is launched. Add an entry for `INCIDENT_API_URL` and set the value to the ASP.NET WebAPI that we earlier loaded into the browser. Do not add a trailing slash.
+1. Back in VSCode, let's begin integrating the API into our code.  We will need to query the API's endpoint URL, and we have options of where to store that string. While we could insert it directly into our code, a better practice is to abstract such a configuration setting into an environment variable. VSCode makes it straightforward to define variables at runtime in the debugging settings.
 
-    ![image](./media/image-009.gif)
+    Stop the debugger by pressing the red "stop" square, and open the `.vscode/launch.json` file that was previously generated. Under `configurations` create an `env` object. This section defines key/value pairs that will be passed into environment variables whenever the debugger is launched. Add an entry for `INCIDENT_API_URL` and set the value to the ASP.NET WebAPI that we earlier loaded into the browser. Do not add a trailing slash.
 
-    > Before October 2016 the `env` note was present by default. For [newer versions of VSCode](https://code.visualstudio.com/updates/v1_7#_node-debugging) you will need to manually create the `env: {}` configuration object
+    ![image](./media/2017-06-29_15_37_00.png)
 
-    Now that the URL is loaded as an environment variable, we can access it from our application by referencing `process.env.INCIDENT_API_URL`.  We will repeat this process several times to configure our application with Azure services.
+    > Before October 2016 the `env` note was present by default. For [newer versions of VSCode](https://code.visualstudio.com/updates/v1_7#_node-debugging) you will need to manually create the `env: {}` configuration object.
 
-    > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application
+    Now that the URL is loaded as an environment variable, we can access it from our application by referencing `process.env.INCIDENT_API_URL`. We will repeat this process several times to configure our application with Azure services.
+
+    > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application.
 
 1. The dashboard page is handled by the `/routes/dashboard.js` file. Open the file and paste this function at the bottom:
 
     ```javascript
     function getIncidents() {
-
+    
         return new Promise(function (resolve, reject) {
-
+        
             // Define URL to use for the API
             var apiUrl = `${process.env.INCIDENT_API_URL}/incidents`;
-
+            
             // Make a GET request with the Request library
             request(apiUrl, { json: true }, function (error, results, body) {
-
+            
                 // Resolve the Promise with incident data
                 resolve(body);
-
+                
             });
-
+            
         });
-
+        
     }
     ```
 
     This function uses the popular [request](https://github.com/request/request) library to generate a HTTP GET to the API endpoint. It is also wrapping the call in [JavaScript Promise syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) to avoid nested callbacks when consuming the function.
 
-    > Ensure that the version you have locally of Node is recent enough to support Promises. To be safe it is advised to [upgrade](https://nodejs.org/en/) to Node v6
+    > Ensure that the version you have locally of Node is recent enough to support Promises. To be safe it is advised to [upgrade](https://nodejs.org/en/) to Node v6.
 
-    Next, wrap `res.render()` in our new `getIncidents()` function:
+    Next, wrap `res.render()` in our new `getIncidents()` function. Exchange the code in the `router.get()` function:
 
     ```javascript
     // Query the API for incident data
@@ -156,13 +171,17 @@ This hands-on-lab has the following exercises:
     });
     ```
 
-    At the top of the file, add `var request = require('request');` below the other require statements to load the library.
+    At the top of the file, add `var request = require('request');` below the other require statements to load the library. Your code should look like this:
+    
+    ![image](./media/2017-06-29_15_48_00.png)
 
 1.  On the command line, execute `npm install request --save` to download the request library and save it to `package.json`.
 
+    ![image](./media/2017-06-29_15_53_00.png)
+
 1. To test if the API returns data, set a breakpoint by clicking in the gap left of the line number containing `resolve(body)`.  Then start the VSCode debugger and open your browser to `http://localhost:3000/dashboard`.
 
-    ![image](./media/image-014.gif)
+    ![image](./media/2017-06-29_15_57_00.png)
 
     The breakpoint should be hit as the page loads.  Hover over the `body` parameter to examine the array of returned incidents from the API.  This is the array that will be passed to the view for rendering. Next we need to update our view to accommodate the data.
 
@@ -198,35 +217,38 @@ This hands-on-lab has the following exercises:
 
     ```
     
-    > **Pug** is the same library as **Jade**, [which underwent a rename](https://github.com/pugjs/pug/issues/2184) 
+    > **Pug** is the same library as **Jade**, [which underwent a rename](https://github.com/pugjs/pug/issues/2184).
 
 1. With the dashboard route code and the view template updated, run the application via the Debug Tab in VSCode and check the dashboard page.
 
-    ![image](./media/image-015.gif)
+    ![image](./media/2017-06-29_16_00_00.png)
 
 The cards now represent data returned from our API, replacing the static mockup code.
 
-### Exercise 2: Add a caching layer
-Querying our API is a big step forward, but querying a cache would increase performance and limit the load on our API.  Azure offers a managed (PaaS) service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
+---
+## Exercise 2: Add a caching layer<a name="ex2"></a>
+Querying our API is a big step forward, but querying a cache would increase performance and limit the load on our API. Azure offers a managed (PaaS) service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
 
-We deployed an instance of Azure Redis Cache in the ARM Template, but need to add application logic
-* First, check the cache to see if a set of incidents is available
-* If not, query the API
-* Cache response from API
-* Set cached response to expire after 60 seconds
+We deployed an instance of Azure Redis Cache in the ARM Template, but need to add application logic:
+* First, check the cache to see if a set of incidents is available.
+* If not, query the API.
+* Cache response from API.
+* Set cached response to expire after 60 seconds.
 
-1. First, let's add our Redis information to local environment variables. In the [Azure Portal](https://portal.azure.com) navigate to the Resource Group and select the Redis instance.
+1. First, let's add our Redis information to local environment variables. In the [Azure Portal](https://portal.azure.com) navigate to the resource group `DevCamp` and select the Redis Cache instance named `incidentcache...`:
 
-    ![image](./media/image-016.gif)
+    ![image](./media/2017-06-16_13_14_00.png)
 
-    On the Redis blade, note the **Host Name**, then select **Show access keys** and note the **Primary Key**.
+1. On the Redis blade, note the **Host Name**.
 
-    ![image](./media/image-017.gif)
+    ![image](./media/2017-06-16_13_18_00.png)
 
-    On the Redis blade, expand **Ports** by clicking on **Non-SSL port (6379) disabled** and note the Non-SSL port of **6379** and SSL Port of **6380**.
+1. Then select `Show access keys` and note the **Primary Key**.
 
-    ![image](./media/image-018.gif)
+1. Return to the `Overview` blade and expand **Ports** by selecting `Non-SSL port (6379) disabled` and note the Non-SSL port 6379 and SSL Port of 6380 on the port details blade.
 
+    ![image](./media/2017-06-16_13_29_00.png)
+    
     In VSCode, open `.vscode/launch.json` and add four variables for `REDISCACHE_HOSTNAME`, `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and `REDISCACHE_SSLPORT`. The values of each were noted previously, and should look similar to:
 
     ```json
@@ -243,6 +265,8 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
     We will use these variables to configure a Redis client. 
 
 1. From the command line, run `npm install redis --save` to install the Redis library.
+
+    ![image](./media/2017-06-29_16_22_00.png)
 
 1. To create a Redis client, open `routes/dashboard.js` and extend the require statements to include the Redis library:
 
@@ -312,32 +336,38 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
     }
     ```
+1. To test if the API uses the cache start the VSCode debugger and open your browser to `http://localhost:3000/dashboard`.
 
 1. Back in VSCode, the Debug Console should be emitting information about whether the cache was used, or the API was hit directly.
 
-    ![image](./media/image-023.gif)
+    ![image](./media/2017-06-29_16_39_00.png)
 
-All application requests for the dashboard will now first try to use Azure Redis Cache.  Under high traffic, this will improve page performance and decrease the API's scaling needs.   
+1. Refresh the dashboard in your browser to see the cache being used.
 
-### Exercise 3: Write images to Azure Blob Storage
+All application requests for the dashboard will now first try to use Azure Redis Cache. Under high traffic, this will improve page performance and decrease the API's scaling needs.   
 
-When a new incident is reported, the user can attach a photo.  In this exercise we will process that image and upload it into an Azure Blob Storage Container.
+---
+## Exercise 3: Write images to Azure Blob Storage<a name="ex3"></a>
 
-1. The [Azure Storage SDK](https://github.com/Azure/azure-storage-node) looks at environment variables for configuration.  To get the necessary values, open the [Azure Portal](https://portal.azrue.com) and open the Resource Group.  Select the Storage Account beginning with `incidentblobstg`.
+When a new incident is reported, the user can attach a photo. In this exercise we will process that image and upload it into an Azure Blob Storage Container.
 
-    > The other storage accounts are used for diagnostics data and virtual machine disks
+1. The [Azure Storage SDK](https://github.com/Azure/azure-storage-node) looks at environment variables for configuration. To get the necessary values, open the [Azure Portal](https://portal.azrue.com) and open the Resource Group. Select the Storage Account beginning with `incidentblobstg`.
 
-    ![image](./media/image-019.gif)
+    > The other storage accounts are used for diagnostics data and virtual machine disks.
 
-    Select **Access Keys** and note the **key1** for the storage account.
+    ![image](./media/2017-06-16_15_41_00.png)
 
-    ![image](./media/image-020.gif)
+    Select `Access Keys` and note the `key1` for the storage account.
 
-    In VSCode, open `.vscode/launch.json` and add variables. 
-    * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource 
-    * `AZURE_STORAGE_ACCESS_KEY` is **key1** from the Access Keys blade
-    * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containers to group sets of blobs together.  For this demo let's use `images` as the Container name
-    * `AZURE_STORAGE_QUEUE` is the name of the queue that will be used to store new messages
+    ![image](./media/2017-06-16_15_43_00.png)
+
+    In VSCode, open `.vscode/launch.json` and add these additional variables:
+    * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource. 
+    * `AZURE_STORAGE_ACCESS_KEY` is **key1** from the Access Keys blade.
+    * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containers to group sets of blobs together. For this demo let's use `images` as the Container name.
+    * `AZURE_STORAGE_QUEUE` is the name of the queue that will be used to store new messages. For this demo let's use `thumbnail` as the queue name.
+
+    Your environment variable should look similar to this now:
 
     ```json
      "env": {
@@ -356,7 +386,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
     Now when the SDK fires up it will configure itself with these settings.
 
-1. To better organize our code, let's create a utility file to handle interactions with Azure Storage.  Create `utilities/storage.js` and paste in the following:
+1. To better organize our code, let's create a utility file to handle interactions with Azure Storage. Create `utilities/storage.js` and paste in the following:
 
     ```javascript
     var fs = require('fs');
@@ -552,19 +582,40 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
 
 1. In the terminal, execute a `npm install formidable azure-storage mime --save` to install the dependencies.
 
-1. Open a browser window and navigate to `http://localhost:3000/new`.  Fill out the form and hit the **Submit** button.
+    ![image](./media/2017-06-29_16_52_00.png)
+
+1. Start the VSCode debugger, open a browser window and navigate to `http://localhost:3000/new`. Fill out the form and hit the `Submit` button.
 
     ![image](./media/image-021.gif)
 
     You should be redirected to the Dashboard screen.  
 
-    > It may take up to 60 seconds to see your new entry due to the cache
+    > It may take up to 60 seconds to see your new entry due to the cache.
 
-2. In the Microsoft Azure Storage Explorer, navigate to your Storage Account and ensure that the blob was created.
+1. Within your virtual machine, open the Azure Storage Explorer. If it has not been installed automatically you can download the setup from [storageexplorer.com](http://storageexplorer.com/).
+ 
+1. Connect it to your Azure Storage using your login data.
 
-    ![image](./media/image-022.gif)
+1. In the Microsoft Azure Storage Explorer, navigate to your Storage Account and ensure that the blob was created.
 
+    ![image](./media/2017-06-16_16_29_00.png)
+
+    You can also use the Azure Storage Explorer to view the `thumbnails` queue, and verify that there is an entry for the image we uploaded. It is also safe to delete the images and queue entries using Azure Storage Explorer, and enter new Incidents for testing.
+
+Our application can now create new incidents and upload related images to Azure Blob Storage. It will also put an entry into an Azure queue, to invoke an image resizing process, for example. In a later demo, we'll show how an [Azure Function](https://azure.microsoft.com/en-us/services/functions/) can be invoked via a queue entry to do tasks such as this.
+
+---
 ## Summary
-Our application started as a prototype on our local machine, but now uses a variety of Azure services.  We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
+Our application started as a prototype on our local machine, but now uses a variety of Azure services. We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
+
+In this hands-on lab, you learned how to:
+* Use Visual Studio to connect to an API.
+* Provision an Azure Web App to host the Web site.
+* Modify a view to add caching.
+* Modify code to add queuing and blob storage.
+
+After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs.
+
+### View Module 3 instructions for [NodeJS](../03-azuread-office365).
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
