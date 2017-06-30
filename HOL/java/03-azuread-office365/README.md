@@ -86,7 +86,8 @@ AzureAD can handle authentication for web applications. First we will create a n
     ![image](./media/2017-21-06_08_46_00.png)
     ![image](./media/2017-21-06_08_48_00.png)
   
-  Confirm your selection and close the modal dialog by clicking `OK`.
+    Confirm your selection and close the modal dialog by clicking `OK`.
+
 
 1. Click the `Save` button on the bottom of the screen.
 
