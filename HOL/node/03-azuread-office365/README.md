@@ -2,71 +2,95 @@
 
 ## Overview
 
-City Power & Light is a sample application that allows citizens to to report "incidents" that have occurred in their community.  It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
+City Power & Light is a sample application that allows citizens to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo. The application is implemented with several components:
 
-* Front end web application contains the user interface and business logic.  This component has been implemented three times in .NET, NodeJS, and Java.
-* WebAPI is shared across the front ends and exposes the backend DocumentDB
-* DocumentDB is used as the data persistence layer 
+* Front end web application contains the user interface and business logic. This component has been implemented three times in .NET, NodeJS, and Java.
+* WebAPI is shared across the front ends and exposes the backend DocumentDB.
+* DocumentDB is used as the data persistence layer.
 
-In this lab, you will continue enhancing the City Power & Light application by adding authentication for users powered by [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/).  Once authenticated, you may then query the [Microsoft Office Graph](https://graph.microsoft.io) to retrieve information pertinent to the application.
+In this lab, you will continue enhancing the City Power & Light application by adding authentication for users powered by [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/). Once authenticated, you may then query the [Microsoft Office Graph](https://graph.microsoft.io) to retrieve information pertinent to the application.
 
-> This guide use [Visual Studio Code](https://code.visualstudio.com/) for editing, however please feel free to use your editor of choice.  If you are interested in using full Visual Studio + [Node.js Tools for Visual Studio Extension (NTVS)](https://www.visualstudio.com/vs/node-js/), please see [here](https://github.com/Microsoft/nodejstools/wiki/Projects#create-project-from-existing-files) for instructions on wrapping existing code into a VS Project.
+> This guide use [Visual Studio Code](https://code.visualstudio.com/) for editing, however please feel free to use your editor of choice. If you are interested in using full Visual Studio + [Node.js Tools for Visual Studio Extension (NTVS)](https://www.visualstudio.com/vs/node-js/), please see [here](https://github.com/Microsoft/nodejstools/wiki/Projects#create-project-from-existing-files) for instructions on wrapping existing code into a VS Project.
 
 ## Objectives
 In this hands-on lab, you will learn how to:
 
-* Take an anonymous application and add user authentication via AzureAD
-* Query data from the Microsoft Graph
-* Manipulate data in the Microsoft Graph
+* Take an anonymous application and add user authentication via AzureAD.
+* Query data from the Microsoft Graph.
+* Manipulate data in the Microsoft Graph.
 
 ## Prerequisites
 
-* The source for the starter app is located in the `HOL\node\azuread-office365\start` folder. 
-* The finished project is located in the `HOL\node\azuread-office365\end` folder. 
-* Deployed the starter ARM Template
-* Completion of the first modern-apps lab
+* The source for the starter app is located in the [start](start) folder. 
+* The finished project is located in the [end](end) folder. 
+* Deployed the starter ARM Template [HOL 1](../01-developer-environment).
+* Completion of the [HOL 2](../02-modern-cloud-apps).
+
+> **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the HOL 2 environment variables.
+>
 
 ## Exercises
 
 This hands-on-lab has the following exercises:
 
-* Exercise 1: Setup authentication 
-* Exercise 2: Create a user profile page
-* Exercise 3: Send a confirmation email to the user on incident creation
+* [Exercise 1: Setup authentication](#ex1)
+* [Exercise 2: Create a user profile page](#ex2)
+* [Exercise 3: Send a confirmation email to the user on incident creation](#ex3)
 
-### Exercise 1: Integrate the API
+---
+### Exercise 1: Integrate the API<a name="ex1"></a>
 
 AzureAD can handle authentication for web applications. First we will create a new application in our AzureAD directory, and then we will extend our application code to work with an authentication flow. 
 
-1. Navigate in a browser to [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com), click the button to **Register your app**, and login with your Azure credentials.
+1. Navigate in a browser to [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com), login with your Azure credentials (Work or school Account), and click the button to `Add an app`.
 
-    ![image](./media/image-001.gif)
+    ![image](./media/2017-21-06_08_00_00.png)
 
-1. There are several types of application that can be registered.  For City Power & Light, select **Web Application**
+1. Provide an application name and click `Create`:
 
-    ![image](./media/image-002.gif)
+    ![image](./media/2017-21-06_08_08_00.png)
 
-1. Provide an application name and contact email address.
+1. On the Registration page, take note of the `Application ID`. This will be used as an environment variable and is used to configure the authentication library.  
 
-    ![image](./media/image-003.gif)
+    We also need to generate a client secret. Select the `Generate New Password` button.
 
-1. After AzureAD handles the authentication, it needs a route in our application to redirect the user.  For testing locally, we'll use `http://localhost:3000/auth/openid/return` as the **Redirect URI** and as an environment variable named `AAD_RETURN_URL`.  Click the **Create** button. 
+    ![image](./media/2017-21-06_08_12_00.png)
 
-    ![image](./media/image-004.gif)
-
-1. The page then shows some sample code. Scroll down to the bottom and select **Go to settings**
-
-    ![image](./media/image-005.gif)
-
-1. On the Registration page, take note of the **Application ID**. This will be used as an environment variable named `AAD_CLIENT_ID` and is used to configure the authentication library.  
-
-    We also need to generate a client secret. Select the **Generate New Password** button.
-
-    ![image](./media/image-006.gif)
-
-1. A key is generated for you. Save this, as you will not be able to retrieve it in the future. This key will become the `AAD_CLIENT_SECRET` environment variable. Click the **Save** button at the bottom of the page.
+1. A key is generated for you. ***Save this key***, as you will not be able to retrieve it in the future.
 
     ![image](./media/image-007.gif)
+
+1. Click on the `Add Platform` button:
+
+    ![image](./media/2017-21-06_08_23_00.png)
+
+1. Select `Web`:
+
+    ![image](./media/2017-21-06_08_25_00.png)
+
+1. After AzureAD handles the authentication, it needs a location to redirect the user. For testing locally, we'll use `http://localhost:3000/auth/openid/return` as the `Redirect URI` and as an environment variable named `AAD_RETURN_URL`. Click the `Create` button. Paste that URI in the redirect URI box.
+
+![image](./media/2017-21-06_08_33_00.png)
+
+1. We will need to grant our application permission to access resources on our behalf. In the Microsoft Graph Permissions section for `Delegated Permissions`, select `Add`:
+
+    ![image](./media/2017-21-06_08_43_00.png)  
+
+1. Add the following permissions (you will have to scroll down to find them):
+    * Mail.ReadWrite
+    * Mail.Send
+    * User.Read
+    * User.ReadBasic.All
+
+    ![image](./media/2017-21-06_08_46_00.png)
+    ![image](./media/2017-21-06_08_48_00.png)
+  
+    Confirm your selection and close the modal dialog by clicking `OK`.
+
+
+1. Click the `Save` button on the bottom of the screen.
+
+    ![image](./media/2017-21-06_08_49_00.png)  
 
 1. In VSCode, let's add those environment variables into `.vscode/launch.json`:
 
@@ -75,7 +99,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     "AAD_CLIENT_ID": "2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6",
     "AAD_CLIENT_SECRET": "JjrKfgDyo5peQ4xJa786e8z"
     ```
-1. We have two choices of libraries to handle authentication between our Node application and AzureAD. The first is the [Azure Active Directory Library for NodeJS](https://github.com/AzureAD/azure-activedirectory-library-for-nodejs) (ADAL), and the second leverages [Passport.js](http://passportjs.org/) with the [Azure Active Directory Passport.js Plugin](https://github.com/AzureAD/passport-azure-ad).  For this example, we will use the Passport plugin in a utility file.    
+1. We have two choices of libraries to handle authentication between our Node application and AzureAD. The first is the [Azure Active Directory Library for NodeJS](https://github.com/AzureAD/azure-activedirectory-library-for-nodejs) (ADAL), and the second leverages [Passport.js](http://passportjs.org/) with the [Azure Active Directory Passport.js Plugin](https://github.com/AzureAD/passport-azure-ad). For this example, we will use the Passport plugin in a utility file.    
 
     Create `utility/auth.js` and paste in the following:
 
@@ -295,7 +319,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     `user: req.user`
     ```
 
-    Extend `res.render()` for dashboard.js, index.js and new.js from the views folder so that they match:
+    Extend `res.render()` for `dashboard.js`, `index.js` and `new.js` from the `routes` folder so that they match:
 
     dashboard.js:
     ```javascript
@@ -323,7 +347,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     });
     ```
 
-1. Simply piping the user data into our views is useful, but what if we want to make a page in our application only visible to logged in users? To do this we need to check the user's status before loading a route.  Let's make `routes/new.js` a secure page by adding some authentication.  Reference our `authUtility` file, and then pass `authUtility.ensureAuthenticated` into both our `.get` and `.post` routes.  Here's an abbreviated snippet of `routes/new.js`:
+1. Simply piping the user data into our views is useful, but what if we want to make a page in our application only visible to logged in users? To do this we need to check the user's status before loading a route. Let's make `routes/new.js` a secure page by adding some authentication. Reference our `authUtility` file, and then pass `authUtility.ensureAuthenticated` into both our `.get` and `.post` routes.  Here's an abbreviated snippet of `routes/new.js`:
 
     ```javascript
     var fs = require('fs');
@@ -337,7 +361,8 @@ AzureAD can handle authentication for web applications. First we will create a n
     /* GET new outage */
     router.get('/', authUtility.ensureAuthenticated, function (req, res) {
         res.render('new', {
-            title: 'Report an Outage'
+            title: 'Report an Outage',
+            user: req.user
         });
     });
 
@@ -351,9 +376,9 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     With these edits, each page will receive a `user` object if a user is authenticated, and when the **Report an Outage** page is loaded it will ensure the user is authenticated.  
 
-1. Express needs to use passport for this middleware.  Open `utilities/express.js` and add the following after the Setup View engines block
+1. Express needs to use passport for this middleware. Open `utilities/express.js` and add the following authentication code after the Setup View engines block
 
-    Also add a `var passport = require('passport');` to the top of the page
+    Also add a `var passport = require('passport');` to the top of the page:
 
     ```javascript
     var express = require('express');
@@ -383,23 +408,30 @@ AzureAD can handle authentication for web applications. First we will create a n
         
     };
     ```
+    
+    ![image](./media/2017-06-30_09_56_00.png)
 
 1. To install dependencies, run `npm install passport-azure-ad@2.0.3 --save` from the command line.
 
-    > Please ensure you declare the `2.0.3` version, as `3.0.0` has breaking changes with this code
+    > Please ensure you declare the `2.0.3` version, as `3.0.0` has breaking changes with this code!
 
-1. Our backend code is taking shape, but we need the user interface to display a **Login** button.  Open up `views/navigation.pug` and remove the entire commented out line `//- Begin Login Dropdown Block` to make the Login dropdown visible. Now load the application in the browser and you should see the **Login** button on the top navigation.
+    ![image](./media/2017-06-30_09_58_00.png)
 
-    ![image](./media/image-009.gif)
+1. Our backend code is taking shape, but we need the user interface to display a **Login** button. Open up `views/navigation.pug` and remove the entire commented out line `//- Begin Login Dropdown Block` to make the Login drop-down visible.
 
-    Click on the link for **Report Outage**. Since you are not currently authenticated, the application redirects you to Azure to provide a username and password.  Sign in, and you will be redirect back to the homescreen with a username in the top right corner. Click the name to dropdown a link for a **Profile** page and to **Sign Out**.  
+1. Now start the VSCode debugger and open your browser to `http://localhost:3000/` to load the application in the browser and you should see the `Login` button on the top navigation.
 
-    ![image](./media/image-010.gif)
+    ![image](./media/2017-26-06_15_28_00.jpg)
 
-The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
+    Click on the link for `Report Outage`. Since you are not currently authenticated, the application redirects you to Azure to provide a username and password. Sign in, and you will be redirect back to the homescreen with a username in the top right corner. Click the name to dropdown a link for a `Profile` page and to `Sign Out`.  
 
-### Exercise 2: Create a user profile page
-Next, we are going to create a page to display information about the logged in user.  While AzureAD returns a name and email address, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a route, and then query the Graph for user information.
+    ![image](./media/2017-26-06_15_33_00.jpg)
+
+    The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
+
+---
+## Exercise 2: Create a user profile page<a name="ex2"></a>
+Next, we are going to create a page to display information about the logged in user. While AzureAD returns a name and email address when the user logs in, we can query the Microsoft Graph for extended details about a given user. We will add a view, a route, and then query the Graph for user information.
 
 1. Create a new file named `views/profile.pug`. Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
 
@@ -419,7 +451,7 @@ Next, we are going to create a page to display information about the logged in u
                             td= key
     ```
 
-1. With the view prepped, create a route at `routes/profile.js`.  When the route is loaded, it will query the Microsoft Graph "Me" endpoint.  This query requires a token to be passed in an `authorization` request header, which we grab from the `user` object provided by Passport.
+1. With the view prepped, create a route at `routes/profile.js`. When the route is loaded, it will query the Microsoft Graph "Me" endpoint.  This query requires a token to be passed in an `authorization` request header, which we grab from the `user` object provided by Passport. Add the following code to the `routes/profile.js` file: 
 
     ```javascript
     var express = require('express');
@@ -457,7 +489,7 @@ Next, we are going to create a page to display information about the logged in u
     module.exports = router;
     ```
 
-1. To add the profile route into Express. open `app.js` and add a route entry below the existing `app.use()` statements 
+1. To add the profile route into Express. Open `app.js` and add a route entry below the existing `app.use()` statements:
 
     ```javascript
     // Configure Routes
@@ -467,16 +499,16 @@ Next, we are going to create a page to display information about the logged in u
     app.use('/profile', require('./routes/profile'));
     ```
 
-1. With the view and route created, we can now load `http://localhost:3000/profile` in the browser.
+1. With the view and route created, we can now start the VSCode debugger and load `http://localhost:3000/profile` in the browser.
 
-    ![image](./media/image-011.gif)
+    ![image](./media/2017-06-30_10_39_00.png)
 
 We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
 
-### Exercise 3: Interact with the Microsoft Graph
-In the previous exercise you read data from the Microsoft Graph, but other endpoints can be used for more sophisticated tasks.  In this exercise we will use the Graph to send an email message whenever a new incident is reported.
+## Exercise 3: Interact with the Microsoft Graph<a name="ex3"></a>
+In the previous exercise you read data from the Microsoft Graph API, but other endpoints can be used for more sophisticated tasks. In this exercise we will use the Graph to send an email message whenever a new incident is reported.
 
-1. Create a new file in `utilities/email.js` that will take a recipient and generate a JSON message body for passing into the Graph API. 
+1. Create a new file in `utilities/email.js` that will take a recipient and generate a JSON message body for passing into the Graph API. Insert this code:
 
     ```javascript
     // https://graph.microsoft.io/en-us/docs/api-reference/v1.0/api/user_post_messages
@@ -550,7 +582,7 @@ In the previous exercise you read data from the Microsoft Graph, but other endpo
     module.exports.generateMailBody = generateMailBody; 
     ```
 
-    > There are [numerous settings](https://graph.microsoft.io/en-us/docs/api-reference/v1.0/api/user_post_messages) you can include in a mail message
+    > There are [numerous settings](https://graph.microsoft.io/en-us/docs/api-reference/v1.0/api/user_post_messages) you can include in a mail message.
 
 1. Extend `routes/new.js` to call our helper by adding a new function after the end of `function uploadImage()` and before the module export statement.
 
@@ -587,7 +619,7 @@ In the previous exercise you read data from the Microsoft Graph, but other endpo
 
     ```
 
-    Also update the series of chained promises in the original `.post` to include a reference to the new `emailConfirmation` function
+    Also update the series of chained promises in the original `router.post` function to include a reference to the new `emailConfirmation` function
 
     ```javascript
     // Process the fields into a new incident, upload image, and add thumbnail queue message
@@ -606,13 +638,23 @@ In the previous exercise you read data from the Microsoft Graph, but other endpo
 
     Finally, add a reference at the top of the page for `var emailUtility = require('../utilities/email');`
 
- 1. Load the application in the browser, and create a new incident.  You should soon receive an email in the current user's inbox.
+ 1. Start the VSCode debugger and load the application in the browser, and create a new incident. You should soon receive an email in the current user's inbox.
 
     ![image](./media/image-012.gif)       
 
-Sending this email did not require the setting up of a dedicated email server, but instead leveraged capabilities within the Microsoft Graph.  We could have also created a calendar event, or a task related to the incident for a given user, all via the API.
+Sending this email did not require the setting up of a dedicated email server, but instead leveraged capabilities within the Microsoft Graph. We could have also created a calendar event, or a task related to the incident for a given user, all via the API.
 
+---
 ## Summary
-Our application can now bifurcate anonymous and authenticated users to ensure flexibility between public and private data.  We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
+Our application can now bifurcate anonymous and authenticated users to ensure flexibility between public and private data. We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
+
+In this hands-on lab, you learned how to:
+* Take an anonymous application and add user authentication via AzureAD.
+* Query data from the Microsoft Graph.
+* Manipulate data in the Microsoft Graph.
+
+After completing this module, you can continue on to Module 4: DevOps with Visual Studio Team Services.
+
+### View instructions for [Module 4 for NodeJS](../04-devops-ci).
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

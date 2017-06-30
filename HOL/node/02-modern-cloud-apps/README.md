@@ -179,7 +179,7 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/2017-06-29_15_53_00.png)
 
-1. To test if the API returns data, set a breakpoint by clicking in the gap left of the line number containing `resolve(body)`.  Then start the VSCode debugger and open your browser to `http://localhost:3000/dashboard`.
+1. To test if the API returns data, set a breakpoint by clicking in the gap left of the line number containing `resolve(body)`. Then start the VSCode debugger and open your browser to `http://localhost:3000/dashboard`.
 
     ![image](./media/2017-06-29_15_57_00.png)
 

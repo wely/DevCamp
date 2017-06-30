@@ -243,7 +243,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/2017-26-06_15_28_00.jpg)
 
-    Click on the link for `Report Outage`. Since you are not currently authenticated, the application redirects you to Azure to provide a username and password.  Sign in, and you will be redirect back to the homescreen with a username in the top right corner. Click the name to dropdown a link for a `Profile` page and to `Sign Out`.  
+    Click on the link for `Report Outage`. Since you are not currently authenticated, the application redirects you to Azure to provide a username and password. Sign in, and you will be redirect back to the homescreen with a username in the top right corner. Click the name to dropdown a link for a `Profile` page and to `Sign Out`.  
 
     ![image](./media/2017-26-06_15_33_00.jpg)
 
@@ -639,6 +639,7 @@ In the previous exercise you read data from the Microsoft Graph API, but other e
 
 Sending this email did not require the setting up of a dedicated email server, but instead leveraged capabilities within the Microsoft Graph. We could have also created a calendar event, or a task related to the incident for a given user, all via the API.
 
+---
 ## Summary
 Our application can now bifurcate anonymous and authenticated users to ensure flexibility between public and private data. We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
 
