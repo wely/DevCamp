@@ -156,7 +156,7 @@ We will add both components to our application and enable the sending of telemet
     </script>
     ```
 
-1. Now update `views/layout.pug` with an `include` for the new appInsights.html file before the end of the `head` block:
+1. Now update `views/layout.pug` with an `include` for the new `appInsights.html` file before the end of the `head` block:
 
     ```pug
     doctype html
