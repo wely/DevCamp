@@ -111,8 +111,6 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     To make sure that Eclipse knows about the new packages we added to the build, run the `ide/eclipse` gradle task in the `gradle tasks` window. When that is done, right-click on the project in the project explorer, close the project, and then open it again.
 
-
-
 1. We are going to use the OAuth2 support in Spring to implement most of the features we need for logins. The main effort here is going to be configuring the application.  First, open your `application.yml` file, and add these lines at the bottom:
     ```
     security:
@@ -163,7 +161,6 @@ AzureAD can handle authentication for web applications. First we will create a n
             SpringApplication.run(DevcampApplication.class, args);
         }
     }
-
     ```
     You will need to resolve the imports for `EnableOAuth2Sso`, `WebSecurityConfigurerAdapter`, `HttpSecurity` and `CookieCsrfTokenRepository`.
 
@@ -234,7 +231,6 @@ AzureAD can handle authentication for web applications. First we will create a n
             return null;		
         }
     }
-    
     ```
 
     This is a relatively ugly class - Spring has generic support for OAuth2, but in this class we are depending on the fact that we are using Azure Active Directory.  That makes it possible for us to downcast and get the underlying user's information.
@@ -250,8 +246,8 @@ AzureAD can handle authentication for web applications. First we will create a n
     The application now behaves differently for anonymous vs. authenticated users, allowing you the developer flexibility in exposing pieces of your application to anonymous audiences while ensuring sensitive content stays protected.
 
 ---
+## Exercise 2: Create a user profile page<a name="ex2"></a>
 
-### Exercise 2: Create a user profile page<a name="ex2"></a>
 Next, we are going to create a page to display information about the logged in user. While AzureAD returns a name and email address when the user logs in, we can query the Microsoft Graph for extended details about a given user.  We will add a view, a controller, and then query the Graph for user information.
 
 1. We will need a class to contain the user profile information that is retrieved from the Graph API. It is located in  `devCamp.WebApp.models.UserProfileBean`, with this code:
@@ -355,7 +351,6 @@ Next, we are going to create a page to display information about the logged in u
             UserPrincipalName = userPrincipalName;
         }
     }
-    
     ```
 
 1. Create a new file named `templates/Profile/index.html`. Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
@@ -511,7 +506,6 @@ Next, we are going to create a page to display information about the logged in u
         }
                 
     }
-    
     ```
 
 1. Next, lets create a controller at `devCamp.WebApp.Controllers.ProfileController`. This will invoke the above service when the `/profile` URL is loaded, querying the Microsoft Graph "Me" endpoint.  
@@ -550,7 +544,6 @@ Next, we are going to create a page to display information about the logged in u
         }
             
     }
-
     ```
 
 1. With the view and controller created, we can now run the application, log in, and load `http://localhost:8080/profile` in the browser.
@@ -562,7 +555,7 @@ those fields were likely not filled in in the Azure Active Directory user profil
 
 ---
 
-### Exercise 3: Interact with the Microsoft Graph<a name="ex3"></a>
+## Exercise 3: Interact with the Microsoft Graph<a name="ex3"></a>
 
 In the previous exercise you read data from the Microsoft Graph API, but other endpoints can be used for more sophisticated tasks. In this exercise we will use the Graph to send an email message whenever a new incident is reported.
 
@@ -612,12 +605,11 @@ In the previous exercise you read data from the Microsoft Graph API, but other e
 	        HttpEntity<String> entity = new HttpEntity<String>(jsons,headers);
 	        
 	    	String result = restTemplate.postForObject(mailUrl, entity, String.class);   	
-	    	} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}   
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}   
     }
-    
     ```
 
 1. Lets update the `devCamp.WebApp.Controllers.IncidentController` to call this function when a new incident is created. Add an `@Autowired` instance of `GraphService` under the one for `AzureStorageService`. You will have to resolve the import for `GraphService` as well: 
@@ -641,6 +633,7 @@ Sending this email did not require the setting up of a dedicated email server, b
 
 ---
 ## Summary
+
 Our application can now bifurcate anonymous and authenticated users to ensure flexibility between public and private data. We are also able to leverage the Microsoft Graph to not only return the user's extended user profile, but to send email confirmations whenever a new incident is created.
 
 In this hands-on lab, you learned how to:
@@ -651,5 +644,6 @@ In this hands-on lab, you learned how to:
 After completing this module, you can continue on to Module 4: DevOps with Visual Studio Team Services.
 
 ### View instructions for [Module 4 for Java](../04-devops-ci).
+
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

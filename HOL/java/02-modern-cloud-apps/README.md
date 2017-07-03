@@ -179,7 +179,6 @@ This hands-on-lab has the following exercises:
             return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
         }
     }
-
     ```
 
     You'll notice a red line under `ReflectionToStringBuilder`. This is because we have to add `org.apache.commons.lang3` as a dependency.
@@ -260,7 +259,6 @@ This hands-on-lab has the following exercises:
 
         void clearCache();
     }
-
     ```
 
     We now need an implementation for this interface, so create `devCamp.WebApp.services.IncidentServiceImpl.java`, and add this code:
@@ -410,7 +408,6 @@ This hands-on-lab has the following exercises:
 		model.addAttribute("allIncidents", list);
 		return "Dashboard/index";
 	}	
-
     ```
 
     You will notice that the `@Autowired` annotation is underlined in red - you have to resolve the import for it by hovering the mouse pointer over it, and choose the `import Autowired` quck fix.
@@ -508,8 +505,8 @@ This hands-on-lab has the following exercises:
 
 
 1. In addition to displaying incidents, the application also provides a form to enter in new incidents. The POST from the form is handled by the `IncidentController.java` class. Scroll to the `Create` function of `devCamp.WebApp.Controllers.IncidentController.java` and comment the function out. After the commented out function, add the following code:
-    ```java
 
+    ```java
 	@Autowired
     private IncidentService incidentService;
 
@@ -544,7 +541,6 @@ This hands-on-lab has the following exercises:
 		}
 		return "redirect:/dashboard";
 	}
-    
     ```
  
      > You will have to resolve the imports for `@Autowired`, `IncidentService`, etc. as explained above.
@@ -591,6 +587,7 @@ The cards now represent data returned from our API, replacing the static mockup 
 
 ---
 ## Exercise 2: Add a caching layer<a name="ex2"></a>
+
 Querying our API is a big step forward, but caching the data in memory would increase performance and reduce the load on our API.  Azure offers a managed (PaaS) service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
 
 We deployed an instance of Azure Redis Cache in the ARM Template, but need to add application logic. Spring has great support for caching, and can easily use Azure Redis Cache to hold the data.
@@ -791,7 +788,6 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
         }
         
     }
-
     ```
 
     There is a lot going on in this class.  The `@Configuration` annotation tells Spring that this class declares one or more beans that will generate bean and service definitions. The `@EnableCaching` annotation enables Spring's annotation driving caching mechanism for the application.
@@ -907,7 +903,6 @@ When a new incident is reported, the user can attach a photo. In this exercise w
             return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
         }
     }
-    
     ```
 
 1. Today we are working with Azure Storage Blobs, but in the future we may decide to extend our application use Azure Stage Tables or Azure Storage Queues. To better organize our code, let's create a storage interaction class with an interface. Create the interface `devCamp.WebApp.services.AzureStorageService.java` and paste in the following code: 
@@ -931,7 +926,6 @@ When a new incident is reported, the user can attach a photo. In this exercise w
             CompletableFuture<String> uploadFileToBlobStorageAsync(String IncidentId, String fileName, String contentType, byte[] fileBuffer);
 
         }
-
     ```
 
 1. Now lets create the implementation for this class. Create `devCamp.WebApp.services.AzureStorageServiceImpl.java` and paste in the following code: 
@@ -1040,7 +1034,6 @@ When a new incident is reported, the user can attach a photo. In this exercise w
                 return String.format("%s.%s", IncidentId,fileExt);
             }
         }
-    
     ```
     > This code calls the Azure storage APIs to create either a Blob or a queue entry. Both of the functions are using the CompletableFuture async pattern so that the application doesn't have to wait for the operations to complete before continuing on.
 
@@ -1072,7 +1065,6 @@ When a new incident is reported, the user can attach a photo. In this exercise w
                 LOG.info("Successfully uploaded file to blob storage, now adding message to queue");
                 storageService.addMessageToQueueAsync(incidentID, fileName);
             });
-    
     ```
 
 1. Finally, lets make sure the configuration class is created when the application starts. Open `devCamp.WebApp.configurations.ApplicationConfig.java`, and add a line containing `AzureStorageAccountProperties.class` in the `@EnableConfigurationProperties` annotation and resolve the import for `AzureStorageAccountProperties`:

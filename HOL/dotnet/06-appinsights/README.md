@@ -31,7 +31,7 @@ This hands-on-lab has the following exercises:
 * [Exercise 4: Create a global web test](#ex4)
 * [Exercise 5: Interact with your telemetry data](#ex5)
 
-----
+---
 ## Exercise 1: Create an Application Insights resource<a name="ex1"></a>
 
 An instance of Application Insights can be created in a variety of ways, including ARM Templates or CLI commands. For this exercise we will use the Azure Portal to create and configure our instance.
@@ -62,7 +62,7 @@ An instance of Application Insights can be created in a variety of ways, includi
 
 We now have an instance of Application Insights created and ready for data. The Instrumentation Key is important, as it is the link that ties an application to the AI service. 
 
-----
+---
 ## Exercise 2: Add server and client side SDK's <a name="ex2"></a>
 
 App Insights works with 2 components:
@@ -187,7 +187,7 @@ We will add both components to our application and enable the sending of telemet
 
 Our application is now providing the Application Insights service telemetry data from both the server and client.
 
-----
+---
 ## Exercise 3: Monitor custom events<a name="ex3"></a>
 
 Up until this point the telemetry provided has been an automatic, out-of-the-box experience. For custom events we need to use the SDK. Let's create an event where any time a user views their Profile page, we record their name and AzureAD tenant ID.

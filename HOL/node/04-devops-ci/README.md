@@ -43,7 +43,7 @@ This hands-on-lab has the following exercises:
 
 1. A new project called `MyFirstProject` will be automatically created.
 
-----
+---
 ## Exercise 2: Create VSTS Git repository<a name="ex2"></a>
 
 VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us/docs/tfvc/overview) as our project's repository. For this exercise we will use Git, and then clone the repository to our dev machine. 
@@ -66,7 +66,7 @@ VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us
 
 You have now created a project in VSTS with a Git repository. Next we'll clone the repository locally to your developer machine and upload code from our machine to VSTS.
 
-----
+---
 ## Exercise 3: Add application to VSTS Git<a name="ex3"></a>
 
 1. Click `Code` on the top toolbar to navigate to the Code screen. Then click the `Generate Git Credentials` button to set a user name, alias, and password.
@@ -324,7 +324,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     1. Next, we need to grant the new SP "Contributor" permissions for our Azure subscription. Execute the following command, substituting the content between `<>` for the Object ID returned from the SP creation command, and the Subscription ID returned from the Azure Portal Blade.
     
         ```shell
-        azure role assignment create -o Contributor --objectId <Object ID returned in previous step> -c /subscriptions/<Subscription ID GUID retrieved earlier from portal>`
+        azure role assignment create -o Contributor --objectId <Object ID returned in previous step> -c /subscriptions/<Subscription ID GUID retrieved earlier from portal>
         ```
 
     1. An example command looks like: 

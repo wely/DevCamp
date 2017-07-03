@@ -1,5 +1,3 @@
-
-
 # Developer Environment (NodeJS)
 
 ## Overview
@@ -197,7 +195,6 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
     ![image](./media/2016-10-18_13-39-10.gif)
 
 ---
-
 ## Exercise 5: Use an Azure Virtual Machine for remote development<a name="ex5"></a>
 
 1. The Azure resource group template will have created a virtual machine that can be used for remote development on Windows. Exercise 5 describes the configuration for the Windows virtual machine, which would be appropriate for any of the languages.
@@ -296,8 +293,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
 1. Close the remote desktop connection.
 
-----
-
+---
 ## Exercise 6: Deploy shared API application<a name="ex6"></a>
 
 1. The API application has been prepared for you to be available as a communication partner during different exercises and just needs to be deployed once. It will be first used in the second hands on lab.
@@ -523,7 +519,7 @@ After all 3 locks have been deleted you are able to delete the resource group. N
 ![image](./media/2017-06-16_10_25_00.png)
 
 ---
-# Summary
+## Summary
 
 In this hands-on lab, you learned how to:
 * Set up an Office365 developer subscription
@@ -535,7 +531,7 @@ In this hands-on lab, you learned how to:
 
 After completing this module, you can continue on to Module 2: Building modern cloud apps.
 
-#### View Module 2 instructions for [Node.JS](../02-modern-cloud-apps/)
+### View Module 2 instructions for [Node.JS](../02-modern-cloud-apps/)
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

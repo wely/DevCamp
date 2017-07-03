@@ -28,7 +28,7 @@ This hands-on-lab has the following exercises:
 * [Exercise 4: Create a Continuous Integration pipeline](#ex4)
 * [Exercise 5: Deploy code to an Azure Web App](#ex5)
 
-----
+---
 ## Exercise 1: Create VSTS online account<a name="ex1"></a>
 
 1. In your browser, navigate to [https://www.visualstudio.com/](https://www.visualstudio.com/)
@@ -43,7 +43,7 @@ This hands-on-lab has the following exercises:
 
 1. A new project called `MyFirstProject` will be automatically created.
 
-----
+---
 ## Exercise 2: Create VSTS Git repository<a name="ex2"></a>
 
 VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us/docs/tfvc/overview) as our project's repository. For this exercise we will use Git, and then clone the repository to our dev machine. 
@@ -66,7 +66,7 @@ VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us
 
 You have now created a project in VSTS with a Git repository. Next we'll clone the repository locally to your developer machine and upload code from our machine to VSTS.
 
-----
+---
 ## Exercise 3: Add application to VSTS Git<a name="ex3"></a>
 
 1. Click `Code` on the top toolbar to navigate to the Code screen.
@@ -166,7 +166,7 @@ You have now created a project in VSTS with a Git repository. Next we'll clone t
 
      ![image](./media/2017-06-22_08_55_00.png)
 
-----
+---
 ## Exercise 4: Create a Continuous Integration pipeline<a name="ex4"></a>
 
 With application code now uploaded to VSTS, we can begin to create builds via a Build Definition. Navigate to the `Build` tab from the top navigation. We will use the hosted agent within VSTS to process our builds in this exercise.
@@ -234,7 +234,7 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
 We now have a Build Definition that will compile the application and create a package for deployment anytime code is checked into the repository, or a manual build is queued.
 
-----
+---
 ## Exercise 5: Deploy code to an Azure Web App<a name="ex5"></a>
 
 In the ARM Template that was originally deployed, a web app was created as a development environment to hold a deployed .NET application. We will use this web app as a deployment target from VSTS. First, we need to prepare this web app for our application code.
@@ -392,4 +392,5 @@ After completing this module, you can continue on to Module 5: ARM.
 
 ### View Module 5 instructions for [.NET](../05-arm-cd).
 
+---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

@@ -64,7 +64,7 @@ You can use any editor you like to create Azure resource group templates, but bo
 
     ![image](./media/image-008.gif) 
 
-    This web app name needs to be globally unique, as it will be used for the https://***.azurewebsites.net DNS entry and cannot be the same as an existing webapp. Use `javaapptest` plus 4-5 random characters.
+    This web app name needs to be globally unique, as it will be used for the https://[...].azurewebsites.net DNS entry and cannot be the same as an existing webapp. Use `javaapptest` plus 4-5 random characters.
 
     The webapp resource has stubbed in 3 instances of `APP_SERVICE_PLAN_NAME`. Replace this value with the `AppServicePlan` name value that you gave the App Service Plan earlier.
 
@@ -237,6 +237,7 @@ With the updated Release Definition, we can now execute a release.
 
 We have now created a new "test" environment web app and app service plan via an ARM Template, and integrated the new environment into our VSTS Release Definition.
 
+---
 ## Summary
 
 In this hands-on lab, you learned how to:
@@ -249,4 +250,5 @@ After completing this module, you can continue on to Module 6: Monitoring with A
 
 ### View Module 6 instructions for [Java](../06-appinsights).
 
+---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

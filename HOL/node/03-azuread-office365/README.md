@@ -505,7 +505,9 @@ Next, we are going to create a page to display information about the logged in u
 
 We now have a simple visualization of the current user's profile information as loaded from the Microsoft Graph.
 
+---
 ## Exercise 3: Interact with the Microsoft Graph<a name="ex3"></a>
+
 In the previous exercise you read data from the Microsoft Graph API, but other endpoints can be used for more sophisticated tasks. In this exercise we will use the Graph to send an email message whenever a new incident is reported.
 
 1. Create a new file in `utilities/email.js` that will take a recipient and generate a JSON message body for passing into the Graph API. Insert this code:
@@ -657,4 +659,5 @@ After completing this module, you can continue on to Module 4: DevOps with Visua
 
 ### View instructions for [Module 4 for NodeJS](../04-devops-ci).
 
+---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
