@@ -297,50 +297,51 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     
     1. In the new tab, select `New Service Endpoint` and from the drop-down choose `Azure Resource Manager`.
     
-    ![image](./media/image-038.gif)
+        ![image](./media/image-038.gif)
     
     1. The modal window should automatically determine your subscription information. Provide a name such as **Azure**, select `OK`, and skip the remaining instructions for this step.
 
-    ![image](./media/image-039.gif)
+        ![image](./media/image-039.gif)
 
     1. However, if your subscription is not in the dropdown list, then VSTS could not automatically configure a Service Principal for your account and you will need to manually create the SP. A Service Principal is similar to a service account, in that it is a separate account within Azure Active Directory that is given permissions to activities in an Azure Subscription (such as the creation or deletion of Azure resources). 
 
     1. To begin manually creating a Service Principal, click the `here` link at the bottom of the "Add Azure Resource Manager Service Endpoint" modal window.   
 
-    ![image](./media/image-043a.gif)
+        ![image](./media/image-043a.gif)
 
     1. The window format will change to allow you to enter connection information on your subscription. 
 
-    ![image](./media/image-054.gif)
+        ![image](./media/image-054.gif)
 
     1. For `Connection Name`, enter a value of **Azure**.
 
     1. The **Subscription ID** is the GUID for your Azure Subscription. This can be found by opening the [Subscriptions Blade](https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade) from the Azure Portal, and selecting your subscription. The GUID will be in the Subscription Details blade. Next to the ID is the value for `Subscription Name`. Copy these values back in the Modal Dialog in VSTS.
 
-    ![image](./media/image-052.gif)
+        ![image](./media/image-052.gif)
 
     1. To create a Service Principal, open a terminal window that has the [AzureCLI installed](https://docs.microsoft.com/en-us/azure/xplat-cli-install), and execute `azure ad sp create -n DevCampSP -p Devc@mp2016!`. The returned **Service Principal Name** maps to **Service Principal Client ID** in VSTS.  The password used (`Devc@mp2016!`) maps to the **Service Principal Key** in VSTS. Also take note of the returned **Object ID** value for the next step.
 
     1. Next, we need to grant the new SP "Contributor" permissions for our Azure subscription. Execute the following command, substituting the content between `<>` for the Object ID returned from the SP creation command, and the Subscription ID returned from the Azure Portal Blade.
     
-    ```shell
-    azure role assignment create -o Contributor --objectId <Object ID returned in previous step> -c /subscriptions/<Subscription ID GUID retrieved earlier from portal>`
-    ```
+        ```shell
+        azure role assignment create -o Contributor --objectId <Object ID returned in previous step> -c /subscriptions/<Subscription ID GUID retrieved earlier from portal>`
+        ```
 
     1. An example command looks like: 
 
-    ```shell
-    azure role assignment create -o Contributor --objectId ae5350b5-2346-4509-8184-d83f296d3cac -c /subscriptions/9f4d814b-7085-44ae-0f99-bfh8sf5a3f35
-    ```
+        ```shell
+        azure role assignment create -o Contributor --objectId ae5350b5-2346-4509-8184-d83f296d3cac -c /subscriptions/9f4d814b-7085-44ae-0f99-bfh8sf5a3f35
+        ```
 
     1. The **Tenant ID** in VSTS means the GUID of your Azure Active Directory tenant. To find the value, open the [Properties Blade](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Properties) in the Azure Portal's AAD Blade.
 
     1. To visualize where each Service Endpoint value is found, please see:
-    ![image](./media/image-053.gif)
+    
+        ![image](./media/image-053.gif)
     
     1. Once each value is filled out, click `Verify Connection` to ensure the values work, then click `OK` to finish creating the Service Endpoint connection to Azure.
 
-    ![image](./media/image-048a.gif)
+        ![image](./media/image-048a.gif)
 
     > This Service Endpoint pattern is used to connect to a variety of services beyond Azure such as Jenkins, Chef, and Docker.
 
