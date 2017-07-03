@@ -328,7 +328,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
         ![image](./media/image-048a.gif)
 
- 1. If this is the first time you are connecting to this subscription, you will need to authorize VSTS to have access to deploy to Azure. After you select your subscription, click `Authorize`.
+    1. If this is the first time you are connecting to this subscription, you will need to authorize VSTS to have access to deploy to Azure. After you select your subscription, click `Authorize`.
 
     ![image](./media/image-067.gif) 
 

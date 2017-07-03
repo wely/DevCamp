@@ -9,6 +9,7 @@ In this hands-on lab, you will learn how to:
 * Create a VSTS Git repository.
 * Add your code to the VSTS Git repository.
 * Create a Continuous Integration pipeline.
+* Deploy a built application to an Azure Web App from VSTS.
 
 ## Prerequisites
 
@@ -25,7 +26,7 @@ This hands-on-lab has the following exercises:
 * [Exercise 2: Create VSTS Git repository](#ex2)
 * [Exercise 3: Add application to VSTS Git](#ex3)
 * [Exercise 4: Create a Continuous Integration pipeline](#ex4)
-* [Exercise 5: Deploy code to an Azure Web App](#ex5)* 
+* [Exercise 5: Deploy code to an Azure Web App](#ex5)
 
 ---
 ## Exercise 1: Create VSTS online account<a name="ex1"></a>
@@ -200,7 +201,7 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/2017-06-27_10_11_00.png)
 
-    Accept the defaults and click **Queue**. Your Build will then be queued until the Hosted Build Agent can pick it up for processing. This typically takes less than 60 seconds to begin.
+    Accept the defaults and click `Queue`. Your Build will then be queued until the Hosted Build Agent can pick it up for processing. This typically takes less than 60 seconds to begin.
     
     Click the number of the build to see its status:
 
