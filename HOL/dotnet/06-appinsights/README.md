@@ -291,12 +291,13 @@ In the `Metrics Explorer`, you can create charts and grids based on the telemetr
 
    ![image](./media/2016-10-25_22-29-02.gif)
   
-----
+---
 ## Summary
 
 In this hands-on lab, you learned how to:
-* Learn to create an Application Insights instance.
+* Create an Application Insights instance.
 * Use SDKs to add telemetry to your application.
 * View performance metrics in the Azure Portal.
 
+---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

@@ -382,15 +382,12 @@ Application Insights can also integrate with the Java logging frameworks such as
     > The include and logger lines at the bottom are examples of other logging tasks you can do within the logback environment. Please refer to the [logback documentation](http://logback.qos.ch/) for more information. 
 
 ---
-## Summary ##
+## Summary
 
 In this hands-on lab, you learned how to:
-* Exercise 1: Create an Application Insights resource
-* Exercise 2: Add server and client side SDK's 
-* Exercise 3: Monitor custom events
-* Exercise 4: Create a global web test
-* Exercise 5: Interact with your telemetry data
-* Exercise 6: Monitor logging events
+* Create an Application Insights instance.
+* Use SDKs to add telemetry to your application.
+* View performance metrics in the Azure Portal.
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
