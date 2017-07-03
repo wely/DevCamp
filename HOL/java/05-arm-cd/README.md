@@ -64,15 +64,15 @@ You can use any editor you like to create Azure resource group templates, but bo
 
     ![image](./media/image-008.gif) 
 
-    This web app name needs to be globally unique, as it will be used for the https://***.azurewebsites.net DNS entry and cannot be the same as an existing webapp.  Use `javaapptest` plus 4-5 random characters.
+    This web app name needs to be globally unique, as it will be used for the https://***.azurewebsites.net DNS entry and cannot be the same as an existing webapp. Use `javaapptest` plus 4-5 random characters.
 
     The webapp resource has stubbed in 3 instances of `APP_SERVICE_PLAN_NAME`. Replace this value with the `AppServicePlan` name value that you gave the App Service Plan earlier.
 
     ![image](./media/image-009.gif)
 
-1. The web application needs to be configured to work with the AzureAD, Azure Storage, Azure Redis Cache, and ASP.NET WebAPI that we configured earlier. 
+1. The web application needs to be configured to work with the AzureAD, Azure Storage, Azure Redis Cache, and ASP.NET WebAPI that we configured earlier.
 
-    In earlier exercises we have configured these settings as environment variables on our local machines, and in the Azure Portal for our "Dev" Azure Web App.  
+    In earlier exercises we have configured these settings as environment variables on our local machines, and in the Azure Portal for our "Dev" Azure Web App.
 
     ARM Templates can include `resources`, which define numerous options for a given resource. For a web app, we can use `appsettings` to adjust the environment variables present on our app. Here is an extended web app with the `resources` array filled in.
     
@@ -81,67 +81,68 @@ You can use any editor you like to create Azure resource group templates, but bo
     > If you are using VSCode and have been debugging locally with `.vscode/launch.json` then you can copy/paste the values into the template to override the sample values below:
 
     ```json
-            {
-            "apiVersion": "2015-08-01",
-            "name": "javaapptest0298374",
-            "type": "Microsoft.Web/sites",
-            "location": "[resourceGroup().location]",
-            "tags": {
-                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/AppServicePlan')]": "Resource",
-                "displayName": "javaapptest0298374"
-            },
-            "dependsOn": [
-                "Microsoft.Web/serverfarms/AppServicePlan"
-            ],
-            "properties": {
-                "name": "javaapptest0298374",
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', 'AppServicePlan')]"
-            },
-            "resources": [{
-                    "apiVersion": "2015-08-01",
-                    "name": "web",
-                    "type": "config",
-                    "dependsOn": [
-                        "[concat('Microsoft.Web/sites/', 'javaapptest0298374')]"
-                    ],
-                    "properties": {
-                        "javaVersion": "1.8",
-                        "javaContainer": "TOMCAT",
-                        "javaContainerVersion": "8.0"
-                    }
-                },
-                {
-                    "name": "appsettings",
-                    "type": "config",
-                    "apiVersion": "2015-08-01",
-                    "dependsOn": [
-                        "[concat('Microsoft.Web/sites/', 'javaapptest0298374')]"
-                    ],
+	{
+		"apiVersion": "2015-08-01",
+		"name": "javaapptest0298374",
+		"type": "Microsoft.Web/sites",
+		"location": "[resourceGroup().location]",
+		"tags": {
+			"[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/AppServicePlan')]": "Resource",
+			"displayName": "javaapptest0298374"
+		},
+		"dependsOn": [
+			"Microsoft.Web/serverfarms/AppServicePlan"
+		],
+		"properties": {
+			"name": "javaapptest0298374",
+			"serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', 'AppServicePlan')]"
+		},
+		"resources": [
+		    {
+				"apiVersion": "2015-08-01",
+				"name": "web",
+				"type": "config",
+				"dependsOn": [
+					"[concat('Microsoft.Web/sites/', 'javaapptest0298374')]"
+				],
+				"properties": {
+					"javaVersion": "1.8",
+					"javaContainer": "TOMCAT",
+					"javaContainerVersion": "8.0"
+				}
+			},
+			{
+				"name": "appsettings",
+				"type": "config",
+				"apiVersion": "2015-08-01",
+				"dependsOn": [
+					"[concat('Microsoft.Web/sites/', 'javaapptest0298374')]"
+				],
 
-                    "tags": {
-                        "displayName": "AppSettings"
-                    },
-                    "properties": {
-                        "WEBSITE_NODE_DEFAULT_VERSION": "6.7.0",
-                        "AZURE_STORAGE_ACCOUNT": "incidentblobstg32csxy6h3",
-                        "AZURE_STORAGE_ACCESS_KEY": "JUv0Ii0ZH59z/VuloHVVf0jIwU+g2bfVb76dg0XQo+m0ne+PL8S7eFcZdNqkUbBj4EmQrAW673bhhXdDUfiNRQ==",
-                        "AZURE_STORAGE_BLOB_CONTAINER": "images",
-                        "AZURE_STORAGE_QUEUE": "thumbnails",
-                        "INCIDENT_API_URL": "http://incidentapi32csxy6h3sbku.azurewebsites.net/",
-                        "REDISCACHE_HOSTNAME": "incidentcache32csxy6h3sbku.redis.cache.windows.net",
-                        "REDISCACHE_PORT": "6379",
-                        "REDISCACHE_SSLPORT": "6380",
-                        "REDISCACHE_PRIMARY_KEY": "ofiGLn8mowbVJ9/egFQ2+opdel4FQw7yWMFhxZclfPo=",
-                        "AAD_CLIENT_ID": "31959d66-08a7-49b1-8f03-7e64d55045f5",
-                        "AAD_CLIENT_SECRET": "oxE2XRnjyBkuz24saKuqN22",
-                        "AAD_RETURN_URL": "[concat('https://', reference('javaapptest0298374', '2015-08-01').defaultHostName, '/auth/openid/return')]"
-                    }
-                }
-            ]
-        }
+				"tags": {
+					"displayName": "AppSettings"
+				},
+				"properties": {
+					"WEBSITE_NODE_DEFAULT_VERSION": "6.7.0",
+					"AZURE_STORAGE_ACCOUNT": "incidentblobstg32csxy6h3",
+					"AZURE_STORAGE_ACCESS_KEY": "JUv0Ii0ZH59z/VuloHVVf0jIwU+g2bfVb76dg0XQo+m0ne+PL8S7eFcZdNqkUbBj4EmQrAW673bhhXdDUfiNRQ==",
+					"AZURE_STORAGE_BLOB_CONTAINER": "images",
+					"AZURE_STORAGE_QUEUE": "thumbnails",
+					"INCIDENT_API_URL": "http://incidentapi32csxy6h3sbku.azurewebsites.net/",
+					"REDISCACHE_HOSTNAME": "incidentcache32csxy6h3sbku.redis.cache.windows.net",
+					"REDISCACHE_PORT": "6379",
+					"REDISCACHE_SSLPORT": "6380",
+					"REDISCACHE_PRIMARY_KEY": "ofiGLn8mowbVJ9/egFQ2+opdel4FQw7yWMFhxZclfPo=",
+					"AAD_CLIENT_ID": "31959d66-08a7-49b1-8f03-7e64d55045f5",
+					"AAD_CLIENT_SECRET": "oxE2XRnjyBkuz24saKuqN22",
+					"AAD_RETURN_URL": "[concat('https://', reference('javaapptest0298374', '2015-08-01').defaultHostName, '/auth/openid/return')]"
+				}
+			}
+		]
+	}
     ```
 
-    > For the `AAD_RETURN_URL` we are dynamically resolving the value by using a `reference()` lookup for a given app name. Ensure that you replace `javaapptest0298374`  with whatever name you choose for your web app.
+    > For the `AAD_RETURN_URL` we are dynamically resolving the value by using a `reference()` lookup for a given app name. Ensure that you replace `javaapptest0298374` with whatever name you choose for your web app.
 
     Your template should now look like this:
    
@@ -222,7 +223,7 @@ With the updated Release Definition, we can now execute a release.
 
     ![image](./media/2017-06-27_16_55_00.png)
 
-1. Click the Release number to navigate to the Release Details screen
+1. Click the Release number to navigate to the Release Details screen:
 
     ![image](./media/2017-06-27_16_56_00.png)
 

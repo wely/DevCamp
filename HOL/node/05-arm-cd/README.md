@@ -8,33 +8,35 @@ In this hands-on lab, you will learn how to:
 * Author Azure Resource Manager templates
 * Deploy ARM Templates to Azure
 * Integrate environments into VSTS Release pipelines
+* Deploy City Power & Light to new Web App.
 
 ## Prerequisites
 
-The source for this lab is located in the [start](start) folder. 
+* You should have completed the previous Continuous Integration HOL.
 
 ## Exercises
 This hands-on-lab has the following exercises:
-* Exercise 1: Create an ARM Template in Visual Studio Code
-* Exercise 2: Deploy ARM Template to Azure via the XPlat CLI
-* Exercise 3: Integrate new Web App into VSTS
-* Exercise 4: Deploy City Power & Light to new Web App
+* [Exercise 1: Create an ARM Template in Visual Studio Code](#ex1)
+* [Exercise 2: Deploy ARM Template to Azure via the XPlat CLI](#ex2)
+* [Exercise 3: Integrate new Web App into VSTS](#ex3)
+* [Exercise 4: Deploy City Power & Light to new Web App](#ex4)
 
-### Exercise 1: Create an ARM Template in Visual Studio Code
+---
+## Exercise 1: Create an ARM Template in Visual Studio Code<a name="ex1"></a>
 
-Visual Studio Code includes a sizable ecosystem of extensions.  One such extension is the [Azure Resource Manager Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools).
+You can use any editor you like to create Azure resource group templates, but both Visual Studio and Visual Studio Code have convenient mechanisms for this process. In this example, we are going to use Visual Studio Code, and we are going to leverage the [Azure Resource Manager Tools extension](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools).
 
-1. Install the ARM Tools extension in Visual Studio Code by using the [Command Palette](https://code.visualstudio.com/Docs/editor/codebasics#_command-palette).  With VSCode open, press `CTRL` + `P` and enter `ext install azurerm-vscode-tools`.
+1. Install the ARM Tools extension in Visual Studio Code by using the [Command Palette](https://code.visualstudio.com/Docs/editor/codebasics#_command-palette). With VSCode open, press `CTRL` + `P` and enter `ext install azurerm-vscode-tools`.
 
     ![image](./media/image-001.gif)
 
-    This extension gives intellisense and schema support for ARM Templates.  
+    This extension gives intellisense and schema support for ARM Templates.
     
-1. Next, let's install a pack of code snippets to make creating resources easier. In VS Code, you can open the JSON snippets file by either navigating to **File** -> **Preferences** -> **User Snippets** -> **JSON**, or by selecting F1 and typing `preferences` until you can select **Preferences: Snippets**.
+1. Next, let's install a pack of code snippets to make creating resources easier. In VS Code, you can open the JSON snippets file by either navigating to `File` -> `Preferences` -> `User Snippets` -> `JSON`, or by selecting `F1` and typing `preferences` until you can select `Preferences: Snippets`.
 
     ![image](./media/image-002.gif)
 
-    From the options, select **JSON**
+    From the options, select `JSON`:
 
     ![image](./media/image-003.gif)
 
@@ -44,17 +46,17 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
     
     From the [azure-xplat-arm-tooling](https://github.com/Azure/azure-xplat-arm-tooling/) repo, open the [raw snippets file](https://raw.githubusercontent.com/Azure/azure-xplat-arm-tooling/master/VSCode/armsnippets.json) and copy the entire contents to your clipboard.
 
-    Then, paste the contents into VSCode in between the `{}` of the json file. 
+    Then, paste the contents into VSCode in between the `{}` of the json file, replacing the existing comment. 
 
     ![image](./media/image-005.gif)
 
     Save and close the file. You will now be able to use snippets in the creation of ARM files.
 
-1. Now that we have our tooling setup, open `start/azuredeploy.json `. This is a skeleton ARM Template, including the four sections Parameters, Variables, Resources, and Outputs. Click into the brackets next to Resources and create a linebreak.  In the new line, type `arm-p` and hit enter to select **arm-plan**.  This will create a new App Service Plan, which controls the features and performance of associated Azure Web Apps.
+1. Now that we have our tooling setup, open `start` -> `azuredeploy.json` in this HOL's folder. This is a skeleton ARM Template, including the four sections `parameters`, `variables`, `resources`, and `outputs`. Click into the brackets next to `resources` and create a linebreak. In the new line, type `arm-p` and hit enter to select `arm-plan`. This will create a new App Service Plan, which controls the features and performance of associated Azure Web Apps.
 
     ![image](./media/image-006.gif)
 
-    Tap the right arrow key, then hit backspace to remove the `1` from the resource name. 
+    Tap the right arrow key, then hit backspace to remove the `1` from the resource name `AppServicePlan1`. 
 
     ![image](./media/image-007.gif)
 
@@ -62,35 +64,37 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
 
     ![image](./media/image-008.gif) 
 
-    This web app name needs to be globally unique, as it will be used for the https://***.azurewebsites.net DNS entry and cannot be the same as an existing webapp.  Use `nodejsapptest` plus 4-5 random characters.
+    This web app name needs to be globally unique, as it will be used for the https://***.azurewebsites.net DNS entry and cannot be the same as an existing webapp. Use `nodejsapptest` plus 4-5 random characters.
 
     The webapp resource has stubbed in 3 instances of `APP_SERVICE_PLAN_NAME`. Replace this value with the `AppServicePlan` name value that you gave the App Service Plan earlier.
 
-    ![image](./media/image-009.gif)
+    ![image](./media/2017-07-03_10_11_00.png)
 
-1. The web application needs to be configured to work with the AzureAD, Azure Storage, Azure Redis Cache, and ASP.NET WebAPI that we configured earlier. 
+1. The web application needs to be configured to work with the AzureAD, Azure Storage, Azure Redis Cache, and ASP.NET WebAPI that we configured earlier.
 
-    In earlier exercises we have configured these settings as environment variables on our local machines, and in the Azure Portal for our "Dev" Azure Web App.  
+    In earlier exercises we have configured these settings as environment variables on our local machines, and in the Azure Portal for our "Dev" Azure Web App.
 
-    ARM Templates can include `resources`, which define numerous options for a given resource.  For a web app, we can use `appsettings` to adjust the environment variables present on our app.  Here is an extended web app with the `resources` array filled in.  Paste the `resources` content into your ARM Template, updating the `dependsOn` attribute to match your website's `name`, and the environment variables to match your values. 
+    ARM Templates can include `resources`, which define numerous options for a given resource. For a web app, we can use `appsettings` to adjust the environment variables present on our app. Here is an extended web app with the `resources` array filled in.
+    
+    Paste the `resources` content into the ARM Web App resource within your ARM Template. Update the `dependsOn` attribute to match your website's `name`, and the environment variables to match your values. 
 
-    > If you are using VSCode and have been debugging locally with `.vscode/launch.json` then you can copy/paste the values into the template to override the sample values below
+    > If you are using VSCode and have been debugging locally with `.vscode/launch.json` then you can copy/paste the values into the template to override the sample values below:
 
     ```json
     {
         "apiVersion": "2015-08-01",
-        "name": "citypowertest581951",
+        "name": "nodejsapptest123456789",
         "type": "Microsoft.Web/sites",
         "location": "[resourceGroup().location]",
         "tags": {
             "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/AppServicePlan')]": "Resource",
-            "displayName": "citypowertest581951"
+            "displayName": "nodejsapptest123456789"
         },
         "dependsOn": [
             "Microsoft.Web/serverfarms/AppServicePlan"
         ],
         "properties": {
-            "name": "citypowertest581951",
+            "name": "nodejsapptest123456789",
             "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', 'AppServicePlan')]"
         },
         "resources": [
@@ -99,7 +103,7 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
                 "type": "config",
                 "apiVersion": "2015-08-01",
                 "dependsOn": [
-                    "[concat('Microsoft.Web/sites/', 'citypowertest581951')]"
+                    "[concat('Microsoft.Web/sites/', 'nodejsapptest123456789')]"
                 ],
                 "tags": {
                     "displayName": "AppSettings"
@@ -117,93 +121,101 @@ Visual Studio Code includes a sizable ecosystem of extensions.  One such extensi
                     "REDISCACHE_PRIMARY_KEY": "ofiGLn8mowbVJ9/egFQ2+opdel4FQw7yWMFhxZclfPo=",
                     "AAD_CLIENT_ID": "2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6",
                     "AAD_CLIENT_SECRET": "JjrKfgDyo5peQ4xJa786e8z",
-                    "AAD_RETURN_URL": "[concat('https://', reference('citypowertest581951', '2015-08-01').defaultHostName, '/auth/openid/return')]"
+                    "AAD_RETURN_URL": "[concat('https://', reference('nodejsapptest123456789', '2015-08-01').defaultHostName, '/auth/openid/return')]"
                 }
             }
         ]
     }
     ```
 
-    > For the `AAD_RETURN_URL` we are dynamically resolving the value by using a `reference()` lookup for a given app name. Ensure that `citypowertest581951`   matches whatever name you choose for your web app
+    > For the `AAD_RETURN_URL` we are dynamically resolving the value by using a `reference()` lookup for a given app name. Ensure that you replace `nodejsapptest123456789` with whatever name you choose for your web app.
 
-We are now ready to deploy our ARM Template containing an App Service Plan, and a Web App with environment variables to Azure. 
+    Your template should now look like this:
+   
+    ![image](./media/2017-06-27_16_16_00.png)
 
-### Exercise 2: Deploy ARM Template to Azure via the XPlat CLI
+We are now ready to deploy our ARM Template containing an App Service Plan, and a Web App with environment variables to Azure.
 
-For deploying the ARM Template we will use the Azure Xplat CLI.  Please Ensure you have [installed](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/#option-1-install-an-npm-package) the Azure XPlat CLI package from NPM before proceeding.
+---
+## Exercise 2: Deploy ARM Template to Azure via the XPlat CLI<a name="ex2"></a>
 
-1. From the command line, `cd` to the `start` directory containing our ARM Template
+For deploying the ARM Template we will use the Azure Xplat CLI. Please Ensure you have [installed](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/#option-1-install-an-npm-package) the Azure XPlat CLI package from NPM before proceeding.
+
+1. From the command line, `cd` to the `start` directory containing our ARM Template:
 
     ```bash
+    azure login
     azure group create -n DevCampTest -l "West US"
     azure group deployment create -f .\azuredeploy.json -g DevCampTest
     ```
     
-    > Feel free to swap out "West US" with another region
+    > Feel free to swap out "West US" with another region.
 
-    ![image](./media/image-011.gif)
+    ![image](./media/2017-06-27_16_35_00.png)
 
-1. Open the [Azure Portal](https://portal.azure.com) and verify that the Resource Group was created with the defined resources.
+1. Open the [Azure Portal](https://portal.azure.com) and verify that the app has been created in your resource group with the defined resources.
 
-    ![image](./media/image-010.gif)
+    ![image](./media/2017-06-27_16_39_00.png)
 
-    Also check the **Application Settings** blade to verify that the environment variables were created as expected
+    Also check the `Application Settings` blade to verify that the environment variables were created as expected:
 
-    ![image](./media/image-012.gif)
+    ![image](./media/2017-06-27_16_41_00.png)
 
-1. To use authentication with this app, we need to update our AzureAD app registration to whitelist its URL. In the browser, head back to the [Application Registration Portal](https://apps.dev.microsoft.com/#/appList) and select your application.  Under the **Platforms** heading, select **Add Url** and paste in the URL of your newly created Azure Web App plus the `/auth/openid/return` suffix. Also, since two of our applications share the same *.azurewebsites.net domain we need to add an entry for `https://azurewebsites.net` into the list. 
+1. To use authentication with this new web app, we need to update our AzureAD app registration to whitelist its URL. In the browser, navigate to the [Application Registration Portal](https://apps.dev.microsoft.com/#/appList) and select your application. Under the `Platforms` heading, select `Add Url` and paste in the URL of your newly created Azure Web App plus the `/auth/openid/return` suffix. Also, since two of our applications share the same `*.azurewebsites.net` domain we need to add an entry for `https://azurewebsites.net` into the list. Click `Save`.
 
-    ![image](./media/image-021.gif)
+    ![image](./media/2017-06-27_16_44_00.png)
+    
+    > See [here](https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-limitations/#restrictions-on-redirect-uris) for more information about redirect URIs.
 
-    > See [here](https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-limitations/#restrictions-on-redirect-uris) for more information about redirect URIs
+The resource group is now holding our "Test" environment web app and has been added to our app registration.
 
-The new resource group is now holding our "Test" environment web app and has been added to our app registration.
+---
+## Exercise 3: Integrate new Web App into VSTS<a name="ex3"></a>
 
-### Exercise 3: Integrate new Web App into VSTS
+1. In [VSTS](https://www.visualstudio.com/), open the **Release Definition** that we started in a previous lab. You should be be able to find this by navigating to `Releases` in the `Build & Release` menu on the top navigation. We need to create a second environment to serve as our test web app.
 
-We need to create a second environment to serve as our test web app. Back in VSTS, open the Release Definition that we started in a previous lab by hovering on **Build & Release** from the top navigation bar, and selecting **Releases**.
+    ![image](./media/2017-06-27_16_46_00.png)
 
-![image](./media/image-013.gif)
+1. Click the drop-down arrow next to the existing Release Definition, and select `Edit`:
 
-1. Click the dropdown arrow next to the existing Release Definition, and select **Edit**
+    ![image](./media/2017-06-27_16_48_00.png)
 
-    ![image](./media/image-023.gif)
+1. In the Release Definition, select `Add environment` and select `Clone a selected environment`. We will use our existing Dev web app configuration as the template for the new test web app configuration.
 
-1. In the Release Definition, select **Add environment** and select **Clone a selected environment**. 
+    ![image](./media/2017-06-27_16_49_00.png)
 
-    ![image](./media/image-014.gif)
+1. VSTS allows us to control and govern how releases happen between environments. Instead of automatically deploying our test environment after our dev environment, let's add an approval step. A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test environment. 
 
-1. VSTS allows us to control and govern how releases happen between environments.  Instead of automatically deploying our test environment after our dev environment, let's add an approval step.  A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test environment. 
+    For the `Pre-deployment approval` option, select `Specific users` and enter your account name. Then click the `Create` button:
 
-    For the **Pre-deployment approval** option, select **Specific users** and enter your account name. Then click the **Create** button
+    ![image](./media/2017-06-27_16_50_00.png)
 
-    ![image](./media/image-015.gif)
+1. Rename the environment from **Copy of...** to **Test** by clicking on it's title and click the the `Deploy AzureRM App Service` task. Update the `App Service Name` to match the web app that you just deployed via the ARM Template. The task now targets the test environment web app, rather than the dev environment web app.
 
-1. Rename the environment from **Dev copy** to **Test** and click the the **Deploy AzureRM App Service** task. Update the **App Service Name** to match the web app that you just deployed via the ARM Template. The task now targets the test environment web app, rather than the dev environment web app.
-
-    ![image](./media/image-016.gif)
+    ![image](./media/2017-06-27_16_52_00.png)
 
 1. Save your Release Definition to finish adding the additional environment.
 
-### Exercise 4: Deploy City Power & Light to new Web App
+---
+## Exercise 4: Deploy City Power & Light to new Web App<a name="ex4"></a>
 
 With the updated Release Definition, we can now execute a release.
 
-1. Click on the **Release** button and in the dropdown choose **Create Release**.
+1. Click on the `Release` button and in the drop-down choose `Create Release`.
 
-    ![image](./media/image-017.gif)
+    ![image](./media/2017-06-27_16_53_00.png)
 
-1. Select a Build to release into the environments. This is likely the largest numbered Build. Then click the **Create** button
+1. Select a Build to release into the environments. This is likely the largest numbered Build. Then click the `Create` button.
 
-    ![image](./media/image-018.gif)
+    ![image](./media/2017-06-27_16_55_00.png)
 
-1. Click the Release number to navigate to the Release Details screen
+1. Click the Release number to navigate to the Release Details screen:
 
-    ![image](./media/image-019.gif)
+    ![image](./media/2017-06-27_16_56_00.png)
 
-1. On the top toolbar, select **Logs** to monitor the release process.  When the release for the dev environment finishes, you will be prompted to approve the release to the test environment.  Click **Approve** to continue the release.
+1. On the top toolbar, select `Logs` to monitor the release process. When the release for the dev environment finishes, you will be prompted to approve the release to the test environment. Click `Approve` to continue the release.
 
-    ![image](./media/image-020.gif)
+    ![image](./media/2017-06-27_16_57_00.png)
 
 1. Once the test environment app has finished its release, open the app in the browser and login.
 
@@ -214,9 +226,13 @@ We have now created a new "test" environment web app and app service plan via an
 ## Summary
 
 In this hands-on lab, you learned how to:
-* Create an ARM Template in Visual Studio Code
-* Deploy ARM Template to Azure via the XPlat CLI
-* Integrate new Web App into VSTS
-* Deploy City Power & Light to new Web App
+* Create an ARM Template in Visual Studio Code.
+* Deploy ARM Template to Azure via the XPlat CLI.
+* Integrate new Web App into VSTS.
+* Deploy City Power & Light to new Web App.
+
+After completing this module, you can continue on to Module 6: Monitoring with Application Insights.
+
+### View Module 5 instructions for [NodeJS](../06-appinsights).
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

@@ -8,6 +8,7 @@ In this hands-on lab, you will learn how to:
 * Author Azure Resource Manager templates.
 * Deploy ARM Templates to Azure.
 * Integrate environments into VSTS Release pipelines.
+* Deploy City Power & Light to new Web App.
 
 ## Prerequisites
 
