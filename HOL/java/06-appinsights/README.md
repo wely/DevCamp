@@ -11,7 +11,7 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 
-*The source for the starter app is located in the [start](start) folder. 
+* The source for the starter app is located in the [start](start) folder. 
 
 ## Exercises
 This hands-on-lab has the following exercises:
@@ -57,7 +57,7 @@ We now have an instance of Application Insights created and ready for data. The 
 ## Exercise 2: Add server and client side SDK's<a name="ex2"></a>
 
 App Insights works with 2 components:
-1. A server side SDK that integrates into the ASP.NET processes.
+1. A server side SDK that integrates into the Java processes.
 2. A snippet of JavaScript sent down to the client's browser to monitor behavior.
 
 We will add both components to our application and enable the sending of telemetry into the AppInsights service.
