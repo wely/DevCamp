@@ -243,13 +243,13 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     > NOTE: On some high resolution monitors (HIGH DPI), you will notice that the icons and command line windows appear small. If this is an issue, you can download [Remote Desktop Connection Manager 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44989).
 
-1. Change directory to the root using `cd c:\`
+1. Change directory to the root using `cd c:\ `.
 
-1. Type `git clone https://github.com/AzureCAT-GSI/DevCamp.git`
+1. Type `git clone https://github.com/AzureCAT-GSI/DevCamp.git`:
 
     ![image](./media/2016-10-18_17-03-51.gif)
 
-    All of the content for this DevCamp will now be located in `c:\DevCamp\`.
+    All of the content for this DevCamp will now be located in `c:\DevCamp`.
 
 1. Inside your development Virtual Machine, open a *NEW* terminal window and execute this command to verify that the node version is v6 or greater:
 
@@ -289,7 +289,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
     choco install -y maven
     ```
 
-    Go to the root directory using `cd \`, and perform these commands in sequence:
+    Go to the root directory using `cd \ `, and perform these commands in sequence:
 
     ```CMD
     refreshenv
@@ -571,11 +571,11 @@ After all 3 locks have been deleted you are able to delete the resource group. N
 
 In this hands-on lab, you learned how to:
 * Set up an Office365 developer subscription.
-* Set up an Azure trial subscription.
+* Set up an Azure trial subscription allowing you to complete this course free of charge.
 * Configure your Azure subscription for DevCamp.
-* Create an Azure Virtual Machine for development.
+* Create an Azure Virtual Machine for development where you can carry out the following hands on labs.
 * Connect to the Azure Virtual Machine and configure it for development.
-* Use the Azure portal to view the resources that you created.
+* Use the Azure portal to view the resources that you created giving you a first overview of the management of Azure resources.
 
 After completing this module, you can continue on to Module 2: Building modern cloud apps.
 

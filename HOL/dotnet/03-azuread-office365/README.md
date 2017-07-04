@@ -121,7 +121,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     ![image](./media/2017-21-06_08_49_00.png)  
 
 1. In Visual Studio, open `Web.config` and update the settings with the values from the app registration screen:
-    For the `AAD_APP_REDIRECTURI` value, enter the local IIS web site URL including the port and an ending `\` Example: `http://localhost:8443/`, 
+    For the `AAD_APP_REDIRECTURI` value, enter the local IIS web site URL including the port and an ending `\ `. Example: `http://localhost:8443/`, 
     ```xml
    <!--HOL 3-->
     <add key="AAD_APP_ID" value="APPID" />

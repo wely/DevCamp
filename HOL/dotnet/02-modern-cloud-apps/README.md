@@ -563,7 +563,7 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
             }
         }
     }
-    ````
+    ```
 
 1. We will now add code to the Dashboard Controller. Open the file located at `DevCamp.WebApp` -> `Controllers` -> `DashboardController.cs`.
 
@@ -820,9 +820,9 @@ do tasks such as this.
 Our application started as a prototype on our local machine, but now uses a variety of Azure services. We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
 
 In this hands-on lab, you learned how to:
-* Use Visual Studio to connect to an API.
+* Use Visual Studio to connect to an Azure hosted ASP.NET WebAPI that queries a DocumentDB Collection and leveraging several Azure services at the same time.
 * Provision an Azure Web App to host the Web site.
-* Modify a view to add caching.
+* Modify a view to add caching. This enables you to use the benefits of the Azure Redis Cache, reducing queries and increasing performance.
 * Modify code to add queuing and blob storage.
 
 After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs.
