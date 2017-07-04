@@ -383,6 +383,7 @@ Application Insights can also integrate with the Java logging frameworks such as
 
 ---
 ## Summary
+Azure gives you a complete toolset to monitor the status and performance of your applications. It also allows you to run automated performance tests to easily find weaknesses before you go live with your app.
 
 In this hands-on lab, you learned how to:
 * Create an Application Insights instance.
