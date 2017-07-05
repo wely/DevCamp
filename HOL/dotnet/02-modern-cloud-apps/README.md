@@ -122,8 +122,6 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-10.gif)
 
-    As part of the original ARM template we deployed an ASP.NET WebAPI that queries a DocumentDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
-
 1. In Visual Studio, delete the entirety of the `<!--TEMPLATE CODE -->` comment block to remove the sample incidents.
 
 1. Between the `<!--INSERT VIEW CODE -->` comment block paste the following. This block handles the display of the incident dashboard. It creates a HTML panel for each incident retrieved via the API and stored in the solution's model:
@@ -208,7 +206,7 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/image-28.gif)
 
-1. The Settings.cs holds our static variables and constants for the application. It is located at `DevCamp.WebApp` -> `Utils` -> `Settings.cs`:
+1. The `Settings.cs` holds our static variables and constants for the application. It is located at `DevCamp.WebApp` -> `Utils` -> `Settings.cs`:
 
     ![image](./media/2017-06-16_12_19_00.png)
 
@@ -386,7 +384,7 @@ This hands-on-lab has the following exercises:
     }
     ```
 
-1. Resolve the references for the following namespaces `IncidentAPI`, `IncidentAPI.Models`, `DevCamp.WebApp.Utils`, `DevCamp.WebApp.ViewModels` and `DevCamp.WebApp.Mappers` (or you can simply paste this in to the top of each file:
+1. Resolve the references for the following namespaces `IncidentAPI`, `IncidentAPI.Models`, `DevCamp.WebApp.Utils`, `DevCamp.WebApp.ViewModels` and `DevCamp.WebApp.Mappers` (or you can simply paste this in to the top of each file):
     
     ```C#
     using IncidentAPI;
@@ -400,7 +398,7 @@ This hands-on-lab has the following exercises:
 
 1. Add a new `Create` method to the `IncidentController` class that will handle the Create HTTP post method. Add the following code:
 
-    > DO NOT delete the existing `Create` method which handles the default view (eg. HTTP Get).
+    > DO NOT delete the existing `Create` method which handles the default view (e.g. HTTP Get).
 
     ```csharp
     [HttpPost]
@@ -577,7 +575,7 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
         incidents = ja.ToObject<List<Incident>>();
         //TODO: END ADD Caching
     ```
-    with the following:
+    With the following:
 
     ```csharp
     //TODO: BEGIN ADD Caching
