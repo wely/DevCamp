@@ -8,7 +8,6 @@ City Power & Light is a sample application that allows citizens to report "incid
 * DocumentDB is used as the data persistence layer.
 
 In this lab, you will continue enhancing the overall City Power & Light experience by creating an incident reporting bot from scratch and via the Azure Bot Service and host it in Azure. The bot will be able to gather data from a user with an optional photo and submit it to the WebAPI.
-In this lab, you will set up the developing environment to support the creation of bot applications. You will create your own incident reporting bot from scratch and via the Azure Bot Service and host it in Azure.
 
 ## Objectives
 In this hands-on lab, you will learn how to:
@@ -37,21 +36,19 @@ This hands-on-lab has the following exercises:
 
 To develop a bot on your machine you need the `Bot Application` template for Visual Studio and the `Bot Framework Emulator`. To test your bot once it has been deployed to Azure you will need `ngrok`.
 
-1. The SDK is available as a NuGet package and as open source on GitHub.
-
 1. The easiest way to install the `Bot Application` template is via the Visual Studio 2015 `New Project` dialog. Select `Online` and enter `Bot` in the search box. Select `Bot_Application`. Create a new project by clicking `OK` and the template will be installed.
 
     ![image](./media/2017-07-12_10_49_00.png)
 
-    If you are using Visual Studio 2017 download the [Bot Application template](http://aka.ms/bf-bc-vstemplate) and install the template by saving the .zip file to your Visual Studio 2017 project templates directory. The Visual Studio 2017 project templates directory is typically located here: `%USERPROFILE%\Documents\Visual Studio 2017\Templates\ProjectTemplates\Visual C#\`.
+    If you are using Visual Studio 2017 download the [Bot Application template](http://aka.ms/bf-bc-vstemplate) and install the template by saving the .zip file to your Visual Studio 2017 project templates directory. The Visual Studio 2017 project templates directory is typically located here: `%USERPROFILE%\Documents\Visual Studio 2017\Templates\ProjectTemplates\Visual C#\ `.
 
-1. We will use the locally installed `Bot Framework Emulator`. Your bot can also be integrated into a website, reached via Skype and many other channels. You can configure the channels via the bot's blade in the Azure portal.
+1. We will use the locally installed `Bot Framework Emulator` to test our bot. Once the bot is registered it can also be tested in the Bot Framework Portal. There you can configure the channels your bot will support. It can be integrated into a website, reached via Skype and many other channels.
 
 1. To install the `Bot Framework Emulator`, download the current version from the [release page](https://emulator.botframework.com/) and execute the setup.
 
     ![image](./media/2017-07-12_11_50_00.png)
 
-1. Download the current version of [ngrok](https://ngrok.com/) and extract the `.exe` file to your Desktop.
+1. `ngrok` is a tunneling software that allows you to debug a remotely hosted bot. Download the current version of [ngrok](https://ngrok.com/) and extract the `.exe` file to your Desktop.
 
     ![image](./media/2017-07-12_13_48_00.png)
 
@@ -149,6 +146,8 @@ We are using the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotne
 	}
 	```
 
+    Note how we can use the `IncidentTypes` enum and the boolean property `Emergency`. The `FormBuilder` will automatically turn these types into choices presented to the user. Two regular expressions check the format of the `PhoneNumber` and `ZipCode` properties.
+	
 1. Lets test the new bot. Hit `F5` to start the debugging process. The Internet Explorer will open and display bot information. Note the address.
 
 1. Start the `Bot Framework Emulator`.
