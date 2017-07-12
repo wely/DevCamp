@@ -290,7 +290,7 @@ In the `Metrics Explorer`, you can create charts and grids based on the telemetr
 1. When we go to `Application map`, we can see a diagram of the monitored items that make up the application:
 
    ![image](./media/2016-10-25_22-29-02.gif)
-  
+
 ---
 ## Summary
 Azure gives you a complete toolset to monitor the status and performance of your applications. It also allows you to run automated performance tests to easily find weaknesses before you go live with your app.
@@ -299,6 +299,10 @@ In this hands-on lab, you learned how to:
 * Create an Application Insights instance.
 * Use SDKs to add telemetry to your application.
 * View performance metrics in the Azure Portal.
+
+After completing this module, you can continue on to Module 6: Bot.
+
+### View Module 5 instructions for [.NET](../07-bot).
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
