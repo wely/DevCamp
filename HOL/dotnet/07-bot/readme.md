@@ -1,4 +1,4 @@
-# Developer Environment (.NET)
+# Bot (.NET)
 
 ## Overview
 City Power & Light is a sample application that allows citizens to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo. The application is implemented with several components:
