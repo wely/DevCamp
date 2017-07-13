@@ -452,7 +452,9 @@ You have seen some of the basics of bot development. In the exercises you have u
         ![image](./media/2017-07-12_10_20_00.png)
 
     1. Your downloaded bot code created by the Azure Bot Service should now compile and you can also use the `Bot Framework Emulator` to debug it locally.
-    
+
+You have now seen an alternative way to create and debug a bot using the Azure Bot Service. A basic bot can be created completely without a development environment.
+
 ---
 ## Summary
 
