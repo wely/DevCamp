@@ -1,4 +1,4 @@
-# Bots (.NET)
+# Bots (NodeJS)
 
 ## Overview
 City Power & Light is a sample application that allows citizens to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo. The application is implemented with several components:
@@ -8,6 +8,8 @@ City Power & Light is a sample application that allows citizens to report "incid
 * DocumentDB is used as the data persistence layer.
 
 In this lab, you will continue enhancing the overall City Power & Light experience by creating an incident reporting bot from scratch and via the Azure Bot Service and host it in Azure. The bot will be able to gather data from a user with an optional photo and submit it to the WebAPI.
+
+> ***Bot development is currently only supported in C# and NodeJS. In this exercise we will mainly demonstrate the creation and deployment of bots which is independent of the used programming language and different bot capabilities. The actual bot will be created by the extensive use of the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-formflow) template in C#. Changes to the code are minimal and do not require actual understanding of the C# language. It is important to see how the template is applied.***
 
 ## Objectives
 In this hands-on lab, you will learn how to:
@@ -261,7 +263,7 @@ To file the reported incident we use the incident API. The necessary methods are
 
 1. Open `DataWriter` -> `IncidentController.cs` and replace `YOUR INCIDENT API URL` with the URL of your incident API which you retrieved in [HOL 2 exercise 1]((../02-modern-cloud-apps)#ex1) and looks similar to `http://incidentapi[...].azurewebsites.net`.
 
-1. Open `DataWriter` -> `StorageHelper.cs` and replace `YOUR AZURE BLOB STORAGE` with the **Storage account name** and `YOUR AZURE BLOB STORAGE ACCESS KEY` with the **key1** you retrieved in [HOL 2 exercise 3]((../02-modern-cloud-apps)#ex3). You have stored these values in the `Web.config` of the previous lab's code.
+1. Open `DataWriter` -> `StorageHelper.cs` and replace `YOUR AZURE BLOB STORAGE` with the **Storage account name** and `YOUR AZURE BLOB STORAGE ACCESS KEY` with the **key1** you retrieved in [HOL 2 exercise 3]((../02-modern-cloud-apps)#ex3). You have stored these values in the environment variables of the previous lab's code.
 
 1. Now that the `DataWriter` project is prepared we will call its `Create` method after we got all the data from the user. Open `CityPowerBot` -> `Dialogs` -> `BasicForm.cs` and add the following `OnCompletionAsyncDelegate` declaration at the beginning of the `BuildForm` method before the `return`:
 
