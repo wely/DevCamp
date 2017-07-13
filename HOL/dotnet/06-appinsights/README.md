@@ -300,7 +300,7 @@ In this hands-on lab, you learned how to:
 * Use SDKs to add telemetry to your application.
 * View performance metrics in the Azure Portal.
 
-After completing this module, you can continue on to Module 7: Bot.
+After completing this module, you can continue on to Module 7: Bots.
 
 ### View Module 7 instructions for [.NET](../07-bot).
 

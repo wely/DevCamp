@@ -1,4 +1,4 @@
-# Bot (.NET)
+# Bots (.NET)
 
 ## Overview
 City Power & Light is a sample application that allows citizens to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo. The application is implemented with several components:
@@ -11,7 +11,7 @@ In this lab, you will continue enhancing the overall City Power & Light experien
 
 ## Objectives
 In this hands-on lab, you will learn how to:
-* Set up the developing environment to support the creation of bot applications
+* Set up the developing environment to support the creation of bot applications.
 * Create your own bot from scratch.
 * Create your own bot using Azure Bot Service.
 * Hosting your bot in Azure.
