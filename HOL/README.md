@@ -4,7 +4,7 @@ These hands on labs (HOLs) are intended to introduce developers to Azure and Off
 
 ---
 ## HOL 1: Setting up your developer environment
-Setting up your developer environment for your specific language
+Setting up your developer environment for your specific language.
 In this lab you will create the environment that is needed for your language preference.
 
 * Create O365 Developer Tenant
