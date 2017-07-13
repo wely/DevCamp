@@ -435,19 +435,19 @@ You have seen some of the basics of bot development. In the exercises you have u
     
     1. Follow the guide and install [Azure Functions CLI](https://www.npmjs.com/package/azure-functions-cli).
     
-    ![image](./media/2017-07-12_09_42_00.png)
+        ![image](./media/2017-07-12_09_42_00.png)
     
     1. And also [DotNet CLI](https://github.com/dotnet/cli).
     
-    ![image](./media/2017-07-12_09_45_00.png)
+        ![image](./media/2017-07-12_09_45_00.png)
     
     1. And finally the [Command Task Runner Visual Studio Extension](https://visualstudiogallery.msdn.microsoft.com/e6bf6a3d-7411-4494-8a1e-28c1a8c4ce99).
     
-    ![image](./media/2017-07-12_09_45_30.png)
+        ![image](./media/2017-07-12_09_45_30.png)
     
     1. Now start Visual Studio and add the reference `, "Microsoft.Bot.Connector": "1.1.0"` to the `project.json` file.
     
-    ![image](./media/2017-07-12_10_20_00.png)
+        ![image](./media/2017-07-12_10_20_00.png)
 
     1. Your downloaded bot code created by the Azure Bot Service should now compile and you can also use the `Bot Framework Emulator` to debug it locally.
     
