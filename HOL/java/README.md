@@ -13,7 +13,7 @@ In this session, we will provide a brief history of Azure, a quick overview of t
 ## Hands on Labs overview
 This provides and overview of each hands on lab exercise.
 
-[View Overview](../../HOL/README.md)
+[View Overview](../../README.md)
 ---
 
 ## Module 1 - Developer Tools Overview
@@ -30,7 +30,7 @@ In this lab you will create the environment that is needed for your language pre
 * Take prepared image, walk through the tools that are available for your platform (.NET, Node.JS, Java | Windows, MacOSx)
 * Run a custom ARM Template to scaffold out resources used during the training
 
-#### View instructions for [.NET](../HOL/dotnet/01-developer-environment) | [Node.JS](../HOL/node/01-developer-environment/) | [Java](../HOL/java/01-developer-environment/)
+#### View instructions for [.NET](../dotnet/01-developer-environment) | [Node.JS](../node/01-developer-environment/) | [Java](../java/01-developer-environment/)
 
 ----
 ##  Module 2 - Modern Cloud Apps Overview
@@ -47,7 +47,7 @@ This lab will introduce you to building modern cloud apps with Azure. You will p
 * Add Redis cache for the dashboard
 * Stretch: Image resizing with Azure Functions
 
-#### View instructions for [.NET](../HOL/dotnet/02-modern-cloud-apps) | [Node.JS](../HOL/node/02-modern-cloud-apps) | [Java](../HOL/java/02-modern-cloud-apps)
+#### View instructions for [.NET](../dotnet/02-modern-cloud-apps) | [Node.JS](../node/02-modern-cloud-apps) | [Java](../java/02-modern-cloud-apps)
 
 ---
 ##  Module 3 - Identity and Office365 APIs Overview
@@ -66,7 +66,7 @@ This lab will introduce you to identity in Azure AD and the Microsoft Graph. You
 * Send an email via Graph on new incident creation
 * Stretch: Add a calendar event on new incident creation
 
-#### View instructions for [.NET](../HOL/dotnet/03-azuread-office365) | [Node.JS](../HOL/node/03-azuread-office365) | [Java](../HOL/java/03-azuread-office365)
+#### View instructions for [.NET](../dotnet/03-azuread-office365) | [Node.JS](../node/03-azuread-office365) | [Java](../java/03-azuread-office365)
 
 ---
 ## Module 4 - DevOps Overview
@@ -84,7 +84,7 @@ This lab will introduce you to DevOps with Visual Studio Team Services. You will
 * Push code into VSTS
 * Create CI pipeline for build. Ends with published artifacts
 
-#### View instructions for [.NET](../HOL/dotnet/04-devops-ci) | [Node.JS](../HOL/node/04-devops-ci) | [Java](../HOL/java/04-devops-ci)
+#### View instructions for [.NET](../dotnet/04-devops-ci) | [Node.JS](../node/04-devops-ci) | [Java](../java/04-devops-ci)
 
 ---
 ## Module 5 - Infrastructure as code
@@ -100,7 +100,7 @@ This lab will introduce you to ARM templates and deployments to Azure. You will 
 * Create 1 Production environment
 * Configure Continuous deployment
 
-#### View instructions for [.NET](../HOL/dotnet/05-arm-cd) | [Node.JS](../HOL/node/05-arm-cd) | [Java](../HOL/java/05-arm-cd)
+#### View instructions for [.NET](../dotnet/05-arm-cd) | [Node.JS](../node/05-arm-cd) | [Java](../java/05-arm-cd)
 
 ---
 ## Module 6 - Monitoring
@@ -119,7 +119,7 @@ This lab will introduce you to Azure Application Insights. You will perform the 
 * Create availability test that test the dashboard
 * Stretch - Create custom metric around the API call
 
-#### View instructions for [.NET](../HOL/dotnet/06-appinsights) | [Node.JS](../HOL/node/06-appinsights) | [Java](../HOL/java/06-appinsights)
+#### View instructions for [.NET](../dotnet/06-appinsights) | [Node.JS](../node/06-appinsights) | [Java](../java/06-appinsights)
 
 ---
 ## Module 7 - Bots
@@ -133,4 +133,4 @@ This lab will introduce you to Azure hosted Bots. You will perform the following
 * Create your own bot using Azure Bot Service.
 * Hosting your bot in Azure.
 
-#### View instructions for [.NET](../HOL/dotnet/07-bot) | [Node.JS](../HOL/node/07-bot) | [Java](../HOL/java/07-bot)
+#### View instructions for [.NET](../dotnet/07-bot) | [Node.JS](../node/07-bot) | [Java](../java/07-bot)
