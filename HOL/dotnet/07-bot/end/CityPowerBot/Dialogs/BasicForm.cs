@@ -60,7 +60,6 @@ namespace CityPowerBot
                 await context.PostAsync("The incident report has been logged.");
             };
 
-
             // Builds an IForm<T> based on BasicForm
             return new FormBuilder<BasicForm>()
                 .Message("I am the City Power Bot! You can file a new incident report with me :-)")

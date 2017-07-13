@@ -122,7 +122,6 @@ We are using the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotne
 				// Builds an IForm<T> based on BasicForm
 				return new FormBuilder<BasicForm>()
 					.Message("I am the City Power Bot! You can file a new incident report with me :-)")
-					.Message("Did you know? At any point during our conversation you can send me an image that I will attach to your report.")
 					.Field(nameof(FirstName))
 					.Field(nameof(LastName))
 					.Message("Hello {FirstName} {LastName}! Let's file your report!")
@@ -148,7 +147,7 @@ We are using the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotne
 
     Note how we can use the `IncidentTypes` enum and the boolean property `Emergency`. The `FormBuilder` will automatically turn these types into choices presented to the user. Two regular expressions check the format of the `PhoneNumber` and `ZipCode` properties.
 	
-1. Lets test the new bot. Hit `F5` to start the debugging process. The Internet Explorer will open and display bot information. Note the address.
+1. Let's test the new bot. Hit `F5` to start the debugging process. The Internet Explorer will open and display bot information. Note the address.
 
 1. Start the `Bot Framework Emulator`.
 
@@ -235,24 +234,36 @@ Did you notice the image button next to the message window? You can not only sen
 	}
 	```
 
-1. Hit `F5` to start the debugging process and talk to your bot via the `Bot Framework Emulator`. During the interaction click the image button and send an image from your machine. The bot will confirm that it "got your image".
+    The code will store the last submitted image in the variables to be used when the report is submitted.
+
+1. Now we have to tell the users that they can send images along with their incident reports. Open the `CityPowerBot` -> `Dialogs` -> `BasicForm.cs` and in the `BuildForm` method add this additional message right after the first message your bot sends:
+
+    ```csharp
+    .Message("Did you know? At any point during our conversation you can send me an image that I will attach to your report.")
+    ```
+
+1. Hit `F5` to start the debugging process and talk to your bot via the `Bot Framework Emulator`. Note that the bot is informing you about its new capability. During the interaction click the image button and send an image from your machine. The bot will confirm that it "got your image".
 
     ![image](./media/2017-07-11_16_07_00.png)
-	
-	  ![image](./media/2017-07-11_16_08_00.png)
+    
+    The DevCamp folder contains many images that you can use to test the feature.
+    
+    ![image](./media/2017-07-11_16_08_00.png)
+
+    Sending the image will not affect the rest of your conversation with the bot.
 
 Your bot now accepts and stores an image send by the user. Now that you have everything that can be submitted in an incident report you are going to send it to the incident API.
 
 ---
 ## Exercise 4: Integrate the API<a name="ex4"></a>
 
-To file the reported incident we use the incident API. The necessary methods are present in the `DataWriter` project. The project contains excerpts from our previous hands on labs. The code was shortened to just create an incident and upload the attached image. To complete it you have to add your Azure account information. 
+To file the reported incident we use the incident API. The necessary methods are present in the `DataWriter` project. The project contains excerpts from the previous hands on labs. The code was shortened to just create an incident and upload the attached image. To complete it you have to add your Azure account information. 
 
-1. Open `DataWriter` -> `IncidentController.cs` and replace `YOUR INCIDENT API URL` with the URL of your incident API which you retrieved in [HOL 2 Exercise 1]((../02-modern-cloud-apps)#ex1) and looks similar to `http://incidentapi[...].azurewebsites.net`.
+1. Open `DataWriter` -> `IncidentController.cs` and replace `YOUR INCIDENT API URL` with the URL of your incident API which you retrieved in [HOL 2 exercise 1]((../02-modern-cloud-apps)#ex1) and looks similar to `http://incidentapi[...].azurewebsites.net`.
 
-1. Open `DataWriter` -> `StorageHelper.cs` and replace `YOUR AZURE BLOB STORAGE` with the **Storage account name** and `YOUR AZURE BLOB STORAGE ACCESS KEY` with the **key1** you retrieved in [HOL 2 Exercise 3]((../02-modern-cloud-apps)#ex3).
+1. Open `DataWriter` -> `StorageHelper.cs` and replace `YOUR AZURE BLOB STORAGE` with the **Storage account name** and `YOUR AZURE BLOB STORAGE ACCESS KEY` with the **key1** you retrieved in [HOL 2 exercise 3]((../02-modern-cloud-apps)#ex3). You have stored these values in the `Web.config` of the previous lab's code.
 
-1. Now that the `DataWriter` project is prepared we will call its `Create` method after we got all the data from the user. Open `CityPowerBot` -> `BasicForm.cs` and add the following `OnCompletionAsyncDelegate` method to the beginning of the `BuildForm` method:
+1. Now that the `DataWriter` project is prepared we will call its `Create` method after we got all the data from the user. Open `CityPowerBot` -> `Dialogs` -> `BasicForm.cs` and add the following `OnCompletionAsyncDelegate` declaration at the beginning of the `BuildForm` method before the `return`:
 
     ```csharp
     OnCompletionAsyncDelegate<BasicForm> processReport = async (context, state) =>
@@ -263,7 +274,7 @@ To file the reported incident we use the incident API. The necessary methods are
     };
     ```
 
-1. We let the users confirm that they want to submit the entered data. If the user replies with `No` the input can be changed before it is submitted. Once we get the confirmation we can process the incident report by sending it to our incident API. Add the `Confirm` and `OnCompletion` calls to the end of the form builder chain:
+1. We are going to let the users confirm that they want to submit the entered data using the template's confirm feature. If the user replies with `No` the input can be changed before it is submitted. Again the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-formflow) template does all of the work for you. Once we get the confirmation we can process the incident report by sending it to our incident API. Add the `Confirm` and `OnCompletion` calls to the end of the form builder chain before the `Build()` call:
 
     ```csharp
 	.Field(nameof(PhoneNumber))
@@ -283,11 +294,11 @@ To file the reported incident we use the incident API. The necessary methods are
 
     ![image](./media/2017-07-11_16_10_00.png)
 
-1. In another browser tab, open the Dashboard of the City Power site you deployed in the previous hands on labs to check that your new incident has been logged.
+1. In another browser tab, open the Dashboard of the City Power site you deployed in the previous hands on labs to check that your new incident has been logged. You can also run a local copy of your code from another instance of Visual Studio to run the City Power site.
 
     ![image](./media/2017-07-11_16_13_00.png)
 
-1. Use the Azure Storage Explorer like you did in [HOL 2 Exercise 3]((../02-modern-cloud-apps)#ex3) to check that the image you attached was uploaded to the blob storage. You can double-click the image to open it in a new window.    
+1. Use the Azure Storage Explorer like you did in [HOL 2 exercise 3]((../02-modern-cloud-apps)#ex3) to check that the image you attached was uploaded to the blob storage. You can double-click the image to open it in a new window.    
 
     ![image](./media/2017-07-11_16_14_00.png)
 
@@ -390,7 +401,7 @@ You have now manually created a bot and uploaded it to Azure. An alternative way
 ---
 ## Exercise 6: Azure Bot Service<a name="ex6"></a>
 
-You have seen some of the basics of bot development. In the exercises you have used the FormFlow template to create the interaction between the user and the bot. Many other templates are available. You can also use [Azure Bot Service](https://docs.microsoft.com/en-us/bot-framework/azure/azure-bot-service-overview) to quickly create a bot from within the Azure portal.
+You have seen some of the basics of bot development. In the exercises you have used the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-formflow) template to create the interaction between the user and the bot. Many other templates are available. You can also use [Azure Bot Service](https://docs.microsoft.com/en-us/bot-framework/azure/azure-bot-service-overview) to quickly create a bot from within the Azure portal.
 
 1. To create a bot using the Azure Bot Service navigate to the DevCamp resource group and click `Add`. Enter `Bot Service` in the filter box, then select the `Bot Service (Preview)` and click `Create` on the details blade.
 
@@ -404,7 +415,7 @@ You have seen some of the basics of bot development. In the exercises you have u
 
     ![image](./media/2017-07-11_16_41_00.png)
 
-1. Choose the `Form` to end up with a bot that is again based on the `FormFlow` template.
+1. Choose the `Form` to end up with a bot that is again based on the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-formflow) template.
 
 1. As of July 2017 there are still some problems with the online template creation that might prevent you from using Edge or the Internet Explorer. If you encounter the message "This item cannot be accessed or modified." use the Chrome browser instead.
 
