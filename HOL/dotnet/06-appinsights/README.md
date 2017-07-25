@@ -26,7 +26,7 @@ In this hands-on lab, you will learn how to:
 ## Exercises
 This hands-on-lab has the following exercises:
 * [Exercise 1: Create an Application Insights resource](#ex1)
-* [Exercise 2: Add server and client side SDK's](#ex2)
+* [Exercise 2: Add server and client side SDKs](#ex2)
 * [Exercise 3: Monitor custom events](#ex3)
 * [Exercise 4: Create a global web test](#ex4)
 * [Exercise 5: Interact with your telemetry data](#ex5)
@@ -63,7 +63,7 @@ An instance of Application Insights can be created in a variety of ways, includi
 We now have an instance of Application Insights created and ready for data. The Instrumentation Key is important, as it is the link that ties an application to the AI service. 
 
 ---
-## Exercise 2: Add server and client side SDK's <a name="ex2"></a>
+## Exercise 2: Add server and client side SDKs <a name="ex2"></a>
 
 App Insights works with 2 components:
 1. A server side SDK that integrates into the ASP.NET processes.
@@ -98,7 +98,7 @@ We will add both components to our application and enable the sending of telemet
     >
     > If you aren't seeing this option, make sure you are using an updated version of the `Developer Analytics Tools` extension. You can check this by going to `Tools` -> `Extensions and Updates` and click `Updates` -> `Visual Studio Gallery`. If available, choose `Developer Analytics Tools`.
     >
-    > By the time of this writing, this is 7.19 and automatic updates were not shown. You might have to install the update manually by downloading it from [VisualStudioGallery](https://visualstudiogallery.msdn.microsoft.com/82367b81-3f97-4de1-bbf1-eaf52ddc635aJakub).
+    > By the time of this writing, this is version 7.19 and automatic updates were not shown. If this happens try to uninstall the `Developer Analytics Tools`, restart Visual Studio and install the `Developer Analytics Tools` again. If this does not work, you might have to install the update manually by downloading it from [Visual Studio Gallery](https://visualstudiogallery.msdn.microsoft.com/82367b81-3f97-4de1-bbf1-eaf52ddc635aJakub).
 
 1. By default, the `ApplicationInsights.config` is excluded from source control due to the fact that it contains the Instrumentation key. We will remove this from the config file and inject it at runtime. Remove the following key from the `ApplicationInsights.config` file:
 

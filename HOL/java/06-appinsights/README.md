@@ -16,7 +16,7 @@ In this hands-on lab, you will learn how to:
 ## Exercises
 This hands-on-lab has the following exercises:
 * [Exercise 1: Create an Application Insights resource](#ex1)
-* [Exercise 2: Add server and client side SDK's ](#ex2)
+* [Exercise 2: Add server and client side SDKs ](#ex2)
 * [Exercise 3: Monitor custom events](#ex3)
 * [Exercise 4: Create a global web test](#ex4)
 * [Exercise 5: Interact with your telemetry data](#ex5)
@@ -54,7 +54,7 @@ An instance of Application Insights can be created in a variety of ways, includi
 We now have an instance of Application Insights created and ready for data. The Instrumentation Key is important, as it is the link that ties an application to the AI service. 
 
 ---
-## Exercise 2: Add server and client side SDK's<a name="ex2"></a>
+## Exercise 2: Add server and client side SDKs<a name="ex2"></a>
 
 App Insights works with 2 components:
 1. A server side SDK that integrates into the Java processes.
