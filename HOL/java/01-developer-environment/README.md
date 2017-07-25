@@ -552,7 +552,7 @@ They are all called `WinDev-...` but are of different types:
 ---
 ## Clean Up
 
-> Please refer back to this section after the DevCamp concludes
+**&#x1F53A; Please refer back to this section after the DevCamp concludes! This is instructional only! Do NOT clean up until the DevCamp is done! &#x1F53A;**
 
 To clean up a Resource Group, we typically simply delete the Resource Group. However, since we are using an Azure DevTest Lab to manage our Virtual Machine, we have an additional step.
 
