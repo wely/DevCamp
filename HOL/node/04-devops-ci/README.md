@@ -291,7 +291,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
 1. If the drop-down next to `Azure subscription` offers you your subscription, select it, authorize it and continue to select your `nodejsapp...` Azure Web app resource from the `App Service name` drop-down.
  
-1. If the drop-down next to `Azure subscription` does not offer you your subscription, click on `Manage` to open a new browser tab holding configuration options.
+1. If the drop-down next to `Azure subscription` does not offer you your subscription or the drop-down next to `App Service name` does not offer you your Azure Web app resource (give it a moment after selecting the subscription), click on `Manage` to open a new browser tab holding configuration options.
     
     ![image](./media/2017-06-27_13_13_00.png)
     

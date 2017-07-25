@@ -271,7 +271,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/2017-06-22_09_05_00.png)
 
-1. If the drop-down next to `Azure subscription` does not offer you your subscription, click on `Manage`:
+1. If the drop-down next to `Azure subscription` does not offer you your subscription or the drop-down next to `App Service name` does not offer you your Azure Web app resource (give it a moment after selecting the subscription), click on `Manage`:
 
     ![image](./media/2017-06-22_11_35_00.png)
 
