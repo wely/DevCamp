@@ -125,8 +125,8 @@ AzureAD can handle authentication for web applications. First we will create a n
           clientAuthenticationScheme: form
           preEstablishedRedirectUri: ${AAD_RETURN_URL}
           scope:  openid,profile,User.Read, Mail.Send
-      resource:
-        userInfoUri: https://graph.microsoft.com/v1.0/me    
+        resource:
+          userInfoUri: https://graph.microsoft.com/v1.0/me    
     ```
     This will configure the Spring OAuth2 to use the Azure Active Directory URLs for login, token exchange, and getting the user's information, and it will retrieve the application configuration variables from the OS environment.
 
