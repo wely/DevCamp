@@ -414,7 +414,9 @@ This hands-on-lab has the following exercises:
     
     ![image](./media/2017-06-19_13_16_00.png)    
     
-    You can also do this by clicking on the red `x` next to that line, and choosing the `import Autowired` quick fix.  You will have to do this for `IncidentService` and `List`. For `List`, choose the `import java.util.List` option.  This simply adds the appropriate imports to the top of the class. You will have to do this many times during the DevCamp to make sure the proper imports are included.
+    You can also do this by clicking on the red `x` next to that line, and choosing the `import Autowired` quick fix.  You will have to do this for `IncidentService` and `List`. For `List`, choose the `import java.util.List` option. This simply adds the appropriate imports to the top of the class. You will have to do this many times during the DevCamp to make sure the proper imports are included.
+    
+    ***To save some time you can tell Eclipse to add the imports automatically when you save a file. On the menu go to `Java` -> `Editor` -> `Save Actions` -> `Organize Imports`.*** 
 
 1. We will need to create two configuration classes. The first is `devCamp.WebApp.configurations.ApplicationConfig`, with this code:
     ```java
