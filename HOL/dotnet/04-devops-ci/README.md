@@ -372,7 +372,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-033.gif) 
 
-    > Note: Be sure to include the trailing slash **/** in the URL.
+    > Note: Be sure to include the trailing slash **/** in the URL and ensure this address is using **https**.
 
 1. Open a browser and navigate to the site. You should see the running site on Azure.
     
