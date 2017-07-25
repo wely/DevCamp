@@ -132,7 +132,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     > Be careful with indentation in the `application.yml` file.  The line with `security:` should not be indented at all, the line with `oauth2:` should be indented with two spaces, etc. If you run the application and get an error like this: `java.lang.IllegalArgumentException: HTTP URL must not be null`, check your indentation.  If you continue to have problems with this, it may be convenient to copy this file from the `end` directory.
 
-1. We will need to tell Spring which pages to protect and which ones to remain public. Open the `devCamp.WebApp.DevcampApplication` class. Add the `@EnableOauth2Sso` annotation, and make the `DevcampApplication` class inherit from `WebSecurityConfigurerAdapter`. Also, add a `configure` function so the class looks like this:
+1. We will need to tell Spring which pages to protect and which ones to remain public. Open the `devCamp.WebApp.DevcampApplication` class. Add the `@EnableOAuth2Sso` annotation, and make the `DevcampApplication` class inherit from `WebSecurityConfigurerAdapter`. Also, add a `configure` function so the class looks like this:
 
     ```java
     package devCamp.WebApp;
