@@ -298,8 +298,9 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
     mvn clean package
     ```
 
-    Also Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.  
-    If you would like to download a newer version (eg. Neon), Eclipse is available here:
+    Also Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.
+    
+    If you would like to download a newer version (e.g. [Neon](https://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/neon3) - be careful to not upgrade to versions newer than Neon since they no longer support gradle), Eclipse is available here:
 
     [http://www.eclipse.org/downloads/]()
 
