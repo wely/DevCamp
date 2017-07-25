@@ -317,15 +317,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     }
     ```
 
-1. If the `App_Start` folder does not contain a `Startup.cs` file, right click on the `App_Start` folder and select `Add` -> `New Item...`:
-
-    ![image](./media/2017-21-06_10_00_00.png)
-
-1. In the `Add New Item` dialog, choose `Visual C#` -> `Web` -> `General`, and choose `OWIN Startup Class` in the center pane. Name it `Startup` and click `Add`. 
-
-    ![image](./media/2017-21-06_10_02_00.png)
-
-1. Once the file is created, open it in the editor and paste the following code. This will handle the initial authentication flow and cache the tokens:
+1. Open the `App_Start` -> `Startup.cs` file in the editor and paste the following code. This will handle the initial authentication flow and cache the tokens:
 
     ```csharp
     using DevCamp.WebApp.App_Start;
