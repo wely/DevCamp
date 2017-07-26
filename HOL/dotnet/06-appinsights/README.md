@@ -132,6 +132,8 @@ We will add both components to our application and enable the sending of telemet
 
 1. Build and run your application and then navigate around several pages to generate sample telemetry.
 
+    > If you encounter the error that `an assembly cannot be loaded` try to downgrade the NuGet package `System.IdentityModel.Tokens.Jwt` to 4.0.3 in Visual Studio.
+
 1. You can view telemetry in the Azure Portal or directly in Visual Studio from the menu item. 
     
     ![image](./media/image-022.gif)
