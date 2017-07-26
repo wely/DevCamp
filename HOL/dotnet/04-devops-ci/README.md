@@ -366,7 +366,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/2017-06-22_11_49_00.png) 
     
-1. Navigate to the <a href="https://apps.dev.microsoft.com" target="_blank">Application Registration Portal (https://apps.dev.microsoft.com)</a>. 
+1. Navigate to the [Application Registration Portal](https://apps.dev.microsoft.com).
 
 1. Open the configuration for your application and add the Azure web application URL to the list of Redirect URLs. Click `Save`.
 
@@ -378,6 +378,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     
     ![image](./media/2017-06-22_12_12_00.jpg)
 
+    > If your browser displays the error `Could not load file or assembly 'System.IdentityModel.Tokens.Jwt' [...]` you have to downgrade the NuGet package `System.IdentityModel.Tokens.Jwt` to 4.0.3 in Visual Studio.
 ---
 ## Summary
 

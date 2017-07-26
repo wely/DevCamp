@@ -248,7 +248,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
 1. We can deploy our code to this Azure Web App, however it was not configured with our AzureAD details. When trying to authenticate, AzureAD would refuse since it does not know about this domain. 
 
-    To fix this, return to [https://apps.dev.microsoft.com](), login, and open your application settings.
+    To fix this, return to the [Application Registration Portal](https://apps.dev.microsoft.com), login, and open your application settings.
 
     In the section for `Platforms`, click **Add Url** to add the URL of your Azure Web App from Step 1. Remember to append the `/auth/openid/return` route at the end, since that is the route that will process the return data from AzureAD. Ensure this address is using **https**.
 
@@ -262,7 +262,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     * `AAD_RETURN_URL` should be set to the same URL that we just configured for our AzureAD application. Should be similar to `https://javaapp....azurewebsites.net/auth/openid/return`. Ensure this is using **https**.
 
-    * `AAD_CLIENT_ID` should match the Application ID in the [https://apps.dev.microsoft.com]() portal and similar to `2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6`.
+    * `AAD_CLIENT_ID` should match the Application ID in the [Application Registration Portal](https://apps.dev.microsoft.com) and similar to `2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6`.
 
     * `AAD_CLIENT_SECRET` should be the Application Secret generated in the apps portal, and be similar to `JjrKfgDyo5peQ4xJa786e8z`.
 
