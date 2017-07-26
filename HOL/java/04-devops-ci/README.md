@@ -105,6 +105,13 @@ You have now created a project in VSTS with a Git repository. Next we'll clone t
     ```
 
     ![image](./media/2017-06-27_09_10_00.png)
+    
+    > You might have to provide information before you can make your first commit. In this case execute these lines with your login data and try again:
+    
+    ```CMD
+    git config --global user.email "your@email.com"
+    git config --global user.name "Your name"
+    ```
 
 1. In the browser, reload the `Code` page to see the uploaded code:
 
