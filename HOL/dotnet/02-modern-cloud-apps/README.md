@@ -202,9 +202,15 @@ This hands-on-lab has the following exercises:
 
     This will download the definition for the API and install NuGet packages for Microsoft.Rest. It will also create the IncidentAPI client proxy classes and models.
 
-    > ***DO NOT Update the NuGet package for Microsoft.Rest.ClientRuntime. There is a dependency issue with the updated package.***
+    > ***DO NOT Update the NuGet package for 'Microsoft.Rest.ClientRuntime'. There is a dependency issue with the updated package.***
 
     ![image](./media/image-28.gif)
+	
+    > ***Should you encounter problems in the dev environment you may have to downgrade the 'Newtonsoft.Json' package to version 7.0.1.***
+    > From Visual Studio, go to `Tools` -> `Nuget Package Manager` -> `Nuget Package Manager Console`.
+    > From the command line prompt, type: `install-package Newtonsoft.Json -Version 7.0.1`
+    > Copy the Newtonsoft.Json.DLL from `C:\DevCamp\HOL\dotnet\02-modern-cloud-apps\start\packages\Newtonsoft.Json.7.0.1\lib\net45` to `C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE`
+    > Restart Visual Studio and continue.
 
 1. The `Settings.cs` holds our static variables and constants for the application. It is located at `DevCamp.WebApp` -> `Utils` -> `Settings.cs`:
 
