@@ -133,6 +133,10 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 1. There are prebuilt definitions for a variety of programming languages and application stacks. For this exercise select `Empty` and click `Apply`:
 
     ![image](./media/2017-06-27_09_21_00.png)
+    
+1. Use the suggested name and select the `Default` from the `Default agent queue` drop-down.
+
+    ![image](./media/2017-08-11_09_08_00.png)
 
 1. The build tasks are created for us as part of the template. 
 
