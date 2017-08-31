@@ -28,7 +28,7 @@ In [HOL 3](../03-azuread-office365) you learned about Microsoft Graph and used i
 When an incident is reported: 
 * Use Microsoft Graph to read all the current user's contacts.
 * Create a new calendar event.
-* The event should be scheduled during regular working hours and at least 24h in the future.
+* The event should be scheduled during regular working hours and at least one day in the future.
 * As attendees include 3 entries from the user's contact list.
 * As body include the details of the incident.
 
