@@ -39,7 +39,7 @@ When an incident is reported:
 * In the `settings.cs` add new constants for Graph URLs to contacts and to events.
 * In the `Models` folder create new classes for `Event` to store the values send to the Graph API (similar in use to `Models` -> `MailMessage.cs`) and for `Contact` to deserialize the received data (similar in use to `ViewModels` -> `UserProfileViewModel.cs`). Note that you can use the existing `Body` and `EmailAddress` classes from the `MailMessage` class for your `Event` class and that one class is enough to handle `start` and `end`.
 * A response from the `Contacts` API contains more properties than listed in the article above. You will just need the (not listed) `emailAddresses` part. Use the debugger to analyze a response.
-* Note that the contacts are contained in an array called `values` that you have to deserialize, too.
+* Note that the contacts are contained in an array called `value` that you have to deserialize, too.
 * Call your new code in the `Controllers` -> `IncidentController.cs` after `SendIncidentEmail` call in the `Create` method to execute it when a new incident has been reported.
 ---
 ## Summary
