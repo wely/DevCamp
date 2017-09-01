@@ -86,7 +86,7 @@ Click the hyperlink **Azure Subscription** to begin the Azure Trial signup proce
 
 > BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass. If you are not using an Azure Pass, please skip ahead to **END Steps for Azure Pass redemption**
 
-1. Navigate to [http://www.microsoftazurepass.com/]().
+1. Navigate to [http://www.microsoftazurepass.com/](http://www.microsoftazurepass.com/).
 
     ![image](./media/2017-06-15_10_39_00.png)
 
@@ -302,11 +302,11 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
     
     If you would like to download a newer version (e.g. [Neon](https://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/neon3) - be careful to not upgrade to versions newer than Neon since they no longer support gradle), Eclipse is available here:
 
-    [http://www.eclipse.org/downloads/]()
+    [http://www.eclipse.org/downloads/](http://www.eclipse.org/downloads/)
 
     and Spring Tool Suite is available here:
 
-    [http://spring.io/tools/sts]()
+    [http://spring.io/tools/sts](http://spring.io/tools/sts)
 
     For example, after downloading the Eclipse install, run it and you'll get this screen:
 

@@ -86,7 +86,7 @@ Click the hyperlink **Azure Subscription** to begin the Azure Trial signup proce
 
 > BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass. If you are not using an Azure Pass, please skip ahead to **END Steps for Azure Pass redemption**
 
-1. Navigate to [http://www.microsoftazurepass.com/]().
+1. Navigate to [http://www.microsoftazurepass.com/](http://www.microsoftazurepass.com/).
 
     ![image](./media/2017-06-15_10_39_00.png)
 
