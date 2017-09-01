@@ -10,7 +10,8 @@ var emailUtility = require('../utilities/email');
 /* GET new outage */
 router.get('/', authUtility.ensureAuthenticated, function (req, res) {
     res.render('new', {
-        title: 'Report an Outage'
+        title: 'Report an Outage',
+		user: req.user
     });
 });
 
