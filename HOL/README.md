@@ -88,4 +88,12 @@ This lab will introduce you to Azure Application Insights. You will perform the 
 ### View instructions for [.NET](../HOL/dotnet/07-bot) | [Node.JS](../HOL/node/07-bot) | [Java](../HOL/java/07-bot)
 
 ---
+
+## Stretch Goal
+This lab represents an optional stretch goal exercise where you add an additional feature to the City Power & Light sample application on your own.
+
+In this hands-on lab, you will be using the knowledge gained in HOL 3 and learn about some additional Microsoft Graph features.
+
+### View instructions for [.NET](HOL/dotnet/10-stretch-goal) | [Node.JS](HOL/node/10-stretch-goal) | [Java](HOL/java/10-stretch-goal)
+---
 Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
