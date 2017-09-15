@@ -31,7 +31,9 @@ This hands-on-lab has the following exercises:
 
 To program an Arduino device on your machine you need ..., Visual Studio and ...
 
-1. The easiest way to install ...
+1. Download the Arduino IDE package from the Arduino download page. Go to https://www.arduino.cc/en/Main/Software and select the Windows installer.
+The Windows installer sets up everything you need to use the Arduino IDE. If you use the ZIP file you need to install the drivers manually. The drivers are located here: https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers.
+
 
 You have now installed all the necessary components to start programming an Arduino device on your machine.
 
