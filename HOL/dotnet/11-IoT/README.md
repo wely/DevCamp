@@ -177,6 +177,8 @@ Introduction.
 
 1. Open Arduino and create a new sketch.
 
+1. Replace the sketch content with the following code which will connect the device to a specified wireless network. Replace the SSID and the password with proper values.
+
     ```cpp
     #include <ESP8266WiFi.h>
 
@@ -208,7 +210,28 @@ Introduction.
       }
     }
 
-1. Replace the sketch content with the following code which will connect the device to a specified wireless network. Replace the SSID and the password with proper values.
+    void setup() {
+      Serial.begin(115200);
+      
+      pinMode(LED_PIN, OUTPUT);
+      wifiConnect(ssid, password);
+    }
+
+    void loop() {
+      if (WiFi.status() != WL_CONNECTED) {
+        digitalWrite(LED_PIN, HIGH);
+      } else {
+        digitalWrite(LED_PIN, LOW);
+        delay(50);
+        digitalWrite(LED_PIN, HIGH);
+        delay(2000);
+      }
+    }
+
+1. Let’s test the wireless network connection. Hit `CTRL+U` to compile and upload the sketch to your device. If the connection to your network was created, the LED on your device will flash every two seconds. It will completely turn off if the connection failed.
+
+    ![image](./media/arduino-upload%20completed.png)
+
 
 Summary.
 
