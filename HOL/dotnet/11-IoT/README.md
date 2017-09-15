@@ -52,7 +52,7 @@ The Windows installer sets up everything you need to use the Arduino IDE. If you
 
 1. Arduino should look like this:
 
-    ![image](./media/arduino-first start.png)
+    ![image](./media/arduino-first%20start.png)
 
 1. Select `File` -> `Preferences`.
 
@@ -64,11 +64,25 @@ The Windows installer sets up everything you need to use the Arduino IDE. If you
 
 1. Select `Tools` -> `Board` -> `Boards Manager...`.
 
-    ![image](./media/arduino-tools-board-boards manager.png)
+    ![image](./media/arduino-tools-board-boards%20manager.png)
 
-1. 	In the Boards Manager dialog enter esp8266 into the search field. The Arduino package esp8266 will appear. Select the latest version and click Install to add the package.
+1. 	In the `Boards Manager` dialog enter `esp8266` into the search field. The Arduino package `esp8266` will appear. Select the latest version and click `Install` to download and install the package.
 
-    ![image](./media/arduino-boards manager-esp8266.png)
+    ![image](./media/arduino-boards%20manager-esp8266.png)
+
+1. After the installation completed, click `Close`.
+
+    ![image](./media/arduino-boards%20manager-esp8266-installed.png)
+
+1. Select the board from the list of boards by clicking `Tools` -> `Board` -> `NodeMCU 1.0 (ESP-12E Module)`.
+
+    ![image](./media/arduino-tools-board-nodemcu.png)
+
+1. Set the port by selecting the correct COM port from `Tools` -> `Port` -> `Serial ports`. Also make sure `Upload Speed: “115200”` is selected.
+
+    ![image](./media/arduino-tools-port-COM4.png)
+
+
 
 
 You have now installed all the necessary components to start programming an Arduino device on your machine.
