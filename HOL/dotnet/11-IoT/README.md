@@ -31,20 +31,45 @@ This hands-on-lab has the following exercises:
 
 To program an Arduino device on your machine you need ..., Visual Studio and ...
 
-1. Download the Arduino IDE package from the Arduino download page. Go to https://www.arduino.cc/en/Main/Software and select the Windows installer.
+1. Download the Arduino IDE package from the Arduino download page. Go to https://www.arduino.cc/en/Main/Software and select the `Windows installer`.
 The Windows installer sets up everything you need to use the Arduino IDE. If you use the ZIP file you need to install the drivers manually. The drivers are located here: https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers.
 
     ![image](./media/arduino-website.png)
 
 1. Run the installer and accept the license agreement.
 
-1. Select the components to install. Keep at least Install USB driver selected.
+1. Select the components to install. Keep at least `Install USB driver` selected.
 
     ![image](./media/arduino-installer-components.png)
 
 1. Select the installation folder. You should keep the default destination folder.
 
     ![image](./media/arduino-installer-folder.png)
+
+1. After setup completed close the window and run Arduino.
+
+    ![image](./media/arduino-installer-completed.png)
+
+1. Arduino should look like this:
+
+    ![image](./media/arduino-first start.png)
+
+1. Select `File` -> `Preferences`.
+
+    ![image](./media/arduino-file-preferences.png)
+	
+1. Locate the `Additional Boards Manager URLs` property and enter the URL `http://arduino.esp8266.com/stable/package_esp8266com_index.json` and click `OK`.
+
+    ![image](./media/arduino-preferences.png)
+
+1. Select `Tools` -> `Board` -> `Boards Manager...`.
+
+    ![image](./media/arduino-tools-board-boards manager.png)
+
+1. 	In the Boards Manager dialog enter esp8266 into the search field. The Arduino package esp8266 will appear. Select the latest version and click Install to add the package.
+
+    ![image](./media/arduino-boards manager-esp8266.png)
+
 
 You have now installed all the necessary components to start programming an Arduino device on your machine.
 
