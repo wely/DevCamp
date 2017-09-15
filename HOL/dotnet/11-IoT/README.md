@@ -174,8 +174,41 @@ You have now created the data feed for your device.
 ## Exercise 3: Program the device<a name="ex3"></a>
 
 Introduction.
-	
-1. Exercise.
+
+1. Open Arduino and create a new sketch.
+
+    ```cplusplus
+    #include <ESP8266WiFi.h>
+
+    #define LED_PIN   D4 // build-in LED in NodeMCU
+
+    char* ssid = "****";
+    char* password = "****";
+
+    void wifiConnect(char* ssid, char* password) {
+      Serial.print("Connecting to wifi");
+      
+      WiFi.hostname("NodeMCU device");
+      WiFi.begin(ssid, password);
+      
+      uint8_t i = 0;
+      while (WiFi.status() != WL_CONNECTED && i++ < 50) {
+        Serial.print(".");
+        delay(500);
+      }
+      Serial.println(".");
+      
+      if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("Could not connect to wifi.");
+      } else {
+        Serial.print("Connected to wifi: ");
+        Serial.println(ssid);
+        Serial.print("IP address: ");
+        Serial.println(WiFi.localIP());
+      }
+    }
+
+1. Replace the sketch content with the following code which will connect the device to a specified wireless network. Replace the SSID and the password with proper values.
 
 Summary.
 
