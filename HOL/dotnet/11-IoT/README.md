@@ -177,7 +177,7 @@ Introduction.
 
 1. Open Arduino and create a new sketch.
 
-    ```cplusplus
+    ```cpp
     #include <ESP8266WiFi.h>
 
     #define LED_PIN   D4 // build-in LED in NodeMCU
