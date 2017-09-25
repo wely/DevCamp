@@ -235,7 +235,7 @@ It is important to develop projects in small chunks and to understand each funct
 
     ![image](./media/arduino-tools-serial%20monitor.png)
 
-1. In the `Serial Monitor` dialog select `115200 baud` from the list and leave the dialog open.
+1. In the `Serial Monitor` dialog select `115200 baud` from the list and leave the dialog open to see the output from the device.
 
     ![image](./media/arduino-serial%20monitor.png)
 
@@ -243,7 +243,7 @@ It is important to develop projects in small chunks and to understand each funct
 
     ![image](./media/arduino-connect%20to%20wifi-upload%20completed.png)
 
-1. Now we will add an HTTP request to our Arduino code. The new code will also add the method `getIncidentCount()` which will fetch the current incident count from the `IoT` view created in `Exercise 2`. Add the code below to the sketch
+1. Now we will add an HTTP request to our Arduino code. The new code will also add the method `getIncidentCount()` which will fetch the current incident count from the `IoT` view created in `Exercise 2`. Use the code below to replace or adapt the existing code.
 
     ```cpp
     #include <ESP8266WiFi.h>
@@ -359,11 +359,11 @@ It is important to develop projects in small chunks and to understand each funct
     ```cpp
     const char* server = "<app_name>.azurewebsites.net/IoT"; // address for request, without http://
 
-1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device.
+1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device. The device will retrieve the amount of incidents from the `IoT` view and flash the LED for this amount.
 
     ![image](./media/arduino-get%20incident%20count-upload%20completed.png)
 
-Summary.
+This is just an example how to work with data requests, how to link the device to a data source on the internet and display the state using a simple LED.
 
 ---
 ## Summary
