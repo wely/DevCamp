@@ -239,7 +239,12 @@ It is important to develop projects in small chunks and to understand each funct
 
 1. Now we will add an HTTP request to our Arduino code. The new code will also fetch the current incident count from the `IoT` view created in `Exercise 2`.
 
-Add the code below to the sketch and also replace the address in `const char* server = "<app_name>.azurewebsites.net/IoT";` with the address to the `IoT` view. Also replace the SSID and the password with proper values.
+Add the code below to the sketch and also replace the address in 
+
+    ```cpp
+    const char* server = "<app_name>.azurewebsites.net/IoT";
+
+with the address to the `IoT` view. Also replace the SSID and the password with proper values.
 
     ```cpp
     #include <ESP8266WiFi.h>
