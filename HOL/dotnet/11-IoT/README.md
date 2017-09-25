@@ -363,7 +363,7 @@ It is important to develop projects in small chunks and to understand each funct
 
     ![image](./media/arduino-get%20incident%20count-upload%20completed.png)
 
-This is just an example how to work with data requests, how to link the device to a data source on the internet and display the state using a simple LED.
+This example shows how to work with data requests, how to link the device to a data source on the internet and display the state using a simple LED.
 
 ---
 ## Summary
