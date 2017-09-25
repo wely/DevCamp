@@ -231,7 +231,13 @@ It is important to develop projects in small chunks and to understand each funct
       }
     }
 
-1. When it comes to debugging code in Arduino `Serial.print()` and `Serial.println()` are the best way to go. `Serial.begin(115200);` sets up serial data transmission with 115200 baud.
+1. When it comes to debugging code in Arduino, `Serial.print()` and `Serial.println()` are the best way to go. `Serial.begin(115200);` sets up serial data transmission with 115200 baud. Select `Tools` -> `Serial Monitor` to open the `Serial Monitor` dialog for the selected COM port.
+
+    ![image](./media/arduino-tools-serial%20monitor.png)
+
+1. In the `Serial Monitor` dialog select `115200 baud` from the list and leave the dialog open.
+
+    ![image](./media/arduino-serial%20monitor.png)
 
 1. Let’s test the wireless network connection. Hit `CTRL+U` to compile and upload the sketch to your device. If the connection to your network was established, the LED on your device will start blinking. It will completely turn off if the connection has failed.
 
@@ -353,7 +359,7 @@ It is important to develop projects in small chunks and to understand each funct
     ```cpp
     const char* server = "<app_name>.azurewebsites.net/IoT"; // address for request, without http://
 
-1. Select `Sketch` -> `Upload` from the main menu or use `CTRL+U` to compile and upload the sketch to your device.
+1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device.
 
     ![image](./media/arduino-get%20incident%20count-upload%20completed.png)
 
