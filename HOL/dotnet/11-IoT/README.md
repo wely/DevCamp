@@ -57,7 +57,7 @@ The Windows installer sets up everything you need to use the Arduino IDE. If you
 1. Select `File` -> `Preferences`.
 
     ![image](./media/arduino-file-preferences.png)
-	
+    
 1. Locate the `Additional Boards Manager URLs` property and enter the URL `http://arduino.esp8266.com/stable/package_esp8266com_index.json` and click `OK`.
 
     ![image](./media/arduino-preferences.png)
@@ -66,7 +66,7 @@ The Windows installer sets up everything you need to use the Arduino IDE. If you
 
     ![image](./media/arduino-tools-board-boards%20manager.png)
 
-1. 	In the `Boards Manager` dialog enter `esp8266` into the search field. The Arduino package `esp8266` will appear. Select the latest version and click `Install` to download and install the package.
+1.  In the `Boards Manager` dialog enter `esp8266` into the search field. The Arduino package `esp8266` will appear. Select the latest version and click `Install` to download and install the package.
 
     ![image](./media/arduino-boards%20manager-esp8266.png)
 
@@ -162,7 +162,7 @@ The device will regularly call an URL to fetch the current incident count. We wi
     @{
         Layout = null;
     }
-    @Model.Count
+    IncidentCount=@Model.Count
 
 1. Start the debugger and add `/IoT` to the URL to test the new view. It will contain just the number of incidents.
 
@@ -173,7 +173,7 @@ You have now created the data feed for your device.
 ---
 ## Exercise 3: Program the device<a name="ex3"></a>
 
-Introduction.
+It is important to develop projects in small chunks and to understand each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
 
 1. Open Arduino and create a new sketch.
 
@@ -182,15 +182,36 @@ Introduction.
     ```cpp
     #include <ESP8266WiFi.h>
 
+    // Pins
     #define LED_PIN   D4 // build-in LED in NodeMCU
 
-    char* ssid = "****";
-    char* password = "****";
+    // Wifi
+    char* ssid = "***";
+    char* password = "***";
 
-    void wifiConnect(char* ssid, char* password) {
-      Serial.print("Connecting to wifi");
+    void setup() {
+      Serial.begin(115200); // sets up serial data transmission for status information
       
-      WiFi.hostname("NodeMCU device");
+      pinMode(LED_PIN, OUTPUT);
+      
+      connectWifi(ssid, password);
+    }
+
+    void loop() {
+      if (WiFi.status() != WL_CONNECTED) {
+        digitalWrite(LED_PIN, HIGH); // turn the LED off
+      } else {
+        delay(250);
+        digitalWrite(LED_PIN, LOW);
+        delay(50);
+        digitalWrite(LED_PIN, HIGH);
+      }
+    }
+
+    void connectWifi(char* ssid, char* password) {
+      Serial.print("Connecting to Wi-Fi");
+      
+      WiFi.hostname("NodeMCU@DevCamp");
       WiFi.begin(ssid, password);
       
       uint8_t i = 0;
@@ -201,37 +222,133 @@ Introduction.
       Serial.println(".");
       
       if (WiFi.status() != WL_CONNECTED) {
-        Serial.println("Could not connect to wifi.");
+        Serial.println("Could not connect to Wi-Fi");
       } else {
-        Serial.print("Connected to wifi: ");
+        Serial.print("Connected to Wi-Fi: ");
         Serial.println(ssid);
         Serial.print("IP address: ");
         Serial.println(WiFi.localIP());
       }
     }
 
+1. When it comes to debugging code in Arduino `Serial.print()` and `Serial.println()` are the best way to go. `Serial.begin(115200);` sets up serial data transmission with 115200 baud.
+
+1. Let’s test the wireless network connection. Hit `CTRL+U` to compile and upload the sketch to your device. If the connection to your network was established, the LED on your device will start blinking. It will completely turn off if the connection has failed.
+
+    ![image](./media/arduino-upload%20completed.png)
+
+1. Now we will add an HTTP request to our Arduino code. The new code will also fetch the current incident count from the `IoT` view created in `Exercise 2`.
+
+Add the code below to the sketch and also replace the address in `const char* server = "<app_name>.azurewebsites.net/IoT";` with the address to the `IoT` view. Also replace the SSID and the password with proper values.
+
+    ```cpp
+    #include <ESP8266WiFi.h>
+
+    // Pins
+    #define LED_PIN   D4 // build-in LED in NodeMCU
+
+    // Wifi
+    char* ssid = "***";
+    char* password = "***";
+
+    // Request
+    const int port = 80;
+    const char* server = "<app_name>.azurewebsites.net/IoT"; // address for request, without http://
+    const char* searchString = "IncidentCount="; // search for this property
+
     void setup() {
-      Serial.begin(115200);
+      Serial.begin(115200); // sets up serial data transmission for status information
       
       pinMode(LED_PIN, OUTPUT);
-      wifiConnect(ssid, password);
+      
+      connectWifi(ssid, password);
     }
 
     void loop() {
       if (WiFi.status() != WL_CONNECTED) {
         digitalWrite(LED_PIN, HIGH);
       } else {
-        digitalWrite(LED_PIN, LOW);
-        delay(50);
-        digitalWrite(LED_PIN, HIGH);
-        delay(2000);
+        // retrieve the amount of incidents
+        int incidentCount = getIncidentCount();
+        
+        // keep the led blinking for the amount of incidents
+        for (int i = 0; i < incidentCount; i++) {
+          delay(250);
+          digitalWrite(LED_PIN, LOW);
+          delay(50);
+          digitalWrite(LED_PIN, HIGH);
+        }
+        // pause between requests
+        delay(1000);
       }
     }
 
-1. Let’s test the wireless network connection. Hit `CTRL+U` to compile and upload the sketch to your device. If the connection to your network was created, the LED on your device will flash every two seconds. It will completely turn off if the connection failed.
+    void connectWifi(char* ssid, char* password) {
+      Serial.print("Connecting to Wi-Fi");
+      
+      WiFi.hostname("NodeMCU@DevCamp");
+      WiFi.begin(ssid, password);
+      
+      uint8_t i = 0;
+      while (WiFi.status() != WL_CONNECTED && i++ < 50) {
+        Serial.print(".");
+        delay(500);
+      }
+      Serial.println(".");
+      
+      if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("Could not connect to Wi-Fi");
+      } else {
+        Serial.print("Connected to Wi-Fi: ");
+        Serial.println(ssid);
+        Serial.print("IP address: ");
+        Serial.println(WiFi.localIP());
+      }
+    }
 
-    ![image](./media/arduino-upload%20completed.png)
+    int getIncidentCount() {
+      WiFiClient client;
+      if (client.connect(server, port)) {
+        Serial.print("Connected to ");
+        Serial.println(server);
+        Serial.println("Sending request");
+        
+        client.print("GET /");
+        client.println(" HTTP/1.1");
+        client.print("Host: ");
+        client.print(server);
+        client.print(":");
+        client.println(port);
+        client.println("Connection: close");
+        client.println("Accept: text/html");
+        client.println();
 
+        // waiting for server response until client.available() returns true
+        while (client.connected()) {
+          // looking for search string in response data
+          if (client.available()) {
+            if (client.findUntil(searchString, "\0")) {
+              int result = client.readStringUntil('\n').toInt();
+              
+              Serial.print(searchString);
+              Serial.print("=");
+              Serial.println(result);
+              
+              return result;
+            }
+          }
+        }
+        client.stop();
+
+        Serial.println();
+        Serial.println("Connection closed");
+      } else {
+        Serial.print("Connection to ");
+        Serial.print(server);
+        Serial.println(" failed");
+      }
+      return 0;
+    }
 
 Summary.
 
