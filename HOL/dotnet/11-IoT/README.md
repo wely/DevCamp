@@ -241,7 +241,9 @@ It is important to develop projects in small chunks and to understand each funct
 
     ```cpp
     const char* server = "<app_name>.azurewebsites.net/IoT"; // address for request, without http://
-with the address to the `IoT` view. Also replace the SSID and the password with proper values.
+
+    with the address to the `IoT` view. Also replace the SSID and the password with proper values.
+
     ```cpp
     #include <ESP8266WiFi.h>
 
