@@ -235,7 +235,7 @@ It is important to develop projects in small chunks and to understand each funct
 
 1. Let’s test the wireless network connection. Hit `CTRL+U` to compile and upload the sketch to your device. If the connection to your network was established, the LED on your device will start blinking. It will completely turn off if the connection has failed.
 
-    ![image](./media/arduino-upload%20completed.png)
+    ![image](./media/arduino-connect%20to%20wifi-upload%20completed.png)
 
 1. Now we will add an HTTP request to our Arduino code. The new code will also add the method `getIncidentCount()` which will fetch the current incident count from the `IoT` view created in `Exercise 2`. Add the code below to the sketch
 
@@ -353,6 +353,9 @@ It is important to develop projects in small chunks and to understand each funct
     ```cpp
     const char* server = "<app_name>.azurewebsites.net/IoT"; // address for request, without http://
 
+1. Select `Sketch` -> `Upload` from the main menu or use `CTRL+U` to compile and upload the sketch to your device.
+
+    ![image](./media/arduino-get%20incident%20count-upload%20completed.png)
 
 Summary.
 
