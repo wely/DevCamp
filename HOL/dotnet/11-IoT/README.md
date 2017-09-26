@@ -330,10 +330,11 @@ It is important to develop projects in small chunks and to understand and test e
         client.println("Accept: text/html");
         client.println();
 
-        // waiting for server response until client.available() returns true
+        // waiting for server response...
         while (client.connected()) {
-          // looking for search string in response data
+          // ...until the response is available
           if (client.available()) {
+		    // looking for search string in response data
             if (client.findUntil(searchString, "\0")) {
               int result = client.readStringUntil('\n').toInt();
               
