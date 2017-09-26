@@ -21,7 +21,7 @@ public class IoTController {
 	@Autowired
 	IncidentService service;
 
-	@RequestMapping("/iot")
+	@RequestMapping("/IoT")
 	public String iot(Model model) {
 		List<IncidentBean> list = new ArrayList<IncidentBean>(); //service.getAllIncidents();
 		list.add(new IncidentBean());

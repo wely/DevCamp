@@ -29,10 +29,10 @@ This hands-on-lab has the following exercises:
 ---
 ## Exercise 1: Set up your environment<a name="ex1"></a>
 
-To program an Arduino device on your machine you need ..., Visual Studio and ...
+To program an Arduino device on your machine you need the Arduino IDE and Visual Studio. You will now install the Arduino IDE and setup the board manager.
 
-1. Download the Arduino IDE package from the Arduino download page. Go to https://www.arduino.cc/en/Main/Software and select the `Windows installer`.
-The Windows installer sets up everything you need to use the Arduino IDE. If you use the ZIP file you need to install the drivers manually. The drivers are located here: https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers.
+1. Download the Arduino IDE package from the Arduino download page. Go to [www.arduino.cc/en/Main/Software](https://www.arduino.cc/en/Main/Software) and select the `Windows installer`.
+The Windows installer sets up everything you need to use the Arduino IDE. If you use the ZIP file you need to install the drivers manually. The drivers are located here: [https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers](https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers).
 
     ![image](./media/arduino-website.png)
 
@@ -78,12 +78,9 @@ The Windows installer sets up everything you need to use the Arduino IDE. If you
 
     ![image](./media/arduino-tools-board-nodemcu.png)
 
-1. Set the port by selecting the correct COM port from `Tools` -> `Port` -> `Serial ports`. Also make sure `Upload Speed: “115200”` is selected.
+1. Set the port by selecting the correct COM port from `Tools` -> `Port` -> `Serial ports`. Also make sure `Upload Speed: "115200"` is selected.
 
     ![image](./media/arduino-tools-port-COM4.png)
-
-
-
 
 You have now installed all the necessary components to start programming an Arduino device on your machine.
 
@@ -168,6 +165,10 @@ The device will regularly call an URL to fetch the current incident count. We wi
 
     ![image](./media/2017-09-11_10_54_00.png)
 
+1. Publish the changes to your Azure web app and make sure the `/IoT` URL is reachable (see [HOL 5](../05-arm-cd)).
+ 
+    ![image](./media/2017-09-26_15_54_00.png)
+
 You have now created the data feed for your device.
 
 ---
@@ -239,7 +240,7 @@ It is important to develop projects in small chunks and to understand each funct
 
     ![image](./media/arduino-serial%20monitor.png)
 
-1. Let’s test the wireless network connection. Hit `CTRL+U` to compile and upload the sketch to your device. If the connection to your network was established, the LED on your device will start blinking. It will completely turn off if the connection has failed.
+1. Let's test the wireless network connection. Hit `CTRL+U` to compile and upload the sketch to your device. If the connection to your network was established, the LED on your device will start blinking. It will completely turn off if the connection has failed.
 
     ![image](./media/arduino-connect%20to%20wifi-upload%20completed.png)
 
