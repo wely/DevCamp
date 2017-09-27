@@ -7,7 +7,7 @@ City Power & Light is a sample application that allows citizens to report "incid
 * WebAPI is shared across the front ends and exposes the backend DocumentDB.
 * DocumentDB is used as the data persistence layer.
 
-In this lab, you will combine the web app with an IoT device based on an Arduino board that will query the app for the number of incidents and display the refreshed number every minute.
+In this lab, you will combine the web app with an IoT device based on an Arduino-compatible board that will query the app for the number of incidents and display the refreshed number every minute.
 
 ## Objectives
 In this hands-on lab, you will learn how to:
@@ -174,7 +174,9 @@ You have now created the data feed for your device.
 ---
 ## Exercise 3: Program the device<a name="ex3"></a>
 
-It is important to develop projects in small chunks and to understand each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
+The Arduino-compatible device can handle data exchange with web applications. At first we will connect the device to a Wi-Fi, and then we will add an HTTP request to retrieve the amount of incidents from the web application.
+
+It is important to develop projects in small chunks and to understand and test each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
 
 1. Open Arduino and create a new sketch.
 
@@ -284,7 +286,7 @@ It is important to develop projects in small chunks and to understand each funct
           digitalWrite(LED_PIN, HIGH);
         }
         // pause between requests
-        delay(1000);
+        delay(60000);
       }
     }
 
@@ -328,10 +330,11 @@ It is important to develop projects in small chunks and to understand each funct
         client.println("Accept: text/html");
         client.println();
 
-        // waiting for server response until client.available() returns true
+        // waiting for server response...
         while (client.connected()) {
-          // looking for search string in response data
+          // ...until the response is available
           if (client.available()) {
+		    // looking for search string in response data
             if (client.findUntil(searchString, "\0")) {
               int result = client.readStringUntil('\n').toInt();
               
