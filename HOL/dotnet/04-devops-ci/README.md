@@ -259,11 +259,11 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/2017-06-22_11_31_00.png)
 
-1. Select `Azure App Service Deployment` and click `Next`.
+1. Select `Azure App Service Deployment` and click `Apply`.
 
-    ![image](./media/2017-06-22_11_32_00.png)
+    ![image](./media/2017-09-27_10_12_00.png)
 
-1. Ensure the `Source` is set to the Build Definition name used in the earlier exercise and that `Queue` is set to the `Hosted` option. Then click `Create` to finish creating the Release Definition.
+1. Click `Add artifact`. Ensure the `Source` is set to the Build Definition name used in the earlier exercise and that `Queue` is set to the `Hosted` option. Then click `Create` to finish creating the Release Definition.
 
     ![image](./media/image-027.gif)
 
