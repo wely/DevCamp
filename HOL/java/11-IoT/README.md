@@ -170,7 +170,7 @@ The Arduino-compatible device can handle data exchange with web applications. At
 
 It is important to develop projects in small chunks and to understand and test each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
 
-1. Open Arduino and create a new sketch.
+1. Make sure the device is connected to your USB port and open Arduino and create a new sketch.
 
 1. Replace the sketch content with the following code which will connect the device to a specified wireless network. Replace the SSID and the password with proper values.
 
@@ -234,7 +234,9 @@ It is important to develop projects in small chunks and to understand and test e
 
     ![image](./media/arduino-serial%20monitor.png)
 
-1. Let's test the wireless network connection. Hit `CTRL+U` to compile and upload the sketch to your device. If the connection to your network was established, the LED on your device will start blinking. It will completely turn off if the connection has failed.
+1. Let's test the wireless network connection. Hit `CTRL+U` to compile and upload the sketch to your device. Confirm if you are asked to save the code in a local file. You can follow the upload process in the status window at the bottom. If the upload fails and you have multiple COM ports try selecting the other ports.
+
+1. If the connection to your network was established, the LED on your device will start blinking. It will completely turn off if the connection has failed. The COM monitor window will also display the connection attempts made by the device.
 
     ![image](./media/arduino-connect%20to%20wifi-upload%20completed.png)
 
@@ -355,7 +357,7 @@ It is important to develop projects in small chunks and to understand and test e
     ```cpp
     const char* server = "<app_name>.azurewebsites.net/IoT"; // address for request, without http://
 
-1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device. The device will retrieve the amount of incidents from the `IoT` view and flash the LED for this amount.
+1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device. The device will retrieve the amount of incidents from the `IoT` view and flash the LED for this amount. Again you can use the COM monitor to follow the progress of the code execution on the device.
 
     ![image](./media/arduino-get%20incident%20count-upload%20completed.png)
 
