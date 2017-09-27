@@ -74,15 +74,9 @@ Stay on this page until the next exercise.
 ---
 ## Exercise 2: Set up Azure trial subscription<a name="ex2"></a>
 
-Next, we want to set up an Azure subscription, which can be accessed via the Azure Active Directory link.  On the bottom, left-hand side of the screen, click `Admin centers`, and then click `Azure AD`. 
+Next, we want to set up an Azure subscription. Go to [azure.microsoft.com/en-us/free](https://azure.microsoft.com/en-us/free/) and click `Free trial`.
 
-![image](./media/2017-06-15_10_23_00.png)    
-
-This will open up a new browser tab showing this page:
-
-![image](./media/2017-06-15_10_27_00.png)
-
-Click the hyperlink **Azure Subscription** to begin the Azure Trial signup process. If the hyperlink is not available go directly to [azure.microsoft.com/en-us/free](https://azure.microsoft.com/en-us/free/).
+   ![image](./media/2017-09-27_10_43_00.png)
 
 > BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass. If you are not using an Azure Pass, please skip ahead to **END Steps for Azure Pass redemption**
 
