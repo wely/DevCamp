@@ -7,7 +7,7 @@ City Power & Light is a sample application that allows citizens to report "incid
 * WebAPI is shared across the front ends and exposes the backend DocumentDB.
 * DocumentDB is used as the data persistence layer.
 
-In this lab, you will combine the web app with an IoT device based on an Arduino board that will query the app for the number of incidents and display the refreshed number every minute.
+In this lab, you will combine the web app with an IoT device based on an Arduino-compatible board that will query the app for the number of incidents and display the refreshed number every minute.
 
 ## Objectives
 In this hands-on lab, you will learn how to:
@@ -29,9 +29,60 @@ This hands-on-lab has the following exercises:
 ---
 ## Exercise 1: Set up your environment<a name="ex1"></a>
 
-To program an Arduino device on your machine you need ..., Visual Studio and ...
+To program an Arduino device on your machine you need the Arduino IDE and Visual Studio on your machine. Since a hardware connection to the device is required this will not work from a virtual machine. It is possible to use an Arduino emulator for this lab instead of the actual device and work through the exercises in a virtual machine.
 
-1. The easiest way to install ...
+You will now install the Arduino IDE and setup the board manager.
+
+1. Download the Arduino IDE package from the Arduino download page. Go to [www.arduino.cc/en/Main/Software](https://www.arduino.cc/en/Main/Software) and select the `Windows installer`.
+The Windows installer sets up everything you need to use the Arduino IDE. If you use the ZIP file you need to install the drivers manually. The drivers are located here: [https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers](https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers).
+
+    ![image](./media/arduino-website.png)
+
+1. Run the installer and accept the license agreement.
+
+1. Select the components to install. Keep at least `Install USB driver` selected.
+
+    ![image](./media/arduino-installer-components.png)
+
+1. Select the installation folder. You should keep the default destination folder.
+
+    ![image](./media/arduino-installer-folder.png)
+
+1. After setup completed close the window and run Arduino.
+
+    ![image](./media/arduino-installer-completed.png)
+
+1. Arduino should look like this:
+
+    ![image](./media/arduino-first%20start.png)
+
+1. Select `File` -> `Preferences`.
+
+    ![image](./media/arduino-file-preferences.png)
+    
+1. Locate the `Additional Boards Manager URLs` property and enter the URL `http://arduino.esp8266.com/stable/package_esp8266com_index.json` and click `OK`.
+
+    ![image](./media/arduino-preferences.png)
+
+1. Select `Tools` -> `Board` -> `Boards Manager...`.
+
+    ![image](./media/arduino-tools-board-boards%20manager.png)
+
+1.  In the `Boards Manager` dialog enter `esp8266` into the search field. The Arduino package `esp8266` will appear. Select the latest version and click `Install` to download and install the package.
+
+    ![image](./media/arduino-boards%20manager-esp8266.png)
+
+1. After the installation completed, click `Close`.
+
+    ![image](./media/arduino-boards%20manager-esp8266-installed.png)
+
+1. Select the board from the list of boards by clicking `Tools` -> `Board` -> `NodeMCU 1.0 (ESP-12E Module)`.
+
+    ![image](./media/arduino-tools-board-nodemcu.png)
+
+1. Set the port by selecting the correct COM port from `Tools` -> `Port` -> `Serial ports`. Also make sure `Upload Speed: "115200"` is selected.
+
+    ![image](./media/arduino-tools-port-COM4.png)
 
 You have now installed all the necessary components to start programming an Arduino device on your machine.
 
@@ -162,7 +213,9 @@ You have now created the data feed for your device.
 ---
 ## Exercise 3: Program the device<a name="ex3"></a>
 
-It is important to develop projects in small chunks and to understand each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
+The Arduino-compatible device can handle data exchange with web applications. At first we will connect the device to a Wi-Fi, and then we will add an HTTP request to retrieve the amount of incidents from the web application.
+
+It is important to develop projects in small chunks and to understand and test each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
 
 1. Open Arduino and create a new sketch.
 
@@ -272,7 +325,7 @@ It is important to develop projects in small chunks and to understand each funct
           digitalWrite(LED_PIN, HIGH);
         }
         // pause between requests
-        delay(1000);
+        delay(60000);
       }
     }
 
@@ -316,10 +369,11 @@ It is important to develop projects in small chunks and to understand each funct
         client.println("Accept: text/html");
         client.println();
 
-        // waiting for server response until client.available() returns true
+        // waiting for server response...
         while (client.connected()) {
-          // looking for search string in response data
+          // ...until the response is available
           if (client.available()) {
+        // looking for search string in response data
             if (client.findUntil(searchString, "\0")) {
               int result = client.readStringUntil('\n').toInt();
               

@@ -29,7 +29,9 @@ This hands-on-lab has the following exercises:
 ---
 ## Exercise 1: Set up your environment<a name="ex1"></a>
 
-To program an Arduino device on your machine you need the Arduino IDE and Visual Studio. You will now install the Arduino IDE and setup the board manager.
+To program an Arduino device on your machine you need the Arduino IDE and Visual Studio on your machine. Since a hardware connection to the device is required this will not work from a virtual machine. It is possible to use an Arduino emulator for this lab instead of the actual device and work through the exercises in a virtual machine.
+
+You will now install the Arduino IDE and setup the board manager.
 
 1. Download the Arduino IDE package from the Arduino download page. Go to [www.arduino.cc/en/Main/Software](https://www.arduino.cc/en/Main/Software) and select the `Windows installer`.
 The Windows installer sets up everything you need to use the Arduino IDE. If you use the ZIP file you need to install the drivers manually. The drivers are located here: [https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers](https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers).
