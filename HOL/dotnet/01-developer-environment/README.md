@@ -215,7 +215,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
 1. Use the following credentials to log on to the machine:
     
-    > User Name = `\l-admin`
+    > User Name = `.\l-admin`
     >
     > Password = `Devc@mp2016!` 
  

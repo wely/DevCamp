@@ -88,6 +88,20 @@ This lab will introduce you to Azure Application Insights. You will perform the 
 ### View instructions for [.NET](../HOL/dotnet/07-bot) | [Node.JS](../HOL/node/07-bot) | [Java](../HOL/java/07-bot)
 
 ---
+## HOL 8: Analytics and PowerBI
+Currently there is no hands-on lab for this module.
+
+---
+
+## HOL 9: IoT
+In this lab, you will combine the web app with an IoT device based on an Arduino-compatible board. You will perform the following tasks:
+
+* Set up the developing environment to support the programming of Arduino chips.
+* Create your own IoT software from scratch.
+
+### View instructions for [.NET](../HOL/dotnet/11-IoT) | [Node.JS](../HOL/node/11-IoT) | [Java](../HOL/java/11-IoT)
+
+---
 
 ## Stretch Goal
 This lab represents an optional stretch goal exercise where you add an additional feature to the City Power & Light sample application on your own.
