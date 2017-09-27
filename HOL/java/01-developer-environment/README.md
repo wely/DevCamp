@@ -34,7 +34,7 @@ This hands-on-lab has the following exercises:
 
 > If you already have an Office 365 subscription, please use an alternate browser or use private mode. This will help avoid any issues with conflicting accounts.
 
-1. In your browser, go to [https://products.office.com/en-us/business/office-365-enterprise-e3-business-software](https://products.office.com/en-us/business/office-365-enterprise-e3-business-software) 
+1. In your browser, go to [products.office.com/en-us/business/office-365-enterprise-e3-business-software](https://products.office.com/en-us/business/office-365-enterprise-e3-business-software) 
 and click the link that says `Free Trial`. 
 
     ![image](./media/2017-03-14_08_28_44.png)
@@ -82,11 +82,11 @@ This will open up a new browser tab showing this page:
 
 ![image](./media/2017-06-15_10_27_00.png)
 
-Click the hyperlink **Azure Subscription** to begin the Azure Trial signup process.
+Click the hyperlink **Azure Subscription** to begin the Azure Trial signup process. If the hyperlink is not available go directly to [azure.microsoft.com/en-us/free](https://azure.microsoft.com/en-us/free/).
 
 > BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass. If you are not using an Azure Pass, please skip ahead to **END Steps for Azure Pass redemption**
 
-1. Navigate to [http://www.microsoftazurepass.com/](http://www.microsoftazurepass.com/).
+1. Navigate to [www.microsoftazurepass.com](http://www.microsoftazurepass.com/).
 
     ![image](./media/2017-06-15_10_39_00.png)
 
@@ -127,7 +127,7 @@ You should now be taken to the [Azure Portal](http://portal.azure.com) where you
 
 In a future lab we will use [Visual Studio Team Services](https://www.visualstudio.com/team-services/), or "VSTS" for short. In this exercise we will enable a free trial subscription.
 
-1. In your browser, go to [http://www.visualstudio.com/team-services](http://www.visualstudio.com/team-services) and click on `Sign in` in the upper right corner.  
+1. In your browser, go to [www.visualstudio.com/team-services](http://www.visualstudio.com/team-services) and click on `Sign in` in the upper right corner.  
 
     ![image](./media/2017-03-14_09_21_21.png)
 
