@@ -368,5 +368,8 @@ In this hands-on lab, you learned how to:
 * Set up the developing environment to support the programming of Arduino chips.
 * Create your own IoT software from scratch.
 
+After completing this module, you can continue on to the Stretch Goal.
+
+### View Stretch Goal instructions for [Java](../10-stretch-goal/)
 ---
 Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
