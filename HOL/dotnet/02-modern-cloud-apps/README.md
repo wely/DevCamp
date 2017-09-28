@@ -465,7 +465,7 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
 1. Before we do anything with the NuGet package manager, we would like to point out that we have developed the DevCamp application with specific versions of all the included NuGet packages.  For this reason, please **DO NOT** update the modules in this tool. 
 
-1. Click `Browse` and enter `Microsoft.Extensions.Caching.Redis` in the search box.  Add the `Microsoft.Extensions.Caching.Redis` package by highlighting the name and selecting `install`:
+1. Click `Browse` and enter `Microsoft.Extensions.Caching.Redis` in the search box.  Add the `Microsoft.Extensions.Caching.Redis` package by highlighting the name, selecting version `1.1.2` (**DO NOT** use a higher version) and selecting `install`:
 
     ![image](./media/2017-06-16_13_45_00.png)
 
