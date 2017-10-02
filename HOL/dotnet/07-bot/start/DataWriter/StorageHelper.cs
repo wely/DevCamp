@@ -8,15 +8,16 @@ using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Azure;
 
 namespace DataWriter
 {
     class StorageHelper
     {
-        private static string AZURE_STORAGE_ACCOUNT = "YOUR AZURE BLOB STORAGE";
-        private static string AZURE_STORAGE_ACCESS_KEY = "YOUR AZURE BLOB STORAGE ACCESS KEY";
-        private static string AZURE_STORAGE_BLOB_CONTAINER = "images";
-        private static string AZURE_STORAGE_QUEUE = "thumbnails";
+        private static string AZURE_STORAGE_ACCOUNT = CloudConfigurationManager.GetSetting("AZURE_STORAGE_ACCOUNT");
+        private static string AZURE_STORAGE_ACCESS_KEY = CloudConfigurationManager.GetSetting("AZURE_STORAGE_ACCESS_KEY");
+        private static string AZURE_STORAGE_BLOB_CONTAINER = CloudConfigurationManager.GetSetting("AZURE_STORAGE_BLOB_CONTAINER");
+        private static string AZURE_STORAGE_QUEUE = CloudConfigurationManager.GetSetting("AZURE_STORAGE_QUEUE");
         private static string AZURE_STORAGE_CONNECTIONSTRING = String.Format("DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}", AZURE_STORAGE_ACCOUNT, AZURE_STORAGE_ACCESS_KEY);
 
         /// <summary>

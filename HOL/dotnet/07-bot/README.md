@@ -22,6 +22,8 @@ In this hands-on lab, you will learn how to:
 * Deployed the starter ARM Template [HOL 1](../01-developer-environment).
 * Completion of the [HOL 5](../05-arm-cd).
 
+> **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the previous HOL's settings to the `Web.config` file.
+
 ## Exercises
 This hands-on-lab has the following exercises:
 * [Exercise 1: Set up your environment](#ex1)
