@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using IncidentAPI;
 using Microsoft.Rest;
+using Microsoft.Azure;
 
 namespace IncidentAPI
 {
@@ -47,7 +48,7 @@ namespace IncidentAPI
             : base()
         {
             this._incident = new IncidentOperations(this);
-            this._baseUri = new Uri("http://incidentapilwcvaqj7qehhw.azurewebsites.net");
+            this._baseUri = new Uri(CloudConfigurationManager.GetSetting("INCIDENT_API_URL"));
         }
         
         /// <summary>
@@ -61,7 +62,7 @@ namespace IncidentAPI
             : base(handlers)
         {
             this._incident = new IncidentOperations(this);
-            this._baseUri = new Uri("http://incidentapilwcvaqj7qehhw.azurewebsites.net");
+            this._baseUri = new Uri(CloudConfigurationManager.GetSetting("INCIDENT_API_URL"));
         }
         
         /// <summary>
@@ -78,9 +79,9 @@ namespace IncidentAPI
             : base(rootHandler, handlers)
         {
             this._incident = new IncidentOperations(this);
-            this._baseUri = new Uri("http://incidentapilwcvaqj7qehhw.azurewebsites.net");
+            this._baseUri = new Uri(CloudConfigurationManager.GetSetting("INCIDENT_API_URL"));
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the IncidentAPIClient class.
         /// </summary>
