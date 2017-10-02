@@ -109,7 +109,7 @@ We are using the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotne
 			[Prompt("In which {&} do you live?")]
 			public string City { get; set; }
 
-			[Prompt("And in which state {&}?")]
+			[Prompt("And in which {&}?")]
 			public string State { get; set; }
 
 			[Prompt("Lastly, what {&} do you live on?")]
@@ -261,9 +261,17 @@ Your bot now accepts and stores an image send by the user. Now that you have eve
 
 To file the reported incident we use the incident API. The necessary methods are present in the `DataWriter` project. The project contains excerpts from the previous hands on labs. The code was shortened to just create an incident and upload the attached image. To complete it you have to add your Azure account information. 
 
-1. Open `DataWriter` -> `IncidentController.cs` and replace `YOUR INCIDENT API URL` with the URL of your incident API which you retrieved in [HOL 2 exercise 1]((../02-modern-cloud-apps)#ex1) and looks similar to `http://incidentapi[...].azurewebsites.net`.
+1. Open `web.config` of the `CityPowerBot Project` and replace the value for `INCIDENT_API_URL` with the URL of your incident API which you retrieved in [HOL 2 exercise 1]((../02-modern-cloud-apps)#ex1) and looks similar to `http://incidentapi[...].azurewebsites.net`.
 
-1. Open `DataWriter` -> `StorageHelper.cs` and replace `YOUR AZURE BLOB STORAGE` with the **Storage account name** and `YOUR AZURE BLOB STORAGE ACCESS KEY` with the **key1** you retrieved in [HOL 2 exercise 3]((../02-modern-cloud-apps)#ex3). You have stored these values in the environment variables of the previous lab's code.
+1. Replace the value for `AZURE_STORAGE_ACCOUNT` with your **storage account name** and the value for `AZURE_STORAGE_ACCESS_KEY` with your **storage account key** you retrieved in [HOL 2 exercise 3]((../02-modern-cloud-apps)#ex3).
+
+1. Your `web.config` should now be updated with your unique values.
+
+	```xml
+	<add key="INCIDENT_API_URL" value="API URL" />
+	<add key="AZURE_STORAGE_ACCOUNT" value="STORAGEACCOUNT"/>
+	<add key="AZURE_STORAGE_ACCESS_KEY" value="STORAGEKEY" />
+	```
 
 1. Now that the `DataWriter` project is prepared we will call its `Create` method after we got all the data from the user. Open `CityPowerBot` -> `Dialogs` -> `BasicForm.cs` and add the following `OnCompletionAsyncDelegate` declaration at the beginning of the `BuildForm` method before the `return`:
 
@@ -373,8 +381,9 @@ To make our bot accessible we have to publish it in a public location. An Azure 
 
 1. In Visual Studio, open the `CityPowerBot` -> `Web.config` and enter the values you just gathered for the `BotId` (the bot's `Handle` you entered during the registration process), `MicrosoftAppId` and `MicrosoftAppPassword` in the `appSettings` section.
 
-    ```charp
+    ```xml
     <appSettings>
+		<!--OMITTED-->
         <!-- update these with your BotId, Microsoft App Id and your Microsoft App Password-->
         <add key="BotId" value="YourBotId" />
         <add key="MicrosoftAppId" value="" />
