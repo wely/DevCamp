@@ -4,8 +4,8 @@
 City Power & Light is a sample application that allows citizens to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo. The application is implemented with several components:
 
 * Front end web application contains the user interface and business logic. This component has been implemented three times in .NET, NodeJS, and Java.
-* WebAPI is shared across the front ends and exposes the backend DocumentDB.
-* DocumentDB is used as the data persistence layer.
+* WebAPI is shared across the front ends and exposes the backend CosmosDB.
+* CosmosDB is used as the data persistence layer.
 
 In this lab, you will continue enhancing the overall City Power & Light experience by creating an incident reporting bot from scratch and via the Azure Bot Service and host it in Azure. The bot will be able to gather data from a user with an optional photo and submit it to the WebAPI.
 

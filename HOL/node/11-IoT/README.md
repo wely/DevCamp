@@ -4,8 +4,8 @@
 City Power & Light is a sample application that allows citizens to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo. The application is implemented with several components:
 
 * Front end web application contains the user interface and business logic. This component has been implemented three times in .NET, NodeJS, and Java.
-* WebAPI is shared across the front ends and exposes the backend DocumentDB.
-* DocumentDB is used as the data persistence layer.
+* WebAPI is shared across the front ends and exposes the backend CosmosDB.
+* CosmosDB is used as the data persistence layer.
 
 In this lab, you will combine the web app with an IoT device based on an Arduino-compatible board that will query the app for the number of incidents and display the refreshed number every minute.
 

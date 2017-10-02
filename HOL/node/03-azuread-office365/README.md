@@ -5,8 +5,8 @@
 City Power & Light is a sample application that allows citizens to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo. The application is implemented with several components:
 
 * Front end web application contains the user interface and business logic. This component has been implemented three times in .NET, NodeJS, and Java.
-* WebAPI is shared across the front ends and exposes the backend DocumentDB.
-* DocumentDB is used as the data persistence layer.
+* WebAPI is shared across the front ends and exposes the backend CosmosDB.
+* CosmosDB is used as the data persistence layer.
 
 In this lab, you will continue enhancing the City Power & Light application by adding authentication for users powered by [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/). Once authenticated, you may then query the [Microsoft Office Graph](https://graph.microsoft.io) to retrieve information pertinent to the application.
 

@@ -5,8 +5,8 @@
 City Power & Light is a sample application that allows citizens to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
 
 * Front end web application contains the user interface and business logic. This component has been implemented three times in .NET, NodeJS, and Java.
-* WebAPI is shared across the front ends and exposes the backend DocumentDB.
-* DocumentDB is used as the data persistence layer.
+* WebAPI is shared across the front ends and exposes the backend CosmosDB.
+* CosmosDB is used as the data persistence layer.
 
 In this lab, you will work with an existing API to connect to the web application front end. This will allow you perform CRUD operations for incidents. You will also configure additional Azure features for Redis Cache, Azure Storage Queues, and Azure Blob Storage. 
 
@@ -90,7 +90,7 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/2017-06-19_12_01_30.png)
 
-    As part of the original ARM template we deployed an ASP.NET WebAPI that queries a DocumentDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
+    As part of the original ARM template we deployed an ASP.NET WebAPI that queries a CosmosDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
 
 1. In the [Azure Portal](https://portal.azure.com) navigate to the resource group `DevCamp` that you created with the original ARM template. Resource groups can be found on the left hand toolbar.
 
@@ -108,7 +108,7 @@ This hands-on-lab has the following exercises:
     
     ![image](./media/image-05.gif)
 
-1. Since we provisioned a new instance of DocumentDB, there are no records in the database. We will generate some sample data using the shared API. It has a route that can be accessed at any time to create or reset the documents in your collection.  In the browser, add the following to your API URL to generate sample documents.
+1. Since we provisioned a new instance of CosmosDB, there are no records in the database. We will generate some sample data using the shared API. It has a route that can be accessed at any time to create or reset the documents in your collection.  In the browser, add the following to your API URL to generate sample documents.
 
     >
     > Add `/incidents/sampledata` to the end of your API URL. 
@@ -123,11 +123,11 @@ This hands-on-lab has the following exercises:
 	
     > In Chrome you should see a JSON response directly in the browser tab, however in Internet Explorer you may be asked top Open or Download a file. If prompted, Open the file in Notepad or Visual Studio Code to see the return message.
 
-1. After navigating to the `sampledata` route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade, select the `DevCamp` and then select the DocumentDB resource which starts with `incidentdb`.
+1. After navigating to the `sampledata` route, let's verify that the documents were created in CosmosDB. In the Azure Portal, navigate to the Resource Group blade, select the `DevCamp` and then select the CosmosDB resource which starts with `incidentdb`.
 
     ![image](./media/2017-06-16_11_39_00.png)
 
-    Select the DocumentDB database. This will open the DocumentDB blade. Scroll to the Collections section.
+    Select the CosmosDB database. This will open the CosmosDB blade. Scroll to the Collections section.
 
     In the Collections section, select `Document Explorer`.
     
@@ -1131,7 +1131,7 @@ Our application can now create new incidents and upload related images to Azure 
 Our application started as a prototype on our local machine, but now uses a variety of Azure services. We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
 
 In this hands-on lab, you learned how to:
-* Use Eclipse to connect to an Azure hosted ASP.NET WebAPI that queries a DocumentDB Collection and leveraging several Azure services at the same time.
+* Use Eclipse to connect to an Azure hosted ASP.NET WebAPI that queries a CosmosDB Collection and leveraging several Azure services at the same time.
 * Provision an Azure Web App to host the Web site.
 * Modify a view to add caching. This enables you to use the benefits of the Azure Redis Cache, reducing queries and increasing performance.
 * Modify code to add queuing and blob storage.

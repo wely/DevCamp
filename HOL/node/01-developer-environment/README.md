@@ -473,7 +473,7 @@ Also, our resource group template has added a random string to the end of many o
 
 * `incidentcache...` - This is the Redis cache that we use from the application to make data access faster.  The modern-cloud-apps hands on lab adds support to the application to be able to leverage the cache.
 
-* `incidentdb...` - This is the documentDB database that will hold the JSON incident documents stored by the application.
+* `incidentdb...` - This is the CosmosDB database that will hold the JSON incident documents stored by the application.
 
 * `incidentdiagstg...` - Storage account for storing diagnostics from the services in the resource group.
 
