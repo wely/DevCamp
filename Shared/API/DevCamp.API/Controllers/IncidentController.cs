@@ -136,5 +136,17 @@ namespace DevCamp.API.Controllers
             };
             return Ok(resp);
         }
+
+        [HttpGet]
+        [Route("incidents/fakedata")]
+        public async Task<IHttpActionResult> FakeData()
+        {
+            await DocumentDBRepository<Incident>.LoadFakeData(true);
+            var resp = new HttpResponseMessage()
+            {
+                Content = new ApiResponseMsg("Initialized fake data")
+            };
+            return Ok(resp);
+        }
     }
 }

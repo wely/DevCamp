@@ -102,7 +102,7 @@ namespace DevCamp.API.Data
             {
                 string sampleFile = HttpContext.Current.Server.MapPath("\\Data\\sampleincidents.json");
                 JObject sampleData = JObject.Parse(File.ReadAllText(sampleFile));
-                samples = JsonConvert.DeserializeObject<List<Incident>>(sampleData.Root["incidents"].ToString());
+                samples = JsonConvert.DeserializeObject<List<Incident>>(sampleData.Root["sampleincidents"].ToString());
                 foreach(Incident s in samples)
                 {
                     //Generate a sort key
@@ -137,6 +137,30 @@ namespace DevCamp.API.Data
                 }
             }
             return samples;
+        }
+
+        private static List<Incident> getFakeIncidents()
+        {
+            List<Incident> fakeData = new List<Incident>();
+
+            try
+            {
+                string fakeDataFile = HttpContext.Current.Server.MapPath("\\Data\\fakeincidents.json");
+                JObject sampleData = JObject.Parse(File.ReadAllText(fakeDataFile));
+                fakeData = JsonConvert.DeserializeObject<List<Incident>>(sampleData.Root["fakeincidents"].ToString());
+                foreach (Incident s in fakeData)
+                {
+                    //Generate a sort key based on the time it was uploaded
+                    string sortKey = string.Format("{0:D19}", DateTime.MaxValue.Ticks - s.Created.Value.Ticks);
+                    s.SortKey = sortKey;
+                }
+            }
+            catch(Exception e)
+            {
+                //If there is an error loading the fakes, load the samples
+                fakeData = getSampleIncidents();
+            }
+            return fakeData;
         }
 
         /// <summary>
@@ -202,6 +226,20 @@ namespace DevCamp.API.Data
             foreach (Incident i in sampleIncidents)
             {
                 await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DATABASEID, COLLECTIONID), i);
+            }
+        }
+
+        public static async Task LoadFakeData(bool Cleardata)
+        {
+            if (Cleardata)
+            {
+                await ClearDatabase();
+            }
+
+            List<Incident> fakeIncidents = getFakeIncidents();
+            foreach (Incident fi in fakeIncidents)
+            {
+                await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DATABASEID, COLLECTIONID), fi);
             }
         }
 
