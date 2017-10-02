@@ -130,9 +130,10 @@ namespace DevCamp.API.Controllers
         public async Task<IHttpActionResult> SampleData()
         {
             await DocumentDBRepository<Incident>.LoadSampleData(true);
+            var recordCount = DocumentDBRepository<Incident>.GetItemsCount();
             var resp = new HttpResponseMessage()
             {
-                Content = new ApiResponseMsg("Initialized sample data")
+                Content = new ApiResponseMsg($"Initialized sample data with [{recordCount}] incidents")
             };
             return Ok(resp);
         }
@@ -142,9 +143,10 @@ namespace DevCamp.API.Controllers
         public async Task<IHttpActionResult> FakeData()
         {
             await DocumentDBRepository<Incident>.LoadFakeData(true);
+            var recordCount = DocumentDBRepository<Incident>.GetItemsCount();
             var resp = new HttpResponseMessage()
             {
-                Content = new ApiResponseMsg("Initialized fake data")
+                Content = new ApiResponseMsg($"Initialized fake data with [{recordCount}] incidents")
             };
             return Ok(resp);
         }
