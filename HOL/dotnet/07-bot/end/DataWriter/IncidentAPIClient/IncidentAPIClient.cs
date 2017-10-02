@@ -19,6 +19,7 @@ namespace IncidentAPI
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using Models;
+    using Microsoft.Azure;
 
     public partial class IncidentAPIClient : ServiceClient<IncidentAPIClient>, IIncidentAPIClient
     {
@@ -231,7 +232,7 @@ namespace IncidentAPI
         private void Initialize()
         {
             this.IncidentOperations = new IncidentOperations(this);
-            this.BaseUri = new Uri("http://incidentapi3oszghr6hgets.azurewebsites.net");
+            this.BaseUri = new Uri(CloudConfigurationManager.GetSetting("INCIDENT_API_URL"));
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,

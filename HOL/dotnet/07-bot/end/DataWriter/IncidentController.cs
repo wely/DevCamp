@@ -8,13 +8,14 @@ using IncidentAPI;
 using IncidentAPI.Models;
 using Microsoft.Rest;
 using System.IO;
+using Microsoft.Azure;
 
 namespace DataWriter
 {
     public class IncidentController
     {
         [HttpPost]
-        public static Boolean Create(String firstName, String lastName, String street, String city, String state, String zipCode, String phoneNumber, String description, String outageType, Boolean? isEmergency, Stream image, String imageName, String imageType)
+        public static async Task<bool> CreateAsync(String firstName, String lastName, String street, String city, String state, String zipCode, String phoneNumber, String description, String outageType, Boolean? isEmergency, Stream image, String imageName, String imageType)
         {
             Boolean added = false;
             try
@@ -45,7 +46,7 @@ namespace DataWriter
                     var imageUrl = StorageHelper.UploadFileToBlobStorage(newIncident.Id, image, imageType, imageName);
 
                     //Add a message to the queue to process this image
-                    StorageHelper.AddMessageToQueue(newIncident.Id, imageName);
+                    await StorageHelper.AddMessageToQueue(newIncident.Id, imageName);
                 }
             }
             catch (Exception e)
@@ -57,7 +58,7 @@ namespace DataWriter
         public static IncidentAPIClient GetIncidentAPIClient()
         {
             ServiceClientCredentials creds = new BasicAuthenticationCredentials();
-            var client = new IncidentAPIClient(new Uri("YOUR INCIDENT API URL"), creds);
+            var client = new IncidentAPIClient(new Uri(CloudConfigurationManager.GetSetting("INCIDENT_API_URL")), creds);
             return client;
         }
     }
