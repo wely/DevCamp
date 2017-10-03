@@ -75,7 +75,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/2017-21-06_08_00_00.png)
 
-1. Provide an application name and click `Create`:
+1. Provide an application name. Uncheck the `Guided Setup Let us help you get started` checkbox and click `Create`:
 
     ![image](./media/2017-21-06_08_08_00.png)
 
