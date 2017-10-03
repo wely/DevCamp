@@ -372,13 +372,13 @@ When a new incident is reported, the user can attach a photo. In this exercise w
     ```json
      "env": {
         "NODE_ENV": "development",
-        "INCIDENT_API_URL": "http://incidentapimm6lqhplzxjp2.azurewebsites.net",
-        "REDISCACHE_HOSTNAME": "incidentcachemm6lqhplzxjp2.redis.cache.windows.net",
-        "REDISCACHE_PRIMARY_KEY": "bZcVx7XSRICO+RlKrh2eqvIAFMv0y3i5LQbk91LILSY=",
+        "INCIDENT_API_URL": "http://incidentapi[YOUR_UNIQUE_ID].azurewebsites.net",
+        "REDISCACHE_HOSTNAME": "incidentcache[YOUR_UNIQUE_ID].redis.cache.windows.net",
+        "REDISCACHE_PRIMARY_KEY": "[YOUR_UNIQUE_KEY]",
         "REDISCACHE_PORT": "6379",
         "REDISCACHE_SSLPORT": "6380",
-        "AZURE_STORAGE_ACCOUNT": "incidentblobstgmm6lqhplz",
-        "AZURE_STORAGE_ACCESS_KEY": "JP+YcOPBfI58bkmugEHPKKPaM5NLIrq18IBfUfC+0sCsX3V6pSV2a+GU34mD68OoMsiGf79Axu1lHf5pB98Zkw==",
+        "AZURE_STORAGE_ACCOUNT": "incidentblobstg[YOUR_UNIQUE_ID]",
+        "AZURE_STORAGE_ACCESS_KEY": "[YOUR_UNIQUE_KEY]",
         "AZURE_STORAGE_BLOB_CONTAINER": "images",
         "AZURE_STORAGE_QUEUE": "thumbnails"
     }
