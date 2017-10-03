@@ -36,6 +36,7 @@ namespace DevCamp.WebApp.App_Start
                 ClientId = Settings.AAD_APP_ID,
                 Authority = string.Format(CultureInfo.InvariantCulture, Settings.AAD_INSTANCE, "common", ""),
                 ResponseType = "code id_token",
+                Scope = Settings.AAD_GRAPH_SCOPES,
                 PostLogoutRedirectUri = "/",
                 TokenValidationParameters = new TokenValidationParameters
                 {
