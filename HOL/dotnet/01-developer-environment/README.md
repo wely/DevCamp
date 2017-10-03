@@ -308,11 +308,9 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
  
     ![image](./media/2017-06-15_15_47_00.png)
 
-1. Then select `Setup` on the menu bar.
+1. Then select `Choose source` in the blade and select `External Repository`. 
  
     ![image](./media/image-022.gif)
-
-1. Select `External repository`. 
 
 1. Paste the following in the Repository URL field `https://github.com/AzureCAT-GSI/DevCamp.git`.
 
