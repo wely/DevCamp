@@ -131,18 +131,18 @@ AzureAD can handle authentication for web applications. First we will create a n
 
 1. In Visual Studio, add the following packages from NuGet:
 
-    > `Microsoft.IdentityModel.Clients.ActiveDirectory`
+    > `Microsoft.IdentityModel.Clients.ActiveDirectory`  **Choose version 3.13.8**
     >
-    > `Microsoft.IdentityModel.Protocol.Extensions`
+    > `Microsoft.IdentityModel.Protocol.Extensions`  **Choose version 1.0.4.403061554**
     >
-    > `Microsoft.IdentityModel.Tokens`
+    > `Microsoft.IdentityModel.Tokens` **Choose version 5.1.3**
     >
-    > `Microsoft.Owin.Security.OpenIdConnect`
+    > `Microsoft.Owin.Security.OpenIdConnect` **Choose version 3.0.1**
     >
-    > `Microsoft.Owin.Security.Cookies`
+    > `Microsoft.Owin.Security.Cookies` **Choose version 3.0.1**
     >
-    > `Microsoft.Owin.Host.SystemWeb`
-	
+    > `Microsoft.Owin.Host.SystemWeb` **Choose version 3.0.1**
+
 	![image](./media/2017-21-06_08_56_00.png)
 
 1. First let's update the `Settings` class with the additional constants. 
