@@ -179,19 +179,11 @@ You are now ready to create Power BI reports and dashboards.
 
     ![image](./media/pbi-dashboard-18.png)
 
-1. Close the Query editor screen and apply changes if prompted.
+1. We would like to calculate the number of days an incident is open. We can use the `Created` column. Select the `Created` column again and click `Add Column` from the Ribbon. Then click `Date > Age`
 
-1. Now let's add a new column to the datasource that calculates the number of days a incident is open. From the `Modeling` Ribbon menu, choose `New Column`
+    ![image](./media/pbi-dashboard-31.png)
 
-    ![image](./media/pbi-dashboard-20.png)
-
-1. Enter the following formula in the custom query window
-
-    ```Excel
-    DaysOpen = if(incidents[Created] = TODAY(), 0, DateDiff(incidents[Created], Today(), DAY))
-    ```
-
-    ![image](./media/pbi-dashboard-21.png)
+1. Rename the column to `DaysOpen`
 
 1. Close and apply the changes to the query and go back to the report.
 
@@ -213,7 +205,13 @@ You are now ready to create Power BI reports and dashboards.
 
     ![image](./media/pbi-dashboard-26.png)
 
-1. Your report should be udpated with the new visualizations.
+    ![image](./media/pbi-dashboard-32.png)
+
+    ![image](./media/pbi-dashboard-33.png)
+
+    ![image](./media/pbi-dashboard-34.png)
+
+1. Your report should be udpated with the new visualization configuration.
 
     ![image](./media/pbi-dashboard-27.png)
 
