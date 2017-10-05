@@ -1,4 +1,4 @@
-# Visualizing data using PowerBI (.NET)
+# Visualizing data using PowerBI (Java)
 
 ## Overview
 In this lab, you will create a Power BI report to visualize the Incident data.

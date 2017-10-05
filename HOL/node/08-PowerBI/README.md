@@ -1,4 +1,4 @@
-# Visualizing data using PowerBI (.NET)
+# Visualizing data using PowerBI (Node.JS)
 
 ## Overview
 In this lab, you will create a Power BI report to visualize the Incident data.
