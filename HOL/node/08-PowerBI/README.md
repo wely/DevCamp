@@ -1,4 +1,4 @@
-# Visualizing data using PowerBI (Node.JS)
+# Visualizing data using PowerBI (ALL)
 
 ## Overview
 In this lab, you will create a Power BI report to visualize the Incident data.
@@ -123,15 +123,15 @@ You are now ready to create Power BI reports and dashboards.
 
     ![image](./media/pbi-dashboard-04.png)
 
-1. In Azure, gather the connection information for your CosmosDB. You will need the URL and the key.
+1. In Azure, gather the connection information for your CosmosDB. You will need the **URL** and the **key**.
     
     ![image](./media/pbi-dashboard-05.png)
 
-1. In the Power BI connection screen, enter your URL
+1. In the Power BI connection screen, enter your **URL** for your CosmosDB from the previous step.
 
     ![image](./media/pbi-dashboard-06.png)
 
-1. Entet the key and click `Connect`
+1. Enter the **Key** from your CosmosDB connection from step 7. Click `Connect`
 
     ![image](./media/pbi-dashboard-07.png)
 
@@ -179,7 +179,9 @@ You are now ready to create Power BI reports and dashboards.
 
     ![image](./media/pbi-dashboard-18.png)
 
-1. Now let's add a new column to the datasource that calculates the number of days a incident is open. From the modeling menu, choose `New Column`
+1. Close the Query editor screen and apply changes if prompted.
+
+1. Now let's add a new column to the datasource that calculates the number of days a incident is open. From the `Modeling` Ribbon menu, choose `New Column`
 
     ![image](./media/pbi-dashboard-20.png)
 
