@@ -26,6 +26,29 @@ Internet.
 
     ![image](./media/image-001.png)
 
+    ***CAUTION***
+    Make sure you test the content in the region you are presenting in. Azure may have blocked certain services from the region if there capacity issues. This restriction applies for MSDN, BizSpark Base, BizSpark+, and Free Trials. 
+    The following regins may be used as alterantives when usiing free/trial accounts:
+  
+        ​- Europe North
+        - APAC South East
+        - Brazil South
+        - China East
+        - China North
+        - Europe West
+        - Germany Central
+        - India Central
+        - Japan East
+        - Korea Central
+        - Korea South
+        - UK South
+        - US Central
+        - US East
+        - US North Central
+        - US South Central
+        - US West 2
+        - US West Central
+
     Set up monitoring in AppInsights, so there will be some monitoring data by the time you show this feature
 
     Create an OMS portal - you can set up a trial here: `https://www.microsoft.com/en-us/cloud-platform/operations-management-suite-trial`
