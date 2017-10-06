@@ -29,18 +29,19 @@ namespace DevCamp.WebApp.Utils
         //####    HOL 3    ######
         public static string AAD_APP_ID = ConfigurationManager.AppSettings["AAD_APP_ID"];
         public static string AAD_INSTANCE = ConfigurationManager.AppSettings["AAD_INSTANCE"];
-        public static string AAD_APP_REDIRECTURI = ConfigurationManager.AppSettings["AAD_APP_REDIRECTURI"];
         public static string AAD_TENANTID_CLAIMTYPE = "http://schemas.microsoft.com/identity/claims/tenantid";
         public static string AAD_OBJECTID_CLAIMTYPE = "http://schemas.microsoft.com/identity/claims/objectidentifier";
         public static string AAD_AUTHORITY = ConfigurationManager.AppSettings["AAD_AUTHORITY"];
         public static string AAD_LOGOUT_AUTHORITY = ConfigurationManager.AppSettings["AAD_LOGOUT_AUTHORITY"];
-        public static string GRAPH_API_URL = ConfigurationManager.AppSettings["GRAPH_API_URL"];
+        public static string AAD_APP_REDIRECTURI = ConfigurationManager.AppSettings["AAD_APP_REDIRECTURI"];
         public static string AAD_APP_SECRET = ConfigurationManager.AppSettings["AAD_APP_SECRET"];
         public static string AAD_GRAPH_SCOPES = ConfigurationManager.AppSettings["AAD_GRAPH_SCOPES"];
+        public static string GRAPH_API_URL = ConfigurationManager.AppSettings["GRAPH_API_URL"];
         public static string GRAPH_CURRENT_USER_URL = GRAPH_API_URL + "/v1.0/me";
         public static string GRAPH_SENDMESSAGE_URL = GRAPH_CURRENT_USER_URL + "/sendMail";
         public static string SESSIONKEY_ACCESSTOKEN = "accesstoken";
         public static string SESSIONKEY_USERINFO = "userinfo";
+        
         public static string EMAIL_MESSAGE_BODY = getEmailMessageBody();
         public static string EMAIL_MESSAGE_SUBJECT = "New Incident Reported";
         public static string EMAIL_MESSAGE_TYPE = "HTML";

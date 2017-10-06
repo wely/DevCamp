@@ -109,7 +109,17 @@ namespace DevCamp.WebApp.Controllers
                         //Give the image a unique name based on the incident id
                         var imageUrl = await StorageHelper.UploadFileToBlobStorage(incidentToSave.ID, imageFile);
                         //### Add Blob Upload code here #####
+                        incidentToSave.ImageUri = imageUrl;
 
+                        //Update the incident with the image URL of the upload
+                        using (IncidentAPIClient client = IncidentApiHelper.GetIncidentAPIClient())
+                        {
+                            var result = await client.Incident.UpdateIncidentAsync(incidentToSave.ID, incidentToSave);
+                            if (!string.IsNullOrEmpty(result))
+                            {
+                                incidentToSave = JsonConvert.DeserializeObject<Incident>(result);
+                            }
+                        }
 
                         //### Add Queue code here #####
                         //Add a message to the queue to process this image
