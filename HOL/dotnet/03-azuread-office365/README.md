@@ -359,6 +359,7 @@ AzureAD can handle authentication for web applications. First we will create a n
                     Authority = string.Format(CultureInfo.InvariantCulture, Settings.AAD_INSTANCE, "common", ""),
                     ResponseType = "code id_token",
                     PostLogoutRedirectUri = "/",
+                    RedirectUri = Settings.AAD_APP_REDIRECTURI,
                     Scope = Settings.AAD_GRAPH_SCOPES,
                     TokenValidationParameters = new TokenValidationParameters
                     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Web;
 
@@ -24,17 +25,18 @@ namespace DevCamp.WebApp.Utils
         public static string REDISCACHE_PRIMARY_KEY = ConfigurationManager.AppSettings["REDISCACHE_PRIMARY_KEY"];
         public static string REDISCACHE_CONNECTIONSTRING = $"{REDISCACHE_HOSTNAME}:{REDISCACHE_SSLPORT},password={REDISCACHE_PRIMARY_KEY},abortConnect=false,ssl=true";
         //####    HOL 2   ######
+
         //####    HOL 3    ######
         public static string AAD_APP_ID = ConfigurationManager.AppSettings["AAD_APP_ID"];
         public static string AAD_INSTANCE = ConfigurationManager.AppSettings["AAD_INSTANCE"];
-        public static string AAD_APP_REDIRECTURI = ConfigurationManager.AppSettings["AAD_APP_REDIRECTURI"];
         public static string AAD_TENANTID_CLAIMTYPE = "http://schemas.microsoft.com/identity/claims/tenantid";
         public static string AAD_OBJECTID_CLAIMTYPE = "http://schemas.microsoft.com/identity/claims/objectidentifier";
         public static string AAD_AUTHORITY = ConfigurationManager.AppSettings["AAD_AUTHORITY"];
         public static string AAD_LOGOUT_AUTHORITY = ConfigurationManager.AppSettings["AAD_LOGOUT_AUTHORITY"];
-        public static string GRAPH_API_URL = ConfigurationManager.AppSettings["GRAPH_API_URL"];
+        public static string AAD_APP_REDIRECTURI = ConfigurationManager.AppSettings["AAD_APP_REDIRECTURI"];
         public static string AAD_APP_SECRET = ConfigurationManager.AppSettings["AAD_APP_SECRET"];
         public static string AAD_GRAPH_SCOPES = ConfigurationManager.AppSettings["AAD_GRAPH_SCOPES"];
+        public static string GRAPH_API_URL = ConfigurationManager.AppSettings["GRAPH_API_URL"];
         public static string GRAPH_CURRENT_USER_URL = GRAPH_API_URL + "/v1.0/me";
         public static string GRAPH_SENDMESSAGE_URL = GRAPH_CURRENT_USER_URL + "/sendMail";
         public static string SESSIONKEY_ACCESSTOKEN = "accesstoken";
@@ -45,6 +47,10 @@ namespace DevCamp.WebApp.Utils
         public static string EMAIL_MESSAGE_TYPE = "HTML";
         //####    HOL 3    ######
 
+        //####    HOL 5   ######
+        public static string APPINSIGHTS_KEY = ConfigurationManager.AppSettings["APPINSIGHTS_KEY"];
+        //####    HOL 5   ######
+        
         static string getEmailMessageBody()
         {
             StringBuilder emailContent = new StringBuilder();

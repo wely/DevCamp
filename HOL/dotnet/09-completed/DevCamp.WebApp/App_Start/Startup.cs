@@ -38,6 +38,7 @@ namespace DevCamp.WebApp.App_Start
                 ResponseType = "code id_token",
                 Scope = Settings.AAD_GRAPH_SCOPES,
                 PostLogoutRedirectUri = "/",
+                RedirectUri = Settings.AAD_APP_REDIRECTURI,
                 TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = false,
