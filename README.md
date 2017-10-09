@@ -148,6 +148,10 @@ We will provide a quick lap around the various APIs, features and services avail
 
 #### View [PowerPoint](Presentation/Module08-Analytics%20and%20PowerBI.pptx?raw=true)
 
+### HOL 8 - Power BI
+
+#### View instructions for [.NET](HOL/dotnet/08-PowerBI) | [Node.JS](HOL/node/08-PowerBI) | [Java](HOL/java/08-PowerBI)
+
 ---
 ## Module 9 - IoT
 In this module, we will provide an overview of Cognitive Services APIs and an introduction to the BOT framework.
@@ -160,7 +164,7 @@ In this lab, you will combine the web app with an IoT device based on an Arduino
 * Set up the developing environment to support the programming of Arduino chips.
 * Create your own IoT software from scratch.
 
-#### View instructions for [.NET](../HOL/dotnet/11-IoT) | [Node.JS](../HOL/node/11-IoT) | [Java](../HOL/java/11-IoT)
+#### View instructions for [.NET](HOL/dotnet/11-IoT) | [Node.JS](HOL/node/11-IoT) | [Java](HOL/java/11-IoT)
 
 ---
 ## Module 10 - Cloud Building Blocks
