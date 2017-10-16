@@ -254,7 +254,7 @@ It is important to develop projects in small chunks and to understand and test e
 
     // Request
     const int port = 80;
-    const char* server = "<app_name>.azurewebsites.net/IoT"; // address for request, without http://
+    const char* server = "<app_name>.azurewebsites.net"; // address for request, without http://
     const char* searchString = "IncidentCount="; // search for this property
 
     void setup() {
@@ -314,7 +314,7 @@ It is important to develop projects in small chunks and to understand and test e
         Serial.println(server);
         Serial.println("Sending request");
         
-        client.print("GET /");
+        client.print("GET /iot");
         client.println(" HTTP/1.1");
         client.print("Host: ");
         client.print(server);
