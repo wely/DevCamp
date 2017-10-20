@@ -410,6 +410,11 @@ It is important to develop projects in small chunks and to understand and test e
 
 This example shows how to work with data requests, how to link the device to a data source on the internet and display the state using a simple LED.
 
+## Additional Links
+
+* [Getting Started with Arduino and Genuino products](https://www.arduino.cc/en/Guide/HomePage)
+* [Arduino Language Reference](https://www.arduino.cc/en/Reference/HomePage)
+
 ---
 ## Summary
 
