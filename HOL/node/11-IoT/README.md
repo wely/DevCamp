@@ -410,11 +410,6 @@ It is important to develop projects in small chunks and to understand and test e
 
 This example shows how to work with data requests, how to link the device to a data source on the internet and display the state using a simple LED.
 
-## Additional Links
-
-* [Getting Started with Arduino and Genuino products](https://www.arduino.cc/en/Guide/HomePage)
-* [Arduino Language Reference](https://www.arduino.cc/en/Reference/HomePage)
-
 ---
 ## Summary
 
@@ -425,5 +420,12 @@ In this hands-on lab, you learned how to:
 After completing this module, you can continue on to the Stretch Goal.
 
 ### View Stretch Goal instructions for [Node.JS](../10-stretch-goal/)
+
+---
+## Additional Links
+
+* [Getting Started with Arduino and Genuino products](https://www.arduino.cc/en/Guide/HomePage)
+* [Arduino Language Reference](https://www.arduino.cc/en/Reference/HomePage)
+
 ---
 Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
