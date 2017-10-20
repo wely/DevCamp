@@ -379,6 +379,7 @@ After completing this module, you can continue on to the Stretch Goal.
 
 * [Getting Started with Arduino and Genuino products](https://www.arduino.cc/en/Guide/HomePage)
 * [Arduino Language Reference](https://www.arduino.cc/en/Reference/HomePage)
+* [Arduino Forum](https://forum.arduino.cc)
 
 ---
 Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
