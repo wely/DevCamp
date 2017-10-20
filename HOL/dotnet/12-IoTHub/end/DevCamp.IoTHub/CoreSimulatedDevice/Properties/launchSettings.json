@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CoreSimulatedDevice": {
+      "commandName": "Project",
+      "commandLineArgs": "myFirstDevice uW4ibIvyO5pSgc55mI8m+aRwaYNVQ0V8i4/MCXSvB9w="
+    }
+  }
+}

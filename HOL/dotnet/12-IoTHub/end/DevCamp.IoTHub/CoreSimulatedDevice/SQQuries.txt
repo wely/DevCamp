@@ -1,0 +1,37 @@
+﻿SELECT
+    messageId, deviceId, temperature, humidity, CAST(longitude AS bigint) as longitude, CAST(latitude AS bigint) as latitude, CAST ("Fort Worth" AS nvarchar(max)) as city
+INTO
+    pbi
+FROM
+    iot
+
+
+SELECT
+    messageId, cast(timestamp as datetime) as timestamp, deviceId, temperature, humidity, CAST(longitude AS float) as longitude, CAST(latitude AS float) as latitude, CAST (deviceId AS nvarchar(max)) as location
+INTO
+    pbi
+FROM
+    iot
+
+
+	SELECT
+    messageId, 
+    cast(timestamp as datetime) as timestamp, 
+    deviceId, 
+    temperature, 
+    humidity, 
+    CAST(longitude AS float) as longitude, 
+    CAST(latitude AS float) as latitude, 
+    CAST (deviceId AS nvarchar(max)) as location,
+    CONCATCAST(longitude AS nvarchar(max)) + N',' + CAST(latitude AS nvarchar(max)) as map_location
+INTO
+    pbi
+FROM
+    iot;
+
+
+
+	SELECT TollId, EntryTime, CONCAT ( 'Make:', Make, ' And Model:', Model) AS MakeModel, LicensePlate  
+FROM Input TIMESTAMP BY EntryTime  
+WHERE Toll > 5  
+  
