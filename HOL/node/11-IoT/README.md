@@ -399,10 +399,10 @@ It is important to develop projects in small chunks and to understand and test e
       return 0;
     }
 
-1. Replace the SSID and the password with proper values. Also replace the address in the following line with the address to the `IoT` view:
+1. Replace the SSID and the password with proper values. Also replace the address in the following line with the address to your Azure web app:
 
     ```cpp
-    const char* server = "<app_name>.azurewebsites.net/IoT"; // address for request, without http://
+    const char* server = "<app_name>.azurewebsites.net"; // address for request, without http://
 
 1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device. The device will retrieve the amount of incidents from the `IoT` view and flash the LED for this amount. Again you can use the COM monitor to follow the progress of the code execution on the device.
 
