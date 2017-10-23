@@ -78,7 +78,7 @@ Next, we want to set up an Azure subscription. Go to [azure.microsoft.com/en-us/
 
    ![image](./media/2017-09-27_10_43_00.png)
    
-   If the free trial option is not login to [portal.office.com](https://portal.azure.com) and click `Cost Management + Billing` in the menu on the left. This will open the `Cost Management + Billing` blade. From the blade's menu select `Subscriptions` and click on `New subscription` at the top of the blade:
+   If the free trial option is not available login to [portal.office.com](https://portal.azure.com) and click `Cost Management + Billing` in the menu on the left. This will open the `Cost Management + Billing` blade. From the blade's menu select `Subscriptions` and click on `New subscription` at the top of the blade:
    
    ![image](./media/2017-10-23_12_30_00.png)
    
