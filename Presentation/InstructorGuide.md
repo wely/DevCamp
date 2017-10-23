@@ -27,8 +27,8 @@ Internet.
     ![image](./media/image-001.png)
 
     ***CAUTION***
-    Make sure you test the content in the region you are presenting in. Azure may have blocked certain services from the region if there capacity issues. This restriction applies for MSDN, BizSpark Base, BizSpark+, and Free Trials. 
-    The following regins may be used as alterantives when usiing free/trial accounts:
+    Make sure you test the content in the region you are presenting in. Azure may have blocked certain services from the region if there are capacity issues. This restriction applies for MSDN, BizSpark Base, BizSpark+, and Free Trials. 
+    The following regions may be used as alterantives when using free/trial accounts:
   
         ​- Europe North
         - APAC South East
