@@ -200,6 +200,10 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
     
     ![image](./media/2017-06-22_11_06_00.png)
 
+1. In the `Process` settings select `Hosted` as the `Agent queue`:
+
+    ![image](./media/2017-10-23_13_50_00.png)
+
 1. Click `Save & queue`. Our saved Build Definition is ready to be processed by the Hosted Build Agent.
 
     ![image](./media/2017-06-22_11_12_00.png)
