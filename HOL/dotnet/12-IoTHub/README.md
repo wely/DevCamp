@@ -41,11 +41,11 @@ Create an IoT hub for our simulated devices to send messages to.
 
 1.  Sign in to the Azure Portal and select New > Internet of Things > IoT Hub
 
-    ![image](./media/12-net-ex1-a.png)
+    ![image](./media/12-net-ex1-a.PNG)
     
 1. Choos a name for the IoT Hub, A Resource Group Name, and Location (e.g. West US).
 
-    ![image](./media/12-net-ex1-b.png)
+    ![image](./media/12-net-ex1-b.PNG)
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
