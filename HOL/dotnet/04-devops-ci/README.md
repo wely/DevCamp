@@ -360,7 +360,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
      ![image](./media/2017-06-22_11_47_00.png)
 
-1. Copy the values from the `Web.config` into the application settings. If you do not have values for these settings, please review the previous labs for the correct values.
+1. Copy the values from the `Web.config` into the application settings (including `AAD_APP_REDIRECTURI` - not shown). If you do not have values for these settings, please review the previous labs for the correct values.
 
 1. Click `Save`.
 
