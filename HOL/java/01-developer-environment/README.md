@@ -292,17 +292,15 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
     mvn clean package
     ```
 
-    Also Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.
+    Eclipse [Mars](https://www.eclipse.org/downloads/packages/release/Mars/2) or [Neon](https://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/neon3) can be used.
     
-    If you would like to download a newer version (e.g. [Neon](https://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/neon3) - be careful to not upgrade to versions newer than Neon since they no longer support gradle), Eclipse is available here:
+    Be careful to not upgrade to versions newer than Neon since they no longer support gradle.
 
-    [http://www.eclipse.org/downloads/](http://www.eclipse.org/downloads/)
-
-    and Spring Tool Suite is available here:
+    Spring Tool Suite is available here:
 
     [http://spring.io/tools/sts](http://spring.io/tools/sts)
 
-    For example, after downloading the Eclipse install, run it and you'll get this screen:
+    For example, after downloading the Eclipse installer, run it and you'll get this screen:
 
     ![image](./media/2017-06-19_09_10_00.png)
 
