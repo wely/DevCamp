@@ -78,6 +78,14 @@ Next, we want to set up an Azure subscription. Go to [azure.microsoft.com/en-us/
 
    ![image](./media/2017-09-27_10_43_00.png)
 
+   If the free trial option is not login to [portal.office.com](https://portal.azure.com) and click `Cost Management + Billing` in the menu on the left. This will open the `Cost Management + Billing` blade. From the blade's menu select `Subscriptions` and click on `New subscription` at the top of the blade:
+   
+   ![image](./media/2017-10-23_12_30_00.png)
+   
+   From the list select the `Developer support` option to create a Azure trial:
+   
+   ![image](./media/2017-10-23_12_31_00.png)
+
 > BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass. If you are not using an Azure Pass, please skip ahead to **END Steps for Azure Pass redemption**
 
 1. Navigate to [www.microsoftazurepass.com](http://www.microsoftazurepass.com/).
