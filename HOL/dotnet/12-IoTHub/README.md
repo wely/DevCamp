@@ -43,9 +43,23 @@ Create an IoT hub for our simulated devices to send messages to.
 
     ![image](./media/12-net-ex1-a.png)
     
-1. Choos a name for the IoT Hub, A Resource Group Name, and Location (e.g. West US).
+2. Choose a name for the IoT Hub, Pricing Tier, IoT Hub Units, Resource Group Name, and Location (e.g. West US) and click 'Create'
 
     ![image](./media/12-net-ex1-b.png)
 
+3. Make note of the IoT Hub Hostname.
+
+    ![image](./media/12-net-ex1-c.png)    
+
+4. Click on Shared access policies > iothubowner and not the primary key and Connection string.
+
+    ![image](./media/12-net-ex1-d.png)
+
+
+## Exercise 2: Create the Apps<a name="ex2"></a>
+
+Create the apps to create the devices in the IoT Hub and the app to simulate a device sending messages to the IoT Hub.
+
+1. Open Visual Studio 2017 and create a new console application
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
