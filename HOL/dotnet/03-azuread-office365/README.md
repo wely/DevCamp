@@ -119,6 +119,8 @@ AzureAD can handle authentication for web applications. First we will create a n
 1. Click the `Save` button on the bottom of the screen.
 
     ![image](./media/2017-21-06_08_49_00.png)  
+    
+    Sometimes the `Save` button will not work in Internet Explorer and the saving animation will not disapear. In this case please retry using the Chrome browser.
 
 1. In Visual Studio, open `Web.config` and update the settings with the values from the app registration screen:
     For the `AAD_APP_REDIRECTURI` value, enter the local IIS web site URL including the port and an ending `\ `. Example: `http://localhost:8443/`, 

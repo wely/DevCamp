@@ -91,7 +91,9 @@ AzureAD can handle authentication for web applications. First we will create a n
 
 1. Click the `Save` button on the bottom of the screen.
 
-    ![image](./media/2017-21-06_08_49_00.png)  
+    ![image](./media/2017-21-06_08_49_00.png)    
+    
+    Sometimes the `Save` button will not work in Internet Explorer and the saving animation will not disapear. In this case please retry using the Chrome browser.
 
 1. In Eclipse, let's add those environment variables by opening the run environment, click on the environment tab, and clicking `new` (using the values you captured above):
 

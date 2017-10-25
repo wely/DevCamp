@@ -77,6 +77,14 @@ Stay on this page until the next exercise.
 Next, we want to set up an Azure subscription. Go to [azure.microsoft.com/en-us/free](https://azure.microsoft.com/en-us/free/) and click `Free trial`.
 
    ![image](./media/2017-09-27_10_43_00.png)
+   
+   If the free trial option is not available login to [portal.office.com](https://portal.azure.com) and click `Cost Management + Billing` in the menu on the left. This will open the `Cost Management + Billing` blade. From the blade's menu select `Subscriptions` and click on `New subscription` at the top of the blade:
+   
+   ![image](./media/2017-10-23_12_30_00.png)
+   
+   From the list select the `Developer support` option to create a Azure trial:
+   
+   ![image](./media/2017-10-23_12_31_00.png)
 
 > BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass. If you are not using an Azure Pass, please skip ahead to **END Steps for Azure Pass redemption**
 
@@ -292,17 +300,15 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
     mvn clean package
     ```
 
-    Also Eclipse Mars is installed in `C:\Program Files\Eclipse Foundation\4.5.1\eclipse`.
+    Eclipse [Mars](https://www.eclipse.org/downloads/packages/release/Mars/2) or [Neon](https://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/neon3) can be used.
     
-    If you would like to download a newer version (e.g. [Neon](https://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/neon3) - be careful to not upgrade to versions newer than Neon since they no longer support gradle), Eclipse is available here:
+    Be careful to not upgrade to versions newer than Neon since they no longer support gradle.
 
-    [http://www.eclipse.org/downloads/](http://www.eclipse.org/downloads/)
-
-    and Spring Tool Suite is available here:
+    Spring Tool Suite is available here:
 
     [http://spring.io/tools/sts](http://spring.io/tools/sts)
 
-    For example, after downloading the Eclipse install, run it and you'll get this screen:
+    For example, after downloading the Eclipse installer, run it and you'll get this screen:
 
     ![image](./media/2017-06-19_09_10_00.png)
 
