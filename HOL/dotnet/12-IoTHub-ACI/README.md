@@ -43,17 +43,17 @@ Create an IoT hub for our simulated devices to send messages to.
 
 1.  Sign in to the Azure Portal and select New > Internet of Things > IoT Hub
 
-    ![image](./media/12-net-ex1-a.PNG)
+    ![image](./media/12-net-ex1-a.png)
     
-2. Choose a name for the IoT Hub, Pricing Tier, IoT Hub Units, Resource Group Name, and Location (e.g. West US) and click 'Create'
+1. Choose a name for the IoT Hub, Pricing Tier, IoT Hub Units, Resource Group Name, and Location (e.g. West US) and click 'Create'
 
-    ![image](./media/12-net-ex1-b.PNG)
+    ![image](./media/12-net-ex1-b.png)
 
-3. Make note of the IoT Hub Hostname.
+1. Make note of the IoT Hub Hostname.
 
     ![image](./media/12-net-ex1-c.png)    
 
-4. Click on Shared access policies > iothubowner and not the primary key and Connection string.
+1. Click on Shared access policies > iothubowner and not the primary key and Connection string.
 
     ![image](./media/12-net-ex1-d.png)
 
@@ -65,35 +65,35 @@ Now let's configure the IoT Hub to output messages to an Azure Storage Table Acc
 
     ![image](./media/12-net-ex1-2-a.png)
 
-2. In the Azure Portal Create an Azure Function App, make sure to Select Existing for the Storage Account and select the storage account created in the previous step.
+1. In the Azure Portal Create an Azure Function App, make sure to Select Existing for the Storage Account and select the storage account created in the previous step.
 
     ![image](./media/12-net-ex1-2-b.png)
 
-3. Once the function is created click on the Azure Function in the Portal and add a new function.
+1. Once the function is created click on the Azure Function in the Portal and add a new function.
 
     ![image](./media/12-net-ex1-2-c.png)
 
-4. Click on "create your own custom function"
+1. Click on "create your own custom function"
 
     ![image](./media/12-net-ex1-2-d.png)
 
-5. Choose JavaScript in the language dropdown, Core in the Scenario dropdown, and select "EventHubTrigger - JavaScript"
+1. Choose JavaScript in the language dropdown, Core in the Scenario dropdown, and select "EventHubTrigger - JavaScript"
 
     ![image](./media/12-net-ex1-2-e.png)
 
-6. Next to the Event Hub connection box, select the new link
+1. Next to the Event Hub connection box, select the new link
 
     ![image](./media/12-net-ex1-2-f.png)
 
-7. In the dialouge box that opens select IoT Hub, your IoT Hub, then Events as the Endpoint.
+1. In the dialouge box that opens select IoT Hub, your IoT Hub, then Events as the Endpoint.
 
     ![image](./media/12-net-ex1-2-g.png)
 
-8. Leave the other values with their defaults and click Create It should look something like this.
+1. Leave the other values with their defaults and click Create It should look something like this.
 
      ![image](./media/12-net-ex1-2-h.png)
     
-9. This will open up the index.js file where you should add the following JavaScript
+1. This will open up the index.js file where you should add the following JavaScript
     ```JavaScript
     'use strict';
     module.exports = function (context, iotHubMessage) {
@@ -109,23 +109,23 @@ Now let's configure the IoT Hub to output messages to an Azure Storage Table Acc
         context.done();
     };
 
-10. Now click on the Integrate section of the Function > then click on +New Output > Choose Azure Table Storage > Click Select
+1. Now click on the Integrate section of the Function > then click on +New Output > Choose Azure Table Storage > Click Select
     
     ![image](./media/12-net-ex1-2-i.png)
 
-11. Leave the default values click Save
+1. Leave the default values click Save
 
     ![image](./media/12-net-ex1-2-j.png)
 
-12. Now use the Storage Explorer to connect to the Azure Table Storage so we can see the device messages stored in the Table. You will need to get the Storage Account name and keys from the portal.
+1. Now use the Storage Explorer to connect to the Azure Table Storage so we can see the device messages stored in the Table. You will need to get the Storage Account name and keys from the portal.
 
     ![image](./media/12-net-ex1-2-k.png)
 
-13. Open Stroage Explorer > Connect to Azure Storage > Use Stroage account name and key
+1. Open Stroage Explorer > Connect to Azure Storage > Use Stroage account name and key
 
     ![image](./media/12-net-ex1-2-l.png)
 
-14. Enter your storage account name and key and click next > click Connect.
+1. Enter your storage account name and key and click next > click Connect.
 
     ![image](./media/12-net-ex1-2-m.png)
 
@@ -140,23 +140,23 @@ This application will create multiple devices in the IoT Hub
 1. Open Visual Studio 2017 and create a new console application. Called Create Devices
 
     ![image](./media/12-net-ex2-a.png)
-2. Right click on References in the Solution Explorer > Manage Nuget Pacckages > Browse > and search for "Microsoft.Azure.Devices" > Click on Install
+1. Right click on References in the Solution Explorer > Manage Nuget Pacckages > Browse > and search for "Microsoft.Azure.Devices" > Click on Install
 
     ![image](./media/12-net-ex2-b.png)
 
-3. Click on OK in the Review Changes dialouge > Then I Accept on the License Acceptance dialouge
+1. Click on OK in the Review Changes dialouge > Then I Accept on the License Acceptance dialouge
 
     ![image](./media/12-net-ex2-c.png) 3
     
     ![image](./media/12-net-ex2-d.png) 
 ---
-4. Open Program.cs and add the following at the top of the file
+1. Open Program.cs and add the following at the top of the file
 
     ```csharp
     using Microsoft.Azure.Devices;
     using Microsoft.Azure.Devices.Common.Exceptions;
 
-5. Inside the Program Class add the following:
+1. Inside the Program Class add the following:
     ```csharp
     static RegistryManager registryManager;
     static string connectionString = "<IoT Hub Connection String>";
@@ -166,7 +166,7 @@ This application will create multiple devices in the IoT Hub
     static string[] latitude   = new string[18] { "32.924276", "32.923664", "32.923556", "32.923556", "32.922763", "32.922079", "32.921502", "32.92107", "32.920566", "32.938589", "32.937923", "32.937455", "32.93668", "32.936338", "32.935366", "32.934321", "32.932736", "32.930341" };
     
     static string[] longitude  = new string[18] { "-97.295136", "-97.296081", "-97.29681", "-97.297626", "-97.297668", "-97.297497", "-97.296853", "-97.295866", "-97.294836", "-97.14298", "-97.143431", "-97.143753", "-97.144439", "-97.14474", "-97.144954", "-97.14489", "-97.144654", "-97.142723" };
-6. Add the following function to the class. This will add the device into the IoT Hub and write out the device key to the console that we will use later on in the lab.
+1. Add the following function to the class. This will add the device into the IoT Hub and write out the device key to the console that we will use later on in the lab.
     ```csharp
         private static async Task AddDeviceAsync(string name, string lat, string lon)
         {
