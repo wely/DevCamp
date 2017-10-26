@@ -43,19 +43,19 @@ Create an IoT hub for our simulated devices to send messages to.
 
 1.  Sign in to the Azure Portal and select New > Internet of Things > IoT Hub
 
-    ![image](./media/12-net-ex1-a.png)
+    ![image](./media/12-net-ex1-a.PNG)
     
 1. Choose a name for the IoT Hub, Pricing Tier, IoT Hub Units, Resource Group Name, and Location (e.g. West US) and click 'Create'
 
-    ![image](./media/12-net-ex1-b.png)
+    ![image](./media/12-net-ex1-b.PNG)
 
 1. Make note of the IoT Hub Hostname.
 
-    ![image](./media/12-net-ex1-c.png)    
+    ![image](./media/12-net-ex1-c.PNG)    
 
 1. Click on Shared access policies > iothubowner and not the primary key and Connection string.
 
-    ![image](./media/12-net-ex1-d.png)
+    ![image](./media/12-net-ex1-d.PNG)
 
 ## IoT Cold Path to Storage
 
@@ -63,35 +63,35 @@ Now let's configure the IoT Hub to output messages to an Azure Storage Table Acc
 
 1. In the Azure Portal Create an Azure Storage Account
 
-    ![image](./media/12-net-ex1-2-a.png)
+    ![image](./media/12-net-ex1-2-a.PNG)
 
 1. In the Azure Portal Create an Azure Function App, make sure to Select Existing for the Storage Account and select the storage account created in the previous step.
 
-    ![image](./media/12-net-ex1-2-b.png)
+    ![image](./media/12-net-ex1-2-b.PNG)
 
 1. Once the function is created click on the Azure Function in the Portal and add a new function.
 
-    ![image](./media/12-net-ex1-2-c.png)
+    ![image](./media/12-net-ex1-2-c.PNG)
 
 1. Click on "create your own custom function"
 
-    ![image](./media/12-net-ex1-2-d.png)
+    ![image](./media/12-net-ex1-2-d.PNG)
 
 1. Choose JavaScript in the language dropdown, Core in the Scenario dropdown, and select "EventHubTrigger - JavaScript"
 
-    ![image](./media/12-net-ex1-2-e.png)
+    ![image](./media/12-net-ex1-2-e.PNG)
 
 1. Next to the Event Hub connection box, select the new link
 
-    ![image](./media/12-net-ex1-2-f.png)
+    ![image](./media/12-net-ex1-2-f.PNG)
 
 1. In the dialouge box that opens select IoT Hub, your IoT Hub, then Events as the Endpoint.
 
-    ![image](./media/12-net-ex1-2-g.png)
+    ![image](./media/12-net-ex1-2-g.PNG)
 
 1. Leave the other values with their defaults and click Create It should look something like this.
 
-     ![image](./media/12-net-ex1-2-h.png)
+     ![image](./media/12-net-ex1-2-h.PNG)
     
 1. This will open up the index.js file where you should add the following JavaScript
     ```JavaScript
@@ -111,23 +111,23 @@ Now let's configure the IoT Hub to output messages to an Azure Storage Table Acc
 
 1. Now click on the Integrate section of the Function > then click on +New Output > Choose Azure Table Storage > Click Select
     
-    ![image](./media/12-net-ex1-2-i.png)
+    ![image](./media/12-net-ex1-2-i.PNG)
 
 1. Leave the default values click Save
 
-    ![image](./media/12-net-ex1-2-j.png)
+    ![image](./media/12-net-ex1-2-j.PNG)
 
 1. Now use the Storage Explorer to connect to the Azure Table Storage so we can see the device messages stored in the Table. You will need to get the Storage Account name and keys from the portal.
 
-    ![image](./media/12-net-ex1-2-k.png)
+    ![image](./media/12-net-ex1-2-k.PNG)
 
 1. Open Stroage Explorer > Connect to Azure Storage > Use Stroage account name and key
 
-    ![image](./media/12-net-ex1-2-l.png)
+    ![image](./media/12-net-ex1-2-l.PNG)
 
 1. Enter your storage account name and key and click next > click Connect.
 
-    ![image](./media/12-net-ex1-2-m.png)
+    ![image](./media/12-net-ex1-2-m.PNG)
 
 # Exercise 2: Create the Apps<a name="ex2"></a>
 
@@ -139,16 +139,16 @@ This application will create multiple devices in the IoT Hub
 
 1. Open Visual Studio 2017 and create a new console application. Called Create Devices
 
-    ![image](./media/12-net-ex2-a.png)
+    ![image](./media/12-net-ex2-a.PNG)
 1. Right click on References in the Solution Explorer > Manage Nuget Pacckages > Browse > and search for "Microsoft.Azure.Devices" > Click on Install
 
-    ![image](./media/12-net-ex2-b.png)
+    ![image](./media/12-net-ex2-b.PNG)
 
 1. Click on OK in the Review Changes dialouge > Then I Accept on the License Acceptance dialouge
 
-    ![image](./media/12-net-ex2-c.png) 3
+    ![image](./media/12-net-ex2-c.PNG) 3
     
-    ![image](./media/12-net-ex2-d.png) 
+    ![image](./media/12-net-ex2-d.PNG) 
 ---
 1. Open Program.cs and add the following at the top of the file
 
@@ -193,30 +193,30 @@ This application will create multiple devices in the IoT Hub
     Console.ReadLine();
 8. Now press F5 or Run to debug the application. It will create all the devices in the IoT Hub and output their keys to the console. Make sure to copy the out put from the console. We will use that later in the lab.
 
-    ![image](./media/12-net-ex2-e.png) 
+    ![image](./media/12-net-ex2-e.PNG) 
 
 If you forget to copy the console output, you can also get the device keys from the Azure Portal > Your IoT Hub > Device Explorer > Click on the device.
 
-![image](./media/12-net-ex2-f.png) 
+![image](./media/12-net-ex2-f.PNG) 
 
 ## Device Simulator Application
 
 1. Add a .NET Core Console project to the current solution in Visual Studio 2017 called CoreSimulatedDevice.
 
-    ![image](./media/12-net-ex2-g.png)
+    ![image](./media/12-net-ex2-g.PNG)
 
 2. Right click on Dependencies in the solution explorer and click on Manage NuGet packages > Browse > and enter 
 "Microsoft.Azure.Devices.Client" > and Click Install
 
- ![image](./media/12-net-ex2-h.png)
+ ![image](./media/12-net-ex2-h.PNG)
 
 3. Click on Ok on the Review Changes dailouge
 
-![image](./media/12-net-ex2-i.png)
+![image](./media/12-net-ex2-i.PNG)
 
 4. Click on 'I Accept' in the Licence Acceptance dialouge
 
-![image](./media/12-net-ex2-j.png)
+![image](./media/12-net-ex2-j.PNG)
 
 5. Add the following to the Program.cs file
 
@@ -303,15 +303,15 @@ Now right click on the CoreSimulatedDevice Project in the Solution Explorer > Pr
 * DEVICE_LATITUDE
 * DEVICE_LONGITUDE
 
-    ![image](./media/12-net-ex2-k.png)
+    ![image](./media/12-net-ex2-k.PNG)
 
 11. Right click on your solution in the Solution Explorer > Properties > Startup Project and slect Single startup project and select CoreSimulatedDevice from the dropdown.
 
-    ![image](./media/12-net-ex2-l.png)
+    ![image](./media/12-net-ex2-l.PNG)
 
 12. Now press F5 or Run to debug the application. We should see messages being sent to the IoT Hub.
 
-    ![image](./media/12-net-ex2-m.png)
+    ![image](./media/12-net-ex2-m.PNG)
 
 # Exercise 3: Build the Docker Image<a name="ex3"></a>
 
@@ -320,19 +320,19 @@ Now we will put our CoreSimulatedDevice into a docker image. First we will do it
 
 1. In Visual Studio 2017 in the Solution Explorer righ click on the CoreSimulatedDevice project > Add > Docker Support 
 
-    ![image](./media/12-net-ex3-a.png)
+    ![image](./media/12-net-ex3-a.PNG)
 
 2. Click on Linux > Ok
 
-    ![image](./media/12-net-ex3-b.png)
+    ![image](./media/12-net-ex3-b.PNG)
 
 3. This will add a Dockerfile to the CoreSimulatedDevice project and will also add a new project to the solution called "docker-compose"
 
-    ![image](./media/12-net-ex3-c.png)
+    ![image](./media/12-net-ex3-c.PNG)
 
 4. To build the image we need to build a release version of the CoreSimulated Device. To do this change the dropdown in the solution configuration dropdown to Release then build the solution.
 
-    ![image](./media/12-net-ex3-d.png)
+    ![image](./media/12-net-ex3-d.PNG)
 
 
 5. Open a command prompt or powershell terminal and change directory to the path of your visual studio solution and into the CoreSimulatedDevice project and run the following command to see what images you have running in your local Docker environment. If you just installed Docker for this lab, you should not see any images.
@@ -340,20 +340,20 @@ Now we will put our CoreSimulatedDevice into a docker image. First we will do it
     ```powershell
     docker images
 
-![image](./media/12-net-ex3-e.png)
+![image](./media/12-net-ex3-e.PNG)
 
 6. Again, make sure you are in the path of your solution and the CoreSimualtedDevice Project( e.g. "D:\Code\Visual Studio 2017\Project\CreatedDevices\CoreSimulatedDevice")
 
     ```powershell
     docker build -t coresimulateddevice .
 
-![image](./media/12-net-ex3-f.png)
+![image](./media/12-net-ex3-f.PNG)
 
 7. Now run the following command again, and you should see our coresimulateddevice and the microsoft/dotnet images in your local docker repository
     ```powershell
     docker images
 
-![image](./media/12-net-ex3-g.png)
+![image](./media/12-net-ex3-g.PNG)
 
 
 8. Now let's create a local container to test that our simulated device can run from a container
@@ -362,11 +362,11 @@ Now we will put our CoreSimulatedDevice into a docker image. First we will do it
 
 You should see the container sending messages to the IOT HUB
 
-![image](./media/12-net-ex3-h.png)
+![image](./media/12-net-ex3-h.PNG)
 
 You can also use the Azure Storage Explorer to validate that the message are making it to the IOT Hub and our Table Storage.
 
-![image](./media/12-net-ex3-i.png)
+![image](./media/12-net-ex3-i.PNG)
 
 # Exercise 4: Deploy the image to Azure<a name="ex4"></a>
 
@@ -374,7 +374,7 @@ You can also use the Azure Storage Explorer to validate that the message are mak
 
 1. In the Azure Portal Choose + New > Containers > Azure Container Registry (ACR)
 
-    ![image](./media/12-net-ex4-1-a.png)
+    ![image](./media/12-net-ex4-1-a.PNG)
 
 2. Once the ACR is created make sure to enable the Admin User by click on the Access Keys > Admin user > Enable. Then make note of the:
 
@@ -383,7 +383,7 @@ You can also use the Azure Storage Explorer to validate that the message are mak
 * User Name:
 * Password: 
 
-![image](./media/12-net-ex4-1-b.png)
+![image](./media/12-net-ex4-1-b.PNG)
 
 3. Now let's tag our local image for the ACR in a PowerShell Console and push it to the ACR
 
@@ -406,11 +406,11 @@ You can also use the Azure Storage Explorer to validate that the message are mak
 
 You should see the image pushed the the ACR
 
-![image](./media/12-net-ex4-1-c.png)
+![image](./media/12-net-ex4-1-c.PNG)
 
 And in the Azure Portal
 
-![image](./media/12-net-ex4-1-d.png)
+![image](./media/12-net-ex4-1-d.PNG)
 
 
 ## Deploy an Azure Cotainer Instance (ACI) for each registered eevice to simulate load.
@@ -477,15 +477,15 @@ In this lab we'll use PowerShell to deploy an ACI for each device we want to sim
 
 If you deploy all the device containers you should see something similar to this in the output terminal
 
-![image](./media/12-net-ex4-1-e.png)
+![image](./media/12-net-ex4-1-e.PNG)
 
 You shoul also see them created in the portal
 
-![image](./media/12-net-ex4-1-f.png)
+![image](./media/12-net-ex4-1-f.PNG)
 
 You should also see messages in the Azure Table Storage from multiple devices now
 
-![image](./media/12-net-ex4-1-g.png)
+![image](./media/12-net-ex4-1-g.PNG)
 
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
