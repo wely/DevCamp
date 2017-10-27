@@ -9,10 +9,10 @@ In this hands-on lab, you will learn how to:
 
 * Deploy an IOT HUB and create devices
 * Devloper the IoT Hub .NET Applications
-1. App to create the devices in the IoT Hub
-2. App to simulated devices sending messages
-3. App to send cloud to device messages
-4. App to read device to cloud messages
+* App to create the devices in the IoT Hub
+* App to simulated devices sending messages
+* App to send cloud to device messages
+* App to read device to cloud messages
 * Build a docker image of the simulated device
 * Deploy device as an Azure Container Instance
 
@@ -183,7 +183,7 @@ This application will create multiple devices in the IoT Hub
             Console.Write("'{0}', ", device.Authentication.SymmetricKey.PrimaryKey);
         }
 
-7. Add the folling code into the Main method.
+1. Add the folling code into the Main method.
     ```csharp
     registryManager = RegistryManager.CreateFromConnectionString(connectionString);
     for (int i = 0; i < deviceName.Length; i++)
@@ -191,7 +191,7 @@ This application will create multiple devices in the IoT Hub
         AddDeviceAsync(deviceName[i], latitude[i], longitude[i]).Wait();
     }
     Console.ReadLine();
-8. Now press F5 or Run to debug the application. It will create all the devices in the IoT Hub and output their keys to the console. Make sure to copy the out put from the console. We will use that later in the lab.
+1. Now press F5 or Run to debug the application. It will create all the devices in the IoT Hub and output their keys to the console. Make sure to copy the out put from the console. We will use that later in the lab.
 
     ![image](./media/12-net-ex2-e.PNG) 
 
@@ -205,20 +205,20 @@ If you forget to copy the console output, you can also get the device keys from 
 
     ![image](./media/12-net-ex2-g.PNG)
 
-2. Right click on Dependencies in the solution explorer and click on Manage NuGet packages > Browse > and enter 
+1. Right click on Dependencies in the solution explorer and click on Manage NuGet packages > Browse > and enter 
 "Microsoft.Azure.Devices.Client" > and Click Install
 
- ![image](./media/12-net-ex2-h.PNG)
+    ![image](./media/12-net-ex2-h.PNG)
 
-3. Click on Ok on the Review Changes dailouge
+1. Click on Ok on the Review Changes dailouge
 
-![image](./media/12-net-ex2-i.PNG)
+    ![image](./media/12-net-ex2-i.PNG)
 
-4. Click on 'I Accept' in the Licence Acceptance dialouge
+1. Click on 'I Accept' in the Licence Acceptance dialouge
 
-![image](./media/12-net-ex2-j.PNG)
+    ![image](./media/12-net-ex2-j.PNG)
 
-5. Add the following to the Program.cs file
+1. Add the following to the Program.cs file
 
     ```csharp
     using System.Text;
@@ -226,7 +226,7 @@ If you forget to copy the console output, you can also get the device keys from 
     using Newtonsoft.Json;
     using System.Threading.Tasks;
 
-6. Add the folling inside the CoreSimulated class
+1. Add the folling inside the CoreSimulated class
     ```csharp
     static DeviceClient deviceClient;
     static string iotHubUri = null;
@@ -235,7 +235,7 @@ If you forget to copy the console output, you can also get the device keys from 
     static string deviceLatitude = null;
     static string deviceLongitude = null;
 
-7. Add the following method to the CoreSimulated class
+1. Add the following method to the CoreSimulated class
     ```csharp
      private static async Task SendDeviceToCloudMessagesAsync()
         {
@@ -270,7 +270,7 @@ If you forget to copy the console output, you can also get the device keys from 
             }
         }
 
-8. Add the following to the Main method
+1. Add the following to the Main method
     ```csharp
     iotHubUri = Environment.GetEnvironmentVariable("IOTHUB_URI");
     deviceName = Environment.GetEnvironmentVariable("DEVICE_NAME");
@@ -286,7 +286,7 @@ If you forget to copy the console output, you can also get the device keys from 
     deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(deviceName, deviceKey), TransportType.Mqtt);
     SendDeviceToCloudMessagesAsync().Wait();
 
-9. We will need a device id, it's key, latitude, and longitude to test our console application. We can use the first device we have defined in the earlier application.
+1. We will need a device id, it's key, latitude, and longitude to test our console application. We can use the first device we have defined in the earlier application.
 
 * IOT Hub URI: Get that from the Azure Portal
 * Device Id: k1tx1
@@ -305,11 +305,11 @@ Now right click on the CoreSimulatedDevice Project in the Solution Explorer > Pr
 
     ![image](./media/12-net-ex2-k.PNG)
 
-11. Right click on your solution in the Solution Explorer > Properties > Startup Project and slect Single startup project and select CoreSimulatedDevice from the dropdown.
+1. Right click on your solution in the Solution Explorer > Properties > Startup Project and slect Single startup project and select CoreSimulatedDevice from the dropdown.
 
     ![image](./media/12-net-ex2-l.PNG)
 
-12. Now press F5 or Run to debug the application. We should see messages being sent to the IoT Hub.
+1. Now press F5 or Run to debug the application. We should see messages being sent to the IoT Hub.
 
     ![image](./media/12-net-ex2-m.PNG)
 
@@ -322,41 +322,41 @@ Now we will put our CoreSimulatedDevice into a docker image. First we will do it
 
     ![image](./media/12-net-ex3-a.PNG)
 
-2. Click on Linux > Ok
+1. Click on Linux > Ok
 
     ![image](./media/12-net-ex3-b.PNG)
 
-3. This will add a Dockerfile to the CoreSimulatedDevice project and will also add a new project to the solution called "docker-compose"
+1. This will add a Dockerfile to the CoreSimulatedDevice project and will also add a new project to the solution called "docker-compose"
 
     ![image](./media/12-net-ex3-c.PNG)
 
-4. To build the image we need to build a release version of the CoreSimulated Device. To do this change the dropdown in the solution configuration dropdown to Release then build the solution.
+1. To build the image we need to build a release version of the CoreSimulated Device. To do this change the dropdown in the solution configuration dropdown to Release then build the solution.
 
     ![image](./media/12-net-ex3-d.PNG)
 
 
-5. Open a command prompt or powershell terminal and change directory to the path of your visual studio solution and into the CoreSimulatedDevice project and run the following command to see what images you have running in your local Docker environment. If you just installed Docker for this lab, you should not see any images.
+1. Open a command prompt or powershell terminal and change directory to the path of your visual studio solution and into the CoreSimulatedDevice project and run the following command to see what images you have running in your local Docker environment. If you just installed Docker for this lab, you should not see any images.
 
     ```powershell
     docker images
 
 ![image](./media/12-net-ex3-e.PNG)
 
-6. Again, make sure you are in the path of your solution and the CoreSimualtedDevice Project( e.g. "D:\Code\Visual Studio 2017\Project\CreatedDevices\CoreSimulatedDevice")
+1. Again, make sure you are in the path of your solution and the CoreSimualtedDevice Project( e.g. "D:\Code\Visual Studio 2017\Project\CreatedDevices\CoreSimulatedDevice")
 
     ```powershell
     docker build -t coresimulateddevice .
 
 ![image](./media/12-net-ex3-f.PNG)
 
-7. Now run the following command again, and you should see our coresimulateddevice and the microsoft/dotnet images in your local docker repository
+1. Now run the following command again, and you should see our coresimulateddevice and the microsoft/dotnet images in your local docker repository
     ```powershell
     docker images
 
 ![image](./media/12-net-ex3-g.PNG)
 
 
-8. Now let's create a local container to test that our simulated device can run from a container
+1. Now let's create a local container to test that our simulated device can run from a container
     ```powershell
     docker run -e "IOTHUB_URI=<YOUR IOT HUB URI>" -e "DEVICE_NAME=k1tx1" -e "DEVICE_KEY=<your device key" -e "DEVICE_LATITUDE=32.924276" -e "DEVICE_LONGITUDE=-97.295136" coresimulateddevice k1tx1
 
@@ -376,7 +376,7 @@ You can also use the Azure Storage Explorer to validate that the message are mak
 
     ![image](./media/12-net-ex4-1-a.PNG)
 
-2. Once the ACR is created make sure to enable the Admin User by click on the Access Keys > Admin user > Enable. Then make note of the:
+1. Once the ACR is created make sure to enable the Admin User by click on the Access Keys > Admin user > Enable. Then make note of the:
 
 * Registry Name
 * Login Server
@@ -385,7 +385,7 @@ You can also use the Azure Storage Explorer to validate that the message are mak
 
 ![image](./media/12-net-ex4-1-b.PNG)
 
-3. Now let's tag our local image for the ACR in a PowerShell Console and push it to the ACR
+1. Now let's tag our local image for the ACR in a PowerShell Console and push it to the ACR
 
     ```powershell
     $resourceGroupName = <your resource group name>
@@ -479,7 +479,7 @@ If you deploy all the device containers you should see something similar to this
 
 ![image](./media/12-net-ex4-1-e.PNG)
 
-You shoul also see them created in the portal
+You should also see them created in the portal
 
 ![image](./media/12-net-ex4-1-f.PNG)
 
