@@ -271,7 +271,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     All of the content for this DevCamp will now be located in `c:\DevCamp`.
 
-1. **NodeJS version 6 or greater** - We make extensive use of ECMAScript 6/ECMAScript 2015 which causes errors on earlier versions of node. Inside your development Virtual Machine, open a *NEW* terminal window and execute this command to verify that the node version is v6 or greater:
+1. **NodeJS version 6 or greater** - We make extensive use of ECMAScript 6/ECMAScript 2015 which causes errors on earlier versions of node. Inside your development Virtual Machine, open a **NEW** command prompt window and execute this command to verify that the node version is v6 or greater:
 
     ```CMD
     node -v
@@ -289,9 +289,9 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
 1. We will use the [Microsoft Azure Cross Platform Command Line](https://github.com/Azure/azure-xplat-cli) to interact with our subscription.
 
-   > *There is a new python-based command line interface in preview - we are not going to use that one. Please follow these instructions to install the node-based command line interface.* 
+    > *There is a new python-based command line interface in preview - we are not going to use that one. Please follow these instructions to install the node-based command line interface.* 
     
-    Then install the Microsoft Azure Cross Platform Command Line by executing:
+    If necessary finish the Node installation, then install the Microsoft Azure Cross Platform Command Line by executing in a **NEW** command prompt window:
 
     ```CMD
     npm install azure-cli -g

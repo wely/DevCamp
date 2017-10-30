@@ -271,13 +271,13 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     All of the content for this DevCamp will now be located in `c:\DevCamp`.
 
-1. Inside your development Virtual Machine, open a *NEW* terminal window and execute this command to verify that the node version is v6 or greater:
+1. Inside your development Virtual Machine, open a **NEW** command prompt window and execute this command to verify that the node version is v6 or greater:
 
     ```CMD
     node -v
     ```
 
-1. If the Node version on your machine is less than v6, we will need to update the version. In a browser window open a browser window and go to `http://nodejs.org`, and click on the `Other Downloads` link under the current version LTS:
+    If the Node version on your machine is less than v6, we will need to update the version. In a browser window open a browser window and go to `http://nodejs.org`, and click on the `Other Downloads` link under the current version LTS:
 
     ![image](./media/2017-06-19_08_48_00.png)
 
@@ -291,25 +291,25 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     > *There is a new python-based command line interface in preview - we are not going to use that one. Please follow these instructions to install the node-based command line interface.* 
     
-    Then install the Microsoft Azure Cross Platform Command Line by executing:
+    If necessary finish the Node installation, then install the Microsoft Azure Cross Platform Command Line by executing in a **NEW** command prompt window:
 
     ```CMD
     npm install azure-cli -g
     ```
 
-1. If you are not developing in Java for the DevCamp, you can skip this step. We have already installed the Java JDK, but we will install gradle and Eclipse. We will be using the gradle build manager - to install that using the [chocolatey package manager](http://www.chocolatey.org), open a command window as administrator and type:
+1. If you are not developing in Java for the DevCamp, you can skip this step. We have already installed the Java JDK, but we will install gradle and Eclipse. We will be using the gradle build manager - to install that using the [chocolatey package manager](http://www.chocolatey.org), open a **NEW** command window **as administrator** and type:
 
     ```CMD
     choco install -y gradle
     ```
 
-    Also install maven with:
+    Close the command window, open a **NEW** command window **as administrator** and also install maven with:
 
     ```CMD
     choco install -y maven
     ```
 
-    Go to the root directory using `cd \ `, and perform these commands in sequence:
+    Close the command window, open a **NEW** command window **as administrator** and go to the root directory using `cd \ `, and perform these commands in sequence:
 
     ```CMD
     refreshenv
@@ -342,7 +342,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     ![image](./media/2016-10-19_10-55-30.gif)
 
-    In the window that pops up, choose `All Available Sites` for the `Work with` dropdown, type `gradle` in the search box, and when the search is complete (which sometimes takes a minute or two), choose `Buildshop: Eclipse Plug-ins for Gradle`:
+    In the window that pops up, choose `All Available Sites` for the `Work with` dropdown, type `gradle` in the search box, and when the search is complete (which sometimes **takes a minute or two** - there is a progress bar in the lower left corner of the Eclipse main window), choose `Buildshop: Eclipse Plug-ins for Gradle`:
 
     ![image](./media/2017-06-19_09_22_00.png)
     
@@ -355,8 +355,10 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
     This will load a list of available packages. Choose the `Azure Toolkit for Java` package and the `Team Explorer Everywhere` package in the list, and complete the package installation as before:
 
     ![image](./media/2017-06-19_09_29_00.png)
+    
+    You might have to manually download a previous version of the Scala IDE for your Eclipse version from [http://scala-ide.org/download/prev-stable.html](http://scala-ide.org/download/prev-stable.html). Install it by extracting the zip file. Again select `Help` -> `Install New Software...`, and click the `Add..` button next to the `Work with` dropdown. Select the extracted folder. Now the Scala IDE components will be listed. Select them all and continue the installation.
 
-    Also, install the `Spring Tool Suite (STS) for Eclipse` package by using the menu item `Help` -> `Eclipse Marketplace...`, type `spring` in the `Find:` box and choose `Go`. In the list of packages, scroll down to `Spring Tool Suite (STS) for Eclipse X.X.X.RELEASE` and click `Install`.
+    Also, install the `Spring Tool Suite (STS) for Eclipse` package by using the menu item `Help` -> `Eclipse Marketplace...`, type `spring` in the `Find:` box and choose `Go`. In the list of packages, scroll down to `Spring Tools (aka Spring IDE and Spring Tool Suite) X.X.X.RELEASE` and click `Install`.
 
     ![image](./media/2017-06-19_09_34_00.png)
 
