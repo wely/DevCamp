@@ -18,6 +18,7 @@ You will need a cell phone and credit card for identity verification.
 
 The credit card ***will not*** be charged unless you remove the spending limit on the subscription you will create.
 
+
 ## Exercises
 This hands-on-lab has the following exercises:
 * [Exercise 1: Set up Office 365 trial subscription](#ex1)
@@ -26,16 +27,29 @@ This hands-on-lab has the following exercises:
 * [Exercise 4: Configure your Azure subscription for DevCamp](#ex4)
 * [Exercise 5: Use an Azure Virtual Machine for remote development](#ex5)
 * [Exercise 6: Deploy Shared API application](#ex6)
-* [Exercise 7: Azure Portal walkthrough](#ex7)
+* [Exercise 7: Azure Portal walk-through](#ex7)
 * [Exercise 8: View the resources you created](#ex8)
+
+---
+
+## Before you start
+
+> &#x1F53A;If you already have an Office 365 subscription, please **use an alternate browser or use private mode!** This will help avoid any issues with conflicting accounts.
+>
+> Clear your browsers cache and restart your browser.
+>
+> **Do not skip exercise 1!** Even if you already have an Office 365 subscription and address, follow exercise 1 and create a new account.
+>
+> Use the account created in exercise 1 for **all the following exercises and hands-on labs!**
+>
+> To register for a free trial use an e-mail address and a phone number that has **not been used for a free trial** yet!&#x1F53A;
+
 
 ---
 ## Exercise 1: Set up Office 365 trial subscription<a name="ex1"></a>
 
-> If you already have an Office 365 subscription, please use an alternate browser or use private mode. This will help avoid any issues with conflicting accounts.
 
-1. In your browser, go to [products.office.com/en-us/business/office-365-enterprise-e3-business-software](https://products.office.com/en-us/business/office-365-enterprise-e3-business-software) 
-and click the link that says `Free Trial`. 
+1. In your browser, go to [products.office.com/en-us/business/office-365-enterprise-e3-business-software](https://products.office.com/en-us/business/office-365-enterprise-e3-business-software) and click the link that says `Free Trial`. 
 
     ![image](./media/2017-03-14_08_28_44.png)
 
@@ -77,7 +91,7 @@ Stay on this page until the next exercise.
 Next, we want to set up an Azure subscription. Go to [azure.microsoft.com/en-us/free](https://azure.microsoft.com/en-us/free/) and click `Free trial`.
 
    ![image](./media/2017-09-27_10_43_00.png)
-
+   
    If the free trial option is not available login to [portal.office.com](https://portal.azure.com) and click `Cost Management + Billing` in the menu on the left. This will open the `Cost Management + Billing` blade. From the blade's menu select `Subscriptions` and click on `New subscription` at the top of the blade:
    
    ![image](./media/2017-10-23_12_30_00.png)
@@ -88,11 +102,15 @@ Next, we want to set up an Azure subscription. Go to [azure.microsoft.com/en-us/
 
 > BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass. If you are not using an Azure Pass, please skip ahead to **END Steps for Azure Pass redemption**
 
-1. Navigate to [www.microsoftazurepass.com](http://www.microsoftazurepass.com/).
+1. Navigate to [www.microsoftazurepass.com](http://www.microsoftazurepass.com/) and sign in.
 
     ![image](./media/2017-06-15_10_39_00.png)
 
-1. Enter the code that is provided by your facilitator into the text box, then click `Submit`.
+1. Enter the code that is provided by your facilitator into the text box, then click `Claim Promo Code`.
+ 
+1. Click `Activate`.
+
+    ![image](./media/2017-10-30_10_04_00.png)
 
 > END Steps for Azure Pass redemption
 
@@ -143,7 +161,7 @@ In a future lab we will use [Visual Studio Team Services](https://www.visualstud
 
     ![image](./media/2016-10-18_17-30-18.gif)
 
-1. Click the `Accept` button to access your Visual Studio Dev Essentials benefits
+1. Click the `Accept` button to access your Visual Studio Dev Essentials benefits.
 
     ![image](./media/2016-10-18_17-42-01.gif)
 
@@ -156,7 +174,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 ---
 ## Exercise 4: Configure your Azure subscription for DevCamp<a name="ex4"></a>
 
-1. We have created an Azure Resource Group template that will configure the resources you need in Azure for the DevCamp.  To deploy these resources in your Azure subscription, `control + click` on the blue ***Deploy to Azure*** button below (on a MAC, use `Apple Key + click`):
+1. We have created an Azure Resource Group template that will configure the resources you need in Azure for the DevCamp. To deploy these resources in your Azure subscription, `control + click` on the blue ***Deploy to Azure*** button below (on a MAC, use `Apple Key + click`):
 
     :point_right:    <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzureCAT-GSI%2FDevCamp%2Fmaster%2FShared%2FARMTemplate%2FAzureDeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>    :point_left:
 
@@ -166,7 +184,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
 1.  Name your resource group `DevCamp`, and choose a location for your deployment. 
 
-    > Please **do not** choose the region West India for your deployment. It is missing a resource that is needed for the labs
+    > Please **do not** choose the region West India for your deployment. It is missing a resource that is needed for the labs!
 
 1. Check the box that indicates you agree to the terms and conditions, and click the `Purchase` button.
 
@@ -180,11 +198,11 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
 1. This will take approximately 20-30 minutes to complete. Please do not continue on until the template has completed.
 
-    In a later session, we will take a look at Azure Resource Group templates, and how to manage your infrastructure the same way     you manage your code.  As a short introduction, a template is a JSON file that contains definitions for the resources you want in your    resource group.  When you apply the resource group template, Azure will apply the template to your Azure resource group, and create     the resources you have specified in the template.  This makes it easy to maintain the infrastructure definition in the JSON text file.
+    In a later session, we will take a look at Azure Resource Group templates, and how to manage your infrastructure the same way you manage your code. As a short introduction, a template is a JSON file that contains definitions for the resources you want in your resource group. When you apply the resource group template, Azure will apply the template to your Azure resource group, and create the resources you have specified in the template. This makes it easy to maintain the infrastructure definition in the JSON text file.
     
-    In the resource group template we have created for DevCamp, there are several types of resources including Web Apps and a Virtual Machine. The     complete list of resources deployed is detailed in Exercise 8 of this Hands-On-Lab.  Resource Group Templates are usually fairly quick to    apply - the reason this one takes so long is that we are creating a Windows Virtual machine and installing all the tools you will    need for the DevCamp including Visual Studio, the Java development kit, and other software resources.
+    In the resource group template we have created for DevCamp, there are several types of resources including Web Apps and a Virtual Machine. Resource Group Templates are usually fairly quick to apply - the reason this one takes so long is that we are creating a Windows Virtual machine and installing all the tools you will need for the DevCamp including Visual Studio, the Java development kit, and other software resources.
 
-1. You will know when the Resource Group finishes provisioning either by the Notification dropdown, or by navigation on the lefthand bar to **Resource Groups** -> **DevCamp** and check the "Deployments" status for **Succeeded**.
+1. You will know when the Resource Group finishes provisioning either by the Notification drop-down, or by navigation on the left-hand bar to `Resource Groups` -> `DevCamp` and check the `Deployments` status for `Succeeded`.
 
     ![image](./media/2017-06-15_11_41_00.png)
 
@@ -343,9 +361,9 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 1. Select `OK`.
 
 ---
-## Exercise 7: Azure Portal walkthrough<a name="ex7"></a>
+## Exercise 7: Azure Portal walk-through<a name="ex7"></a>
 
-1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, [http://portal.azure.com](https://portal.azure.com).  Log in with the credentials you supplied in the subscription signup exercise.  You should see the Azure portal, similar to this:
+1. On your local machine or the virtual machine in Azure, open a browser window and go to the main Azure portal page, [http://portal.azure.com](https://portal.azure.com). Log in with the credentials you supplied in the subscription sign-up exercise. You should see the Azure portal, similar to this:
 
     ![image](./media/2017-06-15_16_21_00.png)
 
@@ -357,7 +375,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     ![image](./media/2017-06-15_16_29_00.png)
     
-1. On the left you will see a list of the Azure services that you can use on the left hand side.  Notice that this list will scroll up and down to reveal more services, and finally an item that says `More Services >`:
+1. On the left you will see a list of the Azure services that you can use on the left hand side. Notice that this list will scroll up and down to reveal more services, and finally an item that says `More Services >`:
 
     ![image](./media/2017-06-15_16_25_00.png)
 
@@ -423,7 +441,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     You can click on any of the items on the left hand side which will view or manipulate settings for the resource group as a whole.  If you click on any of the individual resources in the center, you will get more information on that resource.
 
-1. Azure automatically logs changes to resource group and who made those changes.  Clicking `Activity log` on the left of the blade will allow you to query the log, and clicking on any logged items will give you additional information on that entry:
+1. Azure automatically logs changes to resource group and who made those changes. Clicking `Activity log` on the left of the blade will allow you to query the log, and clicking on any logged items will give you additional information on that entry:
 
     ![image](./media/2017-06-16_08_51_00.png)
 
@@ -434,6 +452,8 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 1. The Windows VM is managed by an [Azure DevTest lab](https://azure.microsoft.com/en-us/services/devtest-lab/) named `DevCamp` which handles the startup and shutdown of the machine. To change the start up schedule, click on the DevTest Lab icon and select `Configuration and policies` under the `Settings` headline. 
 
     ![image](./media/2017-06-16_09_04_00.png)
+
+    ![image](./media/2017-10-30_12_21_00.png)
 
 1. Select `Auto-shutdown`.
 
