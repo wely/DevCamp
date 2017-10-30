@@ -584,8 +584,9 @@ AzureAD can handle authentication for web applications. First we will create a n
 	
     > 1. Right-click on the `DevCamp.WebApp` project in the `Solution Explorer` and choose `Properties`. This should open the properties page in the middle window of Visual Studio. In the left hand list of pages choose `Web`, and ensure that the Project Url in the center is the SSL URL from above.  
     > 1. Go back to the [apps.dev.microsoft.com](https://apps.dev.microsoft.com) page, and add the Project URL under the `platforms` section of the form. Remove any other URLs that were already there, and save your changes. 
+    > 1. Update the `AAD_APP_REDIRECTURI` value in your `web.config`.
     > 1. Make sure your browsers are closed, then re-run your application.
-    > 1. Closing Visual Studio during the exercise can create new port numbers. Keep the entry in [apps.dev.microsoft.com](https://apps.dev.microsoft.com) up to date.
+    > 1. Closing Visual Studio during the exercise can create new port numbers. Keep the entry in [apps.dev.microsoft.com](https://apps.dev.microsoft.com) and the `web.config` up to date.
     
 1. When you login for the first time, you will be prompted to allow permission for the app to access your data. Click `Accept`.
 
