@@ -100,7 +100,7 @@ You have now created a project in VSTS with a Git repository. Next we'll clone t
 
       ![image](./media/2017-06-21_14_17_00.png)
 
-1. Open the copied solution file in Visual Studio.
+1. Open the **copied solution** file in Visual Studio.
 
 1. Ensure the `Utils` -> `Web.config` settings are set to the values for your application (you can copy them from your working copy back from HOL 3).
 
@@ -125,6 +125,9 @@ You have now created a project in VSTS with a Git repository. Next we'll clone t
     <add key="AAD_GRAPH_SCOPES" value="openid email profile offline_access Mail.ReadWrite Mail.Send User.Read User.ReadBasic.All" />
     <add key="GRAPH_API_URL" value="https://graph.microsoft.com" />
     ```
+
+1. Compile the solution and make sure it works.
+
 1. On the Team Explorer tab, select the changes view by clicking on `Changes`. You may be prompted to confirm your user name.
 
     ![image](./media/2017-06-21_14_21_00.png)
@@ -175,12 +178,16 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
     ![image](./media/2017-06-21_14_35_00.png)
 
-1. There are prebuilt definitions for a variety of programming languages and application stacks. For this exercise select `.NET Desktop` and click `Apply`:
+1. There are pre-built definitions for a variety of programming languages and application stacks. For this exercise select `.NET Desktop` and click `Apply`:
 
     ![image](./media/2017-06-21_14_41_00.png)
 
 1. The build tasks are created for us as part of the template. 
 
+1. In the `Process` settings select `Hosted` as the `Agent queue`:
+
+    ![image](./media/2017-10-23_13_50_00.png)
+    
 1. On the `Get sources` step set the `From` value to your VSTS Project and the `Repository` to the repo that was earlier created.
 
     ![image](./media/2017-06-22_14_40_00.png)
@@ -188,7 +195,7 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 1. Navigate to the `Build Solution` step. Add the following in the `MSBuild Arguments` text box to create a web deployment package as part of the build:
 
     ```xml
-    /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="bin\deploymentpackage"    
+    /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="bin\deploymentpackage"
     ```
     ![image](./media/2017-06-22_11_04_00.png)
 
@@ -200,15 +207,15 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
     
     ![image](./media/2017-06-22_11_06_00.png)
 
-1. In the `Process` settings select `Hosted` as the `Agent queue`:
-
-    ![image](./media/2017-10-23_13_50_00.png)
-
 1. Click `Save & queue`. Our saved Build Definition is ready to be processed by the Hosted Build Agent.
 
     ![image](./media/2017-06-22_11_12_00.png)
 
-1. Accept the defaults and click `Queue`. Your build will then be queued until the Hosted Build Agent can pick it up for processing. This typically takes less than 60 seconds to begin.
+1. Accept the defaults and click `Save & Queue`. Your build will then be queued until the Hosted Build Agent can pick it up for processing. This typically takes less than 60 seconds to begin.
+
+1. Click the build number to proceed.
+ 
+    ![image](./media/2017-11-01_11_15_00.png)
 
 1. Once your build completes, click each step on the left navigation bar and inspect the output.
 
@@ -267,7 +274,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/2017-09-27_10_12_00.png)
 
-1. Click `Add artifact`. Ensure the `Source` is set to the Build Definition name used in the earlier exercise and that `Queue` is set to the `Hosted` option. Then click `Create` to finish creating the Release Definition.
+1. Click `Add artifact`. Ensure the `Source (Build definition)` is set to the Build Definition name used in the earlier exercise. Then click `Add` to finish creating the Release Definition.
 
     ![image](./media/image-027.gif)
 
