@@ -157,17 +157,21 @@ The resource group is now holding our "Test" environment web app and has been ad
 
     ![image](./media/2017-06-23_10_09_00.png)
 
-1. In the Release Definition, select `Add environment` and select `Clone a selected environment`. We will use our existing Dev web app configuration as the template for the new test web app configuration.
+1. In the Release Definition, first select `Environment 1`, then select `Add` and select `Clone environment`. We will use our existing Dev web app configuration as the template for the new test web app configuration.
 
     ![image](./media/2017-06-23_10_11_00.png)
 
-1. VSTS allows us to control and govern how releases happen between environments. Instead of automatically deploying our test environment after our dev environment, let's add an approval step. A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test environment. 
+1. Rename the environment from **Copy of...** to **Test** by clicking on it's title.
 
-    For the `Pre-deployment approval` option, select `Specific users` and enter your account name. Then click the `Create` button:
+1. VSTS allows us to control and govern how releases happen between environments. Instead of automatically deploying our test environment after our dev environment, let's add an approval step. A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test environment. Click the `Pre-deployment conditions` icon on the left side of the test environment, select the `After environment` trigger and the first environment:
 
     ![image](./media/2017-06-23_10_34_00.png)
 
-1. Rename the environment from **Copy of...** to **Test** by clicking on it's title and click the the `Deploy AzureRM App Service` task. Update the `App Service Name` to match the web app that you just deployed via the ARM Template. The task now targets the test environment web app, rather than the dev environment web app.
+    For the `Pre-deployment approvers` option, select `Specific users` and enter your account name. Then click the `Save` button:
+
+    ![image](./media/2017-11-01_13_01_00.png)
+
+1.  Switch to the `Tasks` blade. Update the `App service name` to match the web app that you just deployed via the ARM Template. The task now targets the test environment web app, rather than the dev environment web app.
 
     ![image](./media/2017-06-23_10_39_00.png)
 
