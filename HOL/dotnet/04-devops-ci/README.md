@@ -278,7 +278,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/image-027.gif)
 
-1.  We need to connect your VS agent with your Azure subscription so it can deploy resources. If the drop-down next to `Azure subscription` offers you your subscription, select it, authorize it and continue to select your `dotnetapp...` Azure Web app resource from the `App Service name` drop-down.
+1.  We need to connect your VS agent with your Azure subscription so it can deploy resources. Select `Tasks` from the menu. If the drop-down next to `Azure subscription` offers you your subscription, select it, authorize it and continue to select your `dotnetapp...` Azure Web app resource from the `App Service name` drop-down.
 
     ![image](./media/2017-06-22_09_05_00.png)
 
