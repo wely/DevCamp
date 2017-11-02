@@ -349,9 +349,13 @@ To make our bot accessible we have to publish it in a public location. An Azure 
 
     ![image](./media/2017-07-12_12_55_00.png)
 
-1. Open a browser and navigate to the [Bot Framework Portal](https://dev.botframework.com/bots). After you sign in, click `My bots`, then click `Create a bot`, and finally, click `Register`. Then complete the following steps.
+1. Open a browser and navigate to the [Bot Framework Portal](https://dev.botframework.com/bots). After you sign in, click `Create`:
 
-    ![image](./media/2017-07-12_13_09_00.png)
+    ![image](./media/2017-11-02_09_56_00.png)
+
+1. In the dialog select `Register an existing bot using Bot Builder SDK` and click `Ok`:
+
+    ![image](./media/2017-11-02_09_58_00.png)
 
     **Complete the Bot profile section of the form.**
 
@@ -401,11 +405,13 @@ To make our bot accessible we have to publish it in a public location. An Azure 
 
     ![image](./media/2017-07-12_12_33_00.png)
 
-1. Verify the deployment of your bot by using the `Bot Framework Emulator`. You have to configure `ngrok` to connect to your Azure hosted bot. In the Log section click on the `Edit ngrok settings` message to open the settings dialog.
+1. Verify the deployment of your bot by using the `Bot Framework Emulator`. You have to configure `ngrok` to connect to your Azure hosted bot. Click the three dots and select `App Settings`to open the settings dialog.
+
+    ![image](./media/2017-11-02_10_12_00.png)
+
+1. In the dialog select the `ngrok.exe` file you extracted to your Desktop in the first exercise, check the `Use version 1.0 authentication tokens` option and click `SAVE` to close the dialog.
 
     ![image](./media/2017-07-12_13_47_00.png)
-
-1. In the dialog select the `ngrok.exe` file you extracted to your Desktop in the first exercise and click `SAVE` to close the dialog.
 
 1. Enter the bot's HTTPS endpoint into the address bar of the Emulator. It should look similar to this: `https://citypowerbot20170712104043.azurewebsites.net/api/messages`. Also provide the `Microsoft App ID` and the `Microsoft App Password` you noted earlier. Then click `CONNECT`. Test your bot as before.
 
@@ -430,13 +436,11 @@ You have seen some of the basics of bot development. In the exercises you have u
 
     ![image](./media/2017-07-11_16_37_00.png)
 
-1. You will be redirected to the template blade. Go to [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com) and add a new app like you did in [HOL 3 exercise 1](../03-azuread-office365#ex1). Copy the App Id and the password to the template blade. Now you can select your preferred programming language and the template you want to use for your bot.
+1. Navigate to the bot in your resource group. You will be redirected to the template blade. Now you can select your preferred programming language and the template you want to use for your bot. Choose the `Form` to end up with a bot that is again based on the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-formflow) template and click `Next`.
 
     ![image](./media/2017-07-11_16_41_00.png)
 
-1. Choose the `Form` to end up with a bot that is again based on the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-formflow) template, check and agree to the Terms of Use and click `Create bot`.
-
-    As of July 2017 there are still some problems with the online template creation that might prevent you from using Edge or the Internet Explorer. If you encounter the message "This item cannot be accessed or modified." when you click on a template or later when you try to return to the bot's details blade but end up with the template blade again, use the Chrome browser instead.
+1. Click `Manage Microsoft App ID and password` and create a new id for your bot. Copy the App Id and the password to the template blade, check and agree to the Terms of Use and click `Create bot`.
 
     ![image](./media/2017-07-11_16_28_00.png)
 
