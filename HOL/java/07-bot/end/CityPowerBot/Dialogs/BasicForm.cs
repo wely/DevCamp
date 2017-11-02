@@ -56,8 +56,14 @@ namespace CityPowerBot
             OnCompletionAsyncDelegate<BasicForm> processReport = async (context, state) =>
             {
                 await context.PostAsync("We are currently processing your report. We will message you the status.");
-                DataWriter.IncidentController.Create(state.FirstName, state.LastName, state.Street, state.City, state.State, state.ZipCode, state.PhoneNumber, state.Description, state.IncidentType.ToString(), state.Emergency, MessagesController.LastImage, MessagesController.LastImageName, MessagesController.LastImageType);
-                await context.PostAsync("The incident report has been logged.");
+                if (await DataWriter.IncidentController.CreateAsync(state.FirstName, state.LastName, state.Street, state.City, state.State, state.ZipCode, state.PhoneNumber, state.Description, state.IncidentType.ToString(), state.Emergency, MessagesController.LastImage, MessagesController.LastImageName, MessagesController.LastImageType))
+                {
+                    await context.PostAsync("The incident report has been logged.");
+                }
+                else
+                {
+                    await context.PostAsync("An error occured logging the incident.");
+                }
             };
 
             // Builds an IForm<T> based on BasicForm

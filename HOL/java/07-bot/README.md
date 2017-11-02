@@ -66,89 +66,89 @@ We are using the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotne
 1. Open the `CityPowerBot` -> `Dialogs` -> `BasicForm.cs` and add the following code which will create a property for each value of our incident report. It will also let the bot introduce itself and greet the user with its own name. The order of the interaction is determined by the `FormBuilder` in the `BuildForm` method.
 
     ```csharp
-	using Microsoft.Bot.Builder.Dialogs;
-	using Microsoft.Bot.Builder.FormFlow;
-	using Microsoft.Bot.Builder.FormFlow.Advanced;
-	using System;
-	using System.Collections.Concurrent;
-	using System.Collections.Generic;
-	using System.Globalization;
-	using System.IO;
-	using System.Linq;
-	using System.Reflection;
-	using System.Threading;
-	#pragma warning disable 649
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Bot.Builder.FormFlow;
+    using Microsoft.Bot.Builder.FormFlow.Advanced;
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading;
+    #pragma warning disable 649
 
-	namespace CityPowerBot
-	{
-		public enum IncidentTypes { GasLeak = 1, StreetLightStaysOn };
-		
-		// For more information about this template visit http://aka.ms/azurebots-csharp-form
-		[Serializable]
-		public class BasicForm
-		{
-			[Prompt("What is your {&}?")]
-			public string FirstName { get; set; }
+    namespace CityPowerBot
+    {
+        public enum IncidentTypes { GasLeak = 1, StreetLightStaysOn };
+        
+        // For more information about this template visit http://aka.ms/azurebots-csharp-form
+        [Serializable]
+        public class BasicForm
+        {
+            [Prompt("What is your {&}?")]
+            public string FirstName { get; set; }
 
-			[Prompt("And your {&}?")]
-			public string LastName { get; set; }
+            [Prompt("And your {&}?")]
+            public string LastName { get; set; }
 
-			[Prompt("What type of outage would you like to report? {||}")]
-			public IncidentTypes IncidentType { get; set; }
+            [Prompt("What type of outage would you like to report? {||}")]
+            public IncidentTypes IncidentType { get; set; }
 
-			[Prompt("Is this issue an {&}? {||}")]
-			public bool Emergency { get; set; }
+            [Prompt("Is this issue an {&}? {||}")]
+            public bool Emergency { get; set; }
 
-			[Prompt("Please give a {&} of the problem.")]
-			public string Description { get; set; }
-			
-			[Pattern(@"(<Undefined control sequence>\d)?\s*\d{3}(-|\s*)\d{4}")]
-			[Prompt("What is the {&} where we can currently reach you?")]
-			public string PhoneNumber { get; set; }
+            [Prompt("Please give a {&} of the problem.")]
+            public string Description { get; set; }
+            
+            [Pattern(@"(<Undefined control sequence>\d)?\s*\d{3}(-|\s*)\d{4}")]
+            [Prompt("What is the {&} where we can currently reach you?")]
+            public string PhoneNumber { get; set; }
 
-			[Prompt("In which {&} do you live?")]
-			public string City { get; set; }
+            [Prompt("In which {&} do you live?")]
+            public string City { get; set; }
 
-			[Prompt("And in which state {&}?")]
-			public string State { get; set; }
+            [Prompt("And in which state {&}?")]
+            public string State { get; set; }
 
-			[Prompt("Lastly, what {&} do you live on?")]
-			public string Street { get; set; }
+            [Prompt("Lastly, what {&} do you live on?")]
+            public string Street { get; set; }
 
-			[Pattern(@"^\d{5}(?:[-\s]\d{4})?$")]
-			[Prompt("What is your {&}?")]
-			public string ZipCode { get; set; }
-			
-			public static IForm<BasicForm> BuildForm()
-			{
-				// Builds an IForm<T> based on BasicForm
-				return new FormBuilder<BasicForm>()
-					.Message("I am the City Power Bot! You can file a new incident report with me :-)")
-					.Field(nameof(FirstName))
-					.Field(nameof(LastName))
-					.Message("Hello {FirstName} {LastName}! Let's file your report!")
-					.Field(nameof(Emergency))
-					.Field(nameof(IncidentType))
-					.Field(nameof(Description))
-					.Field(nameof(City))
-					.Field(nameof(State))
-					.Field(nameof(ZipCode))
-					.Field(nameof(Street))
-					.Field(nameof(PhoneNumber))
-					.Build();
-			}
+            [Pattern(@"^\d{5}(?:[-\s]\d{4})?$")]
+            [Prompt("What is your {&}?")]
+            public string ZipCode { get; set; }
+            
+            public static IForm<BasicForm> BuildForm()
+            {
+                // Builds an IForm<T> based on BasicForm
+                return new FormBuilder<BasicForm>()
+                    .Message("I am the City Power Bot! You can file a new incident report with me :-)")
+                    .Field(nameof(FirstName))
+                    .Field(nameof(LastName))
+                    .Message("Hello {FirstName} {LastName}! Let's file your report!")
+                    .Field(nameof(Emergency))
+                    .Field(nameof(IncidentType))
+                    .Field(nameof(Description))
+                    .Field(nameof(City))
+                    .Field(nameof(State))
+                    .Field(nameof(ZipCode))
+                    .Field(nameof(Street))
+                    .Field(nameof(PhoneNumber))
+                    .Build();
+            }
 
-			public static IFormDialog<BasicForm> BuildFormDialog(FormOptions options = FormOptions.PromptInStart)
-			{
-				// Generated a new FormDialog<T> based on IForm<BasicForm>
-				return FormDialog.FromForm(BuildForm, options);
-			}
-		}
-	}
-	```
+            public static IFormDialog<BasicForm> BuildFormDialog(FormOptions options = FormOptions.PromptInStart)
+            {
+                // Generated a new FormDialog<T> based on IForm<BasicForm>
+                return FormDialog.FromForm(BuildForm, options);
+            }
+        }
+    }
+    ```
 
     Note how we can use the `IncidentTypes` enum and the boolean property `Emergency`. The `FormBuilder` will automatically turn these types into choices presented to the user. Two regular expressions check the format of the `PhoneNumber` and `ZipCode` properties.
-	
+    
 1. Let's test the new bot. Hit `F5` to start the debugging process. The Internet Explorer will open and display bot information. Note the address.
 
 1. Start the `Bot Framework Emulator`.
@@ -173,68 +173,68 @@ You have now created a rudimentary bot that gathers all the data we need for an 
 ## Exercise 3: Send attachments to the bot<a name="ex3"></a>
 
 Did you notice the image button next to the message window? You can not only send text messages to your bot but also image files. Let's tell the bot how to handle them.
-	
+    
 1. In the `CityPowerBot` -> `Controllers` -> `MessagesController.cs` replace the creation of the `MainDialog` with a switch that filters messages containing images while letting the existing `MainDialog` handle all the other messages.
 
     ```csharp
-	if (activity.Type == ActivityTypes.Message)
+    if (activity.Type == ActivityTypes.Message)
     {
-		// Stores send images out of order.
-		var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-		var imageAttachment = activity.Attachments?.FirstOrDefault(a => a.ContentType.Contains("image"));
-		if (imageAttachment != null)
-		{
-			LastImage = await GetImageStream(connector, imageAttachment);
-			LastImageName = imageAttachment.Name;
-			LastImageType = imageAttachment.ContentType;
-			Activity reply = activity.CreateReply("Got your image!");
-			await connector.Conversations.ReplyToActivityAsync(reply);
-		}
-		else
-		{
-			// Creates a dialog stack for the new conversation, adds MainDialog to the stack, and forwards all messages to the dialog stack.
-			await Conversation.SendAsync(activity, () => new MainDialog());
-		}
-	}
-	```
+        // Stores send images out of order.
+        var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+        var imageAttachment = activity.Attachments?.FirstOrDefault(a => a.ContentType.Contains("image"));
+        if (imageAttachment != null)
+        {
+            LastImage = await GetImageStream(connector, imageAttachment);
+            LastImageName = imageAttachment.Name;
+            LastImageType = imageAttachment.ContentType;
+            Activity reply = activity.CreateReply("Got your image!");
+            await connector.Conversations.ReplyToActivityAsync(reply);
+        }
+        else
+        {
+            // Creates a dialog stack for the new conversation, adds MainDialog to the stack, and forwards all messages to the dialog stack.
+            await Conversation.SendAsync(activity, () => new MainDialog());
+        }
+    }
+    ```
 
 1. Add these two methods that will extract a stream from the image send by the user.
 
     ```csharp
-	private static async Task<Stream> GetImageStream(ConnectorClient connector, Attachment imageAttachment)
-	{
-		using (var httpClient = new HttpClient())
-		{
-			// The Skype attachment URLs are secured by JwtToken,
-			// you should set the JwtToken of your bot as the authorization header for the GET request your bot initiates to fetch the image.
-			// https://github.com/Microsoft/BotBuilder/issues/662
-			var uri = new Uri(imageAttachment.ContentUrl);
-			if (uri.Host.EndsWith("skype.com") && uri.Scheme == "https")
-			{
-				httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetTokenAsync(connector));
-				httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/octet-stream"));
-			}
+    private static async Task<Stream> GetImageStream(ConnectorClient connector, Attachment imageAttachment)
+    {
+        using (var httpClient = new HttpClient())
+        {
+            // The Skype attachment URLs are secured by JwtToken,
+            // you should set the JwtToken of your bot as the authorization header for the GET request your bot initiates to fetch the image.
+            // https://github.com/Microsoft/BotBuilder/issues/662
+            var uri = new Uri(imageAttachment.ContentUrl);
+            if (uri.Host.EndsWith("skype.com") && uri.Scheme == "https")
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetTokenAsync(connector));
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/octet-stream"));
+            }
 
-			return await httpClient.GetStreamAsync(uri);
-		}
-	}
+            return await httpClient.GetStreamAsync(uri);
+        }
+    }
 
-	/// <summary>
-	/// Gets the JwT token of the bot. 
-	/// </summary>
-	/// <param name="connector"></param>
-	/// <returns>JwT token of the bot</returns>
-	private static async Task<string> GetTokenAsync(ConnectorClient connector)
-	{
-		var credentials = connector.Credentials as MicrosoftAppCredentials;
-		if (credentials != null)
-		{
-			return await credentials.GetTokenAsync();
-		}
+    /// <summary>
+    /// Gets the JwT token of the bot. 
+    /// </summary>
+    /// <param name="connector"></param>
+    /// <returns>JwT token of the bot</returns>
+    private static async Task<string> GetTokenAsync(ConnectorClient connector)
+    {
+        var credentials = connector.Credentials as MicrosoftAppCredentials;
+        if (credentials != null)
+        {
+            return await credentials.GetTokenAsync();
+        }
 
-		return null;
-	}
-	```
+        return null;
+    }
+    ```
 
     The code will store the last submitted image in the variables to be used when the report is submitted.
 
@@ -271,24 +271,30 @@ To file the reported incident we use the incident API. The necessary methods are
     OnCompletionAsyncDelegate<BasicForm> processReport = async (context, state) =>
     {
         await context.PostAsync("We are currently processing your report. We will message you the status.");
-        DataWriter.IncidentController.Create(state.FirstName, state.LastName, state.Street, state.City, state.State, state.ZipCode, state.PhoneNumber, state.Description, state.IncidentType.ToString(), state.Emergency, MessagesController.LastImage, MessagesController.LastImageName, MessagesController.LastImageType);
-        await context.PostAsync("The incident report has been logged.");
+        if (await DataWriter.IncidentController.CreateAsync(state.FirstName, state.LastName, state.Street, state.City, state.State, state.ZipCode, state.PhoneNumber, state.Description, state.IncidentType.ToString(), state.Emergency, MessagesController.LastImage, MessagesController.LastImageName, MessagesController.LastImageType))
+        {
+            await context.PostAsync("The incident report has been logged.");
+        }
+        else
+        {
+            await context.PostAsync("An error occured logging the incident.");
+        }
     };
     ```
 
 1. We are going to let the users confirm that they want to submit the entered data using the template's confirm feature. If the user replies with `No` the input can be changed before it is submitted. Again the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-formflow) template does all of the work for you. Once we get the confirmation we can process the incident report by sending it to our incident API. Add the `Confirm` and `OnCompletion` calls to the end of the form builder chain before the `Build()` call:
 
     ```csharp
-	.Field(nameof(PhoneNumber))
-	
-	.Confirm(async (state) =>
-	{
-		return new PromptAttribute($"OK, we have got all your data. Would you like to send your incident report now?");
-	})
-	.OnCompletion(processReport)
-	
+    .Field(nameof(PhoneNumber))
+    
+    .Confirm(async (state) =>
+    {
+        return new PromptAttribute($"OK, we have got all your data. Would you like to send your incident report now?");
+    })
+    .OnCompletion(processReport)
+    
     .Build();
-	```
+    ```
 
 1. Hit `F5` to start the debugging process and talk to your bot via the `Bot Framework Emulator`.
 
@@ -428,7 +434,7 @@ You have seen some of the basics of bot development. In the exercises you have u
 1. The deployment will take some minutes.
 
     ![image](./media/2017-07-11_16_42_00.png)
-	
+    
 1. You can find more information on the templates and their application [here](https://docs.microsoft.com/en-us/bot-framework/azure/azure-bot-service-overview).
 
 1. You can now develop and test your bot directly within the Azure Portal but should configure continuous integration to be able to add additional files. If you make changes to the code you might have to reload the page for the test section to show the changes. Your new bot is also available via the [Bot Framework Portal](https://dev.botframework.com/bots). You can use a second browser window to test the bot in the Bot Framework Portal.
