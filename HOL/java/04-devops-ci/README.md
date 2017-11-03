@@ -389,9 +389,9 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     If you make changes to the application and `git push` back to the VSTS server, this will automatically trigger a build and deployment. Try to make a small change to the application and verify that the application is re-deployed to the test environment.
 
-> If you see the splash screen instead of the application's start page go to `https://javaapp[...].scm.azurewebsites.net/DebugConsole`.
+    > If you see the splash screen instead of the application's start page go to `https://javaapp[...].scm.azurewebsites.net/DebugConsole`.
 
-![image](./media/image-031.gif)
+    ![image](./media/image-031.gif)
 
     > Sign in and use the console to navigate to `D:\home\site\wwwroot\webapps`. There should be your deployed `ROOT.war` and the extracted folder `ROOT`. Open `ROOT` and delete the `index.jsp` file which contains the splash screen and prevents your application's start page from showing.
 
