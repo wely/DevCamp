@@ -151,7 +151,7 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
     * Package the code assets into a deployable zip file.
     * Publish the zip file as a Publish Artifact that can be consumed by the VSTS Release System.
 
-    Each of these steps will begin by clicking the `Add Task` button.
+    Each of these steps will begin by clicking the `+` button of `Phase 1`.
 
 1.  Add a Build Step for `Gradle`, found under the filter for `Build`. Click `Add` and then select the newly added task to configure it.
 
@@ -201,7 +201,7 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
     
     * Configure `Path to Publish` as `$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip` to target the zip file created in the previous Build Step.
     * For `Artifact Name` enter `drop`
-    * and set `Artifact Type` to `Server`.
+    * and set `Artifact publish location` to `Visual Studio Team Services/TFS`.
 
     ![image](./media/2017-06-27_10_08_00.png)
 
@@ -289,21 +289,17 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/2017-06-22_11_31_00.png)
 
-1. Select `Empty` and click `Next`.
+1. Select `Empty` and click `Apply`.
 
     ![image](./media/2017-06-27_11_23_00.png)
 
-    Next, check the box next to `Continuous deployment` to make sure a new release will be executed whenever a build completes. Click `Create` to complete the process.
+1. Click `Add artifact`, select the build definition you created as the `Source (Build definition)` and click `Add`. Now the artifacts the build definition created will be available in the new release definition.
 
     ![image](./media/2017-06-27_11_24_00.png)
 
-1. In the release definition screen, click the pencil and rename the release definition to **Cloud Test Release** and change the environment name to **Test Environment**.
+1. Switch to `Tasks` and click the `+` button.
 
-    ![image](./media/2017-06-27_11_31_00.png)
-
-    Next, click on `Add tasks`.
-
-    In the task catalog, find `Azure App Service Deploy` and click `Add`, and then `Close`.
+    In the task catalog, find `Azure App Service Deploy` and click `Add`.
 
     ![image](./media/2017-06-27_11_33_00.png)
 
@@ -375,7 +371,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/2017-06-27_11_57_00.png)
 
-    In the following window, type a description for the release, choose the build that you created earlier, and click `Create`:
+    In the following window, type a description for the release, choose the environment that you created earlier, and click `Create`:
 
     ![image](./media/2017-06-27_11_59_00.png)
 
@@ -392,6 +388,14 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     ![image](./media/2017-06-27_13_09_00.jpg)
 
     If you make changes to the application and `git push` back to the VSTS server, this will automatically trigger a build and deployment. Try to make a small change to the application and verify that the application is re-deployed to the test environment.
+
+> If you see the splash screen instead of the application's start page go to `https://javaapp[...].scm.azurewebsites.net/DebugConsole`.
+
+![image](./media/image-031.gif)
+
+    > Sign in and use the console to navigate to `D:\home\site\wwwroot\webapps`. There should be your deployed `ROOT.war` and the extracted folder `ROOT`. Open `ROOT` and delete the `index.jsp` file which contains the splash screen and prevents your application's start page from showing.
+
+    ![image](./media/2017-11-03_10_58_00.png)
 
 --- 
 ## Summary

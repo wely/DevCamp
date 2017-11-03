@@ -410,7 +410,7 @@ This hands-on-lab has the following exercises:
 	}	
     ```
 
-    You will notice that the `@Autowired` annotation is underlined in red - you have to resolve the import for it by hovering the mouse pointer over it, and choose the `import Autowired` quck fix.
+    You will notice that the `@Autowired` annotation is underlined in red - you have to resolve the import for it by hovering the mouse pointer over it, and choose the `import Autowired` quick fix.
     
     ![image](./media/2017-06-19_13_16_00.png)    
     
