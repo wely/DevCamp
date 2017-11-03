@@ -30,6 +30,8 @@ You can use any editor you like to create Azure resource group templates, but bo
 
     ![image](./media/image-001.gif)
 
+    ![image](./media/2017-11-03_11_17_00.png)
+
     This extension gives intellisense and schema support for ARM Templates.
     
 1. Next, let's install a pack of code snippets to make creating resources easier. In VS Code, you can open the JSON snippets file by either navigating to `File` -> `Preferences` -> `User Snippets` -> `JSON`, or by selecting `F1` and typing `preferences` until you can select `Preferences: Snippets`.
@@ -66,7 +68,7 @@ You can use any editor you like to create Azure resource group templates, but bo
 
     This web app name needs to be globally unique, as it will be used for the https://[...].azurewebsites.net DNS entry and cannot be the same as an existing webapp. Use `javaapptest` plus 4-5 random characters.
 
-    The webapp resource has stubbed in 3 instances of `APP_SERVICE_PLAN_NAME`. Replace this value with the `AppServicePlan` name value that you gave the App Service Plan earlier.
+    The webapp resource has stubbed in 3 instances of `APP_SERVICE_PLAN_NAME`. Replace this value with the `AppServicePlan` name value that you gave the App Service Plan earlier when you were removing the `1` from the resource name.
 
     ![image](./media/image-009.gif)
 
@@ -159,6 +161,11 @@ For deploying the ARM Template we will use the Azure Xplat CLI. Please Ensure yo
 
     ```bash
     azure login
+    ```
+
+    Follow the on-screen instructions to log in via your browser.
+
+    ```bash
     azure group create -n DevCampTest -l "West US"
     azure group deployment create -f .\azuredeploy.json -g DevCampTest
     ```
@@ -194,17 +201,21 @@ The resource group is now holding our "Test" environment web app and has been ad
 
     ![image](./media/2017-06-27_16_48_00.png)
 
-1. In the Release Definition, select `Add environment` and select `Clone a selected environment`. We will use our existing Dev web app configuration as the template for the new test web app configuration.
+1. In the Release Definition, first select `Environment 1`, then select `Add` and select `Clone environment`. We will use our existing Dev web app configuration as the template for the new test web app configuration.
 
     ![image](./media/2017-06-27_16_49_00.png)
 
-1. VSTS allows us to control and govern how releases happen between environments. Instead of automatically deploying our test environment after our dev environment, let's add an approval step. A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test environment. 
+1. Rename the environment from **Copy of...** to **Test** by clicking on it's title.
 
-    For the `Pre-deployment approval` option, select `Specific users` and enter your account name. Then click the `Create` button:
+1. VSTS allows us to control and govern how releases happen between environments. Instead of automatically deploying our test environment after our dev environment, let's add an approval step. A user can look at the dev environment, confirm it is is ready, and then authorize a release to the test environment. Click the `Pre-deployment conditions` icon on the left side of the test environment, select the `After environment` trigger and the first environment:
+
+    ![image](./media/2017-11-03_12_49_00.png)
+
+    For the `Pre-deployment approvers` option, select `Specific users` and enter your account name. Then click the `Save` button:
 
     ![image](./media/2017-06-27_16_50_00.png)
 
-1. Rename the environment from **Copy of...** to **Test** by clicking on it's title and click the the `Deploy AzureRM App Service` task. Update the `App Service Name` to match the web app that you just deployed via the ARM Template. The task now targets the test environment web app, rather than the dev environment web app.
+1.  Switch to the `Tasks` blade. Update the `App service name` to match the web app that you just deployed via the ARM Template. The task now targets the test environment web app, rather than the dev environment web app.
 
     ![image](./media/2017-06-27_16_52_00.png)
 
