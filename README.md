@@ -154,7 +154,7 @@ We will provide a quick lap around the various APIs, features and services avail
 
 ---
 ## Module 9 - IoT
-In this module, we will provide an overview of Cognitive Services APIs and an introduction to the BOT framework.
+In this module, you will learn about the Azure IoT capabilities and features.
 
 #### View [PowerPoint](Presentation/Module09-IOT.pptx?raw=true)
 
