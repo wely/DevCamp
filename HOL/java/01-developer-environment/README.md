@@ -106,9 +106,9 @@ Next, we want to set up an Azure subscription. Go to [azure.microsoft.com/en-us/
 
     ![image](./media/2017-11-07_10_14_00.png)
 
-    ![image](./media/2017-06-15_10_39_00.png)
-
 1. Enter the code that is provided by your facilitator into the text box, then click `Claim Promo Code`.
+
+    ![image](./media/2017-06-15_10_39_00.png)
  
 1. Click `Activate`.
 
