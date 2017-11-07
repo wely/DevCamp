@@ -56,7 +56,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/2017-21-06_08_12_00.png)
 
-1. A key is generated for you. ***Save this key***, as you will not be able to retrieve it in the future.
+1. A key is generated for you. ***Save this key***, as you will not be able to retrieve it in the future. **Note:** If the generated key contains the characters **\** or **&** please generate a new key!
 
     ![image](./media/image-007.gif)
 
