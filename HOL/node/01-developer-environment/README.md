@@ -102,7 +102,9 @@ Next, we want to set up an Azure subscription. Go to [azure.microsoft.com/en-us/
 
 > BEGIN Steps for Azure Pass redemption - Follow this step if you are using an Azure Pass. If you are not using an Azure Pass, please skip ahead to **END Steps for Azure Pass redemption**
 
-1. Navigate to [www.microsoftazurepass.com](http://www.microsoftazurepass.com/) and sign in.
+1. Navigate to [www.microsoftazurepass.com](http://www.microsoftazurepass.com/) and sign in. **Make sure to clean your browser cache and use a private window! The sign in screen must display the company icon shown on the left side:**
+
+    ![image](./media/2017-11-07_10_14_00.png)
 
     ![image](./media/2017-06-15_10_39_00.png)
 
