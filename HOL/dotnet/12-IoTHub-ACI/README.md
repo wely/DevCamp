@@ -87,7 +87,7 @@ Now let's configure the IoT Hub to output messages to an Azure Storage Table Acc
 
     ![image](./media/12-net-ex1-2-f.PNG)
 
-1. In the dialogue box that opens select IoT Hub, your IoT Hub, then Events as the Endpoint.
+1. In the dialog box that opens select IoT Hub, your IoT Hub, then Events as the Endpoint.
 
     ![image](./media/12-net-ex1-2-g.PNG)
 
@@ -144,11 +144,11 @@ This application will create multiple devices in the IoT Hub
 1. Open Visual Studio 2017 and create a new console application Named `CreateDevices`
 
     ![image](./media/12-net-ex2-a.PNG)
-1. Right click on References in the Solution Explorer > Manage Nuget Packages > Browse > and search for "Microsoft.Azure.Devices" > Click on Install
+1. Right click on References in the Solution Explorer > Manage Nuget Packages > Browse > and search for `Microsoft.Azure.Devices` > Click `Install`
 
     ![image](./media/12-net-ex2-b.PNG)
 
-1. Click on OK in the Review Changes dialogue > Then I Accept on the License Acceptance dialogue
+1. Click on OK in the Review Changes dialog > Then I Accept on the License Acceptance dialog
 
     ![image](./media/12-net-ex2-c.PNG)
 
@@ -161,7 +161,7 @@ This application will create multiple devices in the IoT Hub
     using Microsoft.Azure.Devices.Common.Exceptions;
     ```
 
-1. Inside the Program Class add the following:
+1. Inside the Program Class add the following. Replace the `<IoT Hub Connection String>` placeholder with your IoT Hub Connection string:
 
     ```csharp
     static RegistryManager registryManager;
@@ -204,7 +204,7 @@ This application will create multiple devices in the IoT Hub
     Console.ReadLine();
     ```
 
-1. Now press F5 or Run to debug the application. It will create all the devices in the IoT Hub and output their keys to the console. Make sure to copy the out put from the console. We will use that later in the lab.
+1. Now press `F5` or `Run` to debug the application. It will create all the devices in the IoT Hub and output their keys to the console. Make sure to copy the out put from the console. We will use that later in the lab.
 
     ![image](./media/12-net-ex2-e.PNG)
 
@@ -214,7 +214,7 @@ This application will create multiple devices in the IoT Hub
 
 ## Device Simulator Application
 
-1. Add a .NET Core Console project to the current solution in Visual Studio 2017 called CoreSimulatedDevice.
+1. Add a .NET Core Console project to the current solution in Visual Studio 2017 called `CoreSimulatedDevice`.
 
     ![image](./media/12-net-ex2-g.PNG)
 
@@ -222,11 +222,11 @@ This application will create multiple devices in the IoT Hub
 
     ![image](./media/12-net-ex2-h.PNG)
 
-1. Click on `Ok` on the Review Changes dialogue
+1. Click on `Ok` on the Review Changes dialog
 
     ![image](./media/12-net-ex2-i.PNG)
 
-1. Click on `I Accept` in the License Acceptance dialogue
+1. Click on `I Accept` in the License Acceptance dialog
 
     ![image](./media/12-net-ex2-j.PNG)
 
@@ -307,7 +307,7 @@ This application will create multiple devices in the IoT Hub
 1. We will need a device id, it's key, latitude, and longitude to test our console application. We can use the first device we have defined in the earlier application.
 
     * IOT Hub URI: Get that from the Azure Portal
-    * Device Id: k1tx1
+    * Device Name: k1tx1
     * Device Key: Get that from the console output or from the Azure portal in the IoT Hub Device Explorer
     * Latitude: "32.924276"
     * Longitude: "-97.295136"
@@ -322,7 +322,7 @@ This application will create multiple devices in the IoT Hub
 
     ![image](./media/12-net-ex2-k.PNG)
 
-1. Right click on your solution in the Solution Explorer > Properties > Startup Project and slect Single startup project and select CoreSimulatedDevice from the dropdown.
+1. Right click on your solution in the Solution Explorer > Properties > Startup Project and select Single startup project and select `CoreSimulatedDevice` from the dropdown.
 
     ![image](./media/12-net-ex2-l.PNG)
 
@@ -348,9 +348,13 @@ Now we will put our CoreSimulatedDevice into a docker image. First we will do it
 
     ![image](./media/12-net-ex3-c.PNG)
 
-1. To build the image we need to build a release version of the CoreSimulated Device. To do this change the dropdown in the solution configuration dropdown to Release then build the solution.
+1. To build the container image, we need to create a **release** version of the CoreSimulated Device. To do this change the dropdown in the solution configuration dropdown to **Release**.
 
-    ![image](./media/12-net-ex3-d.PNG)
+    ![image](./media/12-net-ex3-k.PNG)
+
+1. Build the solution
+
+    ![image](./media/12-net-ex3-l.PNG)
 
 1. Open a command prompt or powershell terminal and change directory to the path of your visual studio solution and into the CoreSimulatedDevice project and run the following command to see what images you have running in your local Docker environment. If you just installed Docker for this lab, you should not see any images.
 
@@ -360,10 +364,11 @@ Now we will put our CoreSimulatedDevice into a docker image. First we will do it
 
     ![image](./media/12-net-ex3-e.PNG)
 
-1. Again, make sure you are in the path of your solution and the CoreSimualtedDevice Project( e.g. "D:\Code\Visual Studio 2017\Project\CreatedDevices\CoreSimulatedDevice")
+1. Again, make sure you are in the path of your solution and the CoreSimualtedDevice Project( e.g. `D:\Code\Visual Studio 2017\Project\CreatedDevices\CoreSimulatedDevice`)
 
     ```powershell
     docker build -t coresimulateddevice .
+    ```
 
 ![image](./media/12-net-ex3-f.PNG)
 
@@ -371,13 +376,14 @@ Now we will put our CoreSimulatedDevice into a docker image. First we will do it
 
     ```powershell
     docker images
+    ```
 
 ![image](./media/12-net-ex3-g.PNG)
 
-1. Now let's create a local container to test that our simulated device can run from a container
+1. Now let's create a local container to test that our simulated device can run from a container. Replace the `<YOUR IOT HUB URI>` placeholder with the IoT Hub URI and the `<YOUR DEVICE KEY>` placeholder with the values from above
 
     ```powershell
-    docker run -e "IOTHUB_URI=<YOUR IOT HUB URI>" -e "DEVICE_NAME=k1tx1" -e "DEVICE_KEY=<your device key" -e "DEVICE_LATITUDE=32.924276" -e "DEVICE_LONGITUDE=-97.295136" coresimulateddevice k1tx1
+    docker run -e "IOTHUB_URI=<YOUR IOT HUB URI>" -e "DEVICE_NAME=k1tx1" -e "DEVICE_KEY=<YOUR DEVICE KEY>" -e "DEVICE_LATITUDE=32.924276" -e "DEVICE_LONGITUDE=-97.295136" coresimulateddevice k1tx1
     ```
 
 1. You should see the container sending messages to the IOT HUB
@@ -408,16 +414,16 @@ Now we will put our CoreSimulatedDevice into a docker image. First we will do it
 1. Now let's tag our local image for the ACR in a PowerShell Console and push it to the ACR
 
     ```powershell
-    $resourceGroupName = <your resource group name>
-    $acrName = <your acr name>
+    $resourceGroupName = "<your resource group name>"
+    $acrName = "<your acr name>" #DO NOT INCLUDE THE .azurecr.io SUFFIX 
 
     Login-AzureRmAccount
-    Select-AzureRmSubscription -Subscription <your subscription>
+    Select-AzureRmSubscription -SubscriptionId "<your subscription id>"
 
     $acr = Get-AzureRmContainerRegistry -ResourceGroupName $resourceGroupName -RegistryName $acrName
     $acrImageName = $acr.LoginServer + "/coresimulateddevice:v1"
 
-    docker tag coresimulateddevice $acrImage
+    docker tag coresimulateddevice $acrImageName
 
     $acrCreds = Get-AzureRmContainerRegistryCredential -RegistryName $acrName -ResourceGroupName $resourceGroupName
 
@@ -433,7 +439,7 @@ Now we will put our CoreSimulatedDevice into a docker image. First we will do it
 
     ![image](./media/12-net-ex4-1-d.PNG)
 
-## Deploy an Azure Cotainer Instance (ACI) for each registered device to simulate load
+## Deploy an Azure Container Instance (ACI) for each registered device to simulate load
 
 1. In this lab we'll use PowerShell to deploy an ACI for each device we want to simulate
 
@@ -443,9 +449,10 @@ Now we will put our CoreSimulatedDevice into a docker image. First we will do it
     Login-AzureRmAccount
     Select-AzureRmSubscription -Subscription "<your subscription here>"
 
-    $rgName = "<your resource group name"
-    $acrName = "<your acr name"
-    $location = "westus"
+    $rgName = "<YOUR RESOURCE GROUP NAME>"
+    $acrName = "<YOUR ACR NAME>"
+    $iotHubUri = "<YOUR IOT HUB URI>"
+    $location = "<YOUR RG LOCATION>"
     $imageName = "<your acr login server>/coresimulateddevice:v1"
 
     $deviceName = @("k1tx1", "k1tx2", "k1tx3", "k1tx4", "k1tx5", "k1tx6", "k1tx7", "k1tx8", "k1tx9", "sthlk1", "sthlk2", "sthlk3", "sthlk4", "sthlk5", "sthlk6", "sthlk7", "sthlk8", "sthlk9" )
