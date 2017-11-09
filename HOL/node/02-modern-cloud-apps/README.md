@@ -456,6 +456,8 @@ When a new incident is reported, the user can attach a photo. In this exercise w
     }
     ```
 
+    > Depending on your developer-environment you may have to change the `mime.extension()` call to `mime.getExtension()`.
+
 1. With the utility created, let's update `routes/new.js` to handle new incidents. Replace the contents with:
 
     ```javascript
