@@ -99,6 +99,8 @@ We will add both components to our application and enable the sending of telemet
     }
     ```
 
+    > If you are using AppInsights SDK version 1.0.0 or higher change `var client = appInsights.getClient();` to `var client = new appInsights.TelemetryClient();` and `client.trackEvent("profileview", { userid: userid, tenantid: tenantid });` to `client.trackEvent({ name: "profileview", properties: { userid: userid, tenantid: tenantid }});`.
+
 1. Extend `app.js` to use the helper on application initialization by adding a require() statement and by calling `appInsightsHelper.setup()`:
 
     ```javascript
