@@ -75,7 +75,7 @@ We need to split our data into training data and evaluation data. The training d
 * Relational expression = \"Created Year" < 2017  
   
 Since we're going to have multiple "Split Data" modules, let's add a comment so that we can keep track. Right click on the module, and choose "Edit Comment". Decorate it with "Year < 2017", and then expand the module so you can see the comment.  
-![Year Split](media/50/ml2_splityear.png)  
+![Year Split](media/100/ml2_splityear.png)  
 The left output of the "Year Split" module will now contain our data from 2014 - 2016, and the right output data from just 2017.   
   
 Let's add another "Split Data" module to the right output and separate out Jan -> May and Jun+. Configure the new "Split Data" as follows:
@@ -83,7 +83,7 @@ Let's add another "Split Data" module to the right output and separate out Jan -
 * Relational expression = \"Created Month" < 7
 * Edit Comment = Month < 7  
   
-![Month Split](media/50/ml2_splitmonth.png)  
+![Month Split](media/100/ml2_splitmonth.png)  
   
 Now, our training data is separated into 2 buckets: 2014-2016 and Jan 2017-May 2017. Let's recombine them by adding an "Add Rows" module (Data Transformation->Manipulation). Connect the left output of the "Split Years" and the left output of the "Split Month" modules into the inputs of "Add Rows".  
 ![Combine Training Data](media/50/ml2_combinetraining.png)  
@@ -107,7 +107,7 @@ We have one final data preparation step. While visualizing the output of the tra
 * Stratified Split: False
 * Edit Comment: Shuffle  
   
-![Shuffle Data](media/50/ml2_shuffle.png)  
+![Shuffle Data](media/100/ml2_shuffle.png)  
   
 ### 7. Modeling ### 
 We are now ready for the main part of this exercise: the modeling! Drag in a "Neural Network Regression" module (Machine Learning -> Regression), and a "Train Model" module (Machine Learning-> Train). Connect the "Neural Network Regression" module to the left input of the "Train Model" module, and your training data set into the right output of the "Train Model" module. Then configure then modules as follows:
@@ -125,7 +125,7 @@ We are now ready for the main part of this exercise: the modeling! Drag in a "Ne
   
 For the "Train Model" module, choose "Duration Days" as the column to train against, as this is what we're trying to predict.  
    
-![Model](media/50/ml2_nn.png)  
+![Model](media/100/ml2_nn.png)  
   
 ### 8. Training the Model
 Let's have another checkpoint to see how out model performs. Run your experiment. While the "Train Model" module is executing, you can watch its progress by clicking on "View output log". The most interesting data here is the "MeanErr" (actually the squared mean error), which is a gauge of how good the model is performing against the training data (which hopefully will replicate against the evaluation sample). In the case below, after 3 (out of 10) iterations, our squared error is extremely low: the square root of 2.16 is ~1.47, which means the model thinks is accurate to a day and a half against the training set, which indicates we're on the right track. Let the training complete.    
@@ -140,7 +140,7 @@ Let's see how our model did against the evaluation sample. Visualize the output 
 ![Evaluation Results](media/25/ml2_evaluateresults1.png) 
   
 Overall, it seems like we have a very effective model. Let's eyeball the actual predictions. Visualize the output of the "Score Model" module and compare the "Duration Days" (which is our known duration) to the "Scored Label" column (our model's predictions). Compare the histograms - they have a similar shape, which is what we want. Look at a few rows of the data - the predictions should pretty accurate as well. The model performed very well on our evaluation sample, giving us good reason to believe that we have not over-trained against the sample data, and we can use it in our production system. 
-![Evaluation Results 2](media/50/ml2_evaluateresults2.png)   
+![Evaluation Results 2](media/100/ml2_evaluateresults2.png)   
   
 Save your experiment using the bottom toolbar with a name such as DevCampML_CPL  
 
@@ -158,7 +158,7 @@ Click "Run" in the bottom toolbar to run this web service creation pipeline
  Deploy the web service using the bottom toolbar. Use the "New" web service deployment option. Select the storage account and price plan (created in Exercise 1).  
    
  Click "Deploy".  
-![Predictive Web Service Config](media/50/ml3_webserviceconfig.png)  
+![Predictive Web Service Config](media/100/ml3_webserviceconfig.png)  
 
 ### 4. Test the Predictive Web Service
  On the next screen, click on "Test Web Service". Fill in realistic sample data, such as:
