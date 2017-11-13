@@ -9,10 +9,10 @@ For our exercise, we will use a Neural Network Regression model.
 We will use a "Regression" model (as opposed to classification, clustering, or anomaly detection) as we are trying to predict how long a repair will take. Our goal will be to product a model that, given information about the complaint such as "Complaint Type", when the complaint was reported, and the location of the incident, will return a single value indicating how long the model predicts the repair will take, based on training data we will supply. 
 
 We will leverage a "Neural Network" as it is a good generic model type to use when you do not know much about the underlying data or its patterns. While they Neural Networks are amongst the slowest and resource-intensive models to train, they are extremely well-suited to identifying and expressing very complicated patterns to a high degree of accuracy. In fact, a major drawback of Neural Networks is that their models are almost impossible to be interpreted by a human once they have been created, unlike other model types such as decision trees.   
-<img alt="Neural Network identifying a complex pattern" src="images/Intro_NNPattern.png" width="25%" height="25%">  
+![Neural Network identifying a complex pattern](media/half/intro_nnpattern.png) 
 
 Neural Networks originated at the intersection of neuroscience and early modern computing in the 1940s, and seek to replicate how neurons in animal brains operate. At its basic level, a single neuron (biological or computational) consists of a unit with 1-many inputs, and 1-many outputs, with each input assigned a weight. Each output is the sum-product of the inputs and their associated weights, usually after being processed through another function to simulate a threshold. A Neural Network is a collection of many neurons. By default, Azure Machine Learning Studio's Neural Network models use a single "hidden" layer with all neurons "fully connected". However, using Net# (https://docs.microsoft.com/en-us/azure/machine-learning/studio/azure-ml-netsharp-reference-guide), more complicated arrangements can be easily expressed, such as 2 layer models often used for Optical Character Recognition (OCR). The default single-layer model is arranged similar to:  
-<img alt="Single Hidden Layer" src="images/Intro_SingleLayerNN.png" width="25%" height="25%">  
+![Single Hidden Layer](media/half/intro_singlelayernn.png) 
   
 There are usually significantly more neurons in the "Hidden Layer" compared to the number of inputs. The "learning" is accomplished via iterations. At first, each neuron is given a starting (often random or uniform) set of weights for each input. A set of inputs with known outputs (training data) are provided, and for each of these, the Neural Network's expected output is computed and compared to the known output. Based on how "wrong" the neural network's prediction was compared to the known output, a mathematical function is applied to each weight, hopefully resulting in a slightly more accurate model. This new model's accuracy is then recomputed, and its weights adjusted. This process is repeated a number of times (configurable in Machine Learning Studio). If you specify too few iterations, the model is not sufficiently tuned and provides inaccurate results. However, too many iterations often results in an "over-trained" model in which the Neural Network identifies patterns present in the training data that don't necessarily work when applied to real world data. Creating the "training set" of known data, and also ensuring a sufficient "evaluation set" of data to test the model once it has been trained is a very important step in Machine Learning. See https://www.jefftk.com/p/detecting-tanks for a (possibly apocryphal) example of overtraining. 
 
@@ -21,53 +21,53 @@ There are usually significantly more neurons in the "Hidden Layer" compared to t
 In this exercise, we will take a look at the data we will be using to train our model and open Azure Machine Learning Studio 
 
 ### 1. Gathering the data ###
-Download the sample data set <!!TODO: LINK>, and open it in a text editor or Excel. You'll see that it is a Comma Separated Value (CSV) formatted text file with linebreaks for each row, with column headers in the first row. This data was originally downloaded from https://data.cityofnewyork.us/Social-Services/Street-Lights-and-Traffic-Signals-311-Service-Requ/jwvp-gyiq. Slight alterations have been made:
+Download the sample data set <NY_complaints_to_DOT_CPL.csv>, and open it in a text editor or Excel. You'll see that it is a Comma Separated Value (CSV) formatted text file with linebreaks for each row, with column headers in the first row. This data was originally downloaded from https://data.cityofnewyork.us/Social-Services/Street-Lights-and-Traffic-Signals-311-Service-Requ/jwvp-gyiq. Slight alterations have been made:
 * Since New York uses different categories of complaints than our City, Power, and Lights application, we have substituted CPL categories to allow us to use this model against CPL's application in Exercise 3. Example mappings used include: "Traffic Signal Condition" -> "Street light-Light Goes On and Off", "Highway Condition" => "Pot hole", and "Opinion for the Mayor" => "Gas leak"
 * We have extracted a few features (columns) in order to improve predictive quality, including "Duration_Days" ("Closed Date" - "Created Date"), as well as Year, Month, Day of Month, and Day of Week for "Created Date". If you desire an additional challenge at the end of the exercise, these features could be created in the Machine Learning Studio.
 * In order to ensure that you can generate a good model in a reasonable amount of time for this exercise, duration_days have been generated artificially. The algorithm used to generate the artificial durations was reasonably complex and included random noise to ensure realism- feel free to examine the data to see if you can locate any human-identifiable patterns (there shouldn't be any).  
-<img alt="NY data opened in Excel" src="images/ML1_InputData.png" width="50%" height="50%">
+![NY data opened in Excel](media/half/ml1_inputdata.png)
 
 ### 1. Open Machine Learning Studio ###
 Navigate to https://portal.azure.com and sign in. Click on "New", and search for "Machine Learning Studio Workspace"  
-<img alt="Creating a new Machine Learning Studio Workspace in the Azure Portal" src="images/ML1_MLW.png" width="50%" height="50%">  
+![Creating a new Machine Learning Studio Workspace in the Azure Portal](media/full/ml1_mlw.png)  
   
 Click on "Create"   
-<img alt="Create the Machine Learning Studio Workspace" src="images/ML1_MLWCreate.png" width="50%" height="50%"> 
+![Create the Machine Learning Studio Workspace](media/half/ml1_mlwcreate.png) 
    
 Name your workspace "DevCamp_ML", and add it to the existing DevCamp Resource Group. Choose the same location you've used previously. Create a new storage account "devcampmlstorage", and ensure that your workspace is in the "Standard" pricing Tier and your Web Service Plan is "S1".   
-<img alt="Configuring the ML Studio Workspace" src="images/ML1_MLWCreate2.png" width="50%" height="50%">  
+![Configuring the ML Studio Workspace](media/half/ml1_mlwcreate2.png)  
 
 ### 2. Go into the DevCamp Resource Group, and select the newly created Machine Learning Studio Workspace, and then "Launch Machine Learning Studio". ###    
-<img alt="Launch ML Studio" src="images/ML1_MLWSelect.png" width="50%" height="50%">  
+![Launch ML Studio](media/half/ml1_mlwselect.png)  
   
 If you are not already, sign in using the same credentials you used for the Azure Portal  
-<img alt="Sign In to ML Studio" src="images/ML1_SignIn.png" width="50%" height="50%">  
+![Sign In to ML Studio](media/half/ml1_signin.png)  
   
 If you have previously used Machine Learning Studio, make sure you are in the newly created "DevCamp_ML" workspace using the dropdown in the top-right corner. It should be empty.   
-<img alt="Verify Workspace" src="images/ML1_Workspace.png" width="50%" height="50%">  
+![Verify Workspace](media/half/ml1_workspace.png)  
 
 ### 3. Upload our data set ###
 Choose "Datasets" and click new, then upload our sample data "from a local file"  
-<img alt="Upload dataset" src="images/ML1_UploadDataset1.png" width="50%" height="50%">
+![Upload dataset](media/half/ml1_uploaddataset1.png)
     
-<img alt="Name dataset" src="images/ML1_UploadData.png" width="25%" height="25%">    
+![Name dataset](media/half/ml1_uploaddata.png)   
 
 ************************************************************************************
 
 ## Exercise 2: Train a Data Model ##
 In this exercise, we will use the data from Exercise 1 to train a neural network to estimate how long a repair will take
 ### 1. Create a new blank experiment in Machine Learning Studio  ###  
-<img alt="Create a new experiment" src="images/ML2_BlankExperiment.png" width="25%" height="25%">  
+![Create a new experiment](media/half/ml2_blankexperiment.png) 
    
 ### 2. Add the dataset to your workspace ###  
 In the toolbox, expand Saved Datasets -> My Datasets. You should see the data set uploaded in Exercise 1 (if not, check to see if it has completed uploading). Drag the dataset into your workspace  
-<img alt="Dataset in the workspace" src="images/ML2_Dataset.png" width="50%" height="50%">  
+![Dataset in the workspace](media/half/ml2_dataset.png)  
   
 ### 3. Remove rows with missing values ###  
 First, let's clean our data. For this sample, we will be fairly intolerant - we'll drop any row that has any missing values. Drag a "Clean Missing Data" module (Data Transformation -> Manipulation) into our workspace, and connect our dataset to its input. Configure it in the right taskpane as follows:   
 * All Columns
 * Cleaning Mode: remove entire row  
-<img alt="Clean Missing Data" src="images/ML2_CleanData.png" width="50%" height="50%">  
+![Clean Missing Data](media/half/ml2_cleandata.png)  
   
 ### 4. Partition our data into "Training" and "Evaluation" sets
 We need to split our data into training data and evaluation data. The training data will be used by the neural network to create the model, but need to make sure we have some data "set aside" to allow us to evaluate the quality of our model before we use its predictions in production. Using the training data for evaluation can often result in "over-training", where a model provides excellent results against its input data, but fails to make accurate predictions when provided with new data. Our sample data contains information from 1/1/2014 through 9/13/17, so a natural split will be to separate all data before 6/1/17 as training, and the data afterwards as evaluation data. This gives us a good evaluation - we can pretend we used "all information available" in June 2017, and see how the model would have performed from June -> Sep 2017, and leaves enough data in the "training set" to identify long term annual and seasonal patterns. We'll do this in 2 steps: first by year, then by month. For the year split, drag a "Split Data" module (Data Transformation -> Sample & Split) into the workspace and connect it to our dataset. Configure it as follows:
@@ -75,23 +75,23 @@ We need to split our data into training data and evaluation data. The training d
 * Relational expression = \"Created Year" < 2017  
   
 Since we're going to have multiple "Split Data" modules, let's add a comment so that we can keep track. Right click on the module, and choose "Edit Comment". Decorate it with "Year < 2017", and then expand the module so you can see the comment.  
-<img alt="Year Split" src="images/ML2_SplitYear.png" width="50%" height="50%">  
+![Year Split](media/half/ml2_splityear.png)  
 The left output of the "Year Split" module will now contain our data from 2014 - 2016, and the right output data from just 2017.   
   
 Let's add another "Split Data" module to the right output and separate out Jan -> May and Jun+. Configure the new "Split Data" as follows:
 * Mode = Relative Expression
 * Relational expression = \"Created Month" < 7
 * Edit Comment = Month < 7  
-<img alt="Month Split" src="images/ML2_SplitMonth.png" width="50%" height="50%">  
+![Month Split](media/half/ml2_splitmonth.png)  
   
 Now, our training data is separated into 2 buckets: 2014-2016 and Jan 2017-May 2017. Let's recombine them by adding an "Add Rows" module (Data Transformation->Manipulation). Connect the left output of the "Split Years" and the left output of the "Split Month" modules into the inputs of "Add Rows".  
-<img alt="Combine Training Data" src="images/ML2_CombineTraining.png" width="50%" height="50%">  
+![Combine Training Data](media/half/ml2_combinetraining.png)  
   
 ### 5. Data Visualization ###  
 Let's take a quick testing checkpoint. Run your model using the bottom toolbar, and visualize the data coming out of the components we've added. Right click on the "Add Rows" module and choose "Results Dataset" => "Visualize"  
-<img alt="Visualize Data" src="images/ML2_VisualizeAddRows.png" width="50%" height="50%">  
+![Visualize Data](media/half/ml2_VisualizeAddRows.png)  
 Explore the various columns' statistics. Note that the frequency diagram for "Created_Year" has 3 roughly equal spikes (2014,2015,2016) and a shorter one for 2017. This makes sense, as we've truncated the 2017 data to Jan -> May
-<img alt="Visualize Data" src="images/ML2_VisualizeAddRows2.png" width="50%" height="50%">  
+![Visualize Data](media/half/ml2_visualizeaddrows2.png)  
 Optionally, perform some quick spot checks, such as:
 * The number of rows in the output of the "Add rows" module (our training sample) and the right output of "Split Months" (our evaluation sample) should equal the number of rows that went into the "Split Years" module.
 * The evaluation sample should only have data from June 2017 - Sep 2017
@@ -105,7 +105,7 @@ We have one final data preparation step. While visualizing the output of the tra
 * Random seed: Pick a number
 * Stratified Split: False
 * Edit Comment: Shuffle  
-<img alt="Shuffle Data" src="images/ML2_Shuffle.png" width="50%" height="50%">  
+![Shuffle Data](media/half/ml2_shuffle.png)  
   
 ### 7. Modeling ### 
 We are now ready for the main part of this exercise: the modeling! Drag in a "Neural Network Regression" module (Machine Learning -> Regression), and a "Train Model" module (Machine Learning-> Train). Connect the "Neural Network Regression" module to the left input of the "Train Model" module, and your training data set into the right output of the "Train Model" module. Then configure then modules as follows:
@@ -123,22 +123,22 @@ We are now ready for the main part of this exercise: the modeling! Drag in a "Ne
   
 For the "Train Model" module, choose "Duration Days" as the column to train against, as this is what we're trying to predict.  
    
-<img alt="Model" src="images/ML2_NN.png" width="50%" height="50%">  
+![Model](media/half/ml2_NN.png)  
   
 ### 8. Training the Model
 Let's have another checkpoint to see how out model performs. Run your experiment. While the "Train Model" module is executing, you can watch its progress by clicking on "View output log". The most interesting data here is the "MeanErr" (actually the squared mean error), which is a gauge of how good the model is performing against the training data (which hopefully will replicate against the evaluation sample). In the case below, after 3 (out of 10) iterations, our squared error is extremely low: the square root of 2.16 is ~1.47, which means the model thinks is accurate to a day and a half against the training set, which indicates we're on the right track. Let the training complete.    
-<img alt="Model Training Progress" src="images/ML2_TrainProgress.png" width="50%" height="50%"> 
+![Model Training Progress](media/half/ml2_trainprogress.png) 
    
 ### 9. Use our Model to score our Evaluation Data  
 Let's see how our model performed by using it against the evaluation sample. "Scoring" a dataset is a Machine Learning term that leverages a model against a dataset, adding the model's predictions as a new column.  Drag in a new "Score Model" module (Machine Learning -> Score), and connect the output of the "Train Model" module to its left input, and the evaluation sample (the right output of the "Split Months" module from a few steps back) to the right input. Ensure that it is configured to "append the score column", as we'll want to compare the model's predictions to our known durations in the evaluation data. Drag in an "Evaluate Model" module (Machine Learning-> Evaluate) and connect the output of "Score Model" to its left input. Run the experiment again.  Note: Machine Learning Studio is fairly intelligent, and will not rerun steps if the parameters/inputs into that step have not changed. Therefore, we can train our model now, and add more steps to our experiment later without having to re-execute the lengthy "Train Model" steps as long as we don't alter any of its inputs or parameters.    
-<img alt="Score & Evaluate Model" src="images/ML2_FinalConfig.png" width="50%" height="50%">
+![Score & Evaluate Model](media/half/ml2_finalconfig.png)
       
 ### 10. Assess our Model's performance
 Let's see how our model did against the evaluation sample. Visualize the output of the Evaluate Model module. Against my model, I got a "Mean Absolute Error" of 1.43 days, and almost all predictions were closer than 4 days.  
-<img alt="Evaluation Results" src="images/ML2_EvaluateResults1.png" width="25%" height="25%">  
+![Evaluation Results](media/quarter/ml2_evaluateresults1.png) 
   
 Overall, it seems like we have a very effective model. Let's eyeball the actual predictions. Visualize the output of the "Score Model" module and compare the "Duration Days" (which is our known duration) to the "Scored Label" column (our model's predictions). Compare the histograms - they have a similar shape, which is what we want. Look at a few rows of the data - the predictions should pretty accurate as well. The model performed very well on our evaluation sample, giving us good reason to believe that we have not over-trained against the sample data, and we can use it in our production system. 
-<img alt="Evaluation Results 2" src="images/ML2_EvaluateResults2.png" width="50%" height="50%">   
+![Evaluation Results 2](media/half/ml2_evaluateresults2.png)   
   
 Save your experiment using the bottom toolbar with a name such as DevCampML_CPL  
 
@@ -147,7 +147,7 @@ Save your experiment using the bottom toolbar with a name such as DevCampML_CPL
 ### 1. Set Up the Prediction Web Service pipeline
 Click on "Set up a Web Service" -> Predictive Web Service in the bottom toolbar. If this option is disabled, rerun your model (which should be quick as Machine Learning Studio remembers partial progress). In a new tab, new modules will be added to a copy of your experiment, and the data flow changed. 
   
-<img alt="Predictive Web Service" src="images/ML3_Predictive.png" width="25%" height="25%">  
+![Predictive Web Service](media/half/ml3_predictive.png) 
 
 ### 2. Execute the Prediction Web Service
 Click "Run" in the bottom toolbar to run this web service creation pipeline
@@ -156,7 +156,7 @@ Click "Run" in the bottom toolbar to run this web service creation pipeline
  Deploy the web service using the bottom toolbar. Use the "New" web service deployment option. Select the storage account and price plan (created in Exercise 1).  
    
  Click "Deploy".  
-<img alt="Predictive Web Service Config" src="images/ML3_WebServiceConfig.png" width="50%" height="50%">  
+![Predictive Web Service Config](media/half/ml3_webserviceconfig.png)  
 
 ### 4. Test the Predictive Web Service
  On the next screen, click on "Test Web Service". Fill in realistic sample data, such as:
@@ -175,13 +175,13 @@ Click "Run" in the bottom toolbar to run this web service creation pipeline
 * Duration_Days: 0 (this is ignored).   
   
 Click on "Test Request-Response"  
-<img alt="Web Service Prediction" src="images/ML3_Prediction.png" width="50%" height="50%">  
+![Web Service Prediction](media/full/ml3_prediction.png)  
   
 Try altering values (keep them in line with the sample data) and observe the changes in the "Scored Labels" (prediction) value. 
   
 When you are ready to proceed, click on "Consume" in the top menu. This will provide the endpoint URI, keys, and even C# sample code.   
   
-<img alt="Web Service Consume" src="images/ML3_Consume.png" width="50%" height="50%">  
+![Web Service Consume](media/half/ml3_consume.png)  
 
 ************************************************************************************
 ## Exercise 4: Use a Trained Data Model in an Application
