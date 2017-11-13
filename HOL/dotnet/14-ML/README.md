@@ -20,14 +20,14 @@ There are usually significantly more neurons in the "Hidden Layer" compared to t
 ## Exercise 1: Configure Machine Learning Studio & Preparing our data ## 
 In this exercise, we will take a look at the data we will be using to train our model and open Azure Machine Learning Studio 
 
-### 1. Gathering the data ###
-Download the sample data set <NY_complaints_to_DOT_CPL.csv>, and open it in a text editor or Excel. You'll see that it is a Comma Separated Value (CSV) formatted text file with linebreaks for each row, with column headers in the first row. This data was originally downloaded from https://data.cityofnewyork.us/Social-Services/Street-Lights-and-Traffic-Signals-311-Service-Requ/jwvp-gyiq. Slight alterations have been made:
+### 1. Gather the data ###
+Download the sample dataset from https://github.com/AzureCAT-GSI/DevCamp/blob/14mlinit/HOL/dotnet/14-ML/NY_complaints_to_DOT_CPL.csv, and open it in a text editor or preferably Excel. You'll see that it is a Comma Separated Value (CSV) formatted text file with linebreaks for each row, with column headers in the first row. This data was originally downloaded from https://data.cityofnewyork.us/Social-Services/Street-Lights-and-Traffic-Signals-311-Service-Requ/jwvp-gyiq. Slight alterations have been made:
 * Since New York uses different categories of complaints than our City, Power, and Lights application, we have substituted CPL categories to allow us to use this model against CPL's application in Exercise 3. Example mappings used include: "Traffic Signal Condition" -> "Street light-Light Goes On and Off", "Highway Condition" => "Pot hole", and "Opinion for the Mayor" => "Gas leak"
 * We have extracted a few features (columns) in order to improve predictive quality, including "Duration_Days" ("Closed Date" - "Created Date"), as well as Year, Month, Day of Month, and Day of Week for "Created Date". If you desire an additional challenge at the end of the exercise, these features could be created in the Machine Learning Studio.
 * In order to ensure that you can generate a good model in a reasonable amount of time for this exercise, duration_days have been generated artificially. The algorithm used to generate the artificial durations was reasonably complex and included random noise to ensure realism- feel free to examine the data to see if you can locate any human-identifiable patterns (there shouldn't be any).  
 ![NY data opened in Excel](media/50/ml1_inputdata.png)
 
-### 1. Open Machine Learning Studio ###
+### 2. Open Machine Learning Studio ###
 Navigate to https://portal.azure.com and sign in. Click on "New", and search for "Machine Learning Studio Workspace"  
 ![Creating a new Machine Learning Studio Workspace in the Azure Portal](media/100/ml1_mlw.png)  
   
@@ -37,7 +37,8 @@ Click on "Create"
 Name your workspace "DevCamp_ML", and add it to the existing DevCamp Resource Group. Choose the same location you've used previously. Create a new storage account "devcampmlstorage", and ensure that your workspace is in the "Standard" pricing Tier and your Web Service Plan is "S1".   
 ![Configuring the ML Studio Workspace](media/50/ml1_mlwcreate2.png)  
 
-### 2. Go into the DevCamp Resource Group, and select the newly created Machine Learning Studio Workspace, and then "Launch Machine Learning Studio". ###    
+### 3. Launch Machine Learning Studio ###
+Go into the DevCamp Resource Group, and select the newly created Machine Learning Studio Workspace, and then "Launch Machine Learning Studio".     
 ![Launch ML Studio](media/50/ml1_mlwselect.png)  
   
 If you are not already, sign in using the same credentials you used for the Azure Portal  
@@ -46,7 +47,7 @@ If you are not already, sign in using the same credentials you used for the Azur
 If you have previously used Machine Learning Studio, make sure you are in the newly created "DevCamp_ML" workspace using the dropdown in the top-right corner. It should be empty.   
 ![Verify Workspace](media/50/ml1_workspace.png)  
 
-### 3. Upload our data set ###
+### 4. Upload our data set ###
 Choose "Datasets" and click new, then upload our sample data "from a local file"  
 ![Upload dataset](media/50/ml1_uploaddataset1.png)
     
@@ -90,7 +91,7 @@ Now, our training data is separated into 2 buckets: 2014-2016 and Jan 2017-May 2
   
 ### 5. Data Visualization ###  
 Let's take a quick testing checkpoint. Run your model using the bottom toolbar, and visualize the data coming out of the components we've added. Right click on the "Add Rows" module and choose "Results Dataset" => "Visualize"  
-![Visualize Data](media/50/ml2_VisualizeAddRows.png)  
+![Visualize Data](media/50/ml2_visualizeaddrows.png)  
 Explore the various columns' statistics. Note that the frequency diagram for "Created_Year" has 3 roughly equal spikes (2014,2015,2016) and a shorter one for 2017. This makes sense, as we've truncated the 2017 data to Jan -> May  
 ![Visualize Data](media/50/ml2_visualizeaddrows2.png)  
 Optionally, perform some quick spot checks, such as:
@@ -125,7 +126,7 @@ We are now ready for the main part of this exercise: the modeling! Drag in a "Ne
   
 For the "Train Model" module, choose "Duration Days" as the column to train against, as this is what we're trying to predict.  
    
-![Model](media/50/ml2_NN.png)  
+![Model](media/50/ml2_nn.png)  
   
 ### 8. Training the Model
 Let's have another checkpoint to see how out model performs. Run your experiment. While the "Train Model" module is executing, you can watch its progress by clicking on "View output log". The most interesting data here is the "MeanErr" (actually the squared mean error), which is a gauge of how good the model is performing against the training data (which hopefully will replicate against the evaluation sample). In the case below, after 3 (out of 10) iterations, our squared error is extremely low: the square root of 2.16 is ~1.47, which means the model thinks is accurate to a day and a half against the training set, which indicates we're on the right track. Let the training complete.    
@@ -187,7 +188,7 @@ When you are ready to proceed, click on "Consume" in the top menu. This will pro
 
 ************************************************************************************
 ## Exercise 4: Use a Trained Data Model in an Application
-1. 
+(This exercise is under development)
 
 ************************************************************************************
 ## Optional extensions
