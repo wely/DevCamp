@@ -67,7 +67,11 @@ Click on "Data Explorer"
 ![CosmosDB Overview](media/100/af2-cosmosdboverview.png)  
 
 ### 3. Gather information and ensure you have sample data ###  
-Take note of your Database name and Collection Name - we'll need it later. Click on the "Documents" label under the "incidents" collection. If you completed earlier exercises, you probably have sample incidents already in place, which you can examine by clicking on their id. If not, click "New Document" and create a dummy record with information similar to:  
+Take note of your Database name and Collection Name - we'll need it later. Click on the "Documents" label under the "incidents" collection.  
+  
+![CosmosDB Data](media/100/af2-cosmosdbdata.png)  
+  
+If you completed earlier exercises, you probably have sample incidents already in place, which you can examine by clicking on their id. If not, click "New Document" and create a dummy record with information similar to:  
    
     {  
         "id": "72590008-59ab-4fea-95a9-55cac18b0f40",  
@@ -94,7 +98,6 @@ Take note of your Database name and Collection Name - we'll need it later. Click
         "_ts": 1510331236  
     }   
   
-![CosmosDB Data](media/100/af2-cosmosdbdata.png)  
   
 Leave this browser window open, as we'll use it later. 
   
@@ -134,7 +137,7 @@ Click on the plus sign next to "Functions" to create a new Function within your 
   
 We'll be creating a "Custom Function" to tie into CosmosDB - look for this option near the bottom of the blade.  
   
-![Custom Function](media/100/af2-functiontype.png)  
+![Custom Function](media/50/af2-functiontype.png)  
   
 Scroll down (to the bottom) of the function templates, and choose "CosmosDBTrigger - C#"
   
@@ -149,7 +152,7 @@ Enter your Database and Collection names from Exercise 2. Leave the lease inform
 ![CosmosDB Database and Collection](media/100/af2-functioncosmos2.png)  
   
 ### 5. Checkpoint - Test CosmosDB Integration
-You should now have a function ready with enough code to test. Add a log message "Hello World" if you are feeling ambitious. Leave the existing log messages in place - they are relevant for our app. Note that the sample log messages are at the "Verbose" level, and will not appear in our log trace by default. For normal development, we could change our logging level in host.json, but to keep things simple, change the log levels to Info instead.  Save your function and expand the log window at the bottom. 
+You should now have a function ready with enough code to test. Add a log message "Hello World" if you are feeling ambitious. Leave the existing log messages in place - they are relevant for our app. Note that the sample log messages are at the "Verbose" level, and will not appear in our log trace by default. For normal development, we could change our logging level in host.json, but to keep things simple for this HOL, change the log levels to Info instead.  Save your function and expand the log window at the bottom. 
   
 ![Starter Function Code](media/100/af2-initialfunctioncode.png)  
   
@@ -158,9 +161,9 @@ Trigger a CosmosDB event. You can do this in one of 3 ways:
 * In the CosmosDB Data Explorer browser window we left open from Exercise 2, add a new document using the snippet from Exercise 2
 * In the CosmosDB Data Explorer browser window we left open from Exercise 2, alter and save an existing document
   
-![Update Document](media/100/af2-initialfunctioncode.png)  
+![Update Document](media/75/af2-updatedocument.png)  
   
-Switch back to your Function, and look at the log - you should see evidence that it ran successfully. 
+Switch back to your Function, and look at the log - you should see evidence that it ran successfully, and read the id of your test Document. 
   
 ![Function Successful](media/100/af2-functioncheckpoint1.png)  
   
@@ -325,7 +328,7 @@ Overall, your Function's entire code should now be:
                                                         City, Power, and Lights
                                                         ", curDocDescription, curDocStreet, curDocCity, curDocState, curDocZip, curDocFirstName, curDocLastName, curDocCreated.ToString("MM/dd/yyyy"));
                     string mailFrom     = "citypowerlights@contoso.com";
-                    string mailTo       = "daweins@microsoft.com"; // Your address goes here
+                    string mailTo       = "bob@bob.com"; // Your address goes here
 
                     log.Info(String.Format("Mail content ready: Title: {0}\nBody: {1}\nFrom: {2}\nTo: {3}",mailTitle,mailBody,mailFrom,mailTo ));
 
@@ -354,7 +357,7 @@ Overall, your Function's entire code should now be:
             log.Info($"response.Headers.ToString(): {response.Headers.ToString()}");
     }
 
-### 3. Save & Test
+### 3. Save & Test ###
 Save your code, then open up your CosmosDB browser window (or CPL application) and alter or create a new Incident Document. In your Function's window, observe the log to see that the message was sent correctly. Once it has, watch the inbox of the address you sent your mail to - if it doesn't show up, check your junk/unfocused folders. You can also login to SendGrid to view mail traffic sent through the API to aid in debugging if necessary.  
 
 ![Outlook - I've got mail!](media/100/af3-gotmail.png)  
@@ -362,7 +365,7 @@ Save your code, then open up your CosmosDB browser window (or CPL application) a
 
 
 ****************************************
-##Optional Extensions##  
+## Optional Extensions ##  
   
 1. Add a status attribute to the CosmosDB records, and add logic to your Azure Function to only send the confirmation upon initial creation (and ideally, with logic to ensure the mail is only sent once per incident)   
 2. Add an "e-mail" attribute to the CosmosDB record, and populate it in the IncidentController using the current user's address (or allow the user to enter their own address by adding a property to the creation form). Use this email attribute instead of the hard-coded address we used in this module. 
