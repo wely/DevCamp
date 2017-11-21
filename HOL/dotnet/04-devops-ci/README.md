@@ -102,7 +102,7 @@ You have now created a project in VSTS with a Git repository. Next we'll clone t
 
 1. Open the **copied solution** file in Visual Studio.
 
-1. Ensure the `Utils` -> `Web.config` settings are set to the values for your application (you can copy them from your working copy back from HOL 3).
+1. Ensure the `Web.config` settings are set to the values for your application (you can copy them from your working copy back from HOL 3).
 
     ```xml
     <!--HOL 2-->
