@@ -198,7 +198,7 @@ Make the code changes yourself if you are comfortable, or copy/paste the code fr
                 try
                 {
                     log.Info("Document Id " + input[curDocNum].Id);
-                    
+                    string curDocType           = input[curDocNum].GetPropertyValue<string>("OutageType");
                     string curDocDescription    = input[curDocNum].GetPropertyValue<string>("Description");
                     string curDocStreet         = input[curDocNum].GetPropertyValue<string>("Street");
                     string curDocCity           = input[curDocNum].GetPropertyValue<string>("City");
@@ -212,20 +212,21 @@ Make the code changes yourself if you are comfortable, or copy/paste the code fr
 
                     string mailTitle = String.Format("{0} {1}, Thank you for submitting your incident to City, Power and Lights", curDocFirstName, curDocLastName);
                     string mailBody  = String.Format(@"We have received your incident report: 
-                                                        Description: {0}
-                                                        Street: {1}
-                                                        City: {2} 
-                                                        State: {3} 
-                                                        Zip: {4} 
-                                                        Reported by: {5} {6} 
-                                                        Reported on: {7} 
+                                                        Type: {0}
+                                                        Description: {1}
+                                                        Street: {2}
+                                                        City: {3} 
+                                                        State: {4}
+                                                        Zip: {5} 
+                                                        Reported by: {6} {7} 
+                                                        Reported on: {8} 
                                                         
                                                         We will provide updates as progress is made. 
                                                         Please contact 555-123-4567 or citypowerlights@contoso.com for any questions
                                                         
                                                         Thank you,
                                                         City, Power, and Lights
-                                                        ", curDocDescription, curDocStreet, curDocCity, curDocState, curDocZip, curDocFirstName, curDocLastName, curDocCreated.ToString("MM/dd/yyyy"));
+                                                        ", curDocType, curDocDescription, curDocStreet, curDocCity, curDocState, curDocZip, curDocFirstName, curDocLastName, curDocCreated.ToString("MM/dd/yyyy"));
                     string mailFrom     = "citypowerlights@contoso.com";
                     string mailTo       = "bob@bob.com"; // Your address goes here
 
@@ -299,7 +300,8 @@ Overall, your Function's entire code should now be:
                 try
                 {
                     log.Info("Document Id " + input[curDocNum].Id);
-                    
+
+                    string curDocType           = input[curDocNum].GetPropertyValue<string>("OutageType");
                     string curDocDescription    = input[curDocNum].GetPropertyValue<string>("Description");
                     string curDocStreet         = input[curDocNum].GetPropertyValue<string>("Street");
                     string curDocCity           = input[curDocNum].GetPropertyValue<string>("City");
@@ -313,20 +315,21 @@ Overall, your Function's entire code should now be:
 
                     string mailTitle = String.Format("{0} {1}, Thank you for submitting your incident to City, Power and Lights", curDocFirstName, curDocLastName);
                     string mailBody  = String.Format(@"We have received your incident report: 
-                                                        Description: {0}
-                                                        Street: {1}
-                                                        City: {2} 
-                                                        State: {3} 
-                                                        Zip: {4} 
-                                                        Reported by: {5} {6} 
-                                                        Reported on: {7} 
+                                                        Type: {0}
+                                                        Description: {1}
+                                                        Street: {2}
+                                                        City: {3} 
+                                                        State: {4}
+                                                        Zip: {5} 
+                                                        Reported by: {6} {7} 
+                                                        Reported on: {8}
                                                         
                                                         We will provide updates as progress is made. 
                                                         Please contact 555-123-4567 or citypowerlights@contoso.com for any questions
                                                         
                                                         Thank you,
                                                         City, Power, and Lights
-                                                        ", curDocDescription, curDocStreet, curDocCity, curDocState, curDocZip, curDocFirstName, curDocLastName, curDocCreated.ToString("MM/dd/yyyy"));
+                                                        ", curDocType, curDocDescription, curDocStreet, curDocCity, curDocState, curDocZip, curDocFirstName, curDocLastName, curDocCreated.ToString("MM/dd/yyyy"));
                     string mailFrom     = "citypowerlights@contoso.com";
                     string mailTo       = "bob@bob.com"; // Your address goes here
 
@@ -370,4 +373,4 @@ Save your code, then open up your CosmosDB browser window (or CPL application) a
 1. Add a status attribute to the CosmosDB records, and add logic to your Azure Function to only send the confirmation upon initial creation (and ideally, with logic to ensure the mail is only sent once per incident)   
 2. Add an "e-mail" attribute to the CosmosDB record, and populate it in the IncidentController using the current user's address (or allow the user to enter their own address by adding a property to the creation form). Use this email attribute instead of the hard-coded address we used in this module. 
 3. Add error checking to Exercise 3 - CosmosDB documents are unstructured, so a production quality application would have safety logic ensuring we get all fields we need and handling appropriately (default values or failing)
-
+4. Disable the e-mail functionality in the IncidentController from HOL3 to prevent duplicate mailings

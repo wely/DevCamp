@@ -207,18 +207,515 @@ Click on "Test Request-Response"
   
 Try altering values (keep them in line with the sample data) and observe the changes in the "Scored Labels" (prediction) value. 
   
-When you are ready to proceed, click on "Consume" in the top menu. This will provide the endpoint URI, keys, and even C# sample code.   
+When you are ready to proceed, click on "Consume" in the top menu. This will provide the endpoint URI, keys, and even C# sample code. Leave this browser window open - we'll steal the sample code in the next exercise. 
   
 ![Web Service Consume](media/50/ml3_consume.png)  
 
 ************************************************************************************
-## Exercise 4: Use a Trained Data Model in an Application
-(This exercise is under development)
+## Exercise 4: Use a Trained Data Model in an Application ## 
+In this exercise, we will alter the notification emails sent to incident reporters following creation of an incident to include our model's prediction of how long we thing it will take to resolve the issue.  We will assume that you have completed HOL13 - Azure Functions, which moved the mail functionality from the IncidentController to an Azure Function. However, the code that we will be writing here could easily be integrated into the IncidentController if you did not complete HOL13.
 
+### 1. Open your Azure Function ### 
+Open your e-mail logic in a separate browser window - this should be the Azure Function you created in HOL13. You can find it via the Azure Portal, under the DevCamp resource group as a "Function App". 
+  
+![Web Service Consume](media/100/ml4_afstartingcode.png)  
+
+While most of the assemblies we need are already included in Azure Function's default configuration, the authentication for our web service will require that we include System.Net.Http.Headers. Add the following statement to the top of your codebase:  
+  
+     using System.Net.Http.Headers;
+
+### 2. Steal the Sample Code ### 
+ Copy the InvokeRequestResponseService method from the Azure Machine Learning Studio Web Service consumption tab left open at the end of Exercise 3 into your Azure Function. Rename the method something more appropriate, such as InvokePredictionService
+  
+        static async Task InvokePredictionService() // Originally InvokeRequestResponseService
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var scoreRequest = new
+                        {
+                            Inputs = new Dictionary<string, List<Dictionary<string, string>>> () {
+                                {
+                                    "input1",
+                                    new List<Dictionary<string, string>>(){new Dictionary<string, string>(){
+                                                    {
+                                                        "Complaint Type", ""
+                                                    },
+                                                    {
+                                                        "Created Date", ""
+                                                    },
+                                                    {
+                                                        "Descriptor", ""
+                                                    },
+                                                    {
+                                                        "Incident Zip", ""
+                                                    },
+                                                    {
+                                                        "Address Type", ""
+                                                    },
+                                                    {
+                                                        "City", ""
+                                                    },
+                                                    {
+                                                        "Status", ""
+                                                    },
+                                                    {
+                                                        "Community Board", ""
+                                                    },
+                                                    {
+                                                        "Borough", ""
+                                                    },
+                                                    {
+                                                        "Latitude", "1"
+                                                    },
+                                                    {
+                                                        "Longitude", "1"
+                                                    },
+                                                    {
+                                                        "Created Year", "1"
+                                                    },
+                                                    {
+                                                        "Created Month", "1"
+                                                    },
+                                                    {
+                                                        "Created Day of Month", "1"
+                                                    },
+                                                    {
+                                                        "Created Day of Week", "1"
+                                                    },
+                                                    {
+                                                        "Created WeekNum", "1"
+                                                    },
+                                                    {
+                                                        "Duration_Days", "1"
+                                                    },
+                                        }
+                                    }
+                                },
+                            },
+                            GlobalParameters = new Dictionary<string, string>() {
+                            }
+                        };
+
+                        const string apiKey = "abc123"; // Replace this with the API key for the web service
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", apiKey);
+                        client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/subscriptions/82e247ea1d5346d88ea4374aa9dd4ae5/services/9d15807c2fd347c2bce19daa9eaddfa4/execute?api-version=2.0&format=swagger");
+
+                        // WARNING: The 'await' statement below can result in a deadlock
+                        // if you are calling this code from the UI thread of an ASP.Net application.
+                        // One way to address this would be to call ConfigureAwait(false)
+                        // so that the execution does not attempt to resume on the original context.
+                        // For instance, replace code such as:
+                        //      result = await DoSomeTask()
+                        // with the following:
+                        //      result = await DoSomeTask().ConfigureAwait(false)
+
+                        HttpResponseMessage response = await client.PostAsJsonAsync("", scoreRequest);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string result = await response.Content.ReadAsStringAsync();
+                            Console.WriteLine("Result: {0}", result);
+                        }
+                        else
+                        {
+                            Console.WriteLine(string.Format("The request failed with status code: {0}", response.StatusCode));
+
+                            // Print the headers - they include the request ID and the timestamp,
+                            // which are useful for debugging the failure
+                            Console.WriteLine(response.Headers.ToString());
+
+                            string responseContent = await response.Content.ReadAsStringAsync();
+                            Console.WriteLine(responseContent);
+                        }
+                    }
+                }
+
+### 3. Integrate With Our CosmosDB Data ### 
+To make this interesting, we will want to populate as many of the input values for our prediction web service as possible. Unfortunately, since City, Power, and Lights uses a slightly different schema than our New York data, we will have to hard-code some values. 
+
+* Azure Functions don't have a console, so change all:
+  
+        Console.WriteLine         
+            to  
+        log.Info
+        
+* Alter the function prototype so we can pass in information about the current Document being processed, and a reference to our log writer. Change the task return type so we can return an int (our prediction)
+   
+        static async Task<int> InvokePredictionService(string curDocType,
+                                                DateTime curDocDate,
+                                                string curDocDescription,
+                                                string curDocZip,
+                                                string curDocCity,
+                                                TraceWriter log)  
+
+* Populate the input structure  
+  
+                    new List<Dictionary<string, string>>(){new Dictionary<string, string>(){
+                                    {
+                                        "Complaint Type", curDocType
+                                    },
+                                    {
+                                        "Created Date", curDocDate.ToString("MM/dd/YYYY")
+                                    },
+                                    {
+                                        "Descriptor", curDocDescription
+                                    },
+                                    {
+                                        "Incident Zip", curDocZip
+                                    },
+                                    {
+                                        "Address Type", "ADDRESS" // Have to hard-code this, as it is not in CPL's app
+                                    },
+                                    {
+                                        "City", curDocCity
+                                    },
+                                    {
+                                        "Status", "Closed" // Have to hard-code this, as it is not in CPL's app
+                                    },
+                                    {
+                                        "Community Board", "STATEN ISLAND" // Have to hard-code this, as it is not in CPL's app
+                                    },
+                                    {
+                                        "Borough", "01 STATEN ISLAND" // Have to hard-code this, as it is not in CPL's app
+                                    },
+                                    {
+                                        "Latitude", "40.6" // Have to hard-code this, as it is not in CPL's app. Could use Bing's geolocating API
+                                    },
+                                    {
+                                        "Longitude", "-74.17" // Have to hard-code this, as it is not in CPL's app. Could use Bing's geolocating API
+                                    },
+                                    {
+                                        "Created Year", curDocDate.ToString("YYYY")
+                                    },
+                                    {
+                                        "Created Month", curDocDate.ToString("MM")
+                                    },
+                                    {
+                                        "Created Day of Month", curDocDate.ToString("dd")
+                                    },
+                                    {
+                                        "Created Day of Week", curDocDate.DayOfWeek.ToString()
+                                    },
+                                    {
+                                        "Created WeekNum", Math.Floor(curDocDate.DayOfYear/7.0f).ToString() // Cheap, non-global friendly calendaring
+                                    },
+                                    {
+                                        "Duration_Days", "0" // This is ignored by the model
+                                    },
+                        }
+                    }  
+  
+* Populate the API key with the value from your Machine Learning Studio Web Service Consume tab. You can either put this directly in your code, or use the mechanism shown in HOL13 to place the key in an AppSetting.  
+  
+![Web Service Keys](media/100/ml4_mlkeys.png)  
+
+Include your API Key in the code at the following line:  
+  
+        const string apiKey = "{PASTE IN YOUR KEY}"; // Replace this with the API key for the web service
+
+### 4. Parse the results ### 
+The sample data returns the results as JSON, which we'll need to parse to obtain the prediction. 
+* Add a reference to the Newtonsoft assembly at the top of your code
+
+        #r "Newtonsoft.Json"
+
+* Add a using statement for Newtonsoft as well. We'll be using the deserializer which is part of Newtonsoft's Linq.   
+  
+        using Newtonsoft.Json.Linq;  
+          
+* Alter the "successful web service" code path as follows: (note the change in the log.Info("Result: " + result) line to avoid using String.Format)
+   
+        if (response.IsSuccessStatusCode)
+        {
+            string result = await response.Content.ReadAsStringAsync();
+            log.Info("Result: " + result);
+            JObject resultObj = JObject.Parse(result);
+            double rawPrediction = Convert.ToDouble(resultObj.SelectToken("Results.output1[0].['Scored Labels']"));
+            log.Info("Prediction: " + rawPrediction.ToString());
+            int prediction = Convert.ToInt32(rawPrediction) + 3; // Let's give us a safety margin for our prediction - add 3 days
+            return(prediction);
+
+        }
+
+* Add an error value to the "unsuccessful web service" code path. For this exercise, we'll just return a big number - in reality, we would want to handle this error appropriately.  
+  
+        return(1000);
+
+        else
+                {
+                    log.Info(string.Format("The request failed with status code: {0}", response.StatusCode));
+
+                    // Print the headers - they include the request ID and the timestamp,
+                    // which are useful for debugging the failure
+                    log.Info(response.Headers.ToString());
+
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    log.Info(responseContent);
+                    return(1000);
+                }
+
+               
+### 5. Use the results ###
+Let's actually call our prediction function. Add the following lines of code underneath where we parsed the CosmosDB document into variables:  
+  
+    DateTime curDocCreated  = input[curDocNum].GetPropertyValue<DateTime>("Created");
+    
+    log.Info("Ready to obtain prediction:");
+    int prediction = InvokePredictionService( curDocType,
+                                curDocCreated,
+                                curDocDescription,
+                                curDocZip,
+                                curDocCity,  log ).Result;
+
+    DateTime resolvedPredictionDate = curDocCreated.AddDays(prediction);
+    log.Info("Got prediction:");
+
+Finally, let's use these results in our email. Add this line to email template, and make sure to pass in the resolvedPredictionDate variable that now contains our prediction.   
+  
+     Our best estimate for this being resolved is: {9}
+
+Your email template should look like:   
+
+        string mailBody  = String.Format(@"We have received your incident report: 
+                                                            Type: {0}
+                                                            Description: {1}
+                                                            Street: {2}
+                                                            City: {3} 
+                                                            State: {4}
+                                                            Zip: {5} 
+                                                            Reported by: {6} {7} 
+                                                            Reported on: {8}
+                                                            
+                                                            
+                                                            Our best estimate for this being resolved is: {9}.  
+                                                            We will provide updates as progress is made. 
+                                                            Please contact 555-123-4567 or citypowerlights@contoso.com for any questions
+                                                            
+                                                            Thank you,
+                                                            City, Power, and Lights
+                                                            ", curDocType, curDocDescription, curDocStreet, curDocCity, curDocState, curDocZip, curDocFirstName, curDocLastName, curDocCreated.ToString("MM/dd/yyyy"), resolvedPredictionDate.ToString("MM/dd/yyyy"));
+### 6. Test everything together ###
+Save your code, and trigger an execution by altering a CosmosDB record or creating a new record via the CPL application. Watch the logs of your Azure Function to ensure it progresses correctly. Check your email (including your junk folder) to watch for the resulting email! It should include our estimated fix date. Congratulations on adding Machine Intelligence to City, Power, and Lights!
+
+Your final code should look like:           
+
+    #r "Microsoft.Azure.Documents.Client"
+    #r "SendGrid"
+    #r "Newtonsoft.Json"
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Documents;
+    using SendGrid;
+    using SendGrid.Helpers.Mail;
+    using System.Net.Http.Headers;
+    using Newtonsoft.Json.Linq; 
+
+    public static void Run(IReadOnlyList<Document> input, TraceWriter log)
+    {
+        log.Info("Hello World!"); 
+        log.Info("Documents modified " + input.Count);
+        if (input != null)
+        {
+            for(int curDocNum = 0; curDocNum < input.Count; curDocNum++)
+            {
+                try
+                {
+                    log.Info("Document Id " + input[curDocNum].Id);
+                    string curDocType           = input[curDocNum].GetPropertyValue<string>("OutageType");   
+                    string curDocDescription    = input[curDocNum].GetPropertyValue<string>("Description");
+                    string curDocStreet         = input[curDocNum].GetPropertyValue<string>("Street");
+                    string curDocCity           = input[curDocNum].GetPropertyValue<string>("City");
+                    string curDocState          = input[curDocNum].GetPropertyValue<string>("State");
+                    string curDocZip            = input[curDocNum].GetPropertyValue<string>("ZipCode");
+                    string curDocFirstName      = input[curDocNum].GetPropertyValue<string>("FirstName");
+                    string curDocLastName       = input[curDocNum].GetPropertyValue<string>("LastName");
+                    DateTime curDocCreated  = input[curDocNum].GetPropertyValue<DateTime>("Created");
+                            
+                    log.Info("Ready to obtain prediction:");
+                    int prediction = InvokePredictionService( curDocType,
+                                            curDocCreated,
+                                            curDocDescription,
+                                            curDocZip,
+                                            curDocCity,  log ).Result;
+
+                    DateTime resolvedPredictionDate = curDocCreated.AddDays(prediction);
+                    log.Info("Got prediction:");
+                    string mailTitle = String.Format("{0} {1}, Thank you for submitting your incident to City, Power and Lights", curDocFirstName, curDocLastName);
+                    string mailBody  = String.Format(@"We have received your incident report: 
+                                                            Type: {0}
+                                                            Description: {1}
+                                                            Street: {2}
+                                                            City: {3} 
+                                                            State: {4} 
+                                                            Zip: {5} 
+                                                            Reported by: {6} {7} 
+                                                            Reported on: {8}
+                                                            
+                                                            
+                                                            Our best estimate for this being resolved is: {9}.  
+                                                            We will provide updates as progress is made. 
+                                                            Please contact 555-123-4567 or citypowerlights@contoso.com for any questions
+                                                            
+                                                            Thank you,
+                                                            City, Power, and Lights
+                                                            ", curDocType, curDocDescription, curDocStreet, curDocCity, curDocState, curDocZip, curDocFirstName, curDocLastName, curDocCreated.ToString("MM/dd/yyyy"), resolvedPredictionDate.ToString("MM/dd/yyyy"));
+                    string mailFrom     = "citypowerlights@contoso.com";
+                    string mailTo       = "daweins@microsoft.com"; // Your address goes here
+
+                    log.Info(String.Format("Mail content ready: Title: {0}\nBody: {1}\nFrom: {2}\nTo: {3}",mailTitle,mailBody,mailFrom,mailTo ));
+
+                    SendMail(log,mailFrom,mailTo,mailTitle,mailBody).Wait();
+                    log.Info("Mail sent!");
+                }
+                catch(Exception err)
+                {
+                    log.Info("Error sending mail fo document" + input[curDocNum].Id + ": " + err.ToString());
+                }
+            }
+
+        }
+    }
+    public static async Task SendMail(TraceWriter log, string mailFromString, string mailToString,string mailTitle, string mailBodyString)
+    {
+            string apiKey = Environment.GetEnvironmentVariable("SendGridKey");
+            var mailClient = new SendGridAPIClient(apiKey);
+            Email mailFrom = new Email(mailFromString);
+            Email mailTo = new Email(mailToString);
+            Content mailBody= new Content("text/plain", mailBodyString);
+            Mail mailMessage = new Mail (mailFrom,mailTitle,mailTo, mailBody);
+            var response = await mailClient.client.mail.send.post(requestBody: mailMessage.Get());
+            log.Info($"response.StatusCode: {response.StatusCode}");
+            log.Info($"response.Body.ReadAsStringAsync().Result: {response.Body.ReadAsStringAsync().Result}");
+            log.Info($"response.Headers.ToString(): {response.Headers.ToString()}");
+    }
+
+    static async Task<int> InvokePredictionService(string curDocType,
+                                    DateTime curDocDate,
+                                    string curDocDescription,
+                                    string curDocZip,
+                                    string curDocCity,
+                                    TraceWriter log)  
+    {
+        using (var client = new HttpClient())
+        {
+            var scoreRequest = new
+            {
+                
+                Inputs = new Dictionary<string, List<Dictionary<string, string>>> () {
+                    {
+                        "input1",
+                        new List<Dictionary<string, string>>(){new Dictionary<string, string>(){
+                                        {
+                                        "Complaint Type", curDocType
+                                        },
+                                        {
+                                            "Created Date", curDocDate.ToString("MM/dd/yyyy")
+                                        },
+                                        {
+                                            "Descriptor", curDocDescription
+                                        },
+                                        {
+                                            "Incident Zip", curDocZip
+                                        },
+                                        {
+                                            "Address Type", "ADDRESS" // Have to hard-code this, as it is not in CPL's app
+                                        },
+                                        {
+                                            "City", curDocCity
+                                        },
+                                        {
+                                            "Status", "Closed" // Have to hard-code this, as it is not in CPL's app
+                                        },
+                                        {
+                                            "Community Board", "STATEN ISLAND" // Have to hard-code this, as it is not in CPL's app
+                                        },
+                                        {
+                                            "Borough", "01 STATEN ISLAND" // Have to hard-code this, as it is not in CPL's app
+                                        },
+                                        {
+                                            "Latitude", "40.6" // Have to hard-code this, as it is not in CPL's app. Could use Bing's geolocating API
+                                        },
+                                        {
+                                            "Longitude", "-74.17" // Have to hard-code this, as it is not in CPL's app. Could use Bing's geolocating API
+                                        },
+                                        {
+                                            "Created Year", curDocDate.ToString("yyyy")
+                                        },
+                                        {
+                                            "Created Month", curDocDate.ToString("MM")
+                                        },
+                                        {
+                                            "Created Day of Month", curDocDate.ToString("dd")
+                                        },
+                                        {
+                                            "Created Day of Week", ((int)curDocDate.DayOfWeek).ToString()
+                                        },
+                                        {
+                                            "Created WeekNum", Math.Floor(curDocDate.DayOfYear/7.0f).ToString() // Cheap, non-global friendly calendaring
+                                        },
+                                        {
+                                            "Duration_Days", "0" // This is ignored by the model
+                                        },
+                            }
+                        }
+                    },
+                },
+                GlobalParameters = new Dictionary<string, string>() {
+                }
+            };
+
+            const string apiKey = "wAFvG0d9itHVYhpUeEGmuCnwr7yu+7LsrEEFquT9+4ZU0SJVJXzpx+Y5ps0q/ZuRQoWhJ6Qcr1UD/xiSA4wIPQ=="; // Replace this with the API key for the web service
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bearer", apiKey);
+            client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/subscriptions/82e247ea1d5346d88ea4374aa9dd4ae5/services/9d15807c2fd347c2bce19daa9eaddfa4/execute?api-version=2.0&format=swagger");
+
+            // WARNING: The 'await' statement below can result in a deadlock
+            // if you are calling this code from the UI thread of an ASP.Net application.
+            // One way to address this would be to call ConfigureAwait(false)
+            // so that the execution does not attempt to resume on the original context.
+            // For instance, replace code such as:
+            //      result = await DoSomeTask()
+            // with the following:
+            //      result = await DoSomeTask().ConfigureAwait(false)
+
+            HttpResponseMessage response = await client.PostAsJsonAsync("", scoreRequest);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                log.Info("Result: " + result);
+                JObject resultObj = JObject.Parse(result);
+                double rawPrediction = Convert.ToDouble(resultObj.SelectToken("Results.output1[0].['Scored Labels']"));
+                log.Info("Prediction: " + rawPrediction.ToString());
+                int prediction = Convert.ToInt32(rawPrediction) + 3; // Let's give us a safety margin for our prediction - add 3 days
+                return(prediction);
+
+            }
+            else
+            {
+                log.Info(string.Format("The request failed with status code: {0}", response.StatusCode));
+
+                // Print the headers - they include the request ID and the timestamp,
+                // which are useful for debugging the failure
+                log.Info(response.Headers.ToString());
+
+                string responseContent = await response.Content.ReadAsStringAsync();
+                log.Info(responseContent);
+                return(1000);
+            }
+        }
+    }
+            
 ************************************************************************************
-## Optional extensions
+## Optional extensions ## 
 1. Rerun the model to see if you can get more accurate results. Try increasing the number of iterations and the number of hidden nodes
 1. Use an online source of data using the Import data tool
 1. Use R to clean the data, or expand new features. As an example, remove the "Year","Month","DayofMonth","DayofWeek" columns from the dataset, and create them within Machine Learning Studio. This also results in a cleaner web service. 
 1. Experiment with data cleansing tools such as "Clip Values" (Data Transformation -> Scale & Reduce) 
 1. Clone the exercise and rerun it without the "randomizing step" and without "Shuffle" in the "Train Model" module, and compare the quality of the resulting model. Take a look into the "output log"s of the training and compare how quickly and effectively the "MeanError" diminishes with each iteration.  
+1. Use the Bing REST API to geocode your address in the CPL app, and make sure the incident being reported has a valid address. Leverage the geocoding functionality to obtain the Latitude/Longitude and store that in the CosmosDB record, then use that instead of our hard-coded value in the input for the predictive model web service.  See https://msdn.microsoft.com/en-us/library/ff701714.aspx for more details.
+
+
+
+************************************************************************************
+## HOL Notes ##
+1. If you take a break in the middle of the exercise and need to re-find your Machine Learning Studio Web Services, these can be in an unintuitive location. Browse to https://studio.azureml.net, and click on "Web Services" in the left toolbar. However, your web service likely does not show up in this screen, as we did not create it in classic mode. Therefore, look for the "If you don't see your web service, try here" link in the top right of your screen. Your Web Services should be accessible from the new interface. 
