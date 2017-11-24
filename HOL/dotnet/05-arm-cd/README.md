@@ -143,6 +143,8 @@ We are now ready to deploy our ARM Template containing an App Service Plan, and 
     ![image](./media/2017-06-23_09_26_00.png)
 
     > See [here](https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-limitations/#restrictions-on-redirect-uris) for more information about redirect URIs.
+	
+	> If you encounter error messages in the browser please try a redeploy via Visual Studio.
 
 The resource group is now holding our "Test" environment web app and has been added to our app registration.
 
