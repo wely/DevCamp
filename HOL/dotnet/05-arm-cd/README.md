@@ -204,6 +204,8 @@ With the updated Release Definition, we can now execute a release.
 
     ![image](./media/2017-06-23_10_50_00.jpg)
 
+    > Before you are trying to login make sure that you are browsing the https version of the app or a redirect loop will occur.
+
 We have now created a new "test" environment web app and app service plan via an ARM Template, and integrated the new environment into our VSTS Release Definition.
 
 ---
