@@ -560,10 +560,10 @@
                         "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-chrome')]"
                     },
                     {
-                        "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-git')]"
+                        "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-azurepowershell')]"
                     },
                     {
-                        "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-powershell3')]"
+                        "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-git')]"
                     },
                     {
                         "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-vscode')]"
