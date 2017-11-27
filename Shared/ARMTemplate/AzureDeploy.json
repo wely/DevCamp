@@ -37,7 +37,7 @@
         "dtlTimeZoneId": "UTC",
         "dtlVmUsername": "l-admin",
         "dtlVmPassword": "Devc@mp2016!",
-        "chocoPackages": "git-credential-winstore,webpicmd,eclipse,jre8,javaruntime"
+        "chocoPackages": "Git-Credential-Manager-for-Windows,github,azure-cli,microsoftazurestorageexplorer,webpicmd,eclipse,jre8,javaruntime"
     },
     "resources": [
         {
