@@ -465,6 +465,8 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     ![image](./media/2017-06-16_09_08_00.png)
 
+> **The Azure portal is currently in a re-designing phase during which the `Auto-Start` option may not be available at all times. Skip the next to steps if it does not show up on the VM's menu.**
+
 1. The machine does not automatically turn on. To enable this, in the Policy Settings blade, select `Auto-Start`.
 
     ![image](./media/2017-06-16_09_14_00.png)
