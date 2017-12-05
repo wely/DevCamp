@@ -474,11 +474,11 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
     ![image](./media/2017-06-16_13_14_00.png)
 
-1. On the Redis blade, note the **Host Name**.
+1. On the Redis blade, copy the **Host Name**.
 
     ![image](./media/2017-06-16_13_18_00.png)
 
-1. Select `Show access keys` from the overview panel or from the blade and note the **Primary Key**.
+1. Select `Keys` from the overview panel or `Access Keys` from the blade and copy the **Primary Key**.
 
     ![image](./media/redis-keys.png)
 
