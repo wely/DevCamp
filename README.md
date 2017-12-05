@@ -179,7 +179,7 @@ We will provide a quick lap around the various APIs, features and services avail
 
 #### View instructions for [.NET](HOL/dotnet/08-PowerBI) | [Node.JS](HOL/node/08-PowerBI) | [Java](HOL/java/08-PowerBI)
 
-## HOL 14: Machine Learning (IN DEVELOPMENT)
+### HOL 14: Machine Learning (IN DEVELOPMENT)
 
 In this lab you will setup an Azure machine learning workspace and train a model to help predict the estimated time to resolution of logged incidents.
 
@@ -202,7 +202,7 @@ In this lab, you will combine the web app with an IoT device based on an Arduino
 
 #### View instructions for [.NET](HOL/dotnet/11-IoT) | [Node.JS](HOL/node/11-IoT) | [Java](HOL/java/11-IoT)
 
-## HOL 10: IoT using IoT Hub and containers (IN DEVELOPMENT)
+### HOL 10: IoT using IoT Hub and containers (IN DEVELOPMENT)
 
 In this lab you will setup an Azure IoT Hub, Create Devices, develop a .NET Core simulated device application, and deploy it as an Azure Container Instance.
 
