@@ -448,21 +448,17 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     ![image](./media/2017-06-16_08_53_00.png)
 
-1. The Windows VM is managed by an [Azure DevTest lab](https://azure.microsoft.com/en-us/services/devtest-lab/) named `DevCamp` which handles the startup and shutdown of the machine. To change the start up schedule, click on the DevTest Lab icon and select `Configuration and policies` under the `Settings` headline. 
+1. The Windows VM is managed by an [Azure DevTest lab](https://azure.microsoft.com/en-us/services/devtest-lab/) named `DevCamp` which handles the startup and shutdown of the machine. To change the shut down and start up schedule, click on the DevTest Lab icon and select `Configuration and policies`. 
 
     ![image](./media/2017-06-16_09_04_00.png)
 
+ 1. Select `Auto-shutdown`.
+
     ![image](./media/2017-10-30_12_21_00.png)
-
-1. Select `Auto-shutdown`.
-
-    ![image](./media/2017-06-16_09_06_00.png)
-
+    
 1. Modify the Auto-shutdown schedule based on your time zone.
 
     ![image](./media/2017-06-16_09_08_00.png)
-
-> **The Azure portal is currently in a re-designing phase during which the `Auto-Start` option may not be available at all times. Skip the next to steps if it does not show up on the VM's menu.**
 
 1. The machine does not automatically turn on. To enable this, in the Policy Settings blade, select `Auto-Start`.
 
