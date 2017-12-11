@@ -92,14 +92,14 @@ We will add both components to our application and enable the sending of telemet
 
 1. Click on `Enable exception collection` and `Collect traces from System.Diagnostics`. This will enable additional trace listeners.
     
-    ![image](./media/2017-06-23_13_22_00.png)
-    
-    > The snippet above was taken from the Application Insights Configuration window. You can access it by right-clicking the project in your solution and choosing `Application Insights` -> `Configure Application Insights...`.
+    > The snippet below was taken from the Application Insights Configuration window. You can access it by right-clicking the project in your solution and choosing `Application Insights` -> `Configure Application Insights...`.
     >
     > If you aren't seeing this option, make sure you are using an updated version of the `Developer Analytics Tools` extension. You can check this by going to `Tools` -> `Extensions and Updates` and click `Updates` -> `Visual Studio Gallery`. If available, choose `Developer Analytics Tools`.
     >
     > By the time of this writing, this is version 7.19 and automatic updates were not shown. If this happens try to uninstall the `Developer Analytics Tools`, restart Visual Studio and install the `Developer Analytics Tools` again. If this does not work, you might have to install the update manually by downloading it from [Visual Studio Gallery](https://visualstudiogallery.msdn.microsoft.com/82367b81-3f97-4de1-bbf1-eaf52ddc635aJakub).
 
+    ![image](./media/2017-06-23_13_22_00.png)
+    
 1. By default, the `ApplicationInsights.config` is excluded from source control due to the fact that it contains the Instrumentation key. We will remove this from the config file and inject it at runtime. Remove the following key from the `ApplicationInsights.config` file:
 
     ![image](./media/image-020.gif)
