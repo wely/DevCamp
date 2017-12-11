@@ -77,17 +77,17 @@ This hands-on-lab has the following exercises:
 
     ```JSON
     "properties": {
-        "AZURE_STORAGE_ACCOUNT": "{YOUR STORAGE ACCOUNT NAME}",
-        "AZURE_STORAGE_ACCESS_KEY": "{YOUR STORAGE ACCOUNT KEY}",
+        "AZURE_STORAGE_ACCOUNT": "[YOUR STORAGE ACCOUNT NAME]",
+        "AZURE_STORAGE_ACCESS_KEY": "[YOUR STORAGE ACCOUNT KEY]",
         "AZURE_STORAGE_BLOB_CONTAINER": "images",
         "AZURE_STORAGE_QUEUE": "thumbnails",
-        "INCIDENT_API_URL": "https://{YOUR API APPLICATION NAME}.azurewebsites.net",
-        "REDISCACHE_HOSTNAME": "{YOUR REDIS CACHE NAME}.redis.cache.windows.net",
+        "INCIDENT_API_URL": "https://[YOUR API APPLICATION NAME].azurewebsites.net",
+        "REDISCACHE_HOSTNAME": "[YOUR REDIS CACHE NAME].redis.cache.windows.net",
         "REDISCACHE_PORT": "6379",
         "REDISCACHE_SSLPORT": "6380",
-        "REDISCACHE_PRIMARY_KEY": "{YOUR REDIS CACHE KEY}",
-        "AAD_APP_ID": "{YOUR APP ID}",
-        "AAD_APP_SECRET": "{YOUR CLIENT SECRET}",
+        "REDISCACHE_PRIMARY_KEY": "[YOUR REDIS CACHE KEY]",
+        "AAD_APP_ID": "[YOUR APP ID]",
+        "AAD_APP_SECRET": "[YOUR CLIENT SECRET]",
         "AAD_APP_REDIRECTURI": "[concat('https://', variables('webSiteName'), '.azurewebsites.net/')]",
         "AAD_INSTANCE": "https://login.microsoftonline.com/{0}/{1}",
         "AAD_AUTHORITY": "https://login.microsoftonline.com/common/",
@@ -97,7 +97,7 @@ This hands-on-lab has the following exercises:
     }
     ```
 
-1. Locate the values surrounded by `{YOUR ...}`. We will need to replace these values with the correct settings for your web application. You can get these values from the `Web.config` created in the previous labs.
+1. Locate the values surrounded by `[YOUR ...]`. We will need to replace these values with the correct settings for your web application. You can get these values from the `Web.config` created in the previous labs.
 
 1. If you do not have the values from the previous labs, open the Azure portal and find the web application in your resource group that starts with `dotnetapp...`.
 

@@ -262,7 +262,6 @@ This hands-on-lab has the following exercises:
 1. Select the current `//TODO: BEGIN Replace with API Data code` comment block in the Index method and delete it. Also delete the existing return View() code.
 
 1. Paste the following inside the `Index()` function:
-
     ```csharp
     //##### API DATA HERE #####
     List<Incident> incidents;
@@ -475,11 +474,13 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
     ![image](./media/2017-06-16_13_14_00.png)
 
-1. On the Redis blade, note the **Host Name**.
+1. On the Redis blade, copy the **Host Name**.
 
     ![image](./media/2017-06-16_13_18_00.png)
 
-1. Then select `Show access keys` and note the **Primary Key**.
+1. Select `Keys` from the overview panel or `Access Keys` from the blade and copy the **Primary Key**.
+
+    ![image](./media/redis-keys.png)
 
 1. Return to the `Overview` blade and expand **Ports** by selecting `Non-SSL port (6379) disabled` and note the Non-SSL port 6379 and SSL Port of 6380 on the port details blade.
 
