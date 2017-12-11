@@ -18,7 +18,7 @@ In this hands-on lab, you will learn how to:
 * Deployed the starter ARM Template [HOL 1](../01-developer-environment).
 * Completion of the [HOL 3](../03-azuread-ofice365).
 
-> **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the previous HOL's settings to the `Web.config` file.
+> &#x1F53A; **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the previous HOL's settings to the `Web.config` file and make all necessary changes to Azure. &#x1F53A;
 
 ### Note
 > In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 

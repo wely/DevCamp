@@ -26,7 +26,7 @@ In this hands-on lab, you will learn how to:
 * Deployed the starter ARM Template [HOL 1](../01-developer-environment).
 * Completion of the [HOL 2](../02-modern-cloud-apps).
 
-> **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the HOL 2 settings to the `Web.config` file.
+> &#x1F53A; **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the HOL 2 settings to the `Web.config` file and make all necessary changes to Azure. &#x1F53A;
 
 > If you are starting from [HOL 2](../02-modern-cloud-apps) and not from the [start](start) folder, add the following keys to `Web.config`:
 

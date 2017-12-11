@@ -13,6 +13,8 @@ In this hands-on lab, you will learn how to:
 
 * The source for the starter app is located in the [start](start) folder. 
 
+> &#x1F53A; **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the previous HOL's environment variables and make all necessary changes to Azure. &#x1F53A;
+
 ## Exercises
 This hands-on-lab has the following exercises:
 * [Exercise 1: Create an Application Insights resource](#ex1)
