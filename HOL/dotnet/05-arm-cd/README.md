@@ -103,11 +103,12 @@ This hands-on-lab has the following exercises:
 
 1. Select `Application Settings` from the settings blade:
 
-    > If you do not have the `Application Settings` you may have not completed the previous HOL and have to manually add them.
 
     ![image](./media/image-13.gif)
 
 1. Copy the values by double-clicking in the cell and copying the values. Paste them into the ARM template in the correct location that matches the key name.
+
+    > If you do not have the `Application Settings` you may have not completed the previous HOL and have to manually add them.
 
     ![image](./media/image-14.gif)
 
