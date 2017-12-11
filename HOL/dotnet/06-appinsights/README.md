@@ -104,7 +104,7 @@ We will add both components to our application and enable the sending of telemet
 
     ![image](./media/image-020.gif)
 
-1. Open the `Web.config` file and add the following entry, below the other keys. Replace the value with the AppInisghts key you just removed from the `ApplicationInsights.config`:
+1. Open the `Web.config` file and add the following entry, below the other keys. Replace the value with the AppInsights key you just removed from the `ApplicationInsights.config`:
 
     ```xml
     <!--HOL 5-->
