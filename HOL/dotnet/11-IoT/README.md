@@ -384,11 +384,15 @@ In this lesson you will create a Telegram bot.
 
 1. Create a new telegram bot using BotFather. Start a conversation with the bot by following the link https://t.me/botfather or search for BotFather in your contacts.
 
+    ![image](./media/telegram-botfather-start.png)
+
 1. After selecting the start button at the bottom of the chat, you will see the list of available commands for BotFather.
+
+    ![image](./media/telegram-botfather-commands.png)
 
 1. To create a new bot enter or select /newbot from the list of commands.
 
-1. Next BotFather asks you to choose the name for your bot. Thereafter you need to enter the username, which has to end with the term ‘bot’ and will later be used to communicate with the bot (e.g. @DevCampBot).
+1. Next BotFather asks you to choose the name for your bot. Thereafter you need to enter the username, which has to end with the term ‘bot’ and will later be used to communicate with the bot (e.g. [@DevCampBot](https://m.te/devcampbot)).
 
 1. If everything worked well, the bot was successfully created and you will receive a message with a token which is used to access the HTTP API. The token is needed in the following steps.
 
