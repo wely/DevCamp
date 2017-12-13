@@ -180,6 +180,8 @@ The Arduino-compatible device can handle data exchange with web applications. At
 
 It is important to develop projects in small chunks and to understand and test each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
 
+Do not declare too many variables. The device has very limited memory, that’s why it is better to use function calls, for example, instead of saving the returned values for later use.
+
 1. Make sure the device is connected to your USB port and open Arduino and create a new sketch.
 
 1. Replace the sketch content with the following code which will connect the device to a specified wireless network. Replace the SSID and the password with proper values.
@@ -372,6 +374,25 @@ It is important to develop projects in small chunks and to understand and test e
     ![image](./media/arduino-get%20incident%20count-upload%20completed.png)
 
 This example shows how to work with data requests, how to link the device to a data source on the internet and display the state using a simple LED.
+
+---
+## Exercise 4: Remote control using the Telegram Bot API<a name="ex4"></a>
+
+In this lesson you will create a Telegram bot.
+
+1. Install the Telegram app for your device. Got to https://telegram.org/apps and select the preferred download link. To create an account, you need a valid phone number.
+
+1. Create a new telegram bot using BotFather. Start a conversation with the bot by following the link https://t.me/botfather or search for BotFather in your contacts.
+
+1. After selecting the start button at the bottom of the chat, you will see the list of available commands for BotFather.
+
+1. To create a new bot enter or select /newbot from the list of commands.
+
+1. Next BotFather asks you to choose the name for your bot. Thereafter you need to enter the username, which has to end with the term ‘bot’ and will later be used to communicate with the bot (e.g. @DevCampBot).
+
+1. If everything worked well, the bot was successfully created and you will receive a message with a token which is used to access the HTTP API. The token is needed in the following steps.
+
+1. In this step you will add the Universal Telegram Bot Library to your Arduino IDE project and extend it with the ability to read the amount of incidents in Telegram. The Arduino device can send the incident count to your Telegram app using the Telegram bot and you can create a command which will trigger the bot to send you a message with the desired information.
 
 ---
 ## Summary
