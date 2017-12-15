@@ -390,13 +390,165 @@ In this lesson you will create a Telegram bot.
 
     ![image](./media/telegram-botfather-commands.png)
 
-1. To create a new bot enter or select /newbot from the list of commands.
+1. To create a new bot enter or select `/newbot` from the list of commands.
 
-1. Next BotFather asks you to choose the name for your bot. Thereafter you need to enter the username, which has to end with the term ‘bot’ and will later be used to communicate with the bot (e.g. [@DevCampBot](https://t.me/devcampbot)).
+1. Next BotFather asks you to choose the name for your bot. Thereafter you need to enter the username, which has to end with the term ‘bot’ and will be used later to communicate with the bot (e.g. [@DevCampBot](https://t.me/devcampbot)).
 
 1. If everything worked well, the bot was successfully created and you will receive a message with a token which is used to access the HTTP API. The token is needed in the following steps.
 
-1. In this step you will add the Universal Telegram Bot Library to your Arduino IDE project and extend it with the ability to read the amount of incidents in Telegram. The Arduino device can send the incident count to your Telegram app using the Telegram bot and you can create a command which will trigger the bot to send you a message with the desired information.
+1. In this step you will add the Universal Telegram Bot Library to your Arduino project and extend it with the ability to read the amount of incidents in Telegram. The Arduino device can send the incident count to your Telegram app using the Telegram bot and you can create a command which will trigger the bot to send you a message with the desired information.
+
+    ```cpp
+    #include <ESP8266WiFi.h>
+    #include <WiFiClientSecure.h>
+    #include <UniversalTelegramBot.h>
+
+    #define LED_PIN   D4 // build-in LED in NodeMCU
+
+    char* ssid = "***";
+    char* password = "***";
+
+    // Request
+    const int port = 80;
+    const char* server = "<app_name>.azurewebsites.net"; // address for request, without http://
+    const char* searchString = "IncidentCount="; // search for this property
+
+    // Telegram bot
+    #define BOT_TOKEN   "123456789:AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqR" // bot token to access the HTTP API
+
+    WiFiClientSecure clientSecure;
+    UniversalTelegramBot bot(BOT_TOKEN, clientSecure);
+
+    int interval = 1000; // mean time between scan messages
+    long lastMillis; // last time messages' scan has been done
+
+    void setup() {
+      Serial.begin(115200); // sets up serial data transmission for status information
+      
+      pinMode(LED_PIN, OUTPUT);
+      
+      connectWifi(ssid, password);
+    }
+
+    void loop() {
+      if (WiFi.status() != WL_CONNECTED) {
+        digitalWrite(LED_PIN, HIGH);
+      } else {
+        if (millis() > lastMillis + interval) { // better approach to pause between each updates
+          int messageCount = bot.getUpdates(bot.last_message_received + 1);
+          while (messageCount) {
+            handleMessages(messageCount);
+            messageCount = bot.getUpdates(bot.last_message_received + 1);
+          }
+          lastMillis = millis();
+        }
+      }
+    }
+
+    void connectWifi(char* ssid, char* password) {
+      Serial.print("Connecting to Wi-Fi");
+      
+      WiFi.hostname("NodeMCU@DevCamp");
+      WiFi.begin(ssid, password);
+      
+      uint8_t i = 0;
+      while (WiFi.status() != WL_CONNECTED && i++ < 50) {
+        Serial.print(".");
+        delay(500);
+      }
+      Serial.println(".");
+      
+      if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("Could not connect to Wi-Fi");
+      } else {
+        Serial.print("Connected to Wi-Fi: ");
+        Serial.println(ssid);
+        Serial.print("IP address: ");
+        Serial.println(WiFi.localIP());
+      }
+    }
+
+    int getIncidentCount() {
+      WiFiClient client;
+      if (client.connect(server, port)) {
+        Serial.print("Connected to ");
+        Serial.println(server);
+        Serial.println("Sending request");
+        
+        client.print("GET /iot");
+        client.println(" HTTP/1.1");
+        client.print("Host: ");
+        client.print(server);
+        client.print(":");
+        client.println(port);
+        client.println("Connection: close");
+        client.println("Accept: text/html");
+        client.println();
+
+        // waiting for server response...
+        while (client.connected()) {
+          // ...until the response is available
+          if (client.available()) {
+          // looking for search string in response data
+            if (client.findUntil(searchString, "\0")) {
+              int result = client.readStringUntil('\n').toInt();
+              
+              Serial.print(searchString);
+              Serial.print("=");
+              Serial.println(result);
+              
+              return result;
+            }
+          }
+        }
+        client.stop();
+
+        Serial.println();
+        Serial.println("Connection closed");
+      } else {
+        Serial.print("Connection to ");
+        Serial.print(server);
+        Serial.println(" failed");
+      }
+      return 0;
+    }
+
+    void handleMessages(int messageCount) {
+      Serial.println("handleMessages(" + String(messageCount) + ")");
+      for (int i = 0; i < messageCount; i++) {
+        Serial.println("Chat ID: " + bot.messages[i].chat_id);
+        Serial.println("From ID: " + bot.messages[i].from_id);
+        Serial.println("From name: " + bot.messages[i].from_name);
+        Serial.println("Text: " + bot.messages[i].text);
+
+        String fromName = bot.messages[i].from_name;
+        if (fromName == "") {
+          fromName = "Guest";
+        }
+
+        if (bot.messages[i].text == "/start") {
+          bot.sendMessage(bot.messages[i].from_id,
+            "Welcome, " + fromName + "!\n\n"
+            "You can control me by sending these commands:\n\n"
+            "<strong>Incidents</strong>\n/getincidents - get amount of incidents", "HTML");
+        } else if (bot.messages[i].text == "/getincidents") {
+          // retrieve the amount of incidents
+          int incidentCount = getIncidentCount();
+
+          // send a message with the amount of incidents to all bot subscribers
+          bot.sendMessage(bot.messages[i].from_id,
+            "There are currently <strong>" + String(incidentCount) + " incidents</strong> available.", "HTML");
+          
+          // keep the led blinking for the amount of incidents
+          for (int i = 0; i < incidentCount; i++) {
+            delay(250);
+            digitalWrite(LED_PIN, LOW);
+            delay(50);
+            digitalWrite(LED_PIN, HIGH);
+          }
+        }
+      }
+    }
 
 ---
 ## Summary
