@@ -396,8 +396,18 @@ In this lesson you will create a Telegram bot.
 
 1. If everything worked well, the bot was successfully created and you will receive a message with a token which is used to access the HTTP API. The token is needed in the following steps.
 
-1. In this step you will add the Universal Telegram Bot Library to your Arduino project and extend it with the ability to read the amount of incidents in Telegram. The Arduino device can send the incident count to your Telegram app using the Telegram bot and you can create a command which will trigger the bot to send you a message with the desired information.
+1. In the following steps you will add the Universal Telegram Bot Library to your Arduino project and extend it with the ability to read the amount of incidents in Telegram. The Arduino device can send the incident count to your Telegram app using the Telegram bot and you can create a command which will trigger the bot to send you a message with the desired information.
 
+Go to https://github.com/witnessmenow/Universal-Arduino-Telegram-Bot and download the library as zip file.
+
+    ![image](./media/github-universal%20arduino%20telegram%20bot-clone%20or%20download-download%20zip.png)
+
+1. Add the Universal Telegram Bot Library to your Arduino project. Select `Sketch` -> Ìnclude Library` -> `Add .ZIP Library...` in your Arduino IDE and select the zip file you downloaded before.
+
+    ![image](./media/arduino-sketch-include%20library-add%20zip%20library.png)
+
+1. Update code
+    
     ```cpp
     #include <ESP8266WiFi.h>
     #include <WiFiClientSecure.h>
