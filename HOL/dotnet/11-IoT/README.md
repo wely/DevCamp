@@ -570,7 +570,23 @@ In the following steps you will add the Universal Telegram Bot Library to your A
     ```cpp
     #define BOT_TOKEN   "123456789:AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqR" // bot token to access the HTTP API
 
+1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device.
 
+1. Open Telegram and search for the bot you created in the previous steps. In this example we are searching for the [@DevCampBot](https://t.me/devcampbot).
+
+    ![image](./media/telegram-search-devcampbot.png)
+
+1. Start the conversation by selecting `Start` at the bottom of your chat.
+
+    ![image](./media/telegram-devcampbot-start.png)
+
+1. You will receive a message from the bot with the list of available commands.
+
+    ![image](./media/telegram-devcampbot-commands.png)
+
+1. Enter or select `/getincidents` from the list of commands.
+
+    ![image](./media/telegram-devcampbot-getincidents.png)
     
 ---
 ## Summary
