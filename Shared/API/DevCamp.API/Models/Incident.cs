@@ -26,8 +26,9 @@ namespace DevCamp.API.Models
         public DateTime? Created { get; set; }
         public DateTime? LastModified { get; set; }
         public string SortKey { get; set; }
+		public string Tags { get; set; }
 
-        public Incident()
+		public Incident()
         {
             Id = Guid.NewGuid().ToString();
             SortKey = string.Format("{0:D19}", DateTime.MaxValue.Ticks - DateTime.UtcNow.Ticks);

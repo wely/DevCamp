@@ -133,6 +133,7 @@ namespace DevCamp.API.Data
                     sampleIncident.ZipCode = "50500-" + i;
                     sampleIncident.Created = utcNow;
                     sampleIncident.LastModified = utcNow;
+					sampleIncident.Tags = "Street, Cars";
                     samples.Add(sampleIncident);
                 }
             }
