@@ -369,6 +369,7 @@ This hands-on-lab has the following exercises:
             newIncident.Description = incident.Description;
             newIncident.OutageType = incident.OutageType;
             newIncident.IsEmergency = incident.IsEmergency;
+            newIncident.Tags = incident.Tags;
             return newIncident;
         }
 
@@ -386,6 +387,7 @@ This hands-on-lab has the following exercises:
             newIncidentView.Description = incident.Description;
             newIncidentView.OutageType = incident.OutageType;
             newIncidentView.IsEmergency = incident.IsEmergency.Value;
+            newIncidentView.Tags = incident.Tags;
             newIncidentView.Created = incident.Created.Value.ToUniversalTime();
             newIncidentView.LastModified = incident.LastModified.Value.ToUniversalTime();
             return newIncidentView;
