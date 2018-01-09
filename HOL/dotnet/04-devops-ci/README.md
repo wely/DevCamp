@@ -282,72 +282,69 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/2017-06-22_09_05_00.png)
 
-1. If the drop-down next to `Azure subscription` does not offer you your subscription or the drop-down next to `App Service name` does not offer you your Azure Web app resource (give it a moment after selecting the subscription), click on `Manage`:
+    1. If the drop-down next to `Azure subscription` does not offer you your subscription or the drop-down next to `App Service name` does not offer you your Azure Web app resource (give it a moment after selecting the subscription), click on `Manage`:
 
-    ![image](./media/2017-06-22_11_35_00.png)
+        ![image](./media/2017-06-22_11_35_00.png)
 
-1. This will open a screen where you can connect to the ARM service endpoint. Select `New Service Endpoint` -> `Azure Resource Manager`.
+    1. This will open a screen where you can connect to the ARM service endpoint. Select `New Service Endpoint` -> `Azure Resource Manager`.
 
-    ![image](./media/image-042.gif)
+        ![image](./media/image-042.gif)
 
-1. Provide a connection name and select your subscription then click `OK`.
+    1. Provide a connection name and select your subscription then click `OK`.
 
-    ![image](./media/image-025.gif)
+        ![image](./media/image-025.gif)
 
-    > If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
-    > format will change to allow you to enter connection information on your subscription:    
+        > If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
+        > format will change to allow you to enter connection information on your subscription:    
 
-1. Another option is to create a service principal. The steps to create a service principal is below.
+    1. Another option is to create a service principal. The steps to create a service principal is below.
 
-    > If you have not created a service principal for the subscription, you will have to follow the 
-    > [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so.  This process will 
-    > provide the information to enter in this dialog:
-    >
+        > If you have not created a service principal for the subscription, you will have to follow the 
+        > [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so.  This process will 
+        > provide the information to enter in this dialog:
+        >
 
-    1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vsts-rm-documentation/master/Azure/SPNCreation.ps1) in your browser. Select all the content from the window and copy to the clipboard.
-        
-    1. Open a PowerShell ISE window. In the text window, paste the PowerShell script from the clipboard.
+        1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vsts-rm-documentation/master/Azure/SPNCreation.ps1) in your browser. Select all the content from the window and copy to the clipboard.
 
-        ![image](./media/image-044a.gif)
+        1. Open a PowerShell ISE window. In the text window, paste the PowerShell script from the clipboard.
 
-    1. Click the green arrow to run the PowerShell script.
+            ![image](./media/image-044a.gif)
 
-        ![image](./media/image-045a.gif)
+        1. Click the green arrow to run the PowerShell script.
 
-        > If the PowerShell gives an error at runtime regarding a missing AzureRM module, please install it by executing the following command in a PowerShell window with admin privileges: `Install-Module AzureRM`. Then run `Set-ExecutionPolicy RemoteSigned -Scope process` to adjust the execution level
+            ![image](./media/image-045a.gif)
 
-    1. The PowerShell script will ask for your **subscription name** and a **password**. This password is 
-        for the service principal only, not the password for your subscription. So you can use whatever password 
-        you would like, just remember it.    
+            > If the PowerShell gives an error at runtime regarding a missing AzureRM module, please install it by executing the following command in a PowerShell window with admin privileges: `Install-Module AzureRM`. Then run `Set-ExecutionPolicy RemoteSigned -Scope process` to adjust the execution level
 
-        ![image](./media/image-046a.gif)
+        1. The PowerShell script will ask for your **subscription name** and a **password**. This password is for the service principal only, not the password for your subscription. So you can use whatever password you would like, just remember it.    
 
-    1. You will then be asked for your Azure login credentials. Enter your Azure username and password.  
-        The script will print out several values that you will need to enter into the `Add Azure Resource Manager Service Endpoint` window. Copy and paste these values from the PowerShell window:
-        
-        * Subscription ID
-        * Subscription Name
-        * Service Principal Client ID
-        * Service Principal Key
-        * Tenant ID
+            ![image](./media/image-046a.gif)
 
-    1. Also, enter a user-friendly name to use when referring to this service endpoint connection.
-    
-        ![image](./media/image-047a.gif)
+        1. You will then be asked for your Azure login credentials. Enter your Azure username and password. The script will print out several values that you will need to enter into the `Add Azure Resource Manager Service Endpoint` window. Copy and paste these values from the PowerShell window:
 
-    1. Click `Verify connection`, and ensure that the window indicates that the connection was verified. Then Click `OK` and `Close`.
+            * Subscription ID
+            * Subscription Name
+            * Service Principal Client ID
+            * Service Principal Key
+            * Tenant ID
 
-        ![image](./media/image-048a.gif)
+            1. Also, enter a user-friendly name to use when referring to this service endpoint connection.
 
-    1. If this is the first time you are connecting to this subscription, you will need to authorize VSTS to have access to deploy to Azure. After you select your subscription, click `Authorize`.
+                ![image](./media/image-047a.gif)
 
-    ![image](./media/image-067.gif) 
+        1. Click `Verify connection`, and ensure that the window indicates that the connection was verified. Then Click `OK` and `Close`.
 
-1. Navigate back to the VSTS build tab in the browser and click the click the `Refresh` icon to refresh the connections. The `Azure` connection that we setup should now appear. Select it.
+            ![image](./media/image-048a.gif)
 
-1. Next, for `App Service Name` choose the name of the .NET Azure Web App. It may take a moment to populate.
+        1. If this is the first time you are connecting to this subscription, you will need to authorize VSTS to have access to deploy to Azure. After you select your subscription, click `Authorize`.
 
-    ![image](./media/image-062.gif)
+        ![image](./media/image-067.gif) 
+
+    1. Navigate back to the VSTS build tab in the browser and click the click the `Refresh` icon to refresh the connections. The `Azure` connection that we setup should now appear. Select it.
+
+    1. Next, for `App Service Name` choose the name of the .NET Azure Web App. It may take a moment to populate.
+
+        ![image](./media/image-062.gif)
 
 1. From the menu bar select `Save` to save the Release Definition, and select `Release` -> `Create Release`.
 
