@@ -26,6 +26,7 @@ namespace DevCamp.WebApp.Mappers
             newIncident.Description = incident.Description;
             newIncident.OutageType = incident.OutageType;
             newIncident.IsEmergency = incident.IsEmergency;
+			newIncident.Tags = incident.Tags;
             return newIncident;
         }
 
@@ -43,10 +44,11 @@ namespace DevCamp.WebApp.Mappers
             newIncidentView.Description = incident.Description;
             newIncidentView.OutageType = incident.OutageType;
             newIncidentView.IsEmergency = incident.IsEmergency.Value;
+			newIncidentView.Tags = incident.Tags;
             newIncidentView.Created = incident.Created.Value.ToUniversalTime();
-            //newIncidentView.Created = incident.Created.Value.UtcDateTime;
+            newIncidentView.Created = incident.Created.Value.UtcDateTime;
             newIncidentView.LastModified = incident.LastModified.Value.ToUniversalTime();
-            //newIncidentView.LastModified = incident.LastModified.Value.UtcDateTime;
+            newIncidentView.LastModified = incident.LastModified.Value.UtcDateTime;
             return newIncidentView;
         }
     }
