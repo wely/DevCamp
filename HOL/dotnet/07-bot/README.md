@@ -187,6 +187,8 @@ Did you notice the image button next to the message window? You can not only sen
             LastImage = await GetImageStream(connector, imageAttachment);
             LastImageName = imageAttachment.Name;
             LastImageType = imageAttachment.ContentType;
+			LastImageTags = "Coming soon";
+			LastImageDescription = "Coming soon";
             Activity reply = activity.CreateReply("Got your image!");
             await connector.Conversations.ReplyToActivityAsync(reply);
         }
@@ -279,7 +281,7 @@ To file the reported incident we use the incident API. The necessary methods are
     OnCompletionAsyncDelegate<BasicForm> processReport = async (context, state) =>
     {
         await context.PostAsync("We are currently processing your report. We will message you the status.");
-        if (await DataWriter.IncidentController.CreateAsync(state.FirstName, state.LastName, state.Street, state.City, state.State, state.ZipCode, state.PhoneNumber, state.Description, state.IncidentType.ToString(), state.Emergency, MessagesController.LastImage, MessagesController.LastImageName, MessagesController.LastImageType))
+        if (await DataWriter.IncidentController.CreateAsync(state.FirstName, state.LastName, state.Street, state.City, state.State, state.ZipCode, state.PhoneNumber, state.Description + (String.IsNullOrWhiteSpace(MessagesController.LastImageDescription) ? String.Empty : (Environment.NewLine + MessagesController.LastImageDescription)), state.IncidentType.ToString(), state.Emergency, MessagesController.LastImage, MessagesController.LastImageName, MessagesController.LastImageType, MessagesController.LastImageTags))
         {
             await context.PostAsync("The incident report has been logged.");
         }

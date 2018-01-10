@@ -18,7 +18,9 @@ namespace CityPowerBot
     {
         public static Stream LastImage { get; set; } = null;
         public static String LastImageType { get; set; } = String.Empty;
-        public static String LastImageName { get; set; } = String.Empty;
+        public static String LastImageName { get; set; } = String.Empty;		
+		public static String LastImageTags { get; set; } = String.Empty;
+		public static String LastImageDescription { get; set; } = String.Empty;
 
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
