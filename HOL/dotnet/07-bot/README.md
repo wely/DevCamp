@@ -187,8 +187,8 @@ Did you notice the image button next to the message window? You can not only sen
             LastImage = await GetImageStream(connector, imageAttachment);
             LastImageName = imageAttachment.Name;
             LastImageType = imageAttachment.ContentType;
-			LastImageTags = "Coming soon";
-			LastImageDescription = "Coming soon";
+            LastImageTags = "Coming soon";
+            LastImageDescription = "Coming soon";
             Activity reply = activity.CreateReply("Got your image!");
             await connector.Conversations.ReplyToActivityAsync(reply);
         }
