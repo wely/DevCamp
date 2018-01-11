@@ -11,11 +11,13 @@ In this lab, you will continue enhancing the overall City Power & Light experien
 
 > ***Bot development is currently only supported in C# and NodeJS. In this exercise we will mainly demonstrate the creation and deployment of bots which is independent of the used programming language and different bot capabilities. The actual bot will be created by the extensive use of the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-formflow) template in C#. Changes to the code are minimal and do not require actual understanding of the C# language. It is important to see how the template is applied.***
 
+
 ## Objectives
 In this hands-on lab, you will learn how to:
 * Set up the developing environment to support the creation of bot applications.
 * Create your own bot from scratch.
 * Create your own bot using Azure Bot Service.
+* Call Azure Cognitive Services to leverage computer vision API
 * Hosting your bot in Azure.
 
 ## Prerequisites
@@ -24,14 +26,17 @@ In this hands-on lab, you will learn how to:
 * Deployed the starter ARM Template [HOL 1](../01-developer-environment).
 * Completion of the [HOL 5](../05-arm-cd).
 
+> **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the previous HOL's settings to the `Web.config` file.
+
 ## Exercises
 This hands-on-lab has the following exercises:
 * [Exercise 1: Set up your environment](#ex1)
 * [Exercise 2: Create an interactive dialog](#ex2)
 * [Exercise 3: Integrate the API](#ex3)
 * [Exercise 4: Send attachments to the bot](#ex4)
-* [Exercise 5: Host your bot in Azure](#ex5)
-* [Exercise 6: Azure Bot Service](#ex6) 
+* [Exercise 5: Analyze submitted pictures automatically](#ex5)
+* [Exercise 6: Host your bot in Azure](#ex6)
+* [Exercise 7: Azure Bot Service](#ex7) 
 
 ---
 ## Exercise 1: Set up your environment<a name="ex1"></a>
@@ -109,7 +114,7 @@ We are using the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotne
             [Prompt("In which {&} do you live?")]
             public string City { get; set; }
 
-            [Prompt("And in which state {&}?")]
+            [Prompt("And in which {&}?")]
             public string State { get; set; }
 
             [Prompt("Lastly, what {&} do you live on?")]
@@ -187,6 +192,8 @@ Did you notice the image button next to the message window? You can not only sen
             LastImage = await GetImageStream(connector, imageAttachment);
             LastImageName = imageAttachment.Name;
             LastImageType = imageAttachment.ContentType;
+            LastImageTags = String.Empty;
+            LastImageDescription = String.Empty;
             Activity reply = activity.CreateReply("Got your image!");
             await connector.Conversations.ReplyToActivityAsync(reply);
         }
@@ -261,9 +268,17 @@ Your bot now accepts and stores an image send by the user. Now that you have eve
 
 To file the reported incident we use the incident API. The necessary methods are present in the `DataWriter` project. The project contains excerpts from the previous hands on labs. The code was shortened to just create an incident and upload the attached image. To complete it you have to add your Azure account information. 
 
-1. Open `DataWriter` -> `IncidentController.cs` and replace `YOUR INCIDENT API URL` with the URL of your incident API which you retrieved in [HOL 2 exercise 1]((../02-modern-cloud-apps)#ex1) and looks similar to `http://incidentapi[...].azurewebsites.net`.
+1. Open `web.config` of the `CityPowerBot Project` and replace the value for `INCIDENT_API_URL` with the URL of your incident API which you retrieved in [HOL 2 exercise 1]((../02-modern-cloud-apps)#ex1) and looks similar to `http://incidentapi[...].azurewebsites.net`.
 
-1. Open `DataWriter` -> `StorageHelper.cs` and replace `YOUR AZURE BLOB STORAGE` with the **Storage account name** and `YOUR AZURE BLOB STORAGE ACCESS KEY` with the **key1** you retrieved in [HOL 2 exercise 3]((../02-modern-cloud-apps)#ex3). You have stored these values in the environment variables of the previous lab's code.
+1. Replace the value for `AZURE_STORAGE_ACCOUNT` with your **storage account name** and the value for `AZURE_STORAGE_ACCESS_KEY` with your **storage account key** you retrieved in [HOL 2 exercise 3]((../02-modern-cloud-apps)#ex3).
+
+1. Your `web.config` should now be updated with your unique values.
+
+    ```xml
+    <add key="INCIDENT_API_URL" value="API URL" />
+    <add key="AZURE_STORAGE_ACCOUNT" value="STORAGEACCOUNT"/>
+    <add key="AZURE_STORAGE_ACCESS_KEY" value="STORAGEKEY" />
+    ```
 
 1. Now that the `DataWriter` project is prepared we will call its `Create` method after we got all the data from the user. Open `CityPowerBot` -> `Dialogs` -> `BasicForm.cs` and add the following `OnCompletionAsyncDelegate` declaration at the beginning of the `BuildForm` method before the `return`:
 
@@ -271,7 +286,7 @@ To file the reported incident we use the incident API. The necessary methods are
     OnCompletionAsyncDelegate<BasicForm> processReport = async (context, state) =>
     {
         await context.PostAsync("We are currently processing your report. We will message you the status.");
-        if (await DataWriter.IncidentController.CreateAsync(state.FirstName, state.LastName, state.Street, state.City, state.State, state.ZipCode, state.PhoneNumber, state.Description, state.IncidentType.ToString(), state.Emergency, MessagesController.LastImage, MessagesController.LastImageName, MessagesController.LastImageType))
+        if (await DataWriter.IncidentController.CreateAsync(state.FirstName, state.LastName, state.Street, state.City, state.State, state.ZipCode, state.PhoneNumber, state.Description + (String.IsNullOrWhiteSpace(MessagesController.LastImageDescription) ? String.Empty : (Environment.NewLine + MessagesController.LastImageDescription)), state.IncidentType.ToString(), state.Emergency, MessagesController.LastImage, MessagesController.LastImageName, MessagesController.LastImageType, MessagesController.LastImageTags))
         {
             await context.PostAsync("The incident report has been logged.");
         }
@@ -310,10 +325,177 @@ To file the reported incident we use the incident API. The necessary methods are
 
     ![image](./media/2017-07-11_16_14_00.png)
 
-Your bot is finished. It gathers and uploads data to create a new incident report. Next you are going to deploy it to Azure to make it globally accessible.
+Your bot gathers and uploads data in the next exercise it will also analyze the data using the Azure Cognitive Services.
 
 ---
-## Exercise 5: Host your bot in Azure<a name="ex5"></a>
+## Exercise 5: Analyze submitted pictures automatically<a name="ex5"></a>
+
+Azure Cognitive Services offer multiple exciting APIs that can be utilized to add advanced features to your apps. In this exercise we will use the Computer Vision API to analyze the pictures submitted to the bot and automatically add a description and the most likely tags to our data before it gets submitted to the incident service.
+
+1. To call Cognitive Service APIs you first need to create a key. Navigate to the DevCamp resource group and click `Add`. Enter `Cognitive Service` in the filter box, then select the `Cognitive Service` and click `Create` on the details blade.
+
+    ![image](./media/2018-01-11_09_40_00.png)
+
+1. Enter a name for your bot, select your subscription and the existing resource group. As the API type select `Computer Vision API`, as the Pricing tier select `F0` (which will currently give you 20 API calls per minute and a total of 5000 API calls per month for free). Confirm and click `Create` again.
+
+    ![image](./media/2018-01-11_09_43_00.png)
+
+1. You will be redirected to the `Quick start` blade. Click `Keys`.
+
+    ![image](./media/2018-01-11_09_49_00.png)
+
+1. Note the value for `KEY 1`.
+
+    ![image](./media/2018-01-11_09_50_00.png)
+
+1. Switch to the `Overview` and note the value for `Endpoint`.
+
+    ![image](./media/2018-01-11_09_54_00.png)
+
+1. Return to your Visual Studio solution and add your generated key and the endpoint to the `Web.config`. Be sure to keep the `/analyze?` at the end of the endpoint address.
+
+    ```csharp
+    <add key="AZURE_COGNITIVE_SERVICES_KEY" value="COMPUTER_VISION_KEY" />
+    <add key="AZURE_COGNITIVE_SERVICES_URI" value="https://westus.api.cognitive.microsoft.com/vision/v1.0/analyze?" />
+    ```
+
+1. In the `CityPowerBot` -> `Controllers` -> `MessagesController.cs` replace the `Post` method with this code which will call the `GetImageInfo` method for each submitted image and add the result of the analysis to the `tags` and `description` properties. It will also inform the user what we think we see in their image.
+
+    ```csharp
+    public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
+    {
+      if (activity.Type == ActivityTypes.Message)
+      {
+        // Stores send images out of order.
+        var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+        var imageAttachment = activity.Attachments?.FirstOrDefault(a => a.ContentType.Contains("image"));
+        if (imageAttachment != null)
+        {
+          LastImage = await GetImageStream(connector, imageAttachment);
+          LastImageName = imageAttachment.Name;
+          LastImageType = imageAttachment.ContentType;
+          ComputerVisionResult computerVisionResult = await GetImageInfo(LastImage);
+          LastImageTags = String.Join(", ", computerVisionResult.Tags);
+          LastImageDescription = computerVisionResult.Description;
+          String replyText = "Got your image!";
+          if (!String.IsNullOrWhiteSpace(computerVisionResult.Text))
+          {
+            replyText += $" It probably shows { computerVisionResult.Text}.";
+          }
+          Activity reply = activity.CreateReply(replyText);
+          await connector.Conversations.ReplyToActivityAsync(reply);
+        }
+        else
+        {
+          // Creates a dialog stack for the new conversation, adds MainDialog to the stack, and forwards all messages to the dialog stack.
+          await Conversation.SendAsync(activity, () => new MainDialog());
+        }
+      }
+      var response = Request.CreateResponse(HttpStatusCode.OK);
+      return response;
+    }
+    ```
+
+1. Finally add the `GetImageInfo` method to the `MessagesController` class. It will call cognitive services, submit the image, request a description and tags (tags will be automatically included in the description but will not contain confidence values which we will use to filter the returned tags) and parse the returned JSON result. If the API's confidence in a description or a tag is higher than 80% we will return those values.
+
+    ```csharp
+    private static async Task<ComputerVisionResult> GetImageInfo(Stream imageStream)
+    {
+      ComputerVisionResult result = new ComputerVisionResult();
+      try
+      {
+        // Call cognitive services.
+        var jsonResult = string.Empty;
+        using (HttpClient client = new HttpClient())
+        {
+          // Request headers.
+          client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["AZURE_COGNITIVE_SERVICES_KEY"]);
+          var queryString = HttpUtility.ParseQueryString(string.Empty);
+          queryString["visualFeatures"] = "Description,Tags";
+          queryString["language"] = "en";
+
+          // Assemble the URI for the REST API Call.
+          string uri = ConfigurationManager.AppSettings["AZURE_COGNITIVE_SERVICES_URI"] + queryString;
+
+          // Request body. Posts a locally stored JPEG image.
+          byte[] byteData = null;
+          using (MemoryStream ms = new MemoryStream())
+          {
+            imageStream.CopyTo(ms);
+            if (ms.Length >= IMAGE_SIZE_LIMIT)
+              throw new ArgumentException($"Images size should be less than {IMAGE_SIZE_LIMIT / 1024} Kb");
+
+            byteData = ms.ToArray();
+          }
+
+          using (ByteArrayContent content = new ByteArrayContent(byteData))
+          {
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+            // Execute the REST API call.
+            var response = await client.PostAsync(uri, content);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+              throw new Exception("Image analysis failed.");
+            }
+
+            // Get the JSON response.
+            jsonResult = await response.Content.ReadAsStringAsync();
+          }
+        }
+
+        // Retrieve only tags
+        JObject json = JObject.Parse(jsonResult);
+
+        JToken captions = json["description"]["captions"];
+        JToken tags = json["tags"];
+
+        String caption = captions.First()["text"].Value<String>();
+        Double captionConfidence = captions.First()["confidence"].Value<Double>();
+        if (captionConfidence >= 0.8)
+        {
+          result.Description = caption;
+          result.Text = caption;
+        }
+
+        foreach (JToken item in tags)
+        {
+          String tag = item["name"].Value<String>();
+          Double confidence = item["confidence"].Value<Double>();
+
+          if (confidence >= 0.8)
+          {
+            result.Tags.Add(tag);
+            if (String.IsNullOrWhiteSpace(result.Text))
+            {
+              result.Text = tag;
+            }
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        result.Description = ex.Message;
+      }
+      return result;
+    }
+    ```
+
+1. Hit `F5` to start the debugging process and talk to your bot via the `Bot Framework Emulator`. Use your preferred search engine to search for a picture of street lamps. Save the picture locally and submit it to your bot.
+
+    ![image](./media/2018-01-11_12_54_00.png)
+
+1. Answer all the bot's questions and confirm that you want to send the incident report.
+
+1. In another browser tab, open the Dashboard of the City Power site you deployed in the previous hands on labs to check that your new incident has been logged. Click on the incident id to open the details page and see the automatically generated description added to the one entered by the user and the most likely tags in your data.
+
+    ![image](./media/2018-01-11_11_50_00.png)
+
+Your bot is finished. It gathers, analyses and uploads data to create a new incident report. Next you are going to deploy it to Azure to make it globally accessible.
+
+---
+## Exercise 6: Host your bot in Azure<a name="ex6"></a>
 
 To make our bot accessible we have to publish it in a public location. An Azure app is idealy suited for this. We will let Visual Studio do the publishing and automatically create a new Azure app in our resource group to host the bot. Once the Visual Studio publishing wizard has done this we will register the bot in the [Bot Framework Portal](https://dev.botframework.com/bots) and add the generated IDs to our `Web.config`.
 
@@ -383,8 +565,9 @@ To make our bot accessible we have to publish it in a public location. An Azure 
 
 1. In Visual Studio, open the `CityPowerBot` -> `Web.config` and enter the values you just gathered for the `BotId` (the bot's `Handle` you entered during the registration process), `MicrosoftAppId` and `MicrosoftAppPassword` in the `appSettings` section.
 
-    ```charp
+    ```xml
     <appSettings>
+        <!--OMITTED-->
         <!-- update these with your BotId, Microsoft App Id and your Microsoft App Password-->
         <add key="BotId" value="YourBotId" />
         <add key="MicrosoftAppId" value="" />
@@ -407,7 +590,7 @@ To make our bot accessible we have to publish it in a public location. An Azure 
 1. Enter the bot's HTTPS endpoint into the address bar of the Emulator. It should look similar to this: `https://citypowerbot20170712104043.azurewebsites.net/api/messages`. Also provide the `Microsoft App ID` and the `Microsoft App Password` you noted earlier. Then click `CONNECT`. Test your bot as before.
 
     ![image](./media/2017-07-12_13_46_00.png)
-
+    
     > If you get a Server 500 error message try removing the `Microsoft App ID` and the `Microsoft App Password` and reconnect to the bot.
 
 1. If you like you can now [configure the bot](https://docs.microsoft.com/en-us/bot-framework/portal-configure-channels) to run on one or more channels.
@@ -415,7 +598,7 @@ To make our bot accessible we have to publish it in a public location. An Azure 
 You have now manually created a bot and uploaded it to Azure. An alternative way of creating a bot is using the Azure Bot Service.
 
 ---
-## Exercise 6: Azure Bot Service<a name="ex6"></a>
+## Exercise 7: Azure Bot Service<a name="ex7"></a>
 
 You have seen some of the basics of bot development. In the exercises you have used the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-formflow) template to create the interaction between the user and the bot. Many other templates are available. You can also use [Azure Bot Service](https://docs.microsoft.com/en-us/bot-framework/azure/azure-bot-service-overview) to quickly create a bot from within the Azure portal.
 
@@ -476,6 +659,7 @@ In this hands-on lab, you learned how to:
 * Set up the developing environment to support the creation of bot applications.
 * Create your own bot from scratch.
 * Create your own bot using Azure Bot Service.
+* Call Azure Cognitive Services to leverage computer vision API.
 * Hosting your bot in Azure.
 
 After completing this module, you can continue on to Module 9: IoT.

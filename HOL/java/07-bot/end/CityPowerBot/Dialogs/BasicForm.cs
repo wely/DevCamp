@@ -41,7 +41,7 @@ namespace CityPowerBot
         [Prompt("In which {&} do you live?")]
         public string City { get; set; }
 
-        [Prompt("And in which state {&}?")]
+        [Prompt("And in which {&}?")]
         public string State { get; set; }
 
         [Prompt("Lastly, what {&} do you live on?")]

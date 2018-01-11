@@ -15,7 +15,7 @@ namespace DataWriter
     public class IncidentController
     {
         [HttpPost]
-        public static async Task<bool> CreateAsync(String firstName, String lastName, String street, String city, String state, String zipCode, String phoneNumber, String description, String outageType, Boolean? isEmergency, Stream image, String imageName, String imageType)
+        public static async Task<bool> CreateAsync(String firstName, String lastName, String street, String city, String state, String zipCode, String phoneNumber, String description, String outageType, Boolean? isEmergency, Stream image, String imageName, String imageType, String tags)
         {
             Boolean added = false;
             try
@@ -31,6 +31,7 @@ namespace DataWriter
                 newIncident.Description = description;
                 newIncident.OutageType = outageType;
                 newIncident.IsEmergency = isEmergency;
+				newIncident.Tags = tags;
 
                 using (IncidentAPIClient client = GetIncidentAPIClient())
                 {
