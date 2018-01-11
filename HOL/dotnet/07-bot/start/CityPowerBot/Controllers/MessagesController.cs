@@ -16,6 +16,7 @@ namespace CityPowerBot
     [BotAuthentication]
     public class MessagesController : ApiController
     {
+		private const int IMAGE_SIZE_LIMIT = 4000000;
         public static Stream LastImage { get; set; } = null;
         public static String LastImageType { get; set; } = String.Empty;
         public static String LastImageName { get; set; } = String.Empty;		
