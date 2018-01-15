@@ -1,33 +1,24 @@
 package devCamp.WebApp.Controllers;
 
-import devCamp.WebApp.services.AzureStorageService;
-import devCamp.WebApp.services.IncidentService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-//import devCamp.WebApp.IncidentAPIClient.IncidentService;
-
 import devCamp.WebApp.models.IncidentBean;
-/*
-import devCamp.WebApp.IncidentAPIClient.IncidentAPIClient;
-import devCamp.WebApp.IncidentAPIClient.IncidentService;
-import devCamp.WebApp.Utils.IncidentApiHelper;
-import devCamp.WebApp.Utils.StorageHelper;
-*/
-
-import java.util.concurrent.CompletableFuture;
+import devCamp.WebApp.services.AzureStorageService;
+import devCamp.WebApp.services.IncidentService;
 
 @Controller
 public class IncidentController {
-	private static final Logger LOG = LoggerFactory.getLogger(IncidentController.class);
-
-
+	
+	private Log LOG = LogFactory.getLog(IncidentController.class);
 
 	@GetMapping("/details")
 	public String Details( @RequestParam(value="Id", required=false, defaultValue="") String id,Model model) {
@@ -46,21 +37,19 @@ public class IncidentController {
 		model.addAttribute("incident", new IncidentBean());
 		return "Incident/new";
 	}
-
-	/*
+/*
 	@PostMapping("/new")
 	public String Create(@ModelAttribute IncidentBean incident,@RequestParam("file") MultipartFile imageFile) {
 		LOG.info("creating incident");
 		return "redirect:/dashboard";
-	}
-	*/
+	}*/
 	
 	@Autowired
-    private IncidentService incidentService;
+	private IncidentService incidentService;
 	
 	@Autowired
 	private AzureStorageService storageService;
-	
+
 	@PostMapping("/new")
 	public String Create(@ModelAttribute IncidentBean incident, @RequestParam("file") MultipartFile imageFile) {
 		LOG.info("creating incident");
@@ -83,6 +72,7 @@ public class IncidentController {
 								LOG.info("Successfully uploaded file to blob storage, now adding message to queue");
 								storageService.addMessageToQueueAsync(incidentID, fileName);
 							});
+	                
 				}
 			} catch (Exception e) {
 				return "Incident/details";
