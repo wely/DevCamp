@@ -355,7 +355,7 @@ Next, we are going to create a page to display information about the logged in u
     }
     ```
 
-1. Create a new file named `templates/Profile/index.html`. Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
+1. Create a new file named `templates/Profile/index.html` (via `New` -> `Other...` -> `Web` -> `HTML File`). Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
 
     ```html
     <!DOCTYPE html>
