@@ -579,7 +579,7 @@ In the previous exercise you read data from the Microsoft Graph API, but other e
 	private String mailUrl;
 	
     public void sendMail(String displayName,String emailAddr){
-    	LOG.info("sending email");
+    	LOG.info("sending email {} {}", displayName, emailAddr");
     	String email = emailContent1 + displayName+ emailContent2;
     	
     	JSONObject body = null;
