@@ -52,7 +52,6 @@ public class AzureStorageServiceImpl implements AzureStorageService {
                 CloudQueueMessage qMsg = new CloudQueueMessage(msgPayload);
                 msgQ.addMessage(qMsg);
             } catch (URISyntaxException | StorageException | JSONException e) {
-                // TODO Auto-generated catch block
                 LOG.error("addMessageToQueue - error", e);
                 cf.completeExceptionally(e);
             }
@@ -64,7 +63,7 @@ public class AzureStorageServiceImpl implements AzureStorageService {
     @Async
     @Override
     public CompletableFuture<String> uploadFileToBlobStorageAsync(String IncidentId, String fileName,
-                                                                  String contentType, byte[] fileBuffer) {
+                                                                String contentType, byte[] fileBuffer) {
         CompletableFuture<String> cf = new CompletableFuture<>();
         CompletableFuture.runAsync(() ->{
             try {
@@ -90,20 +89,15 @@ public class AzureStorageServiceImpl implements AzureStorageService {
                 //return result
                 cf.complete(builder.toString());
             } catch (URISyntaxException | StorageException | IOException e) {
-                // TODO Auto-generated catch block
                 LOG.error("uploadFileToBlobStorage - error {}", e);
                 cf.completeExceptionally(e);
             }
         });
         return cf;
     }
+
     private String getIncidentBlobFilename(String IncidentId,String FileName) {
         String fileExt = FilenameUtils.getExtension(FileName);
-        // TODO check this against the .NET code -
-        //	with this code in, we're generating filenames that don't have a period between the incident id and the extension
-//		if (fileExt.startsWith(".")){
-//			fileExt = fileExt.substring(1);
-//		}
         return String.format("%s.%s", IncidentId,fileExt);
     }
 }
