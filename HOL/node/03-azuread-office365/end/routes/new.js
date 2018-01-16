@@ -11,7 +11,7 @@ var emailUtility = require('../utilities/email');
 router.get('/', authUtility.ensureAuthenticated, function (req, res) {
     res.render('new', {
         title: 'Report an Outage',
-		user: req.user
+        user: req.user
     });
 });
 
@@ -33,7 +33,7 @@ router.post('/', authUtility.ensureAuthenticated, function (req, res) {
                 // Redirect to dashboard
                 res.redirect('/dashboard');
 
-            });
+        });
 
     });
 
@@ -98,26 +98,6 @@ function uploadImage(input) {
 
 }
 
-function addQueueMessage(blob) {
-
-    return new Promise(function (resolve, reject) {
-
-        if (blob) {
-
-            storageUtility.createQueueMessage(blob).then(function () {
-                resolve();
-            });
-
-        }
-        else {
-            console.log('No message to add to the queue');
-            resolve();
-        }
-
-    });
-
-}
-
 function emailConfirmation(user) {
 
     return new Promise(function (resolve, reject) {
@@ -143,6 +123,26 @@ function emailConfirmation(user) {
             resolve();
 
         });
+
+    });
+
+}
+
+function addQueueMessage(blob) {
+
+    return new Promise(function (resolve, reject) {
+
+        if (blob) {
+
+            storageUtility.createQueueMessage(blob).then(function() {
+                resolve();
+            });            
+
+        }
+        else {
+            console.log('No message to add to the queue');
+            resolve();
+        }
 
     });
 

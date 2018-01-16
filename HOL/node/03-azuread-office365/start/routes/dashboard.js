@@ -9,6 +9,7 @@ var client = redis.createClient(process.env.REDISCACHE_SSLPORT, process.env.REDI
 /* GET dashboard. */
 router.get('/', function (req, res) {
 
+    // Query the API for incident data
     getIncidents().then(function (incidents) {
 
         // Render view
