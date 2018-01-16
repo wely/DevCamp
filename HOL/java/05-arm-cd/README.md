@@ -155,7 +155,7 @@ We are now ready to deploy our ARM Template containing an App Service Plan, and 
 ---
 ## Exercise 2: Deploy ARM Template to Azure via the XPlat CLI<a name="ex2"></a>
 
-For deploying the ARM Template we will use the Azure Xplat CLI. Please Ensure you have [installed](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/#option-1-install-an-npm-package) the Azure XPlat CLI package from NPM before proceeding.
+For deploying the ARM Template we will use the Azure Xplat CLI. Please ensure you have [installed](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/#option-1-install-an-npm-package) the Azure XPlat CLI package from NPM before proceeding.
 
 1. From the command line, `cd` to the `start` directory containing our ARM Template:
 
