@@ -233,7 +233,7 @@ We will add both components to our application and enable the sending of telemet
     * templates/Dashboard/index.html
     * templates/Home/index.html
     * templates/Incident/new.html
-    * templates/Details/details.html
+    * templates/Profile/index.html
     
     with `<div th:include="appinsights"></div> ` right after the `<body>` tag in each file, for example:
     ```HTML
