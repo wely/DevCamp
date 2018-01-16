@@ -118,7 +118,7 @@ You can use any editor you like to create Azure resource group templates, but bo
 				"type": "config",
 				"apiVersion": "2015-08-01",
 				"dependsOn": [
-					"[concat('Microsoft.Web/sites/', '[YOUR WEB APP NAME')]"
+					"[concat('Microsoft.Web/sites/', '[YOUR WEB APP NAME]')]"
 				],
 
 				"tags": {
