@@ -371,7 +371,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/2017-06-27_11_57_00.png)
 
-    In the following window, type a description for the release, choose the environment that you created earlier, and click `Create`:
+    In the following window, type a description for the release and click `Create`:
 
     ![image](./media/2017-06-27_11_59_00.png)
 
