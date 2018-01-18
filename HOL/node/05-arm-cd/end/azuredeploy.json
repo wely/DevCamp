@@ -22,18 +22,18 @@
         },
         {
             "apiVersion": "2015-08-01",
-            "name": "nodejstest123456789",
+            "name": "nodejsapptest123456789",
             "type": "Microsoft.Web/sites",
             "location": "[resourceGroup().location]",
             "tags": {
                 "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/AppServicePlan')]": "Resource",
-                "displayName": "nodejstest123456789"
+                "displayName": "nodejsapptest123456789"
             },
             "dependsOn": [
                 "Microsoft.Web/serverfarms/AppServicePlan"
             ],
             "properties": {
-                "name": "nodejstest123456789",
+                "name": "nodejsapptest123456789",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', 'AppServicePlan')]"
             },
             "resources": [
@@ -42,7 +42,7 @@
                     "type": "config",
                     "apiVersion": "2015-08-01",
                     "dependsOn": [
-                        "[concat('Microsoft.Web/sites/', 'nodejstest123456789')]"
+                        "[concat('Microsoft.Web/sites/', 'nodejsapptest123456789')]"
                     ],
                     "tags": {
                         "displayName": "AppSettings"
@@ -60,7 +60,7 @@
                         "REDISCACHE_PRIMARY_KEY": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
                         "AAD_CLIENT_ID": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
                         "AAD_CLIENT_SECRET": "XXXXXXXXXXXXXXXXXXXXXXXX",
-                        "AAD_RETURN_URL": "[concat('https://', reference('nodejstest123456789', '2015-08-01').defaultHostName, '/auth/openid/return')]"
+                        "AAD_RETURN_URL": "[concat('https://', reference('nodejsapptest123456789', '2015-08-01').defaultHostName, '/auth/openid/return')]"
                     }
                 }
             ]
