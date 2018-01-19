@@ -52,7 +52,7 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/2017-06-29_13_50_00.png)
 
-1. Let's run the application in Debug Mode.  Click the Debug icon on the left toolbar, then select the green "start" triangle.  In the Environment drop-down select `Node.js`. VSCode then scaffolds out the files that it needs for debugging support in a `launch.json` file, stored at the root of your project folder in a `.vscode` folder. Click the green start triangle a second time to launch the application.
+1. Let's run the application in Debug Mode.  Click the Debug icon on the left toolbar, then select the green "start" triangle.  In the Environment drop-down select `Node.js` or if it is not present use `Add Configuration...` to create it. VSCode then scaffolds out the files that it needs for debugging support in a `launch.json` file, stored at the root of your project folder in a `.vscode` folder. Click the green start triangle a second time to launch the application.
 
     ![image](./media/2017-06-29_15_10_00.png) 
 
