@@ -107,15 +107,15 @@ We will add both components to our application and enable the sending of telemet
 1. Open the `Web.config` file and add the following entry, below the other keys. Replace the value with the AppInsights key you just removed from the `ApplicationInsights.config`:
 
     ```xml
-    <!--HOL 5-->
+    <!--HOL 6-->
     <add key="APPINSIGHTS_KEY" value="TELEMETRYKEY" />
     ```
 1. Open the `Utils` -> `Setting.cs` file and add the following key below the existing entries:
     
     ```csharp
-    //####    HOL 5   ######
+    //####    HOL 6   ######
     public static string APPINSIGHTS_KEY = ConfigurationManager.AppSettings["APPINSIGHTS_KEY"];
-    //####    HOL 5   ######
+    //####    HOL 6   ######
     ```
 
 1. Open the `Global.asax.cs` file and add the following to the `Application_Start()` method, below the existing code:
