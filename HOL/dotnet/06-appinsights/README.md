@@ -20,6 +20,8 @@ In this hands-on lab, you will learn how to:
 
 > &#x1F53A; **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the previous HOL's settings to the `Web.config` file and make all necessary changes to Azure. &#x1F53A;
 
+> &#x1F53A; If you did complete HOL 4 just continue with the same solution you have been using. &#x1F53A;
+
 ### Note
 > In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
 
