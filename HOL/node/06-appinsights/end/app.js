@@ -15,7 +15,7 @@ appInsightsHelper.setup(app);
 var env = process.env.NODE_ENV || 'development';
 app.locals.moment = require('moment');
 
-// Configure Express    
+// Configure Express 
 experssHelper.setup(app);
 
 // Configure Routes

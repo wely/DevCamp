@@ -38,7 +38,7 @@ An instance of Application Insights can be created in a variety of ways, includi
 
     ![image](./media/2017-06-23_11_54_00.png)
 
-1. In the overview blade that opens, click `Create` to open the creation settings blade. Enter a name, configure `Application Type` to `Java web application` and then click the `Create` button.
+1. In the overview blade that opens, click `Create` to open the creation settings blade. Enter a name, configure `Application Type` to `Node.js Application` and then click the `Create` button.
 
     Creation typically takes less than a minute.
 
