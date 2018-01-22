@@ -274,3 +274,10 @@ Temporary Items
 
 .vscode
 *.db
+*.pubxml
+HOL/node/02-modern-cloud-apps/end/package-lock.json
+HOL/node/03-azuread-office365/end/package-lock.json
+HOL/node/03-azuread-office365/start/package-lock.json
+HOL/node/04-devops-ci/start/package-lock.json
+HOL/node/06-appinsights/end/package-lock.json
+HOL/node/06-appinsights/start/package-lock.json

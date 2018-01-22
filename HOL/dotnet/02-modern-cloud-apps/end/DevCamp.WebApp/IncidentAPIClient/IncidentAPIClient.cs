@@ -231,7 +231,7 @@ namespace IncidentAPI
         private void Initialize()
         {
             this.IncidentOperations = new IncidentOperations(this);
-            this.BaseUri = new Uri("http://incidentapi32csxy6h3sbku.azurewebsites.net");
+            this.BaseUri = new Uri("http://incidentapiXXXXXXXXXXXX.azurewebsites.net");
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,

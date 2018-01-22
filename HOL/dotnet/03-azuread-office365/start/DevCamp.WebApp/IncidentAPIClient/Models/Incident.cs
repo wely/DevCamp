@@ -21,7 +21,7 @@ namespace IncidentAPI.Models
         /// <summary>
         /// Initializes a new instance of the Incident class.
         /// </summary>
-        public Incident(string id = default(string), string description = default(string), string street = default(string), string city = default(string), string state = default(string), string zipCode = default(string), string firstName = default(string), string lastName = default(string), string phoneNumber = default(string), string outageType = default(string), bool? isEmergency = default(bool?), bool? resolved = default(bool?), string imageUri = default(string), string thumbnailUri = default(string), DateTime? created = default(DateTime?), DateTime? lastModified = default(DateTime?), string sortKey = default(string))
+        public Incident(string id = default(string), string description = default(string), string street = default(string), string city = default(string), string state = default(string), string zipCode = default(string), string firstName = default(string), string lastName = default(string), string phoneNumber = default(string), string outageType = default(string), bool? isEmergency = default(bool?), bool? resolved = default(bool?), string imageUri = default(string), string thumbnailUri = default(string), DateTime? created = default(DateTime?), DateTime? lastModified = default(DateTime?), string sortKey = default(string), string tags = default(string))
         {
             Id = id;
             Description = description;
@@ -40,6 +40,7 @@ namespace IncidentAPI.Models
             Created = created;
             LastModified = lastModified;
             SortKey = sortKey;
+            Tags = tags;
         }
 
         /// <summary>
@@ -126,6 +127,11 @@ namespace IncidentAPI.Models
         /// </summary>
         [JsonProperty(PropertyName = "SortKey")]
         public string SortKey { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "Tags")]
+        public string Tags { get; set; }
 
     }
 }
