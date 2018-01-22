@@ -77,7 +77,7 @@ We will add both components to our application and enable the sending of telemet
  
     ![image](./media/2017-06-23_12_14_00.png)
 
-1. Register the Application and add the AppInsights SDK to the solution by right-clicking on the project and clicking `Add Application Insights Telemetry...`:
+1. Register the Application and add the AppInsights SDK to the solution by right-clicking on the project and clicking `Add Application Insights Telemetry...` or alternatively  by right-clicking on the project and clicking `Add` and then `Application Insights Telemetry...`:
 
     ![image](./media/2017-06-23_12_17_00.png)
 
