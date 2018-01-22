@@ -28,15 +28,15 @@
                 @Html.ActionLink("Outages", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
-                        <li>@Html.ActionLink("Report Outage", "Create", "Incident")</li>
-                    </ul>
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
+                    <li>@Html.ActionLink("Report Outage", "Create", "Incident")</li>
+                </ul>
 
-                    <!-- Top Navigation Right -->
-                    <ul class="nav navbar-nav navbar-right">
-                        @Html.Partial("_LoginPartial")
-                    </ul>
+                <!-- Top Navigation Right -->
+                <ul class="nav navbar-nav navbar-right">
+                    @Html.Partial("_LoginPartial")
+                </ul>
             </div>
         </div>
     </nav>
