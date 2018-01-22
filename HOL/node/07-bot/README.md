@@ -59,7 +59,15 @@ To develop a bot on your machine you need the `Bot Application` template for Vis
 
     ![image](./media/2017-07-12_13_48_00.png)
 
-You have now installed all the necessary components to start developing a bot on your machine.
+    You have now installed all the necessary components to start developing a bot on your machine. The bot will have to store its state data in an Azure database which we will create next.
+
+1. Navigate to the DevCamp resource group and click `Add`. Enter `Azure Cosmos DB` in the filter box, then on the details enter a unique name and select `SQL` as the API and click `Create` blade.
+
+    ![image](./media/2018-01-22_08_20_00.png)
+
+1. You will be redirected to the `Quick start` blade. Click `Keys`. Note the values for `URI` and `KEY 1`.
+
+    ![image](./media/2018-01-22_08_49_00.png)
 
 ---
 ## Exercise 2: Create an interactive dialog<a name="ex2"></a>
@@ -67,6 +75,8 @@ You have now installed all the necessary components to start developing a bot on
 We are using the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-formflow) template to create our bot. The template let's you define a number of properties, including ones based on enums, that the bot will automatically gather from the user. We can even modify the text the bot uses to prompt the user and simply add regular expressions that are verified by the bot.
 
 1. Open Visual Studio and load the `CityPowerBot.sln` from the `start` folder.
+
+1. Open `web.config` of the `CityPowerBot Project` and replace the values for `DocumentDbUrl` and `DocumentDbKey` with the values of your newly created database that you copied in the previous exercise. Make sure to include the port in the `DocumentDbUrl` value.
 
 1. Open the `CityPowerBot` -> `Dialogs` -> `BasicForm.cs` and add the following code which will create a property for each value of our incident report. It will also let the bot introduce itself and greet the user with its own name. The order of the interaction is determined by the `FormBuilder` in the `BuildForm` method.
 

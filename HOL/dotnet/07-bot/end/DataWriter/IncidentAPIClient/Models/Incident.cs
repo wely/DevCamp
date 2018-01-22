@@ -41,7 +41,7 @@ namespace IncidentAPI.Models
             LastModified = lastModified;
             SortKey = sortKey;
 			Tags = tags;
-        }
+		}
 
         /// <summary>
         /// </summary>
@@ -132,5 +132,5 @@ namespace IncidentAPI.Models
 		/// </summary>
 		[JsonProperty(PropertyName = "Tags")]
 		public string Tags { get; set; }
-    }
+	}
 }

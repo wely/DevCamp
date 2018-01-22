@@ -1,5 +1,4 @@
-﻿using Microsoft.Azure;
-using Microsoft.WindowsAzure.Storage;
+﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
@@ -9,6 +8,7 @@ using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Azure;
 
 namespace DataWriter
 {
