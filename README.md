@@ -206,7 +206,7 @@ In this lab, you will combine the web app with an IoT device based on an Arduino
 
 In this lab you will setup an Azure IoT Hub, Create Devices, develop a .NET Core simulated device application, and deploy it as an Azure Container Instance.
 
-### View instructions for [.NET](../HOL/dotnet/12-IoTHub-ACI)
+### View instructions for [.NET](HOL/dotnet/12-IoTHub-ACI)
 
 ----
 
