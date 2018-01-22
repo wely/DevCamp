@@ -57,11 +57,10 @@ namespace DevCamp.WebApp.ViewModels
 
         public string ThumbnailUri { get; set; }
 
-        public DateTime Created { get; set; }
-
 		public string Tags { get; set; }
 
-		public DateTime LastModified { get; set; }
+		public DateTime Created { get; set; }
+        public DateTime LastModified { get; set; }
         public bool Resolved { get; set; }
 
         public IncidentViewModel()
