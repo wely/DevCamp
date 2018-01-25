@@ -55,7 +55,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/2017-21-06_08_12_00.png)
 
-1. A key is generated for you. ***Save this key***, as you will not be able to retrieve it in the future. **Note:** If the generated key contains the characters **\** or **&** please generate a new key!
+1. A key is generated for you. ***Save this key***, as you will not be able to retrieve it in the future. **Note:** If the generated key contains the characters **\\** or **&** please generate a new key!
 
     ![image](./media/image-007.gif)
 
@@ -355,7 +355,7 @@ Next, we are going to create a page to display information about the logged in u
     }
     ```
 
-1. Create a new file named `templates/Profile/index.html`. Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
+1. Create a new file named `templates/Profile/index.html` (via `New` -> `Other...` -> `Web` -> `HTML File`). Rendered with a set of attributes, we will display a simple table where each row corresponds to an attribute.
 
     ```html
     <!DOCTYPE html>
@@ -579,7 +579,7 @@ In the previous exercise you read data from the Microsoft Graph API, but other e
 	private String mailUrl;
 	
     public void sendMail(String displayName,String emailAddr){
-    	LOG.info("sending email");
+    	LOG.info("sending email {} {}", displayName, emailAddr");
     	String email = emailContent1 + displayName+ emailContent2;
     	
     	JSONObject body = null;

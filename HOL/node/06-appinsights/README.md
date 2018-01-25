@@ -38,7 +38,7 @@ An instance of Application Insights can be created in a variety of ways, includi
 
     ![image](./media/2017-06-23_11_54_00.png)
 
-1. In the overview blade that opens, click `Create` to open the creation settings blade. Enter a name, configure `Application Type` to `Java web application` and then click the `Create` button.
+1. In the overview blade that opens, click `Create` to open the creation settings blade. Enter a name, configure `Application Type` to `Node.js Application` and then click the `Create` button.
 
     Creation typically takes less than a minute.
 
@@ -355,6 +355,11 @@ In this hands-on lab, you learned how to:
 * Create an Application Insights instance.
 * Use SDKs to add telemetry to your application.
 * View performance metrics in the Azure Portal.
+
+After completing this module, you can continue on to Module 7: Bots.
+
+### View Module 7 instructions for [NodeJS](../07-bot).
+
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

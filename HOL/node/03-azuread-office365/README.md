@@ -55,7 +55,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/2017-21-06_08_12_00.png)
 
-1. A key is generated for you. ***Save this key***, as you will not be able to retrieve it in the future. **Note:** If the generated key contains the characters **\** or **&** please generate a new key!
+1. A key is generated for you. ***Save this key***, as you will not be able to retrieve it in the future. **Note:** If the generated key contains the characters **\\** or **&** please generate a new key!
 
     ![image](./media/image-007.gif)
 
@@ -374,6 +374,8 @@ AzureAD can handle authentication for web applications. First we will create a n
         var form = new formidable.IncomingForm();
         form.parse(req, (err, fields, files) => {
     ```
+    
+    ![image](./media/2017-06-30_09_56_00.png)
 
     With these edits, each page will receive a `user` object if a user is authenticated, and when the **Report an Outage** page is loaded it will ensure the user is authenticated.  
 
@@ -409,8 +411,6 @@ AzureAD can handle authentication for web applications. First we will create a n
         
     };
     ```
-    
-    ![image](./media/2017-06-30_09_56_00.png)
 
 1. To install dependencies, run `npm install passport-azure-ad@2.0.3 --save` from the command line.
 

@@ -233,7 +233,7 @@ We will add both components to our application and enable the sending of telemet
     * templates/Dashboard/index.html
     * templates/Home/index.html
     * templates/Incident/new.html
-    * templates/Details/details.html
+    * templates/Profile/index.html
     
     with `<div th:include="appinsights"></div> ` right after the `<body>` tag in each file, for example:
     ```HTML
@@ -391,6 +391,10 @@ In this hands-on lab, you learned how to:
 * Create an Application Insights instance.
 * Use SDKs to add telemetry to your application.
 * View performance metrics in the Azure Portal.
+
+After completing this module, you can continue on to Module 7: Bots.
+
+### View Module 7 instructions for [Java](../07-bot).
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

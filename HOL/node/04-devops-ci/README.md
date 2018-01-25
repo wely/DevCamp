@@ -193,11 +193,11 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
     
     * Change the value `Path to Publish` to `$(Build.SourcesDirectory)/archive/$(Build.BuildId).zip` to target the zip file created in the previous Build Step.
     * Change the value `Artifact Name` to `drop`.
-    * Change the value `Artifact Type` to `Server`.
+    * Change the value `Artifact publish location` to `Visual Studio Team Services/TFS`.
 
     ![image](./media/2017-06-30_12_02_00.png)
 
-1. Click `Save & queue`. Our saved Build Definition is ready to be processed by the Hosted Build Agent..
+1. Click `Save & queue`. Our saved Build Definition is ready to be processed by the Hosted Build Agent.
 
     ![image](./media/2017-06-27_10_10_00.png)
     
@@ -207,7 +207,7 @@ With application code now uploaded to VSTS, we can begin to create builds via a 
 
 1. Once your build completes, click each step on the left navigation bar and inspect the output.
 
-    ![image](./media/2017-06-30_12_09_00.png)
+    ![image](./media/2017-06-27_10_15_00.png)
 
 1. Once your build completes, click each step on the left navigation bar and inspect the output. For `Echo Node Version` we can see the agent's version in the right `Logs` pane.
 
@@ -280,21 +280,17 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 
     ![image](./media/2017-06-22_11_31_00.png)
 
-1. Select `Empty` and click `Next`.
+1. Select `Empty` and click `Apply`.
 
     ![image](./media/2017-06-27_11_23_00.png)
 
-    Next, check the box next to `Continuous deployment` to make sure a new release will be executed whenever a build completes. Click `Create` to complete the process.
+1. Click `Add artifact`, select the build definition you created as the `Source (Build definition)` and click `Add`. Now the artifacts the build definition created will be available in the new release definition.
 
     ![image](./media/2017-06-27_11_24_00.png)
 
-1. In the release definition screen, click the pencil and rename the release definition to **Cloud Test Release** and change the environment name to **Test Environment**.
+1. Switch to `Tasks` and click the `+` button.
 
-    ![image](./media/2017-06-27_11_31_00.png)
-
-    Next, click on `Add tasks`.
-
-    In the task catalog, find `Azure App Service Deploy` and click `Add`, and then `Close`.
+    In the task catalog, find `Azure App Service Deploy` and click `Add`.
 
     ![image](./media/2017-06-27_11_33_00.png)
 
@@ -303,78 +299,76 @@ In the ARM Template that was originally deployed, a web app was created as a dev
 1. If the drop-down next to `Azure subscription` offers you your subscription, select it, authorize it and continue to select your `nodejsapp...` Azure Web app resource from the `App Service name` drop-down.
  
 1. If the drop-down next to `Azure subscription` does not offer you your subscription or the drop-down next to `App Service name` does not offer you your Azure Web app resource (give it a moment after selecting the subscription), click on `Manage` to open a new browser tab holding configuration options.
-    
+
     ![image](./media/2017-06-27_13_13_00.png)
     
     1. In the new tab, select `New Service Endpoint` and from the drop-down choose `Azure Resource Manager`.
+
+    ![image](./media/image-041.gif)
+
+    2. The modal window should automatically determine your subscription information. Provide a name such as **Azure**, select `OK`, and a close the browser tab.
+
+    ![image](./media/image-042.gif)
+
+    3. If your subscription is not in the drop-down list, click the link at the bottom of the window, and the window format will change to allow you to enter connection information on your subscription:    
+
+    ![image](./media/image-043.gif)
+
+    4. If you have not created a service principal for the subscription, you will have to follow the 
+    [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so. This process will provide the information to enter in this dialog:
     
-        ![image](./media/image-038.gif)
+        1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vsts-rm-documentation/master/Azure/SPNCreation.ps1) in your browser.
+        1. Select all the content from the window and copy to the clipboard.
+        1. Open a PowerShell ISE window.
+        1. In the text window, paste the PowerShell script from the clipboard.
+
+    ![image](./media/image-044.gif)
+
+    5. Click the green arrow to run the PowerShell script.
+
+    ![image](./media/image-045.gif)
+
+    6. The PowerShell script will ask for your `subscription name` and a `password`. This password is for the service principal only, not the password for your subscription. So you can use whatever password you would like, just remember it.    
+
+    ![image](./media/image-046.gif)
+
+    7. You will then be asked for your Azure login credentials. Enter your Azure username and password. The script will print out several values that you will need to enter into the `Add Azure Resource Manager Service Endpoint` window. Copy and paste these values from the PowerShell window:
     
-    1. The modal window should automatically determine your subscription information. Provide a name such as **Azure**, select `OK`, and skip the remaining instructions for this step.
+        * Subscription ID
+        * Subscription Name
+        * Service Principal Client ID
+        * Service Principal Key
+        * Tenant ID
+        
+    Also, enter a user-friendly name to use when referring to this service endpoint connection.
 
-        ![image](./media/image-039.gif)
+    ![image](./media/image-047.gif)
 
-    1. However, if your subscription is not in the dropdown list, then VSTS could not automatically configure a Service Principal for your account and you will need to manually create the SP. A Service Principal is similar to a service account, in that it is a separate account within Azure Active Directory that is given permissions to activities in an Azure Subscription (such as the creation or deletion of Azure resources). 
+    Click `Verify connection`, and ensure that the window indicates that the connection was verified. Then Click `OK` and `Close`.
 
-    1. To begin manually creating a Service Principal, click the `here` link at the bottom of the "Add Azure Resource Manager Service Endpoint" modal window.   
+    ![image](./media/image-048.gif)
 
-        ![image](./media/image-043a.gif)
-
-    1. The window format will change to allow you to enter connection information on your subscription. 
-
-        ![image](./media/image-054.gif)
-
-    1. For `Connection Name`, enter a value of **Azure**.
-
-    1. The **Subscription ID** is the GUID for your Azure Subscription. This can be found by opening the [Subscriptions Blade](https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade) from the Azure Portal, and selecting your subscription. The GUID will be in the Subscription Details blade. Next to the ID is the value for `Subscription Name`. Copy these values back in the Modal Dialog in VSTS.
-
-        ![image](./media/image-052.gif)
-
-    1. To create a Service Principal, open a terminal window that has the [AzureCLI installed](https://docs.microsoft.com/en-us/azure/xplat-cli-install), and execute `azure ad sp create -n DevCampSP -p Devc@mp2016!`. The returned **Service Principal Name** maps to **Service Principal Client ID** in VSTS.  The password used (`Devc@mp2016!`) maps to the **Service Principal Key** in VSTS. Also take note of the returned **Object ID** value for the next step.
-
-    1. Next, we need to grant the new SP "Contributor" permissions for our Azure subscription. Execute the following command, substituting the content between `<>` for the Object ID returned from the SP creation command, and the Subscription ID returned from the Azure Portal Blade.
-    
-        ```shell
-        azure role assignment create -o Contributor --objectId <Object ID returned in previous step> -c /subscriptions/<Subscription ID GUID retrieved earlier from portal>
-        ```
-
-    1. An example command looks like: 
-
-        ```shell
-        azure role assignment create -o Contributor --objectId ae5350b5-2346-4509-8184-d83f296d3cac -c /subscriptions/9f4d814b-7085-44ae-0f99-bfh8sf5a3f35
-        ```
-
-    1. The **Tenant ID** in VSTS means the GUID of your Azure Active Directory tenant. To find the value, open the [Properties Blade](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Properties) in the Azure Portal's AAD Blade.
-
-    1. To visualize where each Service Endpoint value is found, please see:
-    
-        ![image](./media/image-053.gif)
-    
-    1. Once each value is filled out, click `Verify Connection` to ensure the values work, then click `OK` to finish creating the Service Endpoint connection to Azure.
-
-        ![image](./media/image-048a.gif)
-
-    > This Service Endpoint pattern is used to connect to a variety of services beyond Azure such as Jenkins, Chef, and Docker.
+    > This pattern is used to connect to a variety of services beyond Azure such as Jenkins, Chef, and Docker.
 
 1. Back on the VSTS Build window, in the Build Step we started earlier, click the `Refresh` icon. The **Azure** connection that we setup should now appear.  Select it. 
 
-    ![image](./media/2017-06-30_13_34_00.png)
+    ![image](./media/2017-06-27_13_31_00.png)
 
-    Next, for **App Service Name** click the `Refresh` icon, choose the name of the NodeJS Web App. It may take a moment to populate.
+    Next, for **App Service Name** click the `Refresh` icon, choose the name of the NodeJS Azure Web App. It may take a moment to populate.
 
-    ![image](./media/2017-06-30_13_36_00.png)
+    ![image](./media/2017-06-27_11_42_00.png)
 
-1. `Save` the Build Definition, supplying a comment if you'd like. Next, click `Release` and `Create Release`:
+1. `Save` the Build Definition, accepting the default folder and supplying a comment if you'd like. Next, click `Release` and `Create Release`:
 
-    ![image](./media/2017-06-30_13_37_00.png)
+    ![image](./media/2017-06-27_11_57_00.png)
 
-    In the following window, type a description for the release, choose the build that you created earlier, and click `Create`:
+    In the following window, type a description for the release and click `Create`:
 
     ![image](./media/2017-06-27_11_59_00.png)
 
     You should see a message that your release has been created. Click on the link for `Release-1`.
 
-    ![image](./media/2017-06-30_13_39_00.png)
+    ![image](./media/2017-06-27_12_06_00.png)
     
     You will see the status for the release:
 
@@ -382,7 +376,7 @@ In the ARM Template that was originally deployed, a web app was created as a dev
     
     When the release is complete, browse to the deployment website. You should see the same application you tested in the modern-apps lab:
 
-    ![image](./media/image-043.gif)
+    ![image](./media/2018-01-18_13_42_00.jpg)
 
     If you make changes to the application and `git push` back to the VSTS server, this will automatically trigger a build and deployment. Try to make a small change to the application and verify that the application is re-deployed to the test environment.
 

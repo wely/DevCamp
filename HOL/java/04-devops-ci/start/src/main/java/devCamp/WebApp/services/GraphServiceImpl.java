@@ -61,7 +61,7 @@ public class GraphServiceImpl implements GraphService{
     private String mailUrl;
 
     public void sendMail(String displayName,String emailAddr){
-    	LOG.info("sending email {} {}",displayName,emailAddr);
+    	LOG.info("sending email");
     	String email = emailContent1 + displayName+ emailContent2;
     	
     	JSONObject body = null;
@@ -89,10 +89,9 @@ public class GraphServiceImpl implements GraphService{
             HttpEntity<String> entity = new HttpEntity<String>(jsons,headers);
             
         	String result = restTemplate.postForObject(mailUrl, entity, String.class);   	
-        	} catch (JSONException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}   
-    }    
-            
+    	} catch (JSONException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}   
+    }            
 }

@@ -20,6 +20,8 @@ In this hands-on lab, you will learn how to:
 
 > &#x1F53A; **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the previous HOL's settings to the `Web.config` file and make all necessary changes to Azure. &#x1F53A;
 
+> &#x1F53A; If you did complete HOL 4 just continue with the same solution you have been using. &#x1F53A;
+
 ### Note
 > In the hands-on-labs you will be using Visual Studio Solutions. Please do not update the NuGet packages to the latest available, as we have not tested the labs with every potential combination of packages. 
 
@@ -75,7 +77,7 @@ We will add both components to our application and enable the sending of telemet
  
     ![image](./media/2017-06-23_12_14_00.png)
 
-1. Register the Application and add the AppInsights SDK to the solution by right-clicking on the project and clicking `Add Application Insights Telemetry...`:
+1. Register the Application and add the AppInsights SDK to the solution by right-clicking on the project and clicking `Add Application Insights Telemetry...` or alternatively  by right-clicking on the project and clicking `Add` and then `Application Insights Telemetry...`:
 
     ![image](./media/2017-06-23_12_17_00.png)
 
@@ -107,15 +109,15 @@ We will add both components to our application and enable the sending of telemet
 1. Open the `Web.config` file and add the following entry, below the other keys. Replace the value with the AppInsights key you just removed from the `ApplicationInsights.config`:
 
     ```xml
-    <!--HOL 5-->
+    <!--HOL 6-->
     <add key="APPINSIGHTS_KEY" value="TELEMETRYKEY" />
     ```
 1. Open the `Utils` -> `Setting.cs` file and add the following key below the existing entries:
     
     ```csharp
-    //####    HOL 5   ######
+    //####    HOL 6   ######
     public static string APPINSIGHTS_KEY = ConfigurationManager.AppSettings["APPINSIGHTS_KEY"];
-    //####    HOL 5   ######
+    //####    HOL 6   ######
     ```
 
 1. Open the `Global.asax.cs` file and add the following to the `Application_Start()` method, below the existing code:

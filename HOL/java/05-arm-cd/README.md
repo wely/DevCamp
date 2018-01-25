@@ -118,7 +118,7 @@ You can use any editor you like to create Azure resource group templates, but bo
 				"type": "config",
 				"apiVersion": "2015-08-01",
 				"dependsOn": [
-					"[concat('Microsoft.Web/sites/', '[YOUR WEB APP NAME')]"
+					"[concat('Microsoft.Web/sites/', '[YOUR WEB APP NAME]')]"
 				],
 
 				"tags": {
@@ -155,7 +155,7 @@ We are now ready to deploy our ARM Template containing an App Service Plan, and 
 ---
 ## Exercise 2: Deploy ARM Template to Azure via the XPlat CLI<a name="ex2"></a>
 
-For deploying the ARM Template we will use the Azure Xplat CLI. Please Ensure you have [installed](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/#option-1-install-an-npm-package) the Azure XPlat CLI package from NPM before proceeding.
+For deploying the ARM Template we will use the Azure Xplat CLI. Please ensure you have [installed](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-install/#option-1-install-an-npm-package) the Azure XPlat CLI package from NPM before proceeding.
 
 1. From the command line, `cd` to the `start` directory containing our ARM Template:
 
@@ -211,7 +211,7 @@ The resource group is now holding our "Test" environment web app and has been ad
 
     ![image](./media/2017-11-03_12_49_00.png)
 
-    For the `Pre-deployment approvers` option, select `Specific users` and enter your account name. Then click the `Save` button:
+    For the `Pre-deployment approvers` option, enter your account name. Then click the `Save` button:
 
     ![image](./media/2017-06-27_16_50_00.png)
 

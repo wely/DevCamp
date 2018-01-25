@@ -27,7 +27,8 @@ namespace DevCamp.API.Tests.Utils
                 ZipCode = "55555",
                 ImageUri = new Uri($"http://uri/{unique}/{Name}"),
                 ThumbnailUri = new Uri($"http://thumbnailuri/{unique}/{Name}"),
-                Resolved = false
+                Resolved = false,
+				Tags = "Street, Cars"
             };
 
             return newIncident;

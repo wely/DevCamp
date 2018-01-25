@@ -41,6 +41,8 @@ In this hands-on lab, you will learn how to:
     <add key="GRAPH_API_URL" value="https://graph.microsoft.com" />
 ```
 
+> &#x1F53A; If you did complete HOL 3 just continue with the same solution you have been using. &#x1F53A;
+
 ## Exercises
 
 This hands-on-lab has the following exercises:
@@ -85,7 +87,7 @@ AzureAD can handle authentication for web applications. First we will create a n
 
     ![image](./media/2017-21-06_08_12_00.png)
 
-1. A key is generated for you. ***Save this key***, as you will not be able to retrieve it in the future. This key will become the `AAD_APP_SECRET` environment variable. **Note:** If the generated key contains the characters **\** or **&** please generate a new key!
+1. A key is generated for you. ***Save this key***, as you will not be able to retrieve it in the future. This key will become the `AAD_APP_SECRET` environment variable. **Note:** If the generated key contains the characters **\\** or **&** please generate a new key!
 
     ![image](./media/image-007.gif)
 
@@ -123,7 +125,7 @@ AzureAD can handle authentication for web applications. First we will create a n
     Sometimes the `Save` button will not work in Internet Explorer and the saving animation will not disapear. In this case please retry using the Chrome browser.
 
 1. In Visual Studio, open `Web.config` and update the settings with the values from the app registration screen:
-    For the `AAD_APP_REDIRECTURI` value, enter the local IIS web site URL including the port and an ending `\ `. Example: `http://localhost:8443/`, 
+    For the `AAD_APP_REDIRECTURI` value, enter the local IIS web site URL including the port and an ending `/`. Example: `http://localhost:8443/`, 
     ```xml
    <!--HOL 3-->
     <add key="AAD_APP_ID" value="APPID" />

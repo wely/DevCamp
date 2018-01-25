@@ -19,9 +19,8 @@ namespace DevCamp.WebApp
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //Add the telemetry key from config
-            TelemetryConfiguration.Active.InstrumentationKey = Settings.APPINSIGHTS_KEY;
-
-        }
+			//Add the telemetry key from config
+			TelemetryConfiguration.Active.InstrumentationKey = Settings.APPINSIGHTS_KEY;
+		}
     }
 }

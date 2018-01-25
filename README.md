@@ -183,7 +183,7 @@ We will provide a quick lap around the various APIs, features and services avail
 
 In this lab you will setup an Azure machine learning workspace and train a model to help predict the estimated time to resolution of logged incidents.
 
-### View instructions for [.NET](../HOL/dotnet/14-ML)
+### View instructions for [.NET](HOL/dotnet/14-ML)
 
 ----
 
@@ -206,7 +206,7 @@ In this lab, you will combine the web app with an IoT device based on an Arduino
 
 In this lab you will setup an Azure IoT Hub, Create Devices, develop a .NET Core simulated device application, and deploy it as an Azure Container Instance.
 
-### View instructions for [.NET](../HOL/dotnet/12-IoTHub-ACI)
+### View instructions for [.NET](HOL/dotnet/12-IoTHub-ACI)
 
 ----
 

@@ -52,7 +52,7 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/2017-06-29_13_50_00.png)
 
-1. Let's run the application in Debug Mode.  Click the Debug icon on the left toolbar, then select the green "start" triangle.  In the Environment drop-down select `Node.js`. VSCode then scaffolds out the files that it needs for debugging support in a `launch.json` file, stored at the root of your project folder in a `.vscode` folder. Click the green start triangle a second time to launch the application.
+1. Let's run the application in Debug Mode.  Click the Debug icon on the left toolbar, then select the green "start" triangle.  In the Environment drop-down select `Node.js` or if it is not present use `Add Configuration...` to create it. VSCode then scaffolds out the files that it needs for debugging support in a `launch.json` file, stored at the root of your project folder in a `.vscode` folder. Click the green start triangle a second time to launch the application.
 
     ![image](./media/2017-06-29_15_10_00.png) 
 
@@ -245,7 +245,7 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
 1. Then select `Show access keys` and note the **Primary Key**.
 
-1. Return to the `Overview` blade and expand **Ports** by selecting `Non-SSL port (6379) disabled` and note the Non-SSL port 6379 and SSL Port of 6380 on the port details blade.
+1. Return to the `Overview` blade and expand **Ports** by selecting `Non-SSL port (6379) disabled` and note the Non-SSL port 6379 and SSL Port of 6380 on the port details blade. **Important:** Below `Allow access only via SSL` click on `No` to enable non-SSL connections.
 
     ![image](./media/2017-06-16_13_29_00.png)
     
@@ -253,13 +253,12 @@ We deployed an instance of Azure Redis Cache in the ARM Template, but need to ad
 
     ```json
     "env": {
-            "NODE_ENV": "development",
-            "INCIDENT_API_URL": "http://incidentapimm6lqhplzxjp2.azurewebsites.net",
-            "REDISCACHE_HOSTNAME": "incidentcachemm6lqhplzxjp2.redis.cache.windows.net",
-            "REDISCACHE_PRIMARY_KEY": "bZcVx7XSRICO+RlKrh2eqvIAFMv0y3i5LQbk91LILSY=",
-            "REDISCACHE_PORT": "6379",
-            "REDISCACHE_SSLPORT": "6380"
-        },
+		"INCIDENT_API_URL": "http://incidentapimm6lqhplzxjp2.azurewebsites.net",
+		"REDISCACHE_HOSTNAME": "incidentcachemm6lqhplzxjp2.redis.cache.windows.net",
+		"REDISCACHE_PRIMARY_KEY": "bZcVx7XSRICO+RlKrh2eqvIAFMv0y3i5LQbk91LILSY=",
+		"REDISCACHE_PORT": "6379",
+		"REDISCACHE_SSLPORT": "6380"
+    }
     ``` 
 
     We will use these variables to configure a Redis client. 
@@ -370,8 +369,7 @@ When a new incident is reported, the user can attach a photo. In this exercise w
     Your environment variable should look similar to this now:
 
     ```json
-     "env": {
-        "NODE_ENV": "development",
+    "env": {
         "INCIDENT_API_URL": "http://incidentapi[YOUR_UNIQUE_ID].azurewebsites.net",
         "REDISCACHE_HOSTNAME": "incidentcache[YOUR_UNIQUE_ID].redis.cache.windows.net",
         "REDISCACHE_PRIMARY_KEY": "[YOUR_UNIQUE_KEY]",

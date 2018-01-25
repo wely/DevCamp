@@ -3,11 +3,14 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res) {
+    
+    // Render view
     res.render('index', {
         title: 'City Power & Light',
         home: true,
-        user: req.user      
+        user: req.user
     });
+
 });
 
-module.exports = router;    
+module.exports = router;
