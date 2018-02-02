@@ -612,11 +612,11 @@ You have now manually created a bot and uploaded it to Azure. An alternative way
 
 You have seen some of the basics of bot development. In the exercises you have used the [FormFlow](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-formflow) template to create the interaction between the user and the bot. Many other templates are available. You can also use [Azure Bot Service](https://docs.microsoft.com/en-us/bot-framework/azure/azure-bot-service-overview) to quickly create a bot from within the Azure portal.
 
-1. To create a bot using the Azure Bot Service navigate to the DevCamp resource group and click `Add`. Enter `Bot` in the filter box, then select the `Bot Service (Preview)` and click `Create` on the details blade.
+1. To create a bot using the Azure Bot Service navigate to the DevCamp resource group and click `Add`. Enter `Bot` in the filter box, then select the `Web App Bot` and click `Create` on the details blade.
 
     ![image](./media/2017-07-11_16_31_00.png)
 
-1. Enter a name for your bot, select the `Form (C#)` bot template and click `Create` again.
+1. Enter a name for your bot, select the `Form (C#)` bot template, the `F0` pricing tier and click `Create` again.
 
     ![image](./media/2017-07-11_16_37_00.png)
 
@@ -640,9 +640,9 @@ You have seen some of the basics of bot development. In the exercises you have u
 
 1. The publish wizard will open. Select `Connection` to enter the required password.
 
-    ![image](./media/2017-07-12_09_42_00.png)
-
 1. You can find the password that Azure created for you in the file `yourbotname.PublishSettings` in the folder `PostDeployScripts` in the value `userPWD`. Copy it to the publish wizard and click `Validate Connection`. When the validation succeeded you can click `Publish` to transmit your changes to Azure.
+
+    ![image](./media/2017-07-12_09_42_00.png)
 
 1. Revisit the `Test in Web Chat` page and talk to your bot again. Your code changes should now be visible.
 
