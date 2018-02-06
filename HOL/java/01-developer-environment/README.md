@@ -358,7 +358,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
 
     ![image](./media/2017-06-19_09_29_00.png)
     
-    You might have to manually download a previous version of the Scala IDE for your Eclipse version from [http://scala-ide.org/download/prev-stable.html](http://scala-ide.org/download/prev-stable.html). Install it by extracting the zip file. Again select `Help` -> `Install New Software...`, and click the `Add..` button next to the `Work with` dropdown. Select the extracted folder. Now the Scala IDE components will be listed. Select them all and continue the installation.
+    If you encounter an error you might have to manually download a previous version of the Scala IDE **matching your Eclipse version** from [http://scala-ide.org/download/prev-stable.html](http://scala-ide.org/download/prev-stable.html) (select the highest available version for matching your Eclipse version). Install it by extracting the zip file. Again select `Help` -> `Install New Software...`, and click the `Add..` button next to the `Work with` dropdown. Select the extracted folder. Now the Scala IDE components will be listed. Select them all and continue the installation.
 
     Also, install the `Spring Tool Suite (STS) for Eclipse` package by using the menu item `Help` -> `Eclipse Marketplace...`, type `spring` in the `Find:` box and choose `Go`. In the list of packages, scroll down to `Spring Tools (aka Spring IDE and Spring Tool Suite) X.X.X.RELEASE` and click `Install`.
 

@@ -31,6 +31,8 @@ This hands-on-lab has the following exercises:
 ---
 ## Exercise 1: Create VSTS online account<a name="ex1"></a>
 
+> &#x1F53A; You can skip this exercise if you already created an account in HOL 1. &#x1F53A;
+
 1. In your browser, navigate to [https://www.visualstudio.com/](https://www.visualstudio.com/)
 
     ![image](./media/2017-06-21_13_14_00.png)
