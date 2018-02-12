@@ -279,7 +279,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
     node -v
     ```
     
-    If the Node version on your machine does not equal v6, we will need to update the version. In a browser window open a browser window and go to [nodejs.org](http://nodejs.org), and click on the `Other Downloads` link under the current version LTS, you may have to scroll down and click on `Previous Releases` to find v6 or download it directly from [here](https://nodejs.org/dist/latest-v6.x/node-v6.12.0-x86.msi). If a newer version is already installed you have to uninstall it first:
+    If the Node version on your machine does not equal v6, we will need to update the version. In a browser window open a browser window and go to [nodejs.org](http://nodejs.org), and click on the `Other Downloads` link under the current version LTS, you may have to scroll down and click on `Previous Releases` to find v6 or download it directly from [here](https://nodejs.org/dist/latest-v6.x/node-v6.12.3-x86.msi). If a newer version is already installed you have to uninstall it first:
 
     ![image](./media/2017-06-19_08_48_00.png)
 
