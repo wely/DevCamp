@@ -172,7 +172,7 @@ The resource group is now holding our "Test" environment web app and has been ad
 
     ![image](./media/2017-06-23_10_34_00.png)
 
-    For the `Pre-deployment approvers` option, enter your account name. Then click the `Save` button:
+    For the `Pre-deployment approvers` option, enter your account name and make sure `User requesting a release or deployment should not approve` is **not** checked. Then click the `Save` button:
 
     ![image](./media/2017-11-01_13_01_00.png)
 
