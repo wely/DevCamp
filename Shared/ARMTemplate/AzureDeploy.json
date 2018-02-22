@@ -554,7 +554,7 @@
                 "password": "[variables('dtlVmPassword')]",
                 "isAuthenticationWithSshKey": false,
                 "disallowPublicIpAddress": false,
-                "allowClaim": false,
+                "allowClaim": false/*,
                 "artifacts": [
                     {
                         "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-chrome')]"
@@ -591,7 +591,7 @@
                             }
                         ]
                     }
-                ]
+                ]*/
             }
         }
     ],
