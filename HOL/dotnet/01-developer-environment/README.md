@@ -398,7 +398,7 @@ You have now activated a Visual Studio Team Services Trial Subscription, which w
  
     ![image](./media/2017-06-15_16_46_00.png)
 
-1. The gear at the top of the screen lets you set the color palate for the portal, whether or not there will be animations, and other options for the portal itself:
+1. The gear at the top of the screen lets you set the color palette for the portal, whether or not there will be animations, and other options for the portal itself:
 
     ![image](./media/2016-10-19_15-22-14b.gif)
 

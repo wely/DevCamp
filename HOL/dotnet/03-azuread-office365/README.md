@@ -41,7 +41,7 @@ In this hands-on lab, you will learn how to:
     <add key="GRAPH_API_URL" value="https://graph.microsoft.com" />
 ```
 
-> &#x1F53A; If you did complete HOL 3 just continue with the same solution you have been using. &#x1F53A;
+> &#x1F53A; If you did complete HOL 2 just continue with the same solution you have been using. &#x1F53A;
 
 ## Exercises
 

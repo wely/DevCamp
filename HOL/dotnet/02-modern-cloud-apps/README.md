@@ -676,7 +676,7 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     ```
 1. Now that we configured the storage config values, we can add the logic to upload the images. 
 
-1. In Visual Studio, add the `WindowsAzure.Storage` NuGet package to the solution.
+1. In Visual Studio, add the `WindowsAzure.Storage` NuGet package version 8.1.4 to the solution.
 
     > To do so, repeat the steps from the beginning of exercise 2 that were used to add the `Microsoft.Extensions.Caching.Redis` NuGet package. 
 
