@@ -133,6 +133,12 @@ We are now ready to deploy our ARM Template containing an App Service Plan, and 
 
 1. Click `Save`.
 
+    > If Visual Studio fails to deploy the template and you receive the error message `Add-AzureRmAccount: The term 'Add-AzureRmAccount' is not recognized...` open an interactive Powershell (`View` -> `Other Windows` -> `Powershell Interactive Window`).
+    > Enter `Connect-AzureRmAccount`.
+    > It should prompt you to log in. Follow the instructions.
+    > Redeploy the template.
+
+
 1. Open the [Azure Portal](https://portal.azure.com) and verify that the app has been created in your resource group with the defined resources.
 
     ![image](./media/2017-06-23_09_04_00.png)
