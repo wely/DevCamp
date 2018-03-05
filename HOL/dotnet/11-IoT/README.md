@@ -23,8 +23,8 @@ In this hands-on lab, you will learn how to:
 ## Exercises
 This hands-on-lab has the following exercises:
 * [Exercise 1: Set up your environment](#ex1)
-* [Exercise 2: Create output that will be consumed by the device](#ex2)
-* [Exercise 3: Program the device](#ex3)
+* [Exercise 2: Program the device](#ex2)
+* [Exercise 3: Remote control using the Telegram Bot API](#ex3)
 
 ---
 ## Exercise 1: Set up your environment<a name="ex1"></a>
@@ -87,94 +87,7 @@ The Windows installer sets up everything you need to use the Arduino IDE. If you
 You have now installed all the necessary components to start programming an Arduino device on your machine.
 
 ---
-
-## Exercise 2: Create output that will be consumed by the device<a name="ex2"></a>
-
-The device will regularly call an URL to fetch the current incident count. We will add a page to our existing web application as an easy way to provide this data.
-
-1. Create a new controller. Right-click on `Controllers` and select `Add` -> `Controller...`.
-
-    ![image](./media/2017-09-11_10_14_00.png)
-
-1. In the `Add Scaffold` dialog select `MVC 5 Controller - Empty` and click `Add`.
-
-    ![image](./media/2017-09-11_10_19_00.png)
-
-1. Name the new controller `IoTController` and click `Add`.
-
-    ![image](./media/2017-09-11_10_20_00.png)
-
-1. The controller will just emulate the behavior of the `DashboardController`. Add the following code to the newly created file:
-
-    ```csharp
-    using DevCamp.WebApp.Utils;
-    using IncidentAPI;
-    using IncidentAPI.Models;
-    using Newtonsoft.Json;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
-    
-    namespace DevCamp.WebApp.Controllers
-    {
-        public class IoTController : Controller
-        {
-            // GET: IoT
-            public async Task<ActionResult> Index()
-            {
-                List<Incident> incidents;
-                using (var client = IncidentApiHelper.GetIncidentAPIClient())
-                {
-                    int CACHE_EXPIRATION_SECONDS = 60;
-    
-                    //Check Cache
-                    string cachedData = string.Empty;
-                    if (RedisCacheHelper.UseCachedDataSet(Settings.REDISCCACHE_KEY_INCIDENTDATA, out cachedData))
-                    {
-                        incidents = JsonConvert.DeserializeObject<List<Incident>>(cachedData);
-                    }
-                    else
-                    {
-                        //If stale refresh
-                        var results = await client.IncidentOperations.GetAllIncidentsAsync();
-                        Newtonsoft.Json.Linq.JArray ja = (Newtonsoft.Json.Linq.JArray)results;
-                        incidents = ja.ToObject<List<Incident>>();
-                        RedisCacheHelper.AddtoCache(Settings.REDISCCACHE_KEY_INCIDENTDATA, incidents, CACHE_EXPIRATION_SECONDS);
-                    }
-                }
-                return View(incidents);
-            }
-        }
-    }
-
-1. Now create a view for the new controller by right-clicking on `Views` -> `IoT` and selecting `Add` -> `View`.
-
-    ![image](./media/2017-09-11_10_22_00.png)
-
-1. In the `Add View` dialog set the name to `Index` and make sure that no layout page will be created before you click `Add`.
-
-    ![image](./media/2017-09-11_10_31_00.png)
-
-1. Since we don't need a whole HTML page remove the content of the `Views` -> `IoT` -> `Index.cshtml` file and replace it with:
-
-    ```csharp
-    @{
-        Layout = null;
-    }
-    IncidentCount=@Model.Count
-
-1. Start the debugger and add `/IoT` to the URL to test the new view. It will contain just the number of incidents.
-
-    ![image](./media/2017-09-11_10_54_00.png)
-
-1. Publish the changes to your Azure web app and make sure the `/IoT` URL is reachable (see [HOL 5](../05-arm-cd)).
- 
-    ![image](./media/2017-09-26_15_54_00.png)
-
-You have now created the data feed for your device.
-
----
-## Exercise 3: Program the device<a name="ex3"></a>
+## Exercise 2: Program the device<a name="ex2"></a>
 
 The Arduino-compatible device can handle data exchange with web applications. At first we will connect the device to a Wi-Fi, and then we will add an HTTP request to retrieve the amount of incidents from the web application.
 
@@ -182,7 +95,7 @@ It is important to develop projects in small chunks and to understand and test e
 
 Do not declare too many variables. The device has very limited memory, that’s why it is better to use function calls, for example, instead of saving the returned values for later use.
 
-1. Make sure the device is connected to your USB port and open Arduino and create a new sketch.
+1. Make sure the device is connected to your USB port. Open Arduino and create a new sketch.
 
 1. Replace the sketch content with the following code which will connect the device to a specified wireless network. Replace the SSID and the password with proper values.
 
@@ -193,8 +106,8 @@ Do not declare too many variables. The device has very limited memory, that’s 
     #define LED_PIN   D4 // build-in LED in NodeMCU
 
     // Wifi
-    char* ssid = "***";
-    char* password = "***";
+    const char ssid[] = "***";
+    const char password[] = "***";
 
     void setup() {
       Serial.begin(115200); // sets up serial data transmission for status information
@@ -215,7 +128,7 @@ Do not declare too many variables. The device has very limited memory, that’s 
       }
     }
 
-    void connectWifi(char* ssid, char* password) {
+    void connectWifi(const char ssid[], const char password[]) {
       Serial.print("Connecting to Wi-Fi");
       
       WiFi.hostname("NodeMCU@DevCamp");
@@ -252,131 +165,138 @@ Do not declare too many variables. The device has very limited memory, that’s 
 
     ![image](./media/arduino-connect%20to%20wifi-upload%20completed.png)
 
-1. Now we will add an HTTP request to our Arduino code. The new code will also add the method `getIncidentCount()` which will fetch the current incident count from the `IoT` view created in `Exercise 2`. Use the code below to replace or adapt the existing code.
+1. Now we will add an HTTP request to our Arduino code. The new code will also add the method `sendRequest()` which, with the URL in requestIncidentsCountUri, will fetch the current incident count. Use the code below to replace or adapt the existing code.
 
     ```cpp
     #include <ESP8266WiFi.h>
 
-    // Pins
-    #define LED_PIN   D4 // build-in LED in NodeMCU
+	// Pins
+	#define LED_PIN   D4 // build-in LED in NodeMCU
 
-    // Wifi
-    char* ssid = "***";
-    char* password = "***";
+	// Wifi
+	const char ssid[] = "***";
+	const char password[] = "***";
 
-    // Request
-    const int port = 80;
-    const char* server = "<app_name>.azurewebsites.net"; // address for request, without http://
-    const char* searchString = "IncidentCount="; // search for this property
+	WiFiClient client;
 
-    void setup() {
-      Serial.begin(115200); // sets up serial data transmission for status information
-      
-      pinMode(LED_PIN, OUTPUT);
-      
-      connectWifi(ssid, password);
-    }
+	// Request
+	const int port = 80;
+	const char serverUrl[] = "incidentapi[YOUR_RG_NAME].azurewebsites.net"; // address for request, without http://
 
-    void loop() {
-      if (WiFi.status() != WL_CONNECTED) {
-        digitalWrite(LED_PIN, HIGH);
-      } else {
-        // retrieve the amount of incidents
-        int incidentCount = getIncidentCount();
-        
-        // keep the led blinking for the amount of incidents
-        for (int i = 0; i < incidentCount; i++) {
-          delay(250);
-          digitalWrite(LED_PIN, LOW);
-          delay(50);
-          digitalWrite(LED_PIN, HIGH);
-        }
-        // pause between requests
-        delay(60000);
-      }
-    }
+	const char requestIncidentsCountUri[] = "/incidents/count";
 
-    void connectWifi(char* ssid, char* password) {
-      Serial.print("Connecting to Wi-Fi");
-      
-      WiFi.hostname("NodeMCU@DevCamp");
-      WiFi.begin(ssid, password);
-      
-      uint8_t i = 0;
-      while (WiFi.status() != WL_CONNECTED && i++ < 50) {
-        Serial.print(".");
-        delay(500);
-      }
-      Serial.println(".");
-      
-      if (WiFi.status() != WL_CONNECTED) {
-        Serial.println("Could not connect to Wi-Fi");
-      } else {
-        Serial.print("Connected to Wi-Fi: ");
-        Serial.println(ssid);
-        Serial.print("IP address: ");
-        Serial.println(WiFi.localIP());
-      }
-    }
+	void setup() {
+	  Serial.begin(115200); // sets up serial data transmission for status information
+	  
+	  pinMode(LED_PIN, OUTPUT);
+	  
+	  connectWifi(ssid, password);
+	}
 
-    int getIncidentCount() {
-      WiFiClient client;
-      if (client.connect(server, port)) {
-        Serial.print("Connected to ");
-        Serial.println(server);
-        Serial.println("Sending request");
-        
-        client.print("GET /iot");
-        client.println(" HTTP/1.1");
-        client.print("Host: ");
-        client.print(server);
-        client.print(":");
-        client.println(port);
-        client.println("Connection: close");
-        client.println("Accept: text/html");
-        client.println();
+	void loop() {
+	  if (WiFi.status() != WL_CONNECTED) {
+		  digitalWrite(LED_PIN, HIGH);
+	  } else {
+		// retrieve the amount of incidents
+		String result = sendRequest(requestIncidentsCountUri);
+		if (result != "") {
+		  Serial.print("Result is: ");
+		  Serial.println(result);
+		  
+			int incidentsCount = result.toInt();
+			
+			// keep the led blinking for the amount of incidents
+			for (int i = 0; i < incidentsCount; i++) {
+			  delay(250);
+			  digitalWrite(LED_PIN, LOW);
+			  delay(50);
+			  digitalWrite(LED_PIN, HIGH);
+			}
+		} else {
+		  Serial.println("Result is empty");
+		}
+		// pause between requests
+		delay(60000);
+	  }
+	}
 
-        // waiting for server response...
-        while (client.connected()) {
-          // ...until the response is available
-          if (client.available()) {
-		    // looking for search string in response data
-            if (client.findUntil(searchString, "\0")) {
-              int result = client.readStringUntil('\n').toInt();
-              
-              Serial.print(searchString);
-              Serial.print("=");
-              Serial.println(result);
-              
-              return result;
-            }
-          }
-        }
-        client.stop();
+	void connectWifi(const char ssid[], const char password[]) {
+	  Serial.print("Connecting to Wi-Fi");
+	  
+	  WiFi.hostname("NodeMCU@DevCamp");
+	  WiFi.begin(ssid, password);
+	  
+	  uint8_t i = 0;
+	  while (WiFi.status() != WL_CONNECTED && i++ < 50) {
+		Serial.print(".");
+		delay(500);
+	  }
+	  Serial.println(".");
+	  
+	  if (WiFi.status() != WL_CONNECTED) {
+		  Serial.println("Could not connect to Wi-Fi");
+	  } else {
+		Serial.print("Connected to Wi-Fi: ");
+		Serial.println(ssid);
+		Serial.print("IP address: ");
+		Serial.println(WiFi.localIP());
+	  }
+	}
 
-        Serial.println();
-        Serial.println("Connection closed");
-      } else {
-        Serial.print("Connection to ");
-        Serial.print(server);
-        Serial.println(" failed");
-      }
-      return 0;
-    }
+	String sendRequest(String uri) {
+	  if (client.connect(serverUrl, port)) {
+		Serial.print("Connected to ");
+		Serial.println(serverUrl);
+		Serial.println("Sending request");
+		
+		client.print("GET ");
+		client.print(uri);
+		client.println(" HTTP/1.1");
+		client.print("Host: ");
+		client.print(serverUrl);
+		client.print(":");
+		client.println(port);
+		client.println("Connection: close");
+		client.println("Accept: text/html");
+		client.println();
 
-1. Replace the SSID and the password with proper values. Also replace the address in the following line with the address to your Azure web app:
+		// waiting for server response...
+		while (client.connected()) {
+		  // ...until the response is available
+		  while (client.available()) {
+			// looking for the first empty line that indicates the end of the header
+			if (client.findUntil("\r\n\r\n", "\0")) {
+			  // return the payload
+			  return client.readStringUntil('\n');
+			}
+		  }
+		}
+		client.stop();
+
+		Serial.println();
+		Serial.println("Connection closed");
+		return "";
+	  } else {
+		Serial.print("Connection to ");
+		Serial.print(serverUrl);
+		Serial.println(" failed");
+	  }
+	  return "";
+	}
+
+1. Replace the SSID and the password with proper values. Also replace the address in the following line with the address to your incident API app (without http://):
 
     ```cpp
-    const char* server = "<app_name>.azurewebsites.net"; // address for request, without http://
+    const char* server = "incidentapi[YOUR_RG_NAME].azurewebsites.net"; // address for request, without http://
 
-1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device. The device will retrieve the amount of incidents from the `IoT` view and flash the LED for this amount. Again you can use the COM monitor to follow the progress of the code execution on the device.
+1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device. The device will retrieve the amount of incidents from the incident API and flash the LED for this amount. Again you can use the COM monitor to follow the progress of the code execution on the device.
 
     ![image](./media/arduino-get%20incident%20count-upload%20completed.png)
 
 This example shows how to work with data requests, how to link the device to a data source on the internet and display the state using a simple LED.
 
 ---
-## Exercise 4: Remote control using the Telegram Bot API<a name="ex4"></a>
+## Exercise 3: Remote control using the Telegram Bot API<a name="ex3"></a>
 
 In this lesson you will create a Telegram bot.
 
