@@ -92,7 +92,6 @@ You have now installed all the necessary components to start programming an Ardu
 The Arduino-compatible device can handle data exchange with web applications. At first we will connect the device to a Wi-Fi, and then we will add an HTTP request to retrieve the amount of incidents from the web application.
 
 >> It is important to develop projects in small chunks and to understand and test each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
-
 >> Do not declare too many variables. The device has very limited memory, that’s why it is better to use function calls, for example, instead of saving the returned values for later use.
 
 1. Make sure the device is connected to your USB port. Open Arduino and create a new sketch.
@@ -200,18 +199,18 @@ The Arduino-compatible device can handle data exchange with web applications. At
 		// retrieve the amount of incidents
 		String result = sendRequest(requestIncidentsCountUri);
 		if (result != "") {
-		  Serial.print("Result is: ");
+		  Serial.print("The incident count is: ");
 		  Serial.println(result);
 		  
-			int incidentsCount = result.toInt();
+		  int incidentsCount = result.toInt();
 			
-			// keep the led blinking for the amount of incidents
-			for (int i = 0; i < incidentsCount; i++) {
-			  delay(250);
-			  digitalWrite(LED_PIN, LOW);
-			  delay(50);
-			  digitalWrite(LED_PIN, HIGH);
-			}
+		  // keep the led blinking for the amount of incidents
+		  for (int i = 0; i < incidentsCount; i++) {
+			delay(250);
+			digitalWrite(LED_PIN, LOW);
+			delay(50);
+			digitalWrite(LED_PIN, HIGH);
+		  }
 		} else {
 		  Serial.println("Result is empty");
 		}
@@ -275,7 +274,6 @@ The Arduino-compatible device can handle data exchange with web applications. At
 
 		Serial.println();
 		Serial.println("Connection closed");
-		return "";
 	  } else {
 		Serial.print("Connection to ");
 		Serial.print(serverUrl);
@@ -329,166 +327,310 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 1. Create a new sketch in Arduino IDE and add the paste the following code:
     
     ```cpp
-    #include <ESP8266WiFi.h>
-    #include <WiFiClientSecure.h>
-    #include <UniversalTelegramBot.h>
+	#include <ESP8266WiFi.h>
+	#include <UniversalTelegramBot.h>
+	#include <WiFiClientSecure.h>
 
-    #define LED_PIN   D4 // build-in LED in NodeMCU
+	// Pins
+	#define LED_PIN D4 // build-in LED in NodeMCU
 
-    char* ssid = "***";
-    char* password = "***";
+	// Wifi
+	const char ssid[] = "***";
+	const char password[] = "***";
 
-    // Request
-    const int port = 80;
-    const char* server = "<app_name>.azurewebsites.net"; // address for request, without http://
-    const char* searchString = "IncidentCount="; // search for this property
+	WiFiClient client;
 
-    // Telegram bot
-    #define BOT_TOKEN   "123456789:AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqR" // bot token to access the HTTP API
+	// Request
+	const int port = 80;
+	const char serverUrl[] = "incidentapi[YOUR_RG_NAME].azurewebsites.net"; // address for request, without http://
 
-    WiFiClientSecure clientSecure;
-    UniversalTelegramBot bot(BOT_TOKEN, clientSecure);
+	const char requestIncidentsUri[] = "/incidents";
+	const char requestIncidentUri[] = "/incidents/"; // /incidents/{IncidentId}
+	const char requestIncidentsCountUri[] = "/incidents/count";
+	const char requestIncidentsCountIncludeResolved[] = "/incidents/count/includeresolved";
 
-    int interval = 1000; // mean time between scan messages
-    long lastMillis; // last time messages' scan has been done
+	// Telegram bot
+	#define BOT_TOKEN "123456789:AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqR" // bot token to access the HTTP API
 
-    void setup() {
-      Serial.begin(115200); // sets up serial data transmission for status information
-      
-      pinMode(LED_PIN, OUTPUT);
-      
-      connectWifi(ssid, password);
-    }
+	WiFiClientSecure clientSecure;
+	UniversalTelegramBot bot(BOT_TOKEN, clientSecure);
 
-    void loop() {
-      if (WiFi.status() != WL_CONNECTED) {
-        digitalWrite(LED_PIN, HIGH);
-      } else {
-        if (millis() > lastMillis + interval) { // better approach to pause between each updates
-          int messageCount = bot.getUpdates(bot.last_message_received + 1);
-          while (messageCount) {
-            handleMessages(messageCount);
-            messageCount = bot.getUpdates(bot.last_message_received + 1);
-          }
-          lastMillis = millis();
-        }
-      }
-    }
+	int interval = 1000; // mean time between scan messages
+	long lastMillis; // last time messages' scan has been done
 
-    void connectWifi(char* ssid, char* password) {
-      Serial.print("Connecting to Wi-Fi");
-      
-      WiFi.hostname("NodeMCU@DevCamp");
-      WiFi.begin(ssid, password);
-      
-      uint8_t i = 0;
-      while (WiFi.status() != WL_CONNECTED && i++ < 50) {
-        Serial.print(".");
-        delay(500);
-      }
-      Serial.println(".");
-      
-      if (WiFi.status() != WL_CONNECTED) {
-        Serial.println("Could not connect to Wi-Fi");
-      } else {
-        Serial.print("Connected to Wi-Fi: ");
-        Serial.println(ssid);
-        Serial.print("IP address: ");
-        Serial.println(WiFi.localIP());
-      }
-    }
+	const int maxMessageLength = 1300;  // maximum length of a message defined in UniversalTelegramBot.h
 
-    int getIncidentCount() {
-      WiFiClient client;
-      if (client.connect(server, port)) {
-        Serial.print("Connected to ");
-        Serial.println(server);
-        Serial.println("Sending request");
-        
-        client.print("GET /iot");
-        client.println(" HTTP/1.1");
-        client.print("Host: ");
-        client.print(server);
-        client.print(":");
-        client.println(port);
-        client.println("Connection: close");
-        client.println("Accept: text/html");
-        client.println();
+	void setup() {
+	  Serial.begin(115200); // sets up serial data transmission for status information
+	  
+	  pinMode(LED_PIN, OUTPUT);
+	  
+	  connectWifi(ssid, password);
+	}
 
-        // waiting for server response...
-        while (client.connected()) {
-          // ...until the response is available
-          if (client.available()) {
-          // looking for search string in response data
-            if (client.findUntil(searchString, "\0")) {
-              int result = client.readStringUntil('\n').toInt();
-              
-              Serial.print(searchString);
-              Serial.print("=");
-              Serial.println(result);
-              
-              return result;
-            }
-          }
-        }
-        client.stop();
+	void loop() {
+	  if (WiFi.status() != WL_CONNECTED) {
+		digitalWrite(LED_PIN, HIGH);
+	  } else {
+		if (millis() > lastMillis + interval) { // better approach to pause between each updates
+		  int messageCount = bot.getUpdates(bot.last_message_received + 1);
+		  if (messageCount < 35) {
+			while (messageCount) {
+			  handleMessages(messageCount);
+			  messageCount = bot.getUpdates(bot.last_message_received + 1);
+			}
+		  }
+		  lastMillis = millis();
+		}
+	  }
+	}
 
-        Serial.println();
-        Serial.println("Connection closed");
-      } else {
-        Serial.print("Connection to ");
-        Serial.print(server);
-        Serial.println(" failed");
-      }
-      return 0;
-    }
+	void connectWifi(const char ssid[], const char password[]) {
+	  Serial.print("Connecting to Wi-Fi");
+	  
+	  WiFi.hostname("NodeMCU@DevCamp");
+	  WiFi.begin(ssid, password);
+	  
+	  uint8_t i = 0;
+	  while (WiFi.status() != WL_CONNECTED && i++ < 50) {
+		Serial.print(".");
+		delay(500);
+	  }
+	  Serial.println(".");
+	  
+	  if (WiFi.status() != WL_CONNECTED) {
+		Serial.println("Could not connect to Wi-Fi");
+	  } else {
+		Serial.print("Connected to Wi-Fi: ");
+		Serial.println(ssid);
+		Serial.print("IP address: ");
+		Serial.println(WiFi.localIP());
+	  }
+	}
 
-    void handleMessages(int messageCount) {
-      Serial.println("handleMessages(" + String(messageCount) + ")");
-      for (int i = 0; i < messageCount; i++) {
-        Serial.println("Chat ID: " + bot.messages[i].chat_id);
-        Serial.println("From ID: " + bot.messages[i].from_id);
-        Serial.println("From name: " + bot.messages[i].from_name);
-        Serial.println("Text: " + bot.messages[i].text);
+	String getIncidents() {
+	  String incidents;
+	  
+	  WiFiClient client;
+	  if (client.connect(serverUrl, port)) {
+		Serial.print("Connected to ");
+		Serial.println(serverUrl);
+		Serial.println("Sending request");
+		
+		client.print("GET ");
+		client.print(requestIncidentsUri);
+		client.println(" HTTP/1.1");
+		client.print("Host: ");
+		client.print(serverUrl);
+		client.print(":");
+		client.println(port);
+		client.println("Connection: close");
+		client.println("Accept: text/html");
+		client.println();
 
-        String fromName = bot.messages[i].from_name;
-        if (fromName == "") {
-          fromName = "Guest";
-        }
+		// waiting for server response...
+		while (client.connected()) {
+		  // ...until the response is available
+		  if (client.available()) {
+			while (client.findUntil("{", "\0")) {
+			  String result = client.readStringUntil('}');
 
-        if (bot.messages[i].text == "/start") {
-          bot.sendMessage(bot.messages[i].from_id,
-            "Welcome, " + fromName + "!\n\n"
-            "You can control me by sending these commands:\n\n"
-            "<strong>Incidents</strong>\n/getincidents - get amount of incidents", "HTML");
-        } else if (bot.messages[i].text == "/getincidents") {
-          // retrieve the amount of incidents
-          int incidentCount = getIncidentCount();
+			  String id = result.substring(result.indexOf("\"id\":\"") + 6, result.indexOf("\",\"Description\""));
+			  // removing the hyphens from the id so the command formatting in the Telegram client doesn't break
+			  id.replace("-", "");
+			  
+			  String description = result.substring(result.indexOf("\"Description\":\"") + 15, result.indexOf("\",\"Street\""));
+			  if (description == "") {
+				continue; // ignore incidents without description
+			  }          
+			  description.replace("<br />", "\n");
 
-          // send a message with the amount of incidents to all bot subscribers
-          bot.sendMessage(bot.messages[i].from_id,
-            "There are currently <strong>" + String(incidentCount) + " incidents</strong> available.", "HTML");
-          
-          // keep the led blinking for the amount of incidents
-          for (int i = 0; i < incidentCount; i++) {
-            delay(250);
-            digitalWrite(LED_PIN, LOW);
-            delay(50);
-            digitalWrite(LED_PIN, HIGH);
-          }
-        }
-      }
-    }
+			  String incident = 
+				description + "\n"
+				"/incident_" + id + "\n\n";
+
+			  if (incident.length() + incidents.length() > maxMessageLength) { // truncate message to avoid memory leak
+				return incidents;
+			  } else {
+				incidents += incident;
+			  }
+			}
+		  }
+		}
+		client.stop();
+
+		Serial.println();
+		Serial.println("Connection closed");
+	  } else {
+		Serial.print("Connection to ");
+		Serial.print(serverUrl);
+		Serial.println(" failed");
+	  }
+	  return incidents;
+	}
+
+	void handleMessages(int messageCount) {
+	  Serial.println("handleMessages(" + String(messageCount) + ")");
+	  for (int i = 0; i < messageCount; i++) {
+		if (bot.messages[i].chat_id != "") { // chat id may never be empty
+		  Serial.println("Chat ID: " + bot.messages[i].chat_id);
+		  Serial.println("From ID: " + bot.messages[i].from_id);
+		  Serial.println("From name: " + bot.messages[i].from_name);
+		  Serial.println("Text: " + bot.messages[i].text);
+	  
+		  String fromName = bot.messages[i].from_name;
+		  if (fromName == "") {
+			fromName = "Guest";
+		  }
+	  
+		  if (bot.messages[i].text == "/start") {
+			bot.sendMessage(bot.messages[i].from_id,
+			  "Welcome, " + fromName + "!\n\n"
+			  "You can control me by sending these commands:\n\n"
+			  "<strong>Manage Incidents</strong>\n"
+			  "/incidents - show all incidents\n"
+			  "/incident_{IncidentId} - show specific incident\n"
+			  "/incidents_count - get amount of incidents\n"
+			  "/incidents_count_includeresolved - get amount of incidents including resolved incidents",
+			  "HTML");
+		  } else if (bot.messages[i].text == "/incidents") {
+			bot.sendChatAction(bot.messages[i].chat_id, "typing");
+			
+			String incidents = getIncidents();
+		  
+			// send a message with the current incident to bot subscriber
+			bot.sendMessage(bot.messages[i].from_id, incidents);
+		  } else if (bot.messages[i].text.startsWith("/incident_")) {
+			bot.sendChatAction(bot.messages[i].chat_id, "typing");
+			
+			String incidentId = bot.messages[i].text.substring(10);
+			if (incidentId == "") {
+			  bot.sendMessage(bot.messages[i].from_id, "There was no ID specified. Please use /incidents and select one of the listed commands.");
+			} else {
+			  // adding hyphens to the id to restore the GUID format
+			  incidentId = 
+				incidentId.substring(0, 8) + "-" +
+				incidentId.substring(8, 12) + "-" +
+				incidentId.substring(12, 16) + "-" +
+				incidentId.substring(16, 20) + "-" +
+				incidentId.substring(20);
+			  
+			  String result = sendRequest(requestIncidentUri + incidentId);
+			
+			  // parsing the JSON string
+			  String id = result.substring(result.indexOf("\"id\":\"") + 6, result.indexOf("\",\"Description\""));
+			  if (id != "" && id == incidentId) { // if an incident with the specified ID exists the IDs will match
+				String description = result.substring(result.indexOf("\"Description\":\"") + 15, result.indexOf("\",\"Street\""));
+				String street = result.substring(result.indexOf("\"Street\":\"") + 10, result.indexOf("\",\"City\""));
+				String city = result.substring(result.indexOf("\"City\":\"") + 8, result.indexOf("\",\"State\""));
+				String state = result.substring(result.indexOf("\"State\":\"") + 9, result.indexOf("\",\"ZipCode\""));
+				String zipCode = result.substring(result.indexOf("\"ZipCode\":\"") + 11, result.indexOf("\",\"FirstName\""));
+				String firstName = result.substring(result.indexOf("\"FirstName\":\"") + 13, result.indexOf("\",\"LastName\""));
+				String lastName = result.substring(result.indexOf("\"LastName\":\"") + 12, result.indexOf("\",\"PhoneNumber\""));
+				String phoneNumber = result.substring(result.indexOf("\"PhoneNumber\":\"") + 15, result.indexOf("\",\"OutageType\""));
+			
+				bot.sendMessage(bot.messages[i].from_id,
+				  "<strong>" + description + "</strong>\n"
+				  "Street: " + street + "\n"
+				  "City: " + city + "\n"
+				  "State: " + state + "\n"
+				  "ZIP code: " + zipCode + "\n"
+				  "Name: " + firstName + " " + lastName + "\n"
+				  "Phone: " + phoneNumber,
+				  "HTML");
+			  } else {
+				bot.sendMessage(bot.messages[i].from_id, "There is no incident with the specified ID.");
+			  }
+			}
+		  } else if (bot.messages[i].text == "/incidents_count") {
+			bot.sendChatAction(bot.messages[i].chat_id, "typing");
+
+			// retrieve the amount of incidents
+			String result = sendRequest(requestIncidentsCountUri);
+			int incidentsCount = result.toInt();
+		  
+			// send a message with the amount of incidents to all bot subscribers
+			bot.sendMessage(bot.messages[i].from_id,
+			  "There are currently <strong>" + String(incidentsCount) + " incidents</strong> available.", "HTML");
+		  
+			// keep the led blinking for the amount of incidents
+			for (int i = 0; i < incidentsCount; i++) {
+			  delay(250);
+			  digitalWrite(LED_PIN, LOW);
+			  delay(50);
+			  digitalWrite(LED_PIN, HIGH);
+			}
+		  } else if (bot.messages[i].text == "/incidents_count_includeresolved") {
+			bot.sendChatAction(bot.messages[i].chat_id, "typing");
+
+			String result = sendRequest(requestIncidentsCountIncludeResolved);
+			int incidentsCountIncludeResolved = result.toInt();
+			
+			// send a message with the amount of incidents
+			bot.sendMessage(bot.messages[i].from_id,
+			  "There are currently <strong>" + String(incidentsCountIncludeResolved) + " incidents including resolved incidents</strong> available.", "HTML");
+		  
+			// keep the led blinking for the amount of incidents
+			for (int i = 0; i < incidentsCountIncludeResolved; i++) {
+			  delay(250);
+			  digitalWrite(LED_PIN, LOW);
+			  delay(50);
+			  digitalWrite(LED_PIN, HIGH);
+			}
+		  }
+		}
+	  }
+	}
+
+	String sendRequest(String uri) {
+	  if (client.connect(serverUrl, port)) {
+		Serial.print("Connected to ");
+		Serial.println(serverUrl);
+		Serial.println("Sending request");
+		
+		client.print("GET ");
+		client.print(uri);
+		client.println(" HTTP/1.1");
+		client.print("Host: ");
+		client.print(serverUrl);
+		client.print(":");
+		client.println(port);
+		client.println("Connection: close");
+		client.println("Accept: text/html");
+		client.println();
+
+		// waiting for server response...
+		while (client.connected()) {
+		  // ...until the response is available
+		  while (client.available()) {
+		  // looking for search string in response data
+			if (client.findUntil("\r\n\r\n", "\0")) {
+			  return client.readStringUntil('\n');
+			}
+		  }
+		}
+		client.stop();
+
+		Serial.println();
+		Serial.println("Connection closed");
+	  } else {
+		Serial.print("Connection to ");
+		Serial.print(serverUrl);
+		Serial.println(" failed");
+	  }
+	  return "";
+	}
+
 
 1. Don't forget to replace the SSID and the password with proper values and the address in the following line with the address to your Azure web app:
 
     ```cpp
-    const char* server = "<app_name>.azurewebsites.net"; // address for request, without http://
+    const char server[] = "incidentapi[YOUR_RG_NAME].azurewebsites.net"; // address for request, without http://
 
 1. Replace `123456789:AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqR` with the token you received in step 6.
 
     ```cpp
-    #define BOT_TOKEN   "123456789:AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqR" // bot token to access the HTTP API
+    #define BOT_TOKEN "123456789:AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqR" // bot token to access the HTTP API
 
 1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device.
 
