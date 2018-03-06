@@ -91,9 +91,9 @@ You have now installed all the necessary components to start programming an Ardu
 
 The Arduino-compatible device can handle data exchange with web applications. At first we will connect the device to a Wi-Fi, and then we will add an HTTP request to retrieve the amount of incidents from the web application.
 
-It is important to develop projects in small chunks and to understand and test each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
+>> It is important to develop projects in small chunks and to understand and test each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
 
-Do not declare too many variables. The device has very limited memory, that’s why it is better to use function calls, for example, instead of saving the returned values for later use.
+>> Do not declare too many variables. The device has very limited memory, that’s why it is better to use function calls, for example, instead of saving the returned values for later use.
 
 1. Make sure the device is connected to your USB port. Open Arduino and create a new sketch.
 
@@ -287,7 +287,7 @@ Do not declare too many variables. The device has very limited memory, that’s 
 1. Replace the SSID and the password with proper values. Also replace the address in the following line with the address to your incident API app (without http://):
 
     ```cpp
-    const char* server = "incidentapi[YOUR_RG_NAME].azurewebsites.net"; // address for request, without http://
+    const char server[] = "incidentapi[YOUR_RG_NAME].azurewebsites.net"; // address for request, without http://
 
 1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device. The device will retrieve the amount of incidents from the incident API and flash the LED for this amount. Again you can use the COM monitor to follow the progress of the code execution on the device.
 
