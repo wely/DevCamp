@@ -7,7 +7,7 @@ City Power & Light is a sample application that allows citizens to report "incid
 * WebAPI is shared across the front ends and exposes the backend CosmosDB.
 * CosmosDB is used as the data persistence layer.
 
-In this lab, you will combine the web app with an IoT device based on an Arduino-compatible board that will query the app for the number of incidents and display the refreshed number every minute.
+In this lab, you will combine the web app with an IoT device based on an Arduino-compatible board that will query the app for the number of incidents and display the refreshed number every minute. You will also learn how to remotely control the device by using the Telegram Bot API.
 
 ## Objectives
 In this hands-on lab, you will learn how to:
@@ -303,27 +303,27 @@ In this lesson you will create a Telegram bot which runs on our Arduino device. 
 
 1. Install the Telegram app for your device. Got to https://telegram.org/apps and select the preferred download link. To create an account, you need a valid phone number.
 
-1. Create a new telegram bot using BotFather. Start a conversation with the bot by following the link https://t.me/botfather or search for BotFather in your contacts.
+1. Create a new telegram bot using **BotFather**. Start a conversation with the bot by following the link https://t.me/botfather or search for **BotFather** in your contacts.
 
     ![image](./media/telegram-botfather-start.png)
 
-1. After selecting the start button at the bottom of the chat, you will see the list of available commands for BotFather.
+1. After selecting the start button at the bottom of the chat, you will see the list of available commands for **BotFather**.
 
     ![image](./media/telegram-botfather-commands.png)
 
 1. To create a new bot enter or select `/newbot` from the list of commands.
 
-1. Next BotFather asks you to choose the name for your bot. Thereafter you need to enter the username, which has to end with the term ‘bot’ and will be used later to communicate with the bot (e.g. [@DevCampBot](https://t.me/devcampbot)).
+1. Next **BotFather** asks you to choose the name for your bot. Thereafter you need to enter the username, which has to end with the term ‘bot’ and will be used later to communicate with the bot (e.g. [@DevCampBot](https://t.me/devcampbot)).
 
 1. If everything worked well, the bot was successfully created and you will receive a message with a token which is used to access the HTTP API. The token is needed in the following steps.
 
-In the following steps you will add the Universal Telegram Bot Library to your Arduino project and extend it with the ability to read the amount of incidents using Telegram. The Arduino device can send the incident count to your Telegram app using the Telegram bot and you will create a command which will trigger the bot to send you a message with the desired information.
+In the following steps you will add the **Universal Telegram Bot Library** to your Arduino project and extend it with the ability to read the amount of incidents using Telegram. The Arduino device can send the incident count to your Telegram app using the Telegram bot and you will create a command which will trigger the bot to send you a message with the desired information.
 
 7. Go to https://github.com/witnessmenow/Universal-Arduino-Telegram-Bot and download the library as zip file.
 
     ![image](./media/github-universal%20arduino%20telegram%20bot-clone%20or%20download-download%20zip.png)
 
-1. Add the Universal Telegram Bot Library to your Arduino project. Select `Sketch` -> `Include Library` -> `Add .ZIP Library...` in your Arduino IDE and select the zip file you downloaded before.
+1. Add the **Universal Telegram Bot Library** to your Arduino project. Select `Sketch` -> `Include Library` -> `Add .ZIP Library...` in your Arduino IDE and select the ZIP file you downloaded before.
 
     ![image](./media/arduino-sketch-include%20library-add%20zip%20library.png)
 
@@ -624,7 +624,7 @@ In the following steps you will add the Universal Telegram Bot Library to your A
     }
     ```
 
-1. Don't forget to replace the SSID and the password with proper values and the address in the following line with the address to your Azure web app:
+1. Don't forget to replace the SSID and the password with proper values and the address in the following line with the address to your incident web app:
 
     ```cpp
     const char server[] = "incidentapi[YOUR_RG_NAME].azurewebsites.net"; // address for request, without http://
@@ -652,7 +652,7 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 
     ![image](./media/telegram-devcampbot-incidents_count.png)
 
-1. Now we will add the list of commands to the Telegram bot. Open BotFather and enter `/start` to view all available commands. Enter or select `/setcommands` from the **Edit Bots** section in the menu.
+1. Now we will add the list of commands to the Telegram bot. Open **BotFather** and enter `/start` to view all available commands. Enter or select `/setcommands` from the **Edit Bots** section in the menu.
 
     ![image](./media/telegram-botfather-setcommands.png)
 
@@ -691,4 +691,4 @@ In this hands-on lab, you learned how to:
 * [Telegram Bot API](https://core.telegram.org/bots/api)
 
 ---
-Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
+Copyright 2018 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
