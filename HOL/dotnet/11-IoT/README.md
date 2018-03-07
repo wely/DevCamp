@@ -650,7 +650,7 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 
     ![image](./media/telegram-devcampbot-getincidents.png)
 
-1. Now we will add our list of commands to the Telegram bot. Open BotFather and enter `/start` to view all available commands. Enter or select `/setcommands` from the *Edit Bots* section in the menu.
+1. Now we will add the list of commands to the Telegram bot. Open BotFather and enter `/start` to view all available commands. Enter or select `/setcommands` from the **Edit Bots** section in the menu.
 
     ![image](./media/telegram-botfather-setcommands.png)
 
@@ -665,6 +665,12 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 	incidents_count - get the amount of incidents
 	incidents_count_includeresolved - get the amount of incidents including resolved incidents
 	```
+	
+	![image](./media/telegram-botfather-setcommands-sendlist.png)
+	
+1. Delete the old conversation with your previously created bot and start a new one. When you enter `/` the list of commands will appear.
+
+	![image](./media/telegram-devcampbot-commandlist.png)
 
 ---
 ## Summary
