@@ -151,7 +151,9 @@ The Arduino-compatible device can handle data exchange with web applications. At
       }
     }
 
-1. When it comes to debugging code in Arduino, `Serial.print()` and `Serial.println()` are the best way to go. `Serial.begin(115200);` sets up serial data transmission with 115200 baud. Select `Tools` -> `Serial Monitor` to open the `Serial Monitor` dialog for the selected COM port.
+1. `Serial.begin(115200);` sets up serial data transmission with 115200 baud. Select `Tools` -> `Serial Monitor` to open the `Serial Monitor` dialog for the selected COM port.
+
+> When it comes to debugging code in Arduino, `Serial.print()` and `Serial.println()` are the best way to go.
 
     ![image](./media/arduino-tools-serial%20monitor.png)
 
@@ -161,7 +163,7 @@ The Arduino-compatible device can handle data exchange with web applications. At
 
 1. Let's test the wireless network connection. Hit `CTRL+U` to compile and upload the sketch to your device. Confirm if you are asked to save the code in a local file. You can follow the upload process in the status window at the bottom. If the upload fails and you have multiple COM ports try selecting the other ports.
 
-1. If the connection to your network was established, the LED on your device will start blinking. It will completely turn off if the connection has failed. The COM monitor window will also display the connection attempts made by the device.
+1. If the connection to your network was established, the LED on your device will start blinking. It will completely turn off if the connection has failed. The serial monitor window will also display the connection attempts made by the device.
 
     ![image](./media/arduino-connect%20to%20wifi-upload%20completed.png)
 
@@ -288,7 +290,7 @@ The Arduino-compatible device can handle data exchange with web applications. At
     ```cpp
     const char server[] = "incidentapi[YOUR_RG_NAME].azurewebsites.net"; // address for request, without http://
 
-1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device. The device will retrieve the amount of incidents from the incident API and flash the LED for this amount. Again you can use the COM monitor to follow the progress of the code execution on the device.
+1. Select `Sketch` -> `Upload` or use `CTRL+U` to compile and upload the sketch to your device. The device will retrieve the amount of incidents from the incident API and flash the LED for this amount. Again you can use the serial monitor to follow the progress of the code execution on the device.
 
     ![image](./media/arduino-get%20incident%20count-upload%20completed.png)
 
