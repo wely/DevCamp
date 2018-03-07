@@ -153,7 +153,7 @@ The Arduino-compatible device can handle data exchange with web applications. At
 
 1. `Serial.begin(115200);` sets up serial data transmission with 115200 baud. Select `Tools` -> `Serial Monitor` to open the `Serial Monitor` dialog for the selected COM port.
 
-> When it comes to debugging code in Arduino, `Serial.print()` and `Serial.println()` are the best way to go.
+    > When it comes to debugging code in Arduino, `Serial.print()` and `Serial.println()` are the best way to go.
 
     ![image](./media/arduino-tools-serial%20monitor.png)
 
