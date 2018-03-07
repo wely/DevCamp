@@ -16,7 +16,7 @@ In this hands-on lab, you will learn how to:
 
 ## Prerequisites
 * The source for the starter app is located in the [start](start) folder.
-* The finished project is located in the [end](end) folder.
+* The finished projects are located in the [end](end) folder.
 * Deployed the starter ARM Template [HOL 1](../01-developer-environment).
 * Completion of the [HOL 5](../05-arm-cd).
 
