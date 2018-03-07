@@ -89,7 +89,7 @@ You have now installed all the necessary components to start programming an Ardu
 ---
 ## Exercise 2: Program the device<a name="ex2"></a>
 
-The Arduino-compatible device can handle data exchange with web applications. At first we will connect the device to a Wi-Fi, and then we will add an HTTP request to retrieve the amount of incidents from the web application.
+The Arduino-compatible device can handle data exchange with web applications. At first we will connect the device to a Wi-Fi, and then we will add an HTTP request using the incident REST API to retrieve the amount of incidents from the incident web application.
 
 > It is important to develop projects in small chunks and to understand and test each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
 >
