@@ -13,9 +13,9 @@ In this lab, you will combine the web app with an IoT device based on an Arduino
 In this hands-on lab, you will learn how to:
 * Set up the developing environment to support the programming of Arduino chips.
 * Create your own IoT software from scratch.
+* Enable remote control of your device using the Telegram Bot API.
 
 ## Prerequisites
-* The source for the starter app is located in the [start](start) folder.
 * The finished projects are located in the [end](end) folder.
 * Deployed the starter ARM Template [HOL 1](../01-developer-environment).
 * Completion of the [HOL 5](../05-arm-cd).
