@@ -296,7 +296,7 @@ This example shows how to work with data requests, how to link the device to a d
 ---
 ## Exercise 3: Remote control using the Telegram Bot API<a name="ex3"></a>
 
-In this lesson you will create a Telegram bot.
+In this lesson you will create a Telegram bot which runs on our Arduino device. The bot allows you to control the device remotely.
 
 1. Install the Telegram app for your device. Got to https://telegram.org/apps and select the preferred download link. To create an account, you need a valid phone number.
 
@@ -345,7 +345,7 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 	const char serverUrl[] = "incidentapi[YOUR_RG_NAME].azurewebsites.net"; // address for request, without http://
 
 	const char requestIncidentsUri[] = "/incidents";
-	const char requestIncidentUri[] = "/incidents/"; // /incidents/{IncidentId}
+	const char requestIncidentUri[] = "/incidents/"; // usage: /incidents/{IncidentId}
 	const char requestIncidentsCountUri[] = "/incidents/count";
 	const char requestIncidentsCountIncludeResolved[] = "/incidents/count/includeresolved";
 
@@ -355,16 +355,15 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 	WiFiClientSecure clientSecure;
 	UniversalTelegramBot bot(BOT_TOKEN, clientSecure);
 
-	int interval = 1000; // mean time between scan messages
-	long lastMillis; // last time messages' scan has been done
-
 	const int maxMessageLength = 1300;  // maximum length of a message defined in UniversalTelegramBot.h
+	const int interval = 1000; // mean time between scan messages
+	long lastMillis; // last time messages' scan has been done
 
 	void setup() {
 	  Serial.begin(115200); // sets up serial data transmission for status information
-	  
+
 	  pinMode(LED_PIN, OUTPUT);
-	  
+
 	  connectWifi(ssid, password);
 	}
 
@@ -387,17 +386,17 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 
 	void connectWifi(const char ssid[], const char password[]) {
 	  Serial.print("Connecting to Wi-Fi");
-	  
+
 	  WiFi.hostname("NodeMCU@DevCamp");
 	  WiFi.begin(ssid, password);
-	  
+
 	  uint8_t i = 0;
 	  while (WiFi.status() != WL_CONNECTED && i++ < 50) {
 		Serial.print(".");
 		delay(500);
 	  }
 	  Serial.println(".");
-	  
+
 	  if (WiFi.status() != WL_CONNECTED) {
 		Serial.println("Could not connect to Wi-Fi");
 	  } else {
@@ -410,13 +409,13 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 
 	String getIncidents() {
 	  String incidents;
-	  
+
 	  WiFiClient client;
 	  if (client.connect(serverUrl, port)) {
 		Serial.print("Connected to ");
 		Serial.println(serverUrl);
 		Serial.println("Sending request");
-		
+
 		client.print("GET ");
 		client.print(requestIncidentsUri);
 		client.println(" HTTP/1.1");
@@ -438,18 +437,18 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 			  String id = result.substring(result.indexOf("\"id\":\"") + 6, result.indexOf("\",\"Description\""));
 			  // removing the hyphens from the id so the command formatting in the Telegram client doesn't break
 			  id.replace("-", "");
-			  
+
 			  String description = result.substring(result.indexOf("\"Description\":\"") + 15, result.indexOf("\",\"Street\""));
 			  if (description == "") {
 				continue; // ignore incidents without description
-			  }          
+			  }
 			  description.replace("<br />", "\n");
 
-			  String incident = 
+			  String incident =
 				description + "\n"
 				"/incident_" + id + "\n\n";
 
-			  if (incident.length() + incidents.length() > maxMessageLength) { // truncate message to avoid memory leak
+			  if (incident.length() + incidents.length() > maxMessageLength) { // truncate message to avoid a memory leak
 				return incidents;
 			  } else {
 				incidents += incident;
@@ -477,12 +476,12 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 		  Serial.println("From ID: " + bot.messages[i].from_id);
 		  Serial.println("From name: " + bot.messages[i].from_name);
 		  Serial.println("Text: " + bot.messages[i].text);
-	  
+
 		  String fromName = bot.messages[i].from_name;
 		  if (fromName == "") {
 			fromName = "Guest";
 		  }
-	  
+
 		  if (bot.messages[i].text == "/start") {
 			bot.sendMessage(bot.messages[i].from_id,
 			  "Welcome, " + fromName + "!\n\n"
@@ -495,28 +494,28 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 			  "HTML");
 		  } else if (bot.messages[i].text == "/incidents") {
 			bot.sendChatAction(bot.messages[i].chat_id, "typing");
-			
+
 			String incidents = getIncidents();
-		  
+
 			// send a message with the current incident to bot subscriber
 			bot.sendMessage(bot.messages[i].from_id, incidents);
 		  } else if (bot.messages[i].text.startsWith("/incident_")) {
 			bot.sendChatAction(bot.messages[i].chat_id, "typing");
-			
+
 			String incidentId = bot.messages[i].text.substring(10);
 			if (incidentId == "") {
 			  bot.sendMessage(bot.messages[i].from_id, "There was no ID specified. Please use /incidents and select one of the listed commands.");
 			} else {
 			  // adding hyphens to the id to restore the GUID format
-			  incidentId = 
+			  incidentId =
 				incidentId.substring(0, 8) + "-" +
 				incidentId.substring(8, 12) + "-" +
 				incidentId.substring(12, 16) + "-" +
 				incidentId.substring(16, 20) + "-" +
 				incidentId.substring(20);
-			  
+
 			  String result = sendRequest(requestIncidentUri + incidentId);
-			
+
 			  // parsing the JSON string
 			  String id = result.substring(result.indexOf("\"id\":\"") + 6, result.indexOf("\",\"Description\""));
 			  if (id != "" && id == incidentId) { // if an incident with the specified ID exists the IDs will match
@@ -528,16 +527,16 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 				String firstName = result.substring(result.indexOf("\"FirstName\":\"") + 13, result.indexOf("\",\"LastName\""));
 				String lastName = result.substring(result.indexOf("\"LastName\":\"") + 12, result.indexOf("\",\"PhoneNumber\""));
 				String phoneNumber = result.substring(result.indexOf("\"PhoneNumber\":\"") + 15, result.indexOf("\",\"OutageType\""));
-			
-				bot.sendMessage(bot.messages[i].from_id,
-				  "<strong>" + description + "</strong>\n"
-				  "Street: " + street + "\n"
-				  "City: " + city + "\n"
-				  "State: " + state + "\n"
-				  "ZIP code: " + zipCode + "\n"
-				  "Name: " + firstName + " " + lastName + "\n"
-				  "Phone: " + phoneNumber,
-				  "HTML");
+
+			  bot.sendMessage(bot.messages[i].from_id,
+				"<strong>" + description + "</strong>\n"
+				"Street: " + street + "\n"
+				"City: " + city + "\n"
+				"State: " + state + "\n"
+				"ZIP code: " + zipCode + "\n"
+				"Name: " + firstName + " " + lastName + "\n"
+				"Phone: " + phoneNumber,
+				"HTML");
 			  } else {
 				bot.sendMessage(bot.messages[i].from_id, "There is no incident with the specified ID.");
 			  }
@@ -548,11 +547,11 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 			// retrieve the amount of incidents
 			String result = sendRequest(requestIncidentsCountUri);
 			int incidentsCount = result.toInt();
-		  
+
 			// send a message with the amount of incidents to all bot subscribers
 			bot.sendMessage(bot.messages[i].from_id,
 			  "There are currently <strong>" + String(incidentsCount) + " incidents</strong> available.", "HTML");
-		  
+
 			// keep the led blinking for the amount of incidents
 			for (int i = 0; i < incidentsCount; i++) {
 			  delay(250);
@@ -565,11 +564,11 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 
 			String result = sendRequest(requestIncidentsCountIncludeResolved);
 			int incidentsCountIncludeResolved = result.toInt();
-			
+
 			// send a message with the amount of incidents
 			bot.sendMessage(bot.messages[i].from_id,
 			  "There are currently <strong>" + String(incidentsCountIncludeResolved) + " incidents including resolved incidents</strong> available.", "HTML");
-		  
+
 			// keep the led blinking for the amount of incidents
 			for (int i = 0; i < incidentsCountIncludeResolved; i++) {
 			  delay(250);
@@ -587,7 +586,7 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 		Serial.print("Connected to ");
 		Serial.println(serverUrl);
 		Serial.println("Sending request");
-		
+
 		client.print("GET ");
 		client.print(uri);
 		client.println(" HTTP/1.1");
@@ -603,7 +602,7 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 		while (client.connected()) {
 		  // ...until the response is available
 		  while (client.available()) {
-		  // looking for search string in response data
+			// looking for search string in response data
 			if (client.findUntil("\r\n\r\n", "\0")) {
 			  return client.readStringUntil('\n');
 			}
@@ -620,7 +619,7 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 	  }
 	  return "";
 	}
-
+	```
 
 1. Don't forget to replace the SSID and the password with proper values and the address in the following line with the address to your Azure web app:
 
@@ -646,9 +645,9 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 
     ![image](./media/telegram-devcampbot-commands.png)
 
-1. Enter or select `/incidents` from the list of commands.
+1. Enter or select `/incidents_count` from the list of commands.
 
-    ![image](./media/telegram-devcampbot-getincidents.png)
+    ![image](./media/telegram-devcampbot-incidents_count.png)
 
 1. Now we will add the list of commands to the Telegram bot. Open BotFather and enter `/start` to view all available commands. Enter or select `/setcommands` from the **Edit Bots** section in the menu.
 
@@ -668,7 +667,7 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 	
 	![image](./media/telegram-botfather-setcommands-sendlist.png)
 	
-1. Delete the old conversation with your previously created bot and start a new one. When you enter `/` the list of commands will appear.
+1. Delete the old conversation with your previously created bot and start a new one. When you enter `/` the new list of commands will appear.
 
 	![image](./media/telegram-devcampbot-commandlist.png)
 
@@ -676,12 +675,9 @@ In the following steps you will add the Universal Telegram Bot Library to your A
 ## Summary
 
 In this hands-on lab, you learned how to:
-* Set up the developing environment to support the programming of Arduino chips.
+* Set up the developing environment to support the programming of Arduino-compatible boards.
 * Create your own IoT software from scratch.
-
-After completing this module, you can continue on to the Stretch Goal.
-
-### View Stretch Goal instructions for [.NET](../10-stretch-goal/)
+* Enable remote control of your device using the Telegram Bot API.
 
 ---
 ## Additional Links
@@ -689,6 +685,7 @@ After completing this module, you can continue on to the Stretch Goal.
 * [Getting Started with Arduino and Genuino products](https://www.arduino.cc/en/Guide/HomePage)
 * [Arduino Language Reference](https://www.arduino.cc/en/Reference/HomePage)
 * [Arduino Forum](https://forum.arduino.cc)
+* [Telegram Bot API] (https://core.telegram.org/bots/api)
 
 ---
 Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
