@@ -304,17 +304,17 @@ In this lesson you will create a Telegram bot which runs on our Arduino device. 
 
 1. Install the Telegram app for your device. Got to https://telegram.org/apps and select the preferred download link. To create an account, you need a valid phone number.
 
-1. Create a new telegram bot using **BotFather**. Start a conversation with the bot by following the link https://t.me/botfather or search for **BotFather** in your contacts.
+1. Create a new telegram bot using [@BotFather](https://t.me/botfather). Start a conversation with the bot by following the link https://t.me/botfather or search for `BotFather` in your contacts.
 
     ![image](./media/telegram-botfather-start.png)
 
-1. After selecting the start button at the bottom of the chat, you will see the list of available commands for **BotFather**.
+1. After selecting the start button at the bottom of the chat, you will see the list of available commands for [@BotFather](https://t.me/botfather).
 
     ![image](./media/telegram-botfather-commands.png)
 
 1. To create a new bot enter or select `/newbot` from the list of commands.
 
-1. Next **BotFather** asks you to choose the name for your bot. Thereafter you need to enter the username, which has to end with the term ‘bot’ and will be used later to communicate with the bot (e.g. [@DevCampBot](https://t.me/devcampbot)).
+1. Next [@BotFather](https://t.me/botfather) asks you to choose the name for your bot. Thereafter you need to enter the username, which has to end with the term ‘bot’ and will be used later to communicate with the bot (e.g. [@DevCampBot](https://t.me/devcampbot)).
 
 1. If everything worked well, the bot was successfully created and you will receive a message with a token which is used to access the HTTP API. The token is needed in the following steps.
 
@@ -653,7 +653,7 @@ In the following steps you will add the **Universal Telegram Bot Library** to yo
 
     ![image](./media/telegram-devcampbot-incidents_count.png)
 
-1. Now we will add the list of commands to the Telegram bot. Open **BotFather** and enter `/start` to view all available commands. Enter or select `/setcommands` from the **Edit Bots** section in the menu.
+1. Now we will add the list of commands to the Telegram bot. Open [@BotFather](https://t.me/botfather) and enter `/start` to view all available commands. Enter or select `/setcommands` from the **Edit Bots** section in the menu.
 
     ![image](./media/telegram-botfather-setcommands.png)
 
