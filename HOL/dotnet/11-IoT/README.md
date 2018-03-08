@@ -29,7 +29,7 @@ This hands-on-lab has the following exercises:
 ---
 ## Exercise 1: Set up your environment<a name="ex1"></a>
 
-To program an Arduino device on your machine you need the **Arduino IDE** on your machine. Since a hardware connection to the device is required this will not work from a virtual machine. It is possible to use an Arduino emulator for this lab instead of the actual device and work through the exercises in a virtual machine.
+To program an Arduino device you need the **Arduino IDE** on your machine. Since a hardware connection to the device is required this will not work from a virtual machine. It is possible to use an Arduino emulator for this lab instead of the actual device and work through the exercises in a virtual machine.
 
 You will now install the **Arduino IDE** and set up the boards manager.
 
@@ -98,7 +98,7 @@ The Arduino-compatible device can handle data exchange with web applications. At
 
 1. Make sure the device is connected to your USB port. Open Arduino and create a new sketch.
 
-1. Replace the sketch content with the following code which will connect the device to a specified wireless network. Replace the SSID and the password with proper values.
+1. Replace the sketch content with the following code which will connect the device to a specified wireless network. Replace the **SSID** and the **password** with proper values.
 
     ```cpp
     #include <ESP8266WiFi.h>
@@ -168,7 +168,7 @@ The Arduino-compatible device can handle data exchange with web applications. At
 
     ![image](./media/arduino-connect%20to%20wifi-upload%20completed.png)
 
-1. Now we will add an HTTP request to our Arduino code. The new code will also add the method `sendRequest()` which, with the URL in requestIncidentsCountUri, will fetch the current incident count. Use the code below to replace or adapt the existing code.
+1. Now we will add an HTTP request to our Arduino code. The new code will also add the method `sendRequest()` which, with the URL in `requestIncidentsCountUri`, will fetch the current incident count. Use the code below to replace or adapt the existing code.
 
     ```cpp
     #include <ESP8266WiFi.h>
@@ -286,7 +286,7 @@ The Arduino-compatible device can handle data exchange with web applications. At
       return "";
     }
 
-1. Replace the SSID and the password with proper values. Also replace the address in the following line with the address to your incident API app (without http://):
+1. Replace the **SSID** and the **password** with proper values. Also replace the address in the following line with the address to your incident API app (without http://):
 
     ```cpp
     const char server[] = "incidentapi[YOUR_RG_NAME].azurewebsites.net"; // address for request, without http://
@@ -625,7 +625,7 @@ In the following steps you will add the **Universal Telegram Bot Library** to yo
     }
     ```
 
-1. Don't forget to replace the SSID and the password with proper values and the address in the following line with the address to your incident web app:
+1. Don't forget to replace the **SSID** and the **password** with proper values and the address in the following line with the address to your incident web app:
 
     ```cpp
     const char server[] = "incidentapi[YOUR_RG_NAME].azurewebsites.net"; // address for request, without http://
