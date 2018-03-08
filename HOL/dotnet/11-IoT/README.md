@@ -29,12 +29,12 @@ This hands-on-lab has the following exercises:
 ---
 ## Exercise 1: Set up your environment<a name="ex1"></a>
 
-To program an Arduino device on your machine you need the Arduino IDE on your machine. Since a hardware connection to the device is required this will not work from a virtual machine. It is possible to use an Arduino emulator for this lab instead of the actual device and work through the exercises in a virtual machine.
+To program an Arduino device on your machine you need the **Arduino IDE** on your machine. Since a hardware connection to the device is required this will not work from a virtual machine. It is possible to use an Arduino emulator for this lab instead of the actual device and work through the exercises in a virtual machine.
 
-You will now install the Arduino IDE and set up the board manager.
+You will now install the **Arduino IDE** and set up the boards manager.
 
-1. Download the Arduino IDE package from the Arduino download page. Go to [www.arduino.cc/en/Main/Software](https://www.arduino.cc/en/Main/Software) and select the `Windows installer`.
-The Windows installer sets up everything you need to use the Arduino IDE. If you use the ZIP file you need to install the drivers manually. The drivers are located here: [https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers](https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers).
+1. Download the **Arduino IDE** package from the Arduino download page. Go to [www.arduino.cc/en/Main/Software](https://www.arduino.cc/en/Main/Software) and select the `Windows installer`.
+The Windows installer sets up everything you need to use the **Arduino IDE**. If you use the zip file you need to install the drivers manually. The drivers are located here: [https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers](https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers).
 
     ![image](./media/arduino-website.png)
 
@@ -91,6 +91,7 @@ You have now installed all the necessary components to start programming an Ardu
 
 The Arduino-compatible device can handle data exchange with web applications. At first we will connect the device to a Wi-Fi, and then we will add an HTTP request using the incident REST API to retrieve the amount of incidents from the incident web application.
 
+### Note:
 > It is important to develop projects in small chunks and to understand and test each function. Try to develop code with small functions that clearly separate the functionalities of your device and combine them step by step.
 >
 > Do not declare too many variables. The device has very limited memory, that’s why it is better to use function calls, for example, instead of saving the returned values for later use.
