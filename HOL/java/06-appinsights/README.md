@@ -72,7 +72,7 @@ We will add both components to our application and enable the sending of telemet
 
 1. Next, open the `build.gradle` file for your project and add the following dependency in the dependencies section: 
     ```Java
-   compile('com.microsoft.azure:applicationinsights-web:2.+')
+    compile('com.microsoft.azure:applicationinsights-web:2.+')
     ```
     Gradle will automatically retrieve and include these libraries when the application is built or run. 
     
@@ -118,7 +118,7 @@ We will add both components to our application and enable the sending of telemet
 	       return registration;
        } 
 
-	//Set up AI Web Request Tracking Filter
+	      //Set up AI Web Request Tracking Filter
         @Bean(name = "WebRequestTrackingFilter")
         public Filter webRequestTrackingFilter(@Value("${spring.application.name:application}") String applicationName) {
             return new WebRequestTrackingFilter(applicationName);
