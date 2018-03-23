@@ -683,6 +683,10 @@ In this hands-on lab, you learned how to:
 * Create your own IoT software from scratch.
 * Enable remote control of your device using the Telegram Bot API.
 
+After completing this module, you can continue on to the Stretch Goal.
+
+### View Stretch Goal instructions for [.NET](../10-stretch-goal/)
+
 ---
 ## Additional Links
 
