@@ -6,8 +6,7 @@ import devCamp.WebApp.models.UserProfileBean;
 
 @Service
 public interface GraphService {
-    public UserProfileBean getUserProfile() ;
+    public UserProfileBean getUserProfile();
     
     public void sendMail(String displayName,String emailAddr);
-    
 }

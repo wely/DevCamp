@@ -26,6 +26,29 @@ Internet.
 
     ![image](./media/image-001.png)
 
+    ***CAUTION***
+    Make sure you test the content in the region you are presenting in. Azure may have blocked certain services from the region if there are capacity issues. This restriction applies for MSDN, BizSpark Base, BizSpark+, and Free Trials. 
+    The following regions may be used as alterantives when using free/trial accounts:
+  
+        ​- Europe North
+        - APAC South East
+        - Brazil South
+        - China East
+        - China North
+        - Europe West
+        - Germany Central
+        - India Central
+        - Japan East
+        - Korea Central
+        - Korea South
+        - UK South
+        - US Central
+        - US East
+        - US North Central
+        - US South Central
+        - US West 2
+        - US West Central
+
     Set up monitoring in AppInsights, so there will be some monitoring data by the time you show this feature
 
     Create an OMS portal - you can set up a trial here: `https://www.microsoft.com/en-us/cloud-platform/operations-management-suite-trial`
@@ -38,12 +61,15 @@ Internet.
     use the free PowerPoint viewer available here: `https://www.microsoft.com/en-us/download/details.aspx?id=13`
 
     1. Install `Windows Subsystem for Linux`, which supplies the bash command processor on windows.  
-    Go to control `panel/software/Turn Windows Features on or off`, and select `Windows Subsystem for Linux`:
+    Go to `control panel/software/Turn Windows Features on or off`, and select `Windows Subsystem for Linux`:
 
         ![image](./media/2016-10-28_14-51-30.png)
 
     1. Install Visual Studio community edition from here: `https://www.visualstudio.com/vs/`.  
-    1. Install the Azure SDK from here: `https://azure.microsoft.com/en-us/downloads/`
+	
+		![image](./media/VS-Community-Edition-Azure-SDK.png)
+	
+    1. If you did not install the Azure SDK during the installation of Visual Studio community edition install the Azure SDK from here: `https://azure.microsoft.com/en-us/downloads/`
 
         ![image](./media/2016-10-28_14-58-13.png)
 
@@ -53,7 +79,9 @@ Internet.
         * On Windows
             * Make sure you have the Anniversary edition
             * Activate the containers feature in Windows
-            * Download the beta tools [Windows](https://docs.docker.com/docker-for-windows/)
+            * Download [Docker for Windows](https://docs.docker.com/docker-for-windows/) from the stable channel
+			
+		![image](./media/Windows-10-Containers-Feature.png)
 
 
 ---
@@ -163,7 +191,7 @@ We will provide an overview of the developer tools available for developing on y
 
 **If you have an issue setting the Azure Pass or trial, but some students are working, have that user set up a new user(s) account. Make the test user accounts Global Admin. Also grant the user account access to Azure to the subscription.**
 
-> The ARM Template may not deploy successfully in all regions due to a lack of DocumentDB or a VM Size deployed in that region. As of 5 Jan 2017 the following regions will fail: westindia. Please have attendees select one of the other Azure regions.
+> The ARM Template may not deploy successfully in all regions due to a lack of CosmosDB or a VM Size deployed in that region. As of 5 Jan 2017 the following regions will fail: westindia. Please have attendees select one of the other Azure regions.
 
 ----
 ##  Module 2 - Modern Cloud Apps Overview ####

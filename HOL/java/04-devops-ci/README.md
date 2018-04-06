@@ -5,85 +5,90 @@ In this lab, you will create a Visual Studio Team Services online account, check
 
 ## Objectives
 In this hands-on lab, you will learn how to:
-* Create a Visual Studio Team Services online account
-* Create a VSTS Git repository
-* Add your code to the VSTS Git repository
-* Create a Continuous Integration pipeline
+* Create a Visual Studio Team Services online account.
+* Create a VSTS Git repository.
+* Add your code to the VSTS Git repository.
+* Create a Continuous Integration pipeline.
+* Deploy a built application to an Azure Web App from VSTS.
 
 ## Prerequisites
 
 * The source for the starter app is located in the [start](start) folder. 
-* There will be no code changes required so the the end folder will remain empty. 
-* Deployed the starter ARM Template HOL 1
-* Completion of the [azuread-office365](../03-azuread-office365)
+* There will be no code changes required so the the [end](end) folder will remain empty.
+* Deployed the starter ARM Template [HOL 1](../01-developer-environment).
+* Completion of the [HOL 3](../03-azuread-office365).
 
-> Note: If you did not complete the previous labs, the project in the start folder is cumulative.
+> &#x1F53A; **Note**: If you did not complete the previous labs, the project in the [start](start) folder is cumulative. But you need to add the previous HOL's environment variables and make all necessary changes to Azure. &#x1F53A;
 
 ## Exercises
 This hands-on-lab has the following exercises:
-* Exercise 1: Create VSTS online account 
-* Exercise 2: Create VSTS Git repository
-* Exercise 3: Add application to VSTS Git
-* Exercise 4: Create a Continuous Integration pipeline
+* [Exercise 1: Create VSTS online account](#ex1)
+* [Exercise 2: Create VSTS Git repository](#ex2)
+* [Exercise 3: Add application to VSTS Git](#ex3)
+* [Exercise 4: Create a Continuous Integration pipeline](#ex4)
+* [Exercise 5: Deploy code to an Azure Web App](#ex5)
 
 ---
-## Exercise 1: Create VSTS online account
+## Exercise 1: Create VSTS online account<a name="ex1"></a>
 
-1. In your browser, navigate to [https://www.visualstudio.com/]()
+> &#x1F53A; You can skip this exercise if you already created an account in HOL 1. &#x1F53A;
 
-    ![image](./media/image-000.gif)
+1. In your browser, navigate to [https://www.visualstudio.com/](https://www.visualstudio.com/)
 
-1. Log in with your Azure AD account 
+    ![image](./media/2017-06-21_13_14_00.png)
+
+1. Click `Get started for free` link below `Visual Studio Team Services`.
+
+1. Log in with your Azure AD account.
+
+1. You will be asked to choose an hosting address and if you want to use Git or Team Foundation Version Control. Select `Git` and click `Continue`.
+
+1. A new project called `MyFirstProject` will be automatically created.
 
 ---
-## Exercise 2: Create VSTS Git repository
+## Exercise 2: Create VSTS Git repository<a name="ex2"></a>
 
-VSTS gives us the option to use Git or 
-[TFVC](https://www.visualstudio.com/en-us/docs/tfvc/overview) as our 
-project's repository. For this exercise we will use Git, and then clone 
-the repository to our dev machine. 
+VSTS gives us the option to use Git or [TFVC](https://www.visualstudio.com/en-us/docs/tfvc/overview) as our project's repository. For this exercise we will use Git, and then clone the repository to our dev machine. 
 
-> Note that if you acquired these lab materials via a `git clone` of the workshop repo then you should select a folder somewhere else on your dev machine. 
-> This will minimize conflicts between the two separate repositories 
+> Note that if you acquired these lab materials via a `git clone` of the workshop repo then you should select a folder somewhere else on your dev machine. This will minimize conflicts between the two separate repositories.
 
-1. Starting at your account's landing page, locate the section entitled **Recent projects & teams** and click **New**.
+1. We will ignore the automatically created `MyFirstProject`. Starting at your TFVC account's landing page, click `New Project`.
 
-    ![image](./media/image-001.gif)
+    ![image](./media/2017-06-21_13_56_00.png)
 
-1. Enter a project name such as **DevCamp**, ensure **Version Control** is set to **Git** and then click **Create Project**.
+1. Enter a project name such as **DevCamp**, ensure `Version control` is set to `Git` and then click `Create`.
 
-    ![image](./media/image-002.gif)
+    ![image](./media/2017-06-21_13_58_00.png)
 
-1. Wait for the project to be created. This process may take up to 60 seconds. When finished select the **Navigate to Project** button
+1. Wait for the project to be created. This process may take up to 60 seconds. When finished you will be redirected to the project page
 
-    ![image](./media/image-003.gif)
+1. Click `Dashboards` and explore your pre-built dashboard. Familiarize yourself with the variety of widgets available, and the customization options. 
 
-1. Exit out of the Congratulations window and explore your pre-built dashboard. Familiarize yourself with the variety of widgets available, and the customization options. 
+    ![image](./media/2017-06-21_14_01_00.png)
 
-    ![image](./media/image-004.gif)
+You have now created a project in VSTS with a Git repository. Next we'll clone the repository locally to your developer machine and upload code from our machine to VSTS.
 
-1. Click **Code** on the top toolbar to navigate to the Code screen.  Then click the **Generate Git Credentials** button to set a user name, alias, and password.
+---
+## Exercise 3: Add application to VSTS Git<a name="ex3"></a>
 
-    ![image](./media/image-005.gif)
+1. Click `Code` on the top toolbar to navigate to the Code screen. Then click the `Generate Git Credentials` button to set a user name, alias, and password.
 
-1. Next, select the **Copy** icon to copy the HTTPS URL for the repository.
+    ![image](./media/2017-06-26_16_46_00.png)
+
+1. Next, select the `Copy` icon to copy the HTTPS URL for the repository.
 
 1. In a console window, navigate to a spot on your dev machine and execute a `git clone https://yourrepo.com/DefaultCollection/_git/Repo.git`
 
-    ![image](./media/image-006.gif)
+    ![image](./media/2017-06-26_16_52_00.png)
 
-    Depending on your environment setup you may need to authenticate with VSTS
+    Depending on your environment setup you may need to authenticate with VSTS.
 
-You have now created a project in VSTS with a Git repository, and cloned the repository locally to your developer machine.  Next we'll upload code from our machine to VSTS.
 
-----
-## Exercise 3: Add application to VSTS Git
+1. When we cloned our repository it was empty. Take the code that you have developed in the earlier labs (or the `start` folder bundled with this readme) and paste it into our new directory. This can be done via the command line, or with good old copy/paste in an Explorer or Finder window.
 
-1. When we cloned our repository it was empty.  Take the code that you have developed in the earlier labs (or the `start` folder bundled with this readme) and paste it into our new directory.  This can be done via the command line, or with good old copy/paste in an Explorer or Finder window.
+    ![image](./media/2017-06-27_09_03_00.png)
 
-    ![image](./media/image-007.gif)
-
-    > Depending on how your environment is setup, there may be a hidden folder `.git` in your originating directory. Do not copy this folder into the destination directory linked to VSTS
+    > Depending on how your environment is setup, there may be a hidden folder `.git` in your originating directory. Do **not** copy this folder into the destination directory linked to VSTS.
 
 1. Back in the console, execute a `git status` to ensure the files are picked up by git.
 
@@ -91,7 +96,7 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
     git status
     ```
 
-    ![image](./media/image-008.gif)
+    ![image](./media/2017-06-27_09_06_00.png)
 
 1. Execute `git add *` to track the files, then a `git commit -m "initial upload"` to commit the files to the repository. Finally, execute `git push origin master` to push the files up to VSTS.
 
@@ -101,342 +106,312 @@ You have now created a project in VSTS with a Git repository, and cloned the rep
     git push origin master
     ```
 
-    ![image](./media/image-009.gif)
+    ![image](./media/2017-06-27_09_10_00.png)
+    
+    > You might have to provide information before you can make your first commit. In this case execute these lines with your login data and try again:
+    
+    ```CMD
+    git config --global user.email "your@email.com"
+    git config --global user.name "Your name"
+    ```
 
-1. In the browser, reload the **Code** page to see the uploaded code
+1. In the browser, reload the `Code` page to see the uploaded code:
 
-    ![image](./media/image-010.gif)
+    ![image](./media/2017-06-27_09_15_00.png)
 
-1. Now, any changes you make to the local repository can be pushed up to VSTS.  Other team members may also begin interacting with the code base via their own clones and pushes.
+1. Now, any changes you make to the local repository can be pushed up to VSTS. Other team members may also begin interacting with the code base via their own clones and pushes.
 
-    > Note that we did not include the `build` or `.gradle` folders. These components are typically not added to source control, as they bloat the size of the repository.  These files should have been excluded from your 
-    > repository due to settings in the `.gitignore` file
+    > Note that we did not include the `build` or `.gradle` folders. These components are typically not added to source control, as they bloat the size of the repository. These files should have been excluded from your repository due to settings in the `.gitignore` file.
 
 ---
-## Exercise 4: Create a Continuous Integration pipeline
+## Exercise 4: Create a Continuous Integration pipeline<a name="ex4"></a>
 
-With application code now uploaded to VSTS, we can begin to create builds via a 
-Build Definition.  Navigate to the **Build** tab from he top navigation.  
-We will use the hosted agent within VSTS to process our builds in this 
-exercise.
+With application code now uploaded to VSTS, we can begin to create builds via a Build Definition. Navigate to the `Build` tab from the top navigation. We will use the hosted agent within VSTS to process our builds in this exercise.
 
-1. From the **Build** tab, create a new **Build Definition**
+1. From the `Build & Release` tab, create a new `Build Definition` by clicking the `New Definition` button:
 
-    ![image](./media/image-011.gif)
+    ![image](./media/2017-06-21_14_35_00.png)
 
-1. There are prebuilt definitions for a variety of programming languages and application stacks, however for this exercise select **Empty** and click **Next**
+1. There are prebuilt definitions for a variety of programming languages and application stacks. For this exercise select `Empty` and click `Apply`:
 
-    ![image](./media/image-012.gif)
+    ![image](./media/2017-06-27_09_21_00.png)
+    
+1. Use the suggested name and select the `Default` from the `Default agent queue` drop-down.
 
-1. Confirm the Repository Source is set to your VSTS Project, that the repository is set the repo that was earlier created, and that the Agent Queue is set to **Hosted**.  
+    ![image](./media/2017-08-11_09_08_00.png)
 
-    Check the box next to **Continuous Integration** to automatically run this build anytime code is checked into the repository.
+1. The build tasks are created for us as part of the template. 
 
-    ![image](./media/image-013.gif)
+1. On the `Get sources` step set the `From` value to your VSTS Project and the `Repository` to the repo that was earlier created.
 
-1. After the empty Build Definition is created, we need to create a series of Build Steps.
+    ![image](./media/2017-06-27_09_23_00.png)
 
-    * Perform a gradle build of the application
-    * Copy the ROOT.war file into a `/webapps` directory, so that when we do a web deploy, 
-    the WAR gets placed in the right location
-    * Package the code assets into a deployable zip file
-    * Publish the zip file as a Publish Artifact that can be consumed by the VSTS Release System
+1. After the empty Build Definition is created, we need to create a series of Build Steps:
 
-    Each of these steps will begin by clicking the **Add build step** button
+    * Perform a gradle build of the application.
+    * Copy the `ROOT.war` file into a `/webapps` directory, so that when we do a web deploy, the WAR gets placed in the right location.
+    * Package the code assets into a deployable zip file.
+    * Publish the zip file as a Publish Artifact that can be consumed by the VSTS Release System.
 
-    ![image](./media/image-014.gif)
+    Each of these steps will begin by clicking the `+` button of `Phase 1`.
 
-1.  Add a Build Step for **Gradle**, found under the left-hand filter for **Build**.  After you have done this, click `Close` to close the task catalog.
+1.  Add a Build Step for `Gradle`, found under the filter for `Build`. Click `Add` and then select the newly added task to configure it.
 
-    ![image](./media/image-015.gif)
+    ![image](./media/2017-06-27_09_33_00.png)
+    
+    Change the name of the build step to **Java DevCamp build**.
 
-    Configure the step **Tasks** to `war`, and uncheck the checkbox for 
-    "Publish to TFS/Team Services" in the Junit Test Results box.
+    Change the value `Tasks` from `build` to `war`, and uncheck the checkbox for "Publish to TFS/Team Services" in the JUnit Test Results section.
 
-    Also click the pencil icon to name this build step to **Java DevCamp build**
+    ![image](./media/2017-06-27_09_42_00.png)
 
-    ![image](./media/image-017.gif)
+1. Add another Build Step. Select `Copy Files` from the `Utility` filter:
 
-1. Add a Build Step for **Copy Files**, found under the left-hand filter for **Utility**
+    ![image](./media/2017-06-27_09_46_00.png)
 
-    ![image](./media/image-018.gif)
+    Select the new task to configure it.
+    
+    In configuration boxes, we can use variables in addition to string literals.   
 
-    In configuration boxes, we can use variables in addition to string 
-    literals.   
+    * Name the task `Copy WAR file`
+    * and configure `Source Folder` for `$(build.sourcesdirectory)/build/libs`, 
+    * `Contents` for `**/*.war`,
+    * and finally `Target Folder` for `$(build.artifactstagingdirectory)/webapps`.
 
-    Configure **Source Folder** for `$(build.sourcesdirectory)/build/libs`, 
-    **Contents** for `**/*.war`,
-    **Target Folder** for `$(build.artifactstagingdirectory)/webapps` 
-    and name the step **Copy WAR file**
-
-    ![image](./media/image-019.gif)
+    ![image](./media/2017-06-27_09_54_00.png)
  
 
-1. Add a Build Step for **Archive**, found under the left-hand filter for **Utility**
+1. Add another Build Step. Select `Archive Files` from the `Utility` filter:
 
-    ![image](./media/image-020.gif)
+    ![image](./media/2017-06-27_09_56_00.png)
 
-    For **Root Folder** insert `$(build.artifactstagingdirectory)`
+    Select the new task to configure it.
+    
+    * For `Root Folder` insert `$(build.artifactstagingdirectory)`,
+    * and for `Archive file to create` insert `$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip`. This will dynamically name our zip file of code with the build number.
+    * Uncheck the box for `Prefix root folder name to archive paths` to avoid an unnecessary nesting within the .zip file.
 
-    For **Archive file to create** insert 
-    `$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip`
-    This will dynamically name our zip file of code with the build number.
+    ![image](./media/2017-06-27_10_00_00.png)
 
-    Uncheck the box for **Prefix root folder name to archive paths** to 
-    avoid an unnecessary nesting within the .zip file.
+    > You can define your own variables to use throughout the Build and Release pipelines by clicking `Variables` in the Build Definition's sub-navigation. Also see [here](https://www.visualstudio.com/docs/build/define/variables) for all pre-defined variables available. 
 
-    ![image](./media/image-021.gif)
+1. Finally, add a Build Step by selecting `Publish Build Artifacts` from the `Utility` filter. This step outputs a file(s) from our Build Definition as a special "artifact" that can be used in VSTS' Release Definitions.
 
-    > You can define your own variables to use throughout the Build and Release pipelines by 
-    clicking **Variables** in the Build Definition's sub-navigation. Also see 
-    [here](https://www.visualstudio.com/docs/build/define/variables) for all pre-defined 
-    variables available 
+    ![image](./media/2017-06-27_10_04_00.png)
 
-1. Finally, create a Build Step for **Publish Build Artifacts**, found under the left-hand filter 
-for **Utility**.  This step outputs a file(s) from our Build Definition as a special "artifact" 
-that can be used in VSTS' Release Definitions.
+    Select the new task to configure it.
+    
+    * Configure `Path to Publish` as `$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip` to target the zip file created in the previous Build Step.
+    * For `Artifact Name` enter `drop`
+    * and set `Artifact publish location` to `Visual Studio Team Services/TFS`.
 
-    ![image](./media/image-022.gif)
+    ![image](./media/2017-06-27_10_08_00.png)
 
-    Configure **Path to Publish** as `$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip` to target 
-    the zip file created in the previous Build Step.
+1. Click `Save & queue`. Our saved Build Definition is ready to be processed by the Hosted Build Agent.
 
-    For **Artifact Name** enter `drop`
+    ![image](./media/2017-06-27_10_10_00.png)
 
-    Set **Artifact Type** to `Server`
 
-    ![image](./media/image-023.gif)
+    ![image](./media/2017-06-27_10_11_00.png)
 
-1. Save your Build Definition named **BuildApp**
+    Accept the defaults and click `Queue`. Your Build will then be queued until the Hosted Build Agent can pick it up for processing. This typically takes less than 60 seconds to begin.
+    
+    Click the number of the build to see its status:
 
-    ![image](./media/image-016.gif)
+    ![image](./media/2017-06-27_10_15_00.png)
 
-1. Our saved Build Definition is ready to be processed by the Hosted Build Agent.  
-Click **Queue New Build** to start the build process. 
+1. Once your build completes, click each step on the left navigation bar and inspect the output.
 
-    ![image](./media/image-024.gif)
+    ![image](./media/2017-06-27_10_17_00.png)
 
-    Accept the defaults and click **OK**
+1. Let's inspect the output artifacts that were published. Click the `Build XXX` header in the left pane to view the build's landing page. 
 
-    ![image](./media/image-025.gif)
+    ![image](./media/2017-06-27_10_19_00.png)
+    
+1. Select `Artifacts` from the horizontal toolbar.
 
-    Your Build will then be queued until the Hosted Build Agent can pick it up for processing.  
-    This typically takes less than 60 seconds to begin.
+1. A `drop` folder has been created containing the compiled output. Click `Explore` to see them.
 
-1. Once your Build completes, click each step on the left navigation bar and inspect the output.  
+1. Expand the `drop` folder and view the build artifacts. Click `Close` when complete.
 
-    ![image](./media/image-026.gif)
+1. Click `Download` next to the `drop` folder to save the build locally.
 
-1. Let's inspect the output artifacts that were published.  Click the **Build 13** header 
-in the left pane to view the build's landing page.  Then select **Artifacts** from the horizontal 
-toolbar, and **Download** the **drop** artifact.
+1. Unzip `drop.zip` to see the application files created by the build agent (including the restored `webapps` folder). This artifact will be deployed to an Azure Web App in a later exercise.
 
-    ![image](./media/image-027.gif)
+    ![image](./media/2017-06-27_10_23_00.png)
 
-1. Unzip `drop.zip` to see our files (including the restored `webapps` folder).  This 
-artifact will be deployed to an Azure Web App in a later lab.
-
-    ![image](./media/image-028.gif)
+We now have a Build Definition that will compile the application and create a package for deployment anytime code is checked into the repository, or a manual build is queued.
 
 ---
-### Exercise 5: Deploy code to an Azure Web App
+## Exercise 5: Deploy code to an Azure Web App<a name="ex5"></a>
 
-In the ARM Template that was originally deployed, a web app was created as a development 
-environment to hold a deployed Java application. We will use this web app as a deployment 
-target from VSTS. First, we need to prepare this web app for our application code.
+In the ARM Template that was originally deployed, a web app was created as a development environment to hold a deployed Java application. We will use this web app as a deployment target from VSTS. First, we need to prepare this web app for our application code.
 
-1. Visit the Azure Web App by browsing to the [Azure Portal](http://portal.azure.com), 
-opening the Resource Group, and select the Azure Web App resource that contains 
-**javaapp** before the random string. 
+1. Visit the Azure Web App by browsing to the [Azure Portal](http://portal.azure.com), opening the `DevCamp` Resource Group, and select the Azure Web App resource that begins with `javaapp` before the random string. 
 
-    ![image](./media/image-029.gif)
+    ![image](./media/2017-06-27_10_39_00.png)
 
-    Once the blade expands, select **Browse** from the top toolbar
+1. Once the blade expands, select `Browse` from the top toolbar:
 
-    ![image](./media/image-030.gif)
+    ![image](./media/2017-06-27_10_41_00.png)
 
-    A new browser tab will open with a splash screen visible
+1. A new browser tab will open with a splash screen visible. It will look similar to this image (it gets updated regularly with new information) and tell you that the app service has been created:
 
     ![image](./media/image-031.gif)
 
-1. We can deploy our code to this Azure Web App, however it was not configured with our 
-AzureAD details. When trying to authenticate, AzureAD would refuse since it does not 
-know about this domain. 
+1. We can deploy our code to this Azure Web App, however it was not configured with our AzureAD details. When trying to authenticate, AzureAD would refuse since it does not know about this domain. 
 
-    To fix this, return to `https://apps.dev.microsoft.com`, login, and open your 
-    application settings. 
+    To fix this, return to the [Application Registration Portal](https://apps.dev.microsoft.com), login, and open your application settings.
 
-    ![image](./media/image-032.gif)
+    In the section for `Platforms`, click **Add Url** to add the URL of your Azure Web App from Step 1. Remember to append the `/auth/openid/return` route at the end, since that is the route that will process the return data from AzureAD. Ensure this address is using **https**.
 
-    In the section for **Platforms**, click **Add Url** to add the URL of your Azure Web 
-    App from Step 1.  Remember to append the `/auth/openid/return` route at the end, since 
-    that is the route that will process the return data from AzureAD. Ensure this address 
-    is using **https**.
+    ![image](./media/2017-06-27_10_47_00.png)
 
-    ![image](./media/image-033.gif)
+    Make sure you click `Save` at the bottom of the screen to add the URL to your AzureAD app.
 
-    Make sure you click **Save** at the bottom of the screen to add the URL to your 
-    AzureAD app.
+1. Now that AzureAD is configured, we need to add our AzureAD related environment variables to the Azure Web App. Back in the ***javaapp...*** blade where you hit `Browse` earlier, open `Application Settings` from the left navigation.
 
-1. Now that AzureAD is configured, we need to add our AzureAD related environment 
-variables to the Azure Web App.  Back in the 
-**javaapp***** blade where you hit **Browse** earlier, open **Application Settings** from 
-the left navigation.
+    Find the `App Settings` section containing a table of settings. In the ARM Template we auto-generated the majority of these settings, however we need to add a few additional environment variables to match the `.vscode/launch.json` file that we have been using locally.
 
-    ![image](./media/image-034.gif)
+    * `AAD_RETURN_URL` should be set to the same URL that we just configured for our AzureAD application. Should be similar to `https://javaapp....azurewebsites.net/auth/openid/return`. Ensure this is using **https**.
 
-    Find the **App Settings** section containing a table of settings.  In the ARM Template 
-    we auto-generated the majority of these settings, however we need to add a few 
-    additional environment variables to match the `.vscode/launch.json` file that we have 
-    been using locally.
+    * `AAD_CLIENT_ID` should match the Application ID in the [Application Registration Portal](https://apps.dev.microsoft.com) and similar to `2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6`.
 
-    * **AAD_RETURN_URL** should be set to the same URL that we just configured for our 
-    AzureAD application. Should be similar to 
-    `https://javaappmm6lqhplzxjp2.azurewebsites.net/auth/openid/return`. Ensure this 
-    is using **https**.
+    * `AAD_CLIENT_SECRET` should be the Application Secret generated in the apps portal, and be similar to `JjrKfgDyo5peQ4xJa786e8z`.
 
-    * **AAD_CLIENT_ID** should match the Application ID in the apps.dev.microsoft.com 
-    portal and similar to `2251bd08-10ff-4ca2-a6a2-ccbf2973c6b6`
-
-    * **AAD_CLIENT_SECRET** should be the Application Secret generated in the apps 
-    portal, and be similar to `JjrKfgDyo5peQ4xJa786e8z`
-
-    ![image](./media/image-035.gif)
-
-1. Now that the AzureAD application and the Azure Web App are ready, let's configure VSTS 
-to deploy our built application. Back in our VSTS Build Definition, click on 
-**Releases**. 
-
-    ![image](./media/image-036.gif)
-
-    Create a new release definition by selecting **New Definition**
-
-    ![image](./media/image-036a.gif)
-
-    Choose **Empty** to start with an empty release definition, and choose **Next**
-
-    ![image](./media/image-036b.gif)
-
-    Next, check the box next to "Continuous deployment" to make sure a new release will
-    be executed whenever a build completes.  Click **Create** to complete the process.
-
-    ![image](./media/image-036c.gif)
-
-1. In the release definition screen, click the pencil and rename the release definition 
-to **Cloud Test Realease** and change the environment name to **Test Environment**
-
-    ![image](./media/image-037.gif)
-
-    Next, click on **Add tasks**
-
-    ![image](./media/image-038.gif)
-
-    In the task catalog, find **Azure App Service Deploy** and click **Add**, and then **Close**
-
-    ![image](./media/image-039.gif)
-
-    > Make sure to select the step with **RM** in the title, as it uses the newer Azure Resource Manager deployment system
-
-1. Click on the task name **Deploy AzureRM App Service:** to open the attributes for that task. VSTS will 
-need a connection to the Azure subscription that you are deploying the application to.  Click **Manage** 
-to open a new browser tab holding configuration options.
-
-    ![image](./media/image-040.gif)
+    ![image](./media/2017-06-27_11_11_00.png)
     
-    In the new tab, select **New Service Endpoint** and from the dropdown choose **Azure Resource Manager**
+    After you have created the new settings, click `Save`.
+
+1. Now that we have a build being created and a website to deploy into, let's connect them. Back in our VSTS Build Definition, navigate to the `Build & Release` tab.
+
+1. Click on `Releases`.
+
+1. Click the `+ New Definition` button to create a new release definition:
+
+    ![image](./media/2017-06-22_11_31_00.png)
+
+1. Select `Empty` and click `Apply`.
+
+    ![image](./media/2017-06-27_11_23_00.png)
+
+1. Click `Add artifact`, select the build definition you created as the `Source (Build definition)` and click `Add`. Now the artifacts the build definition created will be available in the new release definition.
+
+    ![image](./media/2017-06-27_11_24_00.png)
+
+1. Switch to `Tasks` and click the `+` button.
+
+    In the task catalog, find `Azure App Service Deploy` and click `Add`.
+
+    ![image](./media/2017-06-27_11_33_00.png)
+
+1. Click on the task name `Azure App Service Deploy` to open the attributes for that task. VSTS will need a connection to the Azure subscription that you are deploying the application to.
+
+1. If the drop-down next to `Azure subscription` offers you your subscription, select it, authorize it and continue to select your `javaapp...` Azure Web app resource from the `App Service name` drop-down.
+ 
+1. If the drop-down next to `Azure subscription` does not offer you your subscription or the drop-down next to `App Service name` does not offer you your Azure Web app resource (give it a moment after selecting the subscription), click on `Manage` to open a new browser tab holding configuration options.
+
+    ![image](./media/2017-06-27_13_13_00.png)
+    
+    1. In the new tab, select `New Service Endpoint` and from the drop-down choose `Azure Resource Manager`.
 
     ![image](./media/image-041.gif)
 
-    The modal window should automatically determine your subscription information. 
-    Provide a name such as **Azure**, select **OK**, and a close the browser tab.
+    2. The modal window should automatically determine your subscription information. Provide a name such as **Azure**, select `OK`, and a close the browser tab.
 
     ![image](./media/image-042.gif)
 
-    If your subscription is not in the dropdown list, click the link at the bottom of the window, and the window 
-    format will change to allow you to enter connection information on your subscription:    
+    3. If your subscription is not in the drop-down list, click the link at the bottom of the window, and the window format will change to allow you to enter connection information on your subscription:    
 
     ![image](./media/image-043.gif)
 
-    If you have not created a service principal for the subscription, you will have to follow the 
-    [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so.  This process will 
-    provide the information to enter in this dialog:
-    1. open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vso-agent-tasks/master/Tasks/DeployAzureResourceGroup/SPNCreation.ps1) 
-    in your browser. Select all the content from the window and copy to the clipboard.
-    1. open a PowerShell ISE window.  in the text window, paste the PowerShell script from the clipboard.
+    4. If you have not created a service principal for the subscription, you will have to follow the 
+    [instructions](https://go.microsoft.com/fwlink/?LinkID=623000&clcid=0x409) to do so. This process will provide the information to enter in this dialog:
+    
+        1. Open [this PowerShell script](https://raw.githubusercontent.com/Microsoft/vsts-rm-documentation/master/Azure/SPNCreation.ps1) in your browser.
+        1. Select all the content from the window and copy to the clipboard.
+        1. Open a PowerShell ISE window.
+        1. In the text window, paste the PowerShell script from the clipboard.
 
     ![image](./media/image-044.gif)
 
-    1. Click the green arrow to run the PowerShell script
+    5. Click the green arrow to run the PowerShell script.
 
     ![image](./media/image-045.gif)
 
-    1. The PowerShell script will ask for your **subscription name** and a **password**.  This password is 
-    for the service principal only, not the password for your subscription.  So you can use whatever password 
-    you would like, just remember it.    
+    6. The PowerShell script will ask for your `subscription name` and a `password`. This password is for the service principal only, not the password for your subscription. So you can use whatever password you would like, just remember it.    
 
     ![image](./media/image-046.gif)
 
-    1. You will then be asked for your Azure login credentials.  Enter your Azure username and password.  
-    The script will print out several values that you will need to enter into the **Add Azure Resource Manager Service Endpoint**
-    window.  Copy and paste these values from the PowerShell window:
-        Subscription ID
-        Subscription Name
-        Service Principal Client ID
-        Service Principal Key
-        Tenant ID
+    7. You will then be asked for your Azure login credentials. Enter your Azure username and password. The script will print out several values that you will need to enter into the `Add Azure Resource Manager Service Endpoint` window. Copy and paste these values from the PowerShell window:
+    
+        * Subscription ID
+        * Subscription Name
+        * Service Principal Client ID
+        * Service Principal Key
+        * Tenant ID
+        
     Also, enter a user-friendly name to use when referring to this service endpoint connection.
 
     ![image](./media/image-047.gif)
 
-    Click **Verify connection*, and ensure that the window indicates that the connection was verified. 
-    Then Click **OK** and **Close**.
+    Click `Verify connection`, and ensure that the window indicates that the connection was verified. Then Click `OK` and `Close`.
 
     ![image](./media/image-048.gif)
 
-    > This pattern is used to connect to a variety of services beyond Azure such as Jenkins, Chef, and Docker
+    > This pattern is used to connect to a variety of services beyond Azure such as Jenkins, Chef, and Docker.
 
-1. Back on the VSTS Build window, in the Build Step we started earlier, click the **Refresh** icon. The **Azure** connection that we setup should now appear.  Select it. 
+1. Back on the VSTS Build window, in the Build Step we started earlier, click the `Refresh` icon. The **Azure** connection that we setup should now appear.  Select it. 
 
-    ![image](./media/image-049.gif)
+    ![image](./media/2017-06-27_13_31_00.png)
 
-    Next, for **App Service Name** click the **Refresh** icon, choose the name of the Java Azure Web App. 
-    It may take a moment to populate.
+    Next, for **App Service Name** click the `Refresh` icon, choose the name of the Java Azure Web App. It may take a moment to populate.
 
-    ![image](./media/image-050.gif)
+    ![image](./media/2017-06-27_11_42_00.png)
 
-1. **Save** the Build Definition, supplying a comment if you'd like.  Next, click **Release** and **Create Release**
+1. `Save` the Build Definition, accepting the default folder and supplying a comment if you'd like. Next, click `Release` and `Create Release`:
 
-    ![image](./media/image-051.gif)
+    ![image](./media/2017-06-27_11_57_00.png)
 
-    In the following window, type a description for the release, choose the build that you created earlier, and click **Create**
+    In the following window, type a description for the release and click `Create`:
 
-    ![image](./media/image-052.gif)
+    ![image](./media/2017-06-27_11_59_00.png)
 
-    You should see a message that your release has been created.  Click on the link for **Release-1**
+    You should see a message that your release has been created. Click on the link for `Release-1`.
 
-    ![image](./media/image-053.gif)
+    ![image](./media/2017-06-27_12_06_00.png)
     
     You will see the status for the release:
 
-    ![image](./media/image-054.gif)
+    ![image](./media/2017-06-27_12_07_00.png)
     
-    When the release is complete, browse to the deployment website.  You should see the same application 
-    you tested in the modern-apps lab:
+    When the release is complete, browse to the deployment website. You should see the same application you tested in the modern-apps lab:
 
-    ![image](./media/image-055.gif)
+    ![image](./media/2017-06-27_13_09_00.jpg)
 
-    If you make changes to the application and `git push` back to the VSTS server, this will
-    automatically trigger a build and deployment.  Try to make a small change to the application and verify that the 
-    application is re-deployed to the test environment.
+    If you make changes to the application and `git push` back to the VSTS server, this will automatically trigger a build and deployment. Try to make a small change to the application and verify that the application is re-deployed to the test environment.
+
+    > If you see the splash screen instead of the application's start page go to `https://javaapp[...].scm.azurewebsites.net/DebugConsole`.
+
+    ![image](./media/image-031.gif)
+
+    > Sign in and use the console to navigate to `D:\home\site\wwwroot\webapps`. There should be your deployed `ROOT.war` and the extracted folder `ROOT`. Open `ROOT` and delete the `index.jsp` file which contains the splash screen and prevents your application's start page from showing.
+
+    ![image](./media/2017-11-03_10_58_00.png)
 
 --- 
 ## Summary
 
 In this hands-on lab, you learned how to:
-* Create a Visual Studio Team Services online account
-* Create a VSTS Git repository
-* Add your code to the VSTS Git repository
-* Create a Continuous Integration pipeline
-* Deploy a built application to an Azure Web App from VSTS
+* Create a Visual Studio Team Services online account that you used for version control of your code, automatic compiling and deploying of your web app.
+* Create a VSTS Git repository that you utilized to synchronize your source code on your machine and in the cloud.
+* Add your code to the VSTS Git repository.
+* Create a Continuous Integration pipeline that you used to automatically compile your application and create packages for deployment anytime code is checked into the repository.
+* Deploy a built application to an Azure Web App from VSTS and thus automating the final steps of your deployment process.
 
+After completing this module, you can continue on to Module 5: ARM.
+
+### View instructions for [Module 5 for Java](../05-arm-cd).
+
+---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

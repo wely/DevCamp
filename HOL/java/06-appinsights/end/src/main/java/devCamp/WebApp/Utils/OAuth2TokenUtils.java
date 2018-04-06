@@ -25,27 +25,9 @@ public class OAuth2TokenUtils {
     public static String getGivenName() {
         return getAttr("givenName");
     }
-    
-    public static String getMail(Authentication auth) {
-        return getAttr(auth, "mail");
-    }
-
-    public static String getGivenName(Authentication auth) {
-        return getAttr(auth,"givenName");
-    }    
 
     public static String getAttr(String attr) {
         HashMap hm = getMap();
-        if (hm != null){
-            String m = (String)hm.get(attr);
-            LOG.info("{} = {}",attr,m);
-            return m;
-        }
-        return null;
-    }
-
-    public static String getAttr(Authentication auth, String attr) {
-        HashMap hm = getMap(auth);
         if (hm != null){
             String m = (String)hm.get(attr);
             LOG.info("{} = {}",attr,m);
@@ -58,12 +40,6 @@ public class OAuth2TokenUtils {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         if (securityContext != null) {
             Authentication sco = securityContext.getAuthentication();
-        	return getMap(sco);
-        }
-        return null;
-    }
-    
-    private static HashMap getMap(Authentication sco){
             if (sco instanceof OAuth2Authentication){
                 OAuth2Authentication au = (OAuth2Authentication)sco;
                 Authentication auth = au.getUserAuthentication();
@@ -72,6 +48,7 @@ public class OAuth2TokenUtils {
                     return (HashMap)deets;
                 }
             }
+        }
         return null;		
     }
 }

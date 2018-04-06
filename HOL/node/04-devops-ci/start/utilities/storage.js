@@ -15,7 +15,7 @@ module.exports.uploadBlob = function (input) {
         var stream = fs.createReadStream(input[1].image.path);
         var streamLength = input[1].image.size;
         var options = { contentSettings: { contentType: input[1].image.type } };
-        var blobName = input[0] + '.' + mime.extension(input[1].image.type);
+        var blobName = input[0] + '.' + mime.getExtension(input[1].image.type);
         var blobContainerName = process.env.AZURE_STORAGE_BLOB_CONTAINER;
 
         // Confirm blob container

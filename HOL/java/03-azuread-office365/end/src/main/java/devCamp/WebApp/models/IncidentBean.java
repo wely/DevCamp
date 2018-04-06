@@ -68,6 +68,8 @@ public class IncidentBean implements Serializable{
 	@JsonProperty("SortKey")
 	private String SortKey;
 
+	@JsonProperty("Tags")
+	private String Tags;
 
 
 	public String toString() {
@@ -90,6 +92,7 @@ public class IncidentBean implements Serializable{
         sb.append("Created=").append(Created).append(", ");
         sb.append("LastModified=").append(LastModified).append(", ");
         sb.append("SortKey=").append(SortKey).append(", ");
+        sb.append("Tags=").append(Tags).append(", ");
 
 		return sb.toString();
 	}
@@ -295,6 +298,16 @@ public class IncidentBean implements Serializable{
 	}
 
 
+	public void setTags(String tags) {
+		Tags = tags;
+	}
+
+
+
+	public String getTags() {
+		return Tags;
+	}
+
 
 	public void setSortKey(String sortKey) {
 		SortKey = sortKey;
@@ -314,6 +327,7 @@ public class IncidentBean implements Serializable{
     	incident.setOutageType("outageType");
     	incident.setIsEmergency(false);
     	incident.setResolved(true);
+    	incident.setTags("Street, Lamps");
     	return incident;
 	}
 }

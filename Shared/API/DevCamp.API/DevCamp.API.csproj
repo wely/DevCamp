@@ -274,8 +274,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Data\SampleIncidents.json" />
+    <Content Include="Data\FakeIncidents.json" />
     <None Include="Properties\PublishProfiles\incidentapi32csxy6h3sbku - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\incidentapi32csxy6h3sbku - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\incidentapimtyi6dghs3i4q - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\incidentapiqv3jp6zfymlau - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />

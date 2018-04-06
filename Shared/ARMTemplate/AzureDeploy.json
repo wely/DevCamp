@@ -37,9 +37,10 @@
         "dtlTimeZoneId": "UTC",
         "dtlVmUsername": "l-admin",
         "dtlVmPassword": "Devc@mp2016!",
-        "chocoPackages": "git-credential-winstore,webpicmd,eclipse,jre8,javaruntime"
+        "chocoPackages": "Git-Credential-Manager-for-Windows,azure-cli,webpicmd,eclipse,jre8,javaruntime"
     },
-    "resources": [{
+    "resources": [
+        {
             "name": "[variables('storageName')]",
             "type": "Microsoft.Storage/storageAccounts",
             "location": "[resourceGroup().location]",
@@ -85,6 +86,7 @@
         },
         {
             "apiVersion": "2015-04-08",
+            "kind": "GlobalDocumentDB",
             "type": "Microsoft.DocumentDB/databaseAccounts",
             "name": "[variables('docDBName')]",
             "location": "[resourceGroup().location]",
@@ -93,12 +95,13 @@
                 "databaseAccountOfferType": "Standard",
                 "consistencyPolicy": {
                     "defaultConsistencyLevel": "Session",
-                    "maxStalenessPrefix": 100,
-                    "maxIntervalInSeconds": 5
+                    "maxIntervalInSeconds": 5,
+                    "maxStalenessPrefix": 100
                 }
             },
             "tags": {
-                "displayName": "DocumentDB"
+                "displayName": "CosmosDB",
+                "defaultExperience": "DocumentDB"
             }
         },
         {
@@ -134,7 +137,8 @@
                 "name": "[variables('apiAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
             },
-            "resources": [{
+            "resources": [
+                {
                     "name": "appsettings",
                     "type": "config",
                     "apiVersion": "2015-08-01",
@@ -228,7 +232,8 @@
                 "name": "[variables('dotnetAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
             },
-            "resources": [{
+            "resources": [
+                {
                     "name": "appsettings",
                     "type": "config",
                     "apiVersion": "2015-08-01",
@@ -301,7 +306,8 @@
                 "name": "[variables('nodejsAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
             },
-            "resources": [{
+            "resources": [
+                {
                     "name": "appsettings",
                     "type": "config",
                     "apiVersion": "2015-08-01",
@@ -375,7 +381,8 @@
                 "name": "[variables('javaAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
             },
-            "resources": [{
+            "resources": [
+                {
                     "apiVersion": "2015-08-01",
                     "name": "web",
                     "type": "config",
@@ -450,7 +457,8 @@
             "type": "Microsoft.DevTestLab/labs",
             "name": "[variables('dtlName')]",
             "location": "[resourceGroup().location]",
-            "resources": [{
+            "resources": [
+                {
                     "apiVersion": "2016-05-15",
                     "name": "[variables('dtlVnetName')]",
                     "type": "virtualnetworks",
@@ -536,7 +544,7 @@
                 "galleryImageReference": {
                     "offer": "VisualStudio",
                     "publisher": "MicrosoftVisualStudio",
-                    "sku": "VS-2015-Comm-VSU3-AzureSDK-291-WS2012R2",
+                    "sku": "VS-2015-Comm-VSU3-AzureSDK-29-WS2012R2",
                     "osType": "Windows",
                     "version": "latest"
                 },
@@ -547,34 +555,52 @@
                 "isAuthenticationWithSshKey": false,
                 "disallowPublicIpAddress": false,
                 "allowClaim": false,
-                "artifacts": [{
+                "artifacts": [
+                    {
                         "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-chrome')]"
                     },
                     {
                         "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-git')]"
                     },
                     {
-                        "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-powershell3')]"
-                    },
-                    {
                         "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-vscode')]"
                     },
                     {
                         "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-chocolatey')]",
-                        "parameters": [{
-                            "name": "packages",
-                            "value": "[variables('chocoPackages')]"
-                        }]
+                        "parameters": [
+                            {
+                                "name": "packages",
+                                "value": "[variables('chocoPackages')]"
+                            }
+                        ]
                     },
                     {
                         "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-run-powershell')]",
-                        "parameters": [{
+                        "parameters": [
+                            {
                                 "name": "scriptFileUris",
                                 "value": "[[\"https://raw.githubusercontent.com/AzureCAT-GSI/DevCamp/master/Shared/ARMTemplate/Scripts/InstallNodeJS.ps1\"]"
                             },
                             {
                                 "name": "scriptToRun",
                                 "value": "InstallNodeJS.ps1"
+                            },
+                            {
+                                "name": "scriptArguments",
+                                "value": ""
+                            }
+                        ]
+                    },
+    {
+                        "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', variables('dtlName'), 'public repo', 'windows-run-powershell')]",
+                        "parameters": [
+                            {
+                                "name": "scriptFileUris",
+                                "value": "[[\"https://raw.githubusercontent.com/AzureCAT-GSI/DevCamp/master/Shared/ARMTemplate/Scripts/extrachocolatey.ps1\"]"
+                            },
+                            {
+                                "name": "scriptToRun",
+                                "value": "extrachocolatey.ps1"
                             },
                             {
                                 "name": "scriptArguments",

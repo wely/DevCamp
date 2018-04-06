@@ -18,6 +18,7 @@ apply plugin: 'war'
 
 war {
 	baseName = 'ROOT'
+	webXml = file('WEB-INF/web.xml')
 }
 
 sourceCompatibility = 1.8

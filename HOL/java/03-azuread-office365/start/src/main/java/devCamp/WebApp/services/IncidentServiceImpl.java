@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class IncidentServiceImpl implements IncidentService {
@@ -26,8 +27,8 @@ public class IncidentServiceImpl implements IncidentService {
 
     @Override
     public List<IncidentBean> getAllIncidents() {
-        LOG.info("Performing get {} web service", applicationProperties.getIncidentApiUrl()+"/incidents");
-        final String restUri = applicationProperties.getIncidentApiUrl() +"/incidents";
+        LOG.info("Performing get {} web service", applicationProperties.getIncidentApiUrl() +"/incidents");
+        final String restUri = applicationProperties.getIncidentApiUrl()+"/incidents";
         ResponseEntity<List<IncidentBean>> response = restTemplate.exchange(restUri, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<IncidentBean>>() {});
         LOG.info("Total Incidents {}", response.getBody().size());
@@ -35,32 +36,11 @@ public class IncidentServiceImpl implements IncidentService {
     }
 
     @Override
-    public IncidentBean createIncident(IncidentBean incident) {
-        LOG.info("Creating incident");
-        final String restUri = applicationProperties.getIncidentApiUrl() +"/incidents";
-        IncidentBean createdBean = restTemplate.postForObject(restUri, incident, IncidentBean.class);
-        LOG.info("Done creating incident");
-        return createdBean;
-
-    }
-
-    @Override
-    public IncidentBean updateIncident(String incidentId, IncidentBean newIncident) {
-        LOG.info("Updating incident");
-        //Add update logic here
-
-
-        LOG.info("Done updating incident");
-        return null;
-    }
-
-
-    @Override
     public CompletableFuture<List<IncidentBean>> getAllIncidentsAsync() {
         CompletableFuture<List<IncidentBean>> cf = new CompletableFuture<>();
         CompletableFuture.runAsync(() -> {
             LOG.info("Performing get /incidents web service");
-            final String restUri = applicationProperties.getIncidentApiUrl() +"/incidents";
+            final String restUri = applicationProperties.getIncidentApiUrl()+"/incidents";
             ResponseEntity<List<IncidentBean>> response = restTemplate.exchange(restUri, HttpMethod.GET, null,
                     new ParameterizedTypeReference<List<IncidentBean>>() {});
             LOG.info("Total Incidents {}", response.getBody().size());
@@ -71,11 +51,20 @@ public class IncidentServiceImpl implements IncidentService {
     }
 
     @Override
+    public IncidentBean createIncident(IncidentBean incident) {
+        LOG.info("Creating incident");
+        final String restUri = applicationProperties.getIncidentApiUrl()+"/incidents";
+        IncidentBean createdBean = restTemplate.postForObject(restUri, incident, IncidentBean.class);
+        LOG.info("Done creating incident");
+        return createdBean;
+    }
+    
+    @Override
     public CompletableFuture<IncidentBean> createIncidentAsync(IncidentBean incident) {
         CompletableFuture<IncidentBean> cf = new CompletableFuture<>();
         CompletableFuture.runAsync(() -> {
             LOG.info("Creating incident");
-            final String restUri = applicationProperties.getIncidentApiUrl() +"/incidents";
+            final String restUri = applicationProperties.getIncidentApiUrl()+"/incidents";
             IncidentBean createdBean = restTemplate.postForObject(restUri, incident, IncidentBean.class);
             cf.complete(createdBean);
             LOG.info("Done creating incident");
@@ -101,7 +90,7 @@ public class IncidentServiceImpl implements IncidentService {
         CompletableFuture<IncidentBean> cf = new CompletableFuture<>();
         CompletableFuture.runAsync(() -> {
             LOG.info("Getting incident by ID {}", incidentId);
-            final String restUri = applicationProperties.getIncidentApiUrl() +"/incidents";
+            final String restUri = applicationProperties.getIncidentApiUrl()+"/incidents";
             IncidentBean result = restTemplate.getForObject(restUri, IncidentBean.class);
 
             cf.complete(result);
@@ -114,4 +103,4 @@ public class IncidentServiceImpl implements IncidentService {
     public void clearCache() {
 
     }
-}
+}   

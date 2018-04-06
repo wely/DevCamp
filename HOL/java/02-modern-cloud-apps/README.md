@@ -2,58 +2,58 @@
 
 ## Overview
 
-City Power & Light is a sample application that allows citizens to to report "incidents" that have occurred in their community.  It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
+City Power & Light is a sample application that allows citizens to report "incidents" that have occurred in their community. It includes a landing screen, a dashboard, and a form for reporting new incidents with an optional photo.  The application is implemented with several components:
 
-* Front end web application contains the user interface and business logic.  This component has been implemented three times in .NET, NodeJS, and Java.
-* WebAPI is shared across the front ends and exposes the backend DocumentDB
-* DocumentDB is used as the data persistence layer
+* Front end web application contains the user interface and business logic. This component has been implemented three times in .NET, NodeJS, and Java.
+* WebAPI is shared across the front ends and exposes the backend CosmosDB.
+* CosmosDB is used as the data persistence layer.
 
 In this lab, you will work with an existing API to connect to the web application front end. This will allow you perform CRUD operations for incidents. You will also configure additional Azure features for Redis Cache, Azure Storage Queues, and Azure Blob Storage. 
 
-This guide uses [Eclipse](https://www.eclipse.org) for editing, however please feel free to use your editor of choice.
+> This guide uses [Eclipse](https://www.eclipse.org) for editing, however please feel free to use your editor of choice.
 
 ## Objectives
 
 In this hands-on lab, you will learn how to:
 
-* Use Eclipse to connect to an API
-* Deploy the application to an Azure Web App
-* Modify a view to add caching
-* Modify code to add queuing and blob storage
+* Use Eclipse to connect to an API.
+* Provision an Azure Web App to host the Web site.
+* Modify a view to add caching.
+* Modify code to add queuing and blob storage.
 
 ## Prerequisites
 
-* The source for the starter app is located in the HOL\java\modern-cloud-apps\start folder.
-* The finished project is located in the HOL\java\modern-cloud-apps\end folder.
-* Deployed the starter ARM Template
-* Established a development machine either on-premises or in Azure
+* The source for the starter app is located in the [start](start) folder.
+* The finished project is located in the [end](end) folder.
+* Deployed the starter ARM Template in [HOL 1](../01-developer-environment).
+* Established a development machine either on-premises or in Azure.
 
 ## Exercises
 
 This hands-on-lab has the following exercises:
-
-* Exercise 1: Integrate the API
-* Exercise 2: Add a caching layer
-* Exercise 3: Write images to Azure Blob storage
+* [Exercise 1: Integrate the API](#ex1)
+* [Exercise 2: Add a caching layer](#ex2)
+* [Exercise 3: Write images to Azure Blob storage](#ex3)
 
 ---
-### Exercise 1: Integrate the API
+## Exercise 1: Integrate the API<a name="ex1"></a>
 
-1. In your development virtual machine, open a command prompt window and navigate to the `c:\DevCamp\HOL\java\02-modern-cloud-apps\start` folder 
+1. In your development virtual machine, open a command prompt window and navigate to the `C:\DevCamp\HOL\java\02-modern-cloud-apps\start` folder.
+
 1. Run `gradle eclipse` in the terminal window to restore all dependencies and configure the
-   project paths for Eclipse
+   project paths for Eclipse:
 
-    ![image](./media/image-001.gif)
+    ![image](./media/2017-06-19_11_42_00.png)
 
-1. Once package restoration completes, open Eclipse 
+1. Once package restoration completes, open Eclipse.
 
-    ![image](./media/image-002.gif)
+    ![image](./media/2017-06-19_11_29_00.png)
 
-    Import the HOL Start folder using the menu item `File/import`, and choose the Gradle project wizard and click `Next`:
+    Import the HOL Start folder using the menu item `File` -> `Import...`, and choose the Gradle project wizard and click `Next`:
 
     ![image](./media/2016-10-24_14-35-05.gif)
 
-    On the gradle welcome page click next, and on the `Import Gradle Project` page, choose the `c:\DevCamp\HOL\java\02-modern-cloud-apps\start` directory.  Click 'Finish`:
+    On the gradle `Welcome` page click `Next`, and on the `Import Gradle Project` page, choose the `C:\DevCamp\HOL\java\02-modern-cloud-apps\start` directory.  Click `Finish`:
 
     ![image](./media/2016-10-24_14-38-30.gif)
 
@@ -62,88 +62,99 @@ This hands-on-lab has the following exercises:
     ![image](./media/2016-10-24_14-41-33.gif)
   
 
-1. Let's run the application in Debug Mode.  Click the Debug icon on
-   the top toolbar, then select "Debug Configurations...".
+1. Let's run the application in Debug Mode. Click the Debug icon on the top toolbar, then select "Debug Configurations...".
 
     ![image](./media/image-003.gif)
+    
+    > If you do not have a toolbar you can activate it via the menu: `Window` -> `Appearance` -> `Show Toolbar`.
 
-   Click on "Spring Boot App" and click the + icon in the top left to create a new run configuration.  
+   ![image](./media/2017-06-19_11_47_00.png)
+
+   Click on `Spring Boot App` and click the `+` icon in the top left to create a new run configuration.  
    
    ![image](./media/2016-10-24_14-46-43.gif)
    
-   Give the run configuration a name, such as `Run DevCamp App`, choose the Start project, click `Search` and choose devCamp.WebApp.DevcampApplication for the main type.
+   Give the run configuration a name, such as `Run DevCamp App`, choose the `start` project, click `Search...` and choose `devCamp.WebApp.DevcampApplication` for the main type.
 
     ![image](./media/2016-10-24_14-51-00.gif)
 
-   Click "Apply" and "Debug".  In the console pane you should see
-   something like this:
+   Click `Apply` and `Debug`.  In the console pane you should see something like this:
 
     ![image](./media/image-003b.gif)
 
-1. Open a browser and navigate to `http://localhost:8080`. You should now see the running application
+1. Open a browser and navigate to `http://localhost:8080`. You should see the home page of the running application:
 
-    ![image](./media/image-004.gif)
+    ![image](./media/2017-06-19_12_01_00.png)
 
-1. On the Dashboard page, notice how the incidents are stubbed in.
+1. Click on `Dashboard` to see some sample incidents hard-coded in the solution:
 
-    ![image](./media/image-005.gif)
+    ![image](./media/2017-06-19_12_01_30.png)
 
-    As part of the original ARM template we deployed an ASP.NET WebAPI that queries a DocumentDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
+    As part of the original ARM template we deployed an ASP.NET WebAPI that queries a CosmosDB Collection. Let's integrate that API so that the incidents are dynamically pulled from a data store.
 
-1. In the [Azure Portal](https://portal.azure.com) navigate to the resource group that you created with the original ARM template.  Resource Groups can be found on the left hand toolbar -> More Services -> Resource Groups.
+1. In the [Azure Portal](https://portal.azure.com) navigate to the resource group `DevCamp` that you created with the original ARM template. Resource groups can be found on the left hand toolbar.
 
-    Select the API app that begins with the name **incidentsapi** followed by a random string of characters.
+    Select the API app that begins with the name `incidentapi` followed by a random string of characters.
 
-    ![image](./media/image-006.gif)
+    ![image](./media/2017-06-16_11_29_00.png)
 
-1. The window that slides out is called a **blade** and contains information and configuration options for the resource.
+1. The window that slides out is called a **blade** and contains information and configuration options for the resource.  
 
-    On the top toolbar, select **Browse** to open the API in a new browser window.
+    On the top toolbar, select `Browse` to open the API in a new browser window.
 
-    ![image](./media/image-007.gif)
+    ![image](./media/2017-06-16_11_33_00.png)
 
-    You should be greeted by the default ASP.NET landing page. Capture
-    the URL in notepad or other text editor.
-    ![image](./media/image-008.gif)
+    You should be greeted by the default ASP.NET landing page:
+    
+    ![image](./media/image-05.gif)
 
-1. Since we provisioned a new instance of DocumentDB, there are not any records to use as sample data.  To generate sample data, our API has a route that can be hit at any time to reset the documents in our collection.  In the browser, add `/incidents/sampledata` to your API's URL to generate sample documents.  The API will respond with a block of JSON that looks like this:
-    ```JSON
-    {"Version":{"_Major":1,"_Minor":1,"_Build":-1,"_Revision":-1},"Content":{"Message":"Initialized sample data","Id":"187a8c66-dae6-406a-9d6e-7654459689c4","Timestamp":"2016-10-24T19:55:02.9495008Z","Headers":[{"Key":"Content-Type","Value":["application/json; charset=utf-8"]}]},"StatusCode":200,"ReasonPhrase":"OK","Headers":[],"RequestMessage":null,"IsSuccessStatusCode":true}
-    ```
+1. Since we provisioned a new instance of CosmosDB, there are no records in the database. We will generate some sample data using the shared API. It has a route that can be accessed at any time to create or reset the documents in your collection.  In the browser, add the following to your API URL to generate sample documents.
 
-1. After navigating to the sampledata route, let's verify that the documents were created in DocumentDB. In the Azure Portal, navigate to the Resource Group blade and select the DocumentDB resource.
+    >
+    > Add `/incidents/sampledata` to the end of your API URL. 
+    >
+    > The URL should look like the following:
+    >  
+    > `http://incidentapi[YOUR_RG_NAME].azurewebsites.net/incidents/sampledata`
+    >
+    > You can also do this using the swagger pages which will be available at this URL:
+    >
+    >`http://incidentapi[YOUR_RG_NAME].azurewebsites.net/swagger`
+	
+    > In Chrome you should see a JSON response directly in the browser tab, however in Internet Explorer you may be asked top Open or Download a file. If prompted, Open the file in Notepad or Visual Studio Code to see the return message.
 
-    ![image](./media/image-010.gif)
+1. After navigating to the `sampledata` route, let's verify that the documents were created in CosmosDB. In the Azure Portal, navigate to the Resource Group blade, select the `DevCamp` and then select the CosmosDB resource which starts with `incidentdb`.
 
-    Select the one database, and then select the **incidents** collection.
+    ![image](./media/2017-06-16_11_39_00.png)
 
-    ![image](./media/image-011.gif)
+    Select the CosmosDB database. This will open the CosmosDB blade. Scroll to the Collections section.
 
-    In the Collection blade, select **Document Explorer** from the top toolbar.
-
-    ![image](./media/image-012.gif)
+    In the Collections section, select `Document Explorer`.
+    
+    ![image](./media/2017-06-16_11_42_00.png)
 
     The Document Explorer is an easy way to view the documents inside of a collection via the browser. Select the first record to see the JSON body of the document.
 
-    ![image](./media/image-013.gif)
+    ![image](./media/2017-06-16_11_44_00.png)
+
+    ![image](./media/2017-06-16_11_45_00.png)
 
     We can see that several incidents have been created and are now available to the API.
 
-1. Back in Eclipse, let's begin integrating the API into our code.  We will need to query the API's endpoint URL, and we have options of where to store that string.  While we could insert it directly into our code, a better practice is to abstract such a configuration setting into an environment variable.
+1. Back in Eclipse, let's begin integrating the API into our code. We will need to query the API's endpoint URL, and we have options of where to store that string. While we could insert it directly into our code, a better practice is to abstract such a configuration setting into an environment variable.
 
-    Stop the debugger by pressing the red "stop" square, and open the
-    run configuration you created earlier.  Click the "Environment"
-    tab.  This section defines key/value pairs that will be passed
-    into environment variables whenever the debugger is launched. Add
-    an entry for `INCIDENT_API_URL` and set the value to the ASP.NET
-    WebAPI that we earlier loaded into the browser (and captured in
-    notepad). It should look like this: `http://incidentapib6prykosg3fjk.azurewebsites.net/`, but with your own website name.  Click OK to save the
-    environment variable, then apply and close.
+    Stop the debugger by pressing the red `stop` square, and open the run configuration you created earlier. Click the `Environment` tab.
+    
+    ![image](./media/2017-06-19_12_11_00.png)
+    
+    This section defines key/value pairs that will be passed into environment variables whenever the debugger is launched. Add an entry for `INCIDENT_API_URL` and set the value to the ASP.NET WebAPI that we earlier loaded into the browser and noted. It should look something like this: `http://incidentapi3oszghr6hgets.azurewebsites.net`, but with your own website name. Click `OK` to save the environment variable, then `Apply` and `Close`.
 
-    ![image](./media/image-009.gif)
+    ![image](./media/2017-06-19_12_16_00.png)
 
-    Now that the URL is loaded as an environment variable, we can
-    access it from our application by creating a configuration object to hold configuration variables, and setting those variables within the application.yml file.  First, let's create the java class `devCamp.WebApp.properties.ApplicationProperties`, and paste in this code:
+    Now that the URL is loaded as an environment variable, we can access it from our application by creating a configuration object to hold configuration variables, and setting those variables within the `application.yml` file.
+    
+    First, let's create the java class `devCamp.WebApp.properties.ApplicationProperties`, and paste in this code:
+    
     ```java
     package devCamp.WebApp.properties;
 
@@ -168,34 +179,51 @@ This hands-on-lab has the following exercises:
             return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
         }
     }
-
     ```
 
-    You'll notice a red line under `ReflectionToStringBuilder`. This is because we have to add `org.apache.commons.lang3` as a dependency.  Open up the `build.gradle` file, and add this line to the dependencies section:
+    You'll notice a red line under `ReflectionToStringBuilder`. This is because we have to add `org.apache.commons.lang3` as a dependency.
+    
+    ![image](./media/2017-06-19_12_42_00.png)
+    
+    Open up the `build.gradle` file, and add this line to the dependencies section:
+    
     ```java
     compile('org.apache.commons:commons-lang3:3.5')
     ```
 
-    To make sure that Eclipse knows about the new packages we added to
-    the buld, go to the `gradle tasks` tab in the bottom pane, navigate to the `ide/eclipse` gradle task and right click on it and choose `Run gradle tasks`.  Then right-click on the project in the project explorer,
-    close the project, and then open it again.  Open `ApplicationProperties.java` and verify that `ReflectionToStringBuilder` no longer has the red line under it, indicating that the import is resolved properly.  We will do this process several times over the course of the DevCamp.
+    ![image](./media/2017-06-19_12_33_00.png)
+
+    To make sure that Eclipse knows about the new packages we added to the build, go to the `Gradle Tasks` tab in the bottom pane.
+    
+    If Eclipse does not show the `Gradle Tasks` tab you can activate it via the menu. Click `Window` -> `Show View` -> `Other...`.
+    
+    ![image](./media/2017-06-19_12_49_00.png)
+    
+    ![image](./media/2017-06-19_12_48_00.png)
+    
+    Navigate to the `ide` -> `eclipse` gradle task and right-click on it and choose `Run Gradle Tasks`.
+    
+    ![image](./media/2017-06-19_12_53_00.png)
+    
+    Then right-click on the project in the project explorer, close the project, and then open it again.
+    
+    ![image](./media/2017-06-19_12_56_00.png)
+    
+    Open `ApplicationProperties.java` and verify that `ReflectionToStringBuilder` no longer has the red line under it, indicating that the import is resolved properly.  We will do this process several times over the course of the DevCamp.
+    
+    ![image](./media/2017-06-19_13_01_00.png)
 
     Let's take a look at `src/main/resources/application.yml`.  This is a configuration file that sets up the parameters that we want to import into the application.  For example, this line:
     ```java
     incidentApiUrl: ${INCIDENT_API_URL}
     ```
-    tells spring boot to get the INCIDENT_API_URL environment variable, and place it into the ApplicationProperties object that we just created.  This file has several other setings that we will be using later.
+    tells spring boot to get the `INCIDENT_API_URL` environment variable, and place it into the ApplicationProperties object that we just created. This file has several other setings that we will be using later.
 
-    > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application
+    > Our ARM Template already configured an environment variable for the Azure Web App that will soon run our application.
 
-1. Several components will work together to call and display the
-   incidents in the database.  We will need an object to hold
-   the data associated with each incident.  We've supplied that object
-   in devCamp.WebApp.models.IncedentBean.Java.  Open
-   that file and look at its properties and methods.
+1. Several components will work together to call and display the incidents in the database. We will need an object to hold the data associated with each incident. We've supplied that object in `devCamp.WebApp.models.IncedentBean.Java`. Open that file and look at its properties and methods.
 
-1. Create the interface `devCamp.WebApp.services.IncidentService.java` with the
-   following code:
+1. Create the interface `devCamp.WebApp.services.IncidentService.java` with the following code:
 
     ```java
     package devCamp.WebApp.services;
@@ -231,7 +259,6 @@ This hands-on-lab has the following exercises:
 
         void clearCache();
     }
-
     ```
 
     We now need an implementation for this interface, so create `devCamp.WebApp.services.IncidentServiceImpl.java`, and add this code:
@@ -344,23 +371,15 @@ This hands-on-lab has the following exercises:
     }    
     ```
 
-    This class uses the 
-    [RestTemplate](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) library
-    to generate a HTTP GET to the API endpoint, and to convert the
-    return javascript into a java object.  In this case, we've
-    specified that it should return a `List<IncidentBean>`.
+    This class uses the [RestTemplate](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) library to generate a HTTP GET to the API endpoint, and to convert the return javascript into a java object. In this case, we've specified that it should return a `List<IncidentBean>`.
 
-    It also uses the `CompletableFuture` object to allow the API calls to run asynchronously.  This will 
-    make pages load faster, because back-end calls don't have to be done synchronously.  A couple of the functions 
-    we will use later are not asyncronous, for reasons we'll see later.
-    The class also contains functions to create a new incident, update an incident, and get a single incident by ID.  These invoke the appropriate REST api call.
+    It also uses the `CompletableFuture` object to allow the API calls to run asynchronously. This will make pages load faster, because back-end calls don't have to be done synchronously. A couple of the functions we will use later are not asyncronous, for reasons we'll see later. The class also contains functions to create a new incident, update an incident, and get a single incident by ID.  These invoke the appropriate REST api call.
 
     Notice this class uses the `applicationProperties` object that we created earlier, to get the incident URL.
 
-1. Open `DevCamp.WebApp.Controllers.DashboardController.java`. The dashboard function in this class is called when the user hits the `/dashboard` url.  In the function we are currently populating some dummy data to display on the dashboard.  We are going to change this to call the API, and display the retrieved data in the dashboard.
+1. Open `DevCamp.WebApp.Controllers.DashboardController.java`. The dashboard function in this class is called when the user hits the `/dashboard` url.  In the function we are currently populating some dummy data to display on the dashboard. We are going to change this to call the API, and display the retrieved data in the dashboard.
 
-    In the dashboard function,
-    comment out the whole dashboard function:
+    In the dashboard function, comment out the whole dashboard function:
 
     ```java
  	@RequestMapping("/dashboard")
@@ -377,8 +396,7 @@ This hands-on-lab has the following exercises:
 		}
     ```
 
-    Insert this code to call the GetAllIncidents API and put the
-    resulting list of IncidentBean in the model.
+    Insert this code to call the GetAllIncidents API and put the resulting list of IncidentBean in the model.
 
     ```java
     @Autowired
@@ -390,12 +408,17 @@ This hands-on-lab has the following exercises:
 		model.addAttribute("allIncidents", list);
 		return "Dashboard/index";
 	}	
-
     ```
 
-    You will notice that the `@Autowired` annotation is underlined in red - you have to resolve the import for it by hovering the mouse pointer over it, and choose the `import Autowired` quck fix.  You can also do this by clicking on the red `x` next to that line, and choosing the `import Autowired` quick fix.  you will have to do this for IncidentService and List.  For list, choose the `import java.util.List` option.  This simply adds the appropriate imports to the top of the class.  You will have to do this many times during the DevCamp to make sure the proper imports are included.
+    You will notice that the `@Autowired` annotation is underlined in red - you have to resolve the import for it by hovering the mouse pointer over it, and choose the `import Autowired` quick fix.
+    
+    ![image](./media/2017-06-19_13_16_00.png)    
+    
+    You can also do this by clicking on the red `x` next to that line, and choosing the `import Autowired` quick fix.  You will have to do this for `IncidentService` and `List`. For `List`, choose the `import java.util.List` option. This simply adds the appropriate imports to the top of the class. You will have to do this many times during the DevCamp to make sure the proper imports are included.
+    
+    ***To save some time you can tell Eclipse to add the imports automatically when you save a file. On the menu go to `Java` -> `Editor` -> `Save Actions` -> `Organize Imports`.*** 
 
-1. We will need to create two configuration classes.  The first is `devCamp.WebApp.configurations.ApplicationConfig`, with this code:
+1. We will need to create two configuration classes. The first is `devCamp.WebApp.configurations.ApplicationConfig`, with this code:
     ```java
     package devCamp.WebApp.configurations;
 
@@ -441,7 +464,7 @@ This hands-on-lab has the following exercises:
         }
     }    
     ```
-    >this class simply makes sure the application configuration is read in, and also configures the RestTemplate library to use the proper message converters.
+    > This class simply makes sure the application configuration is read in, and also configures the RestTemplate library to use the proper message converters.
 
     The other configuration class is `devCamp.WebApp.configurations.AsyncConfig`, which sets up a pool of threads for asynchronous processing of calls.  This is the code to paste into that class:
 
@@ -483,18 +506,16 @@ This hands-on-lab has the following exercises:
     ```
 
 
-1. In addition to displaying incidents, the application also provides a form to enter in new Incidents.  
-The POST from the form is handled by the `IncidentController.java` class.  
-Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.java` and comment the function out. After the commented out function, add the following code:
-    ```java
+1. In addition to displaying incidents, the application also provides a form to enter in new incidents. The POST from the form is handled by the `IncidentController.java` class. Scroll to the `Create` function of `devCamp.WebApp.Controllers.IncidentController.java` and comment the function out. After the commented out function, add the following code:
 
+    ```java
 	@Autowired
     private IncidentService incidentService;
 
 	@PostMapping("/new")
 	public String Create(@ModelAttribute IncidentBean incident, @RequestParam("file") MultipartFile imageFile) {
 		LOG.info("creating incident");
-		graphService.sendMail(OAuth2TokenUtils.getGivenName(),OAuth2TokenUtils.getMail());
+		//graphService.sendMail(OAuth2TokenUtils.getGivenName(),OAuth2TokenUtils.getMail());
 		IncidentBean result = incidentService.createIncident(incident);
 		String incidentID = result.getId();
 
@@ -522,16 +543,12 @@ Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.
 		}
 		return "redirect:/dashboard";
 	}
-    
     ```
  
-     > you will have to resolve the imports for `@Autowired`, `@Async`, `IncidentService`, etc.  as explained above.
+     > You will have to resolve the imports for `@Autowired`, `IncidentService`, etc. as explained above.
 
-    Before we test this code, lets take a look at the HTML template for the dashboard
-    page, located in
-    `src/main/resources/templates/Dashboard/index.html`. The following
-    section loops through all of the incidents in the allIncidents
-    object in the model, and formats them nicely for the display.
+    Before we test this code, lets take a look at the HTML template for the dashboard page, located in
+    `src/main/resources/templates/Dashboard/index.html`. The following section loops through all of the incidents in the `allIncidents` object in the model, and formats them nicely for the display.
 
     ```HTML
     <div th:each="incident : ${allIncidents}">
@@ -562,47 +579,56 @@ Scroll to the Create function of `devCamp.WebApp.Controllers.IncidentController.
     </div>
     ```
 
-    >We aren't making any changes to this file at this point, we are just verifying that the dashboard display simply pulls all the incidents in the model object, and formats them for HTML display.
+    > We aren't making any changes to this file at this point, we are just verifying that the dashboard display simply pulls all the incidents in the model object, and formats them for HTML display.
 
-1. Run the application via the Debug Tab in Eclipse and check the
-   dashboard page at http://localhost:8080/dashboard.
+1. Run the application via the Debug Tab in Eclipse and check the dashboard page at `http://localhost:8080/dashboard`.
 
-    ![image](./media/image-015.gif)
+    ![image](./media/2017-06-19_15_12_00.png)
 
-The cards now represent data returned from our API, replacing the static mockup code.  You can also click on `Report Outage`, enter the information requested, then come back to the dashboard display to verify that your outage was saved.
+The cards now represent data returned from our API, replacing the static mockup code. You can also click on `Report Outage`, enter the information requested, then come back to the dashboard display to verify that your outage was saved.
 
 ---
-## Exercise 2: Add a caching layer
-Querying our API is a big step forward, but caching the data in memory would increase 
-performance and reduce the load on our API.  Azure offers a managed (PaaS) 
-service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
+## Exercise 2: Add a caching layer<a name="ex2"></a>
 
-We deployed an instance of Azure Redis Cache in the ARM Template, but
-need to add application logic. Spring has great support for caching,
-and can easily use Azure Redis Cache to hold the data.
+Querying our API is a big step forward, but caching the data in memory would increase performance and reduce the load on our API.  Azure offers a managed (PaaS) service called [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/).
 
+We deployed an instance of Azure Redis Cache in the ARM Template, but need to add application logic. Spring has great support for caching, and can easily use Azure Redis Cache to hold the data.
 
-1. First, let's add our Redis information to local environment variables. In the [Azure Portal](https://portal.azure.com) navigate to the Resource Group and select the Redis instance.
+1. First, let's add our Redis information to local environment variables. In the [Azure Portal](https://portal.azure.com) navigate to the resource group `DevCamp` and select the Redis Cache instance named `incidentcache...`:
 
-    ![image](./media/image-016.gif)
+    ![image](./media/2017-06-16_13_14_00.png)
 
-    On the Redis blade, note the **Host Name**, then select the **key icon** and note the **Primary Key**.
+1. On the Redis blade, note the **Host Name**.
 
-    ![image](./media/image-017.gif)
+    ![image](./media/2017-06-16_13_18_00.png)
 
-    On the Redis blade, expand **Ports* and note the Non-SSL port 6379 and SSL Port of 6380.
+1. Then select `Show access keys` and note the **Primary Key**.
 
-    ![image](./media/image-018.gif)
+1. Return to the `Overview` blade and expand **Ports** by selecting `Non-SSL port (6379) disabled` and note the Non-SSL port 6379 and SSL Port of 6380 on the port details blade. **Important:** Below `Allow access only via SSL` click on `No` to enable non-SSL connections.
+
+    ![image](./media/2017-06-16_13_29_00.png)
+
+1. Navigate to the `javaapp...` web application in your `DevCamp` resource group:
+
+    ![image](./media/2017-06-16_13_49_00.png)
+
+1. Navigate to the application settings:
+
+    ![image](./media/image-26.gif)
+
+1. Note that the App Settings Keys have values pre-populated with the values required to consume the Azure services matching the values you found in the details of the Redis Cache instance:
+
+    ![image](./media/2017-06-16_13_53_00.png)
+
 
     While you are in the Redis blade, go to `Advanced Settings` and set `Allow access only via SSL` to `No`.  At the time of this writing, the Spring support for Redis does not support 
     SSL communication, however it is coming in the near future.
     
-    In Eclipse open the run configuration, click the environment tab
-    and add four variables for `REDISCACHE_HOSTNAME`,
+    In Eclipse open the run configuration, click the environment tab and add four variables for `REDISCACHE_HOSTNAME`,
     `REDISCACHE_PRIMARY_KEY`, `REDISCACHE_PORT`, and
-    `REDISCACHE_SSLPORT`.  Click apply and close.  Your environment variables should look like this:
+    `REDISCACHE_SSLPORT`.  Click `Apply` and `Close`.  Your environment variables should look like this:
 
-    ![image](./media/2016-10-24_21-33-35.gif)
+    ![image](./media/2017-06-20_12_49_00.png)
 
     We will use these variables to configure a Redis client.
 
@@ -650,9 +676,11 @@ and can easily use Azure Redis Cache to hold the data.
         }
     
     ```
+    
+    ![image](./media/2017-06-20_12_52_00.png)
 
-1. To add caching support to your Spring application, open the build.gradle
-   file and add the following entries under dependencies:
+1. To add caching support to your Spring application, open the `build.gradle` file and add the following entries under dependencies:
+
    ```java
     compile("javax.cache:cache-api")
     compile('org.springframework.data:spring-data-redis')
@@ -660,25 +688,23 @@ and can easily use Azure Redis Cache to hold the data.
     compile('org.springframework.boot:spring-boot-starter-cache')
     ```
 
-    To make sure that Eclipse knows about the new packages we added to
-    the buld, run the `ide/eclipse` gradle task in the `gradle tasks`
-    window. Then right-click on the project in the project explorer,
-    close the project, and then open it again.
+    To make sure that Eclipse knows about the new packages we added to the build, run the `ide/eclipse` gradle task in the `Gradle Tasks` window. Then right-click on the project in the project explorer, close the project, and then open it again. (See exercise 1 for further details.)
 
 1. In Spring, you can apply caching to a Spring
-   [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html), and we will be using the `devCamp.WebApp.services.IncidentService` that we created earlier.  Open that file up, and put a line with `@Cacheable("incidents")` above the getAllIncidentsAsync function declaration:
+   [Service](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html), and we will be using the `devCamp.WebApp.services.IncidentService` that we created earlier. Open that file up, and put a line with `@Cacheable("incidents")` above the `getAllIncidentsAsync` function declaration:
+   
    ```java
 	@Cacheable("incidents")
-	List<IncidentBean> getAllIncidents();   
+	List<IncidentBean> getAllIncidents();
    ```
-    The `@Cacheable` annotation tells spring that the
-    result of the GetAllIncidents is cachable and will automatically
-    use the cached version if available.  You will have to resolve the import for this annotation.
-
-    Before the createIncident, createIncidentAsync, and updateIncidentAsync functions, add a line with `@CacheEvict(cacheNames="incidents", allEntries=true)`.  This tells the Spring framework to clear out the entire cache when those functions are called - these are the ones that make changes to the Incident database.
    
-    We still have to configure Spring caching to use Azure Redis
-    Cache. To do this, create a new class
+   ![image](./media/2017-06-20_13_53_00.png)
+   
+    The `@Cacheable` annotation tells spring that the result of the `GetAllIncidents` is cachable and will automatically use the cached version if available. You might have to resolve the import for this annotation.
+
+    Before the `createIncident`, `createIncidentAsync`, and `updateIncidentAsync` functions, add a line with `@CacheEvict(cacheNames="incidents", allEntries=true)`. This tells the Spring framework to clear out the entire cache when those functions are called - these are the ones that make changes to the Incident database.
+   
+    We still have to configure Spring caching to use Azure Redis Cache. To do this, create a new class
     `devCamp.WebApp.configurations.CacheConfig.java` with this code:
 
     ```java
@@ -764,81 +790,60 @@ and can easily use Azure Redis Cache to hold the data.
         }
         
     }
-
     ```
 
-    There is a lot going on in this class.  The `@Configuration`
-    annotation tells Spring that this class declares one or more beans
-    that will generate bean and service definitions.  The
-    `@EnableCaching` annotation enables Spring's annotation driving
-    caching mechanism for the application.
+    There is a lot going on in this class.  The `@Configuration` annotation tells Spring that this class declares one or more beans that will generate bean and service definitions. The `@EnableCaching` annotation enables Spring's annotation driving caching mechanism for the application.
 
-    The `CacheConfig` class contains beans that will configure the
-    annotation driven caching. The `redisConnectionFactory` function
-    creates a new `JedisConnectionFactory` with the appropriate
-    connection to the Azure Redis cache. It also does a test to make
-    sure it is properly communicating with the cache.
+    The `CacheConfig` class contains beans that will configure the annotation driven caching. The `redisConnectionFactory` function creates a new `JedisConnectionFactory` with the appropriate
+    connection to the Azure Redis cache. It also does a test to make sure it is properly communicating with the cache.
 
-    The `cacheManager` function configures Spring to use the
-    redisConnectionFactory function to connect to the cache.  It also
-    configures the default cache expiration time to 300 seconds.
+    The `cacheManager` function configures Spring to use the redisConnectionFactory function to connect to the cache.  It also configures the default cache expiration time to 300 seconds.
 
-    All application requests for the dashboard will now first try to
-    use Azure Redis Cache. Under high traffic, this will improve page
-    performance and decrease the API's scaling needs.
+    All application requests for the dashboard will now first try to use Azure Redis Cache. Under high traffic, this will improve page performance and decrease the API's scaling needs.
 
-1. Finally enable caching for the application.  Open `devCamp.WebApp.DevcampApplication.java`, and add the annotation `@EnableCaching` for the class. You will also have to resolve the dependency for the EnableCaching annotation by importing `org.springframework.cache.annotation.EnableCaching`.
+1. Finally enable caching for the application. Open `devCamp.WebApp.DevcampApplication.java`, and add the annotation `@EnableCaching` for the class. You will also have to resolve the dependency for the EnableCaching annotation by importing `org.springframework.cache.annotation.EnableCaching`.
 
-1. To test the application using the Azure Redis Cache, note that in
-   the IncidentServiceImpl class, the `GetAllincidents` function has
+1. To test the application using the Azure Redis Cache, note that in the `devCamp.WebApp.services.IncidentServiceImpl` class, the `GetAllincidents` function has
    this code at the top:
 
    ```java
     LOG.info("Performing get {} web service", applicationProperties.getIncidentApiUrl() +"/incidents")
    ```
 
-   This will print a log message every time the API is called. Start
-   the application and in your browser go to
-   `http://localhost:8080/dashboard`. Look at your console out window
-   in Eclipse, it should end with a line that says (with your own API URL of course)
+   This will print a log message every time the API is called. Start the application and in your browser go to `http://localhost:8080/dashboard`. Look at your console out window in Eclipse, it should end with a line that says (with your own API URL of course)
 
    ```
-   Performing get http://incidentapi32csxy6h3sbku.azurewebsites.net/incidents web service
+   Performing get http://incidentapi[...].azurewebsites.net/incidents web service
    ```
 
 If you refresh your page in the browser, you should not get another log message, since the actual API code will not be called for 300 seconds. Go back to the main page `http://localhost:8080`, and then go to `dashboard`, and verify that you **dont't** get another log message that the web service is called.  This indicates that the dashboard information is being retrieved from the cache. 
 
-> if you refresh or click `Dashboard` before the previous request has completed, you may get two log messages indicating the web service has been called.  This is expected behavior, since the write to cache will happen when the request has completed.
+> If you refresh or click `Dashboard` before the previous request has completed, you may get two log messages indicating the web service has been called.  This is expected behavior, since the write to cache will happen when the request has completed.
 
 ---
-### Exercise 3: Write images to Azure Blob Storage
+## Exercise 3: Write images to Azure Blob Storage<a name="ex3"></a>
 
-When a new incident is reported, the user can attach a photo.  In this exercise we will process that image and upload it into an Azure Blob Storage Container.
+When a new incident is reported, the user can attach a photo. In this exercise we will process that image and upload it into an Azure Blob Storage Container.
 
-1. The [Azure Storage SDK](https://github.com/Azure/azure-storage-java) 
-    makes it easy to access Azure storage from within Azure applicatons.
-    First, lets establish environment variables that we can use in the applicaiton
-    for configuration.  To get the necessary values, open the [Azure Portal](https://portal.azrue.com) and open the Resource Group.  Select the Storage Account beginning with `incidentblobstg`.
+1. The [Azure Storage SDK](https://github.com/Azure/azure-storage-java)  makes it easy to access Azure storage from within Azure applications. First, lets establish environment variables that we can use in the application for configuration. To get the necessary values, open the [Azure Portal](https://portal.azrue.com) and open the Resource Group. Select the Storage Account beginning with `incidentblobstg`.
 
-    > The other storage accounts are used for diagnostics data and virtual machine disks
+    > The other storage accounts are used for diagnostics data and virtual machine disks.
 
-    ![image](./media/image-019.gif)
+    ![image](./media/2017-06-16_15_41_00.png)
 
-    Select **Access Keys** and note the **key1** for the storage account.
+    Select `Access Keys` and note the `key1` for the storage account.
 
-    ![image](./media/image-020.gif)
+    ![image](./media/2017-06-16_15_43_00.png)
 
-     In Eclipse open the run configuration, click the environment tab
-    and add the following environment variables:
-    * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource
-    * `AZURE_STORAGE_ACCESS_KEY` is **key1** from the Access Keys blade
-    * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containers to group 
-    sets of blobs together.  For this demo let's use `images` as the Container name
-    * `AZURE_STORAGE_QUEUE` is the name of the Azure Storage Queue resource.  For this demo we will use `thumbnails`.
+    In Eclipse open the run configuration, click the environment tab and add the following environment variables:
+    * `AZURE_STORAGE_ACCOUNT` is the name of the Azure Storage Account resource.
+    * `AZURE_STORAGE_ACCESS_KEY` is `key1` from the Access Keys blade.
+    * `AZURE_STORAGE_BLOB_CONTAINER` is the name of the container that will be used. Storage Accounts use containers to group sets of blobs together. For this demo let's use `images` as the Container name.
+    * `AZURE_STORAGE_QUEUE` is the name of the Azure Storage Queue resource. For this demo we will use `thumbnails`.
 
     Your `Run configurations` window in Eclipse should contain these environment variables:
 
-    ![image](./media/2016-10-24_22-02-32.gif)
+    ![image](./media/2017-06-26_10_37_00.png)
 
     Add the following lines to the dependencies in build.gradle:
     ```java
@@ -846,11 +851,9 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
     compile('com.microsoft.azure:azure-svc-mgmt-storage:0.9.5')
     ```
 
-    Run the `ide/eclipse` gradle task in the `gradle tasks`
-    window. Then right-click on the project in the project explorer,
-    close the project, and then open it again.
+    To make sure that Eclipse knows about the new packages we added to the build, run the `ide` -> `eclipse` gradle task in the `Gradle Tasks` window. Then right-click on the project in the project explorer, close the project, and then open it again. (See exercise 1 for further details.)
 
-1. To retrieve those configurations in our application, we already have variables set up in the `application.yml` file, but we still need to create a class to hold those values.  Create `devCamp.WebApp.properties.AzureStorageAccountProperties.java`, and paste in this code:
+1. To retrieve those configurations in our application, we already have variables set up in the `application.yml` file, but we still need to create a class to hold those values. Create `devCamp.WebApp.properties.AzureStorageAccountProperties.java`, and paste in this code:
     ```java
     package devCamp.WebApp.properties;
 
@@ -902,14 +905,9 @@ When a new incident is reported, the user can attach a photo.  In this exercise 
             return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
         }
     }
-    
     ```
 
-1. Today we are working with Azure Storage Blobs, but in the future we may 
-decide to extend our application use Azure Stage Tables or Azure Storage 
-Queues.  To better organize our code, let's create a storage interaction 
-class with an interface.  Create the interface `devCamp.WebApp.services.AzureStorageService.java` and 
-paste in the following code: 
+1. Today we are working with Azure Storage Blobs, but in the future we may decide to extend our application use Azure Stage Tables or Azure Storage Queues. To better organize our code, let's create a storage interaction class with an interface. Create the interface `devCamp.WebApp.services.AzureStorageService.java` and paste in the following code: 
 
     ```java
         package devCamp.WebApp.services;
@@ -930,11 +928,9 @@ paste in the following code:
             CompletableFuture<String> uploadFileToBlobStorageAsync(String IncidentId, String fileName, String contentType, byte[] fileBuffer);
 
         }
-
     ```
 
-    1. Now lets create the implementation for this class.  Create `devCamp.WebApp.services.AzureStorageServiceImpl.java` and 
-    paste in the following code: 
+1. Now lets create the implementation for this class. Create `devCamp.WebApp.services.AzureStorageServiceImpl.java` and paste in the following code: 
 
     ```java
         package devCamp.WebApp.services;
@@ -1040,21 +1036,19 @@ paste in the following code:
                 return String.format("%s.%s", IncidentId,fileExt);
             }
         }
-    
     ```
-    >This code calls the Azure storage APIs to create either a Blob or a queue entry.  Both of the functions are using the CompletableFuture async pattern so that the application doesn't have to wait for the operations to complete before continuing on.
+    > This code calls the Azure storage APIs to create either a Blob or a queue entry. Both of the functions are using the CompletableFuture async pattern so that the application doesn't have to wait for the operations to complete before continuing on.
 
 
-1. Now lets arrange for the controller that manages new incidents to call the Storage API.  Open up 
-`devCamp.WebApp.Controllers.IncidentController.java`.  
-    Add a class variable for the storage service under the one for IncidentService:
+1. Now lets arrange for the controller that manages new incidents to call the Storage API. Open up 
+`devCamp.WebApp.Controllers.IncidentController.java`. Add a class variable for the storage service under the one for `IncidentService`:
     ```java
     @Autowired
     private AzureStorageService storageService;
     ```
     Resolve the import for `AzureStorageService`.
 
-    Find the code inside the Create function:
+    Find the code inside the `Create` function:
     ```java
     if (fileName != null) {
     ```
@@ -1073,10 +1067,9 @@ paste in the following code:
                 LOG.info("Successfully uploaded file to blob storage, now adding message to queue");
                 storageService.addMessageToQueueAsync(incidentID, fileName);
             });
-    
     ```
 
-1. Finally, lets make sure the configuration class is created when the application starts.  Open `ApplicationConfig.java`, and add a line containing `AzureStorageAccountProperties.class` in the `@EnableConfigurationProperties` annotation and resolve the import for `AzureStorageAccountProperties`:
+1. Finally, lets make sure the configuration class is created when the application starts. Open `devCamp.WebApp.configurations.ApplicationConfig.java`, and add a line containing `AzureStorageAccountProperties.class` in the `@EnableConfigurationProperties` annotation and resolve the import for `AzureStorageAccountProperties`:
     ```java
     @Configuration
     @EnableConfigurationProperties(value = {
@@ -1115,33 +1108,37 @@ paste in the following code:
 
     Resolve the imports for `CloudStorageAccount`, `InvalidKeyException`, and `URISyntaxException`.
     
-1. We should be ready to test the storage changes at this point.  Run or debug the application within Eclipse, and open a browser window.  Before you go to the application, use your favorite search engine and download an image you can post with the incident. Then, navigate to `http://localhost:8080/new` (or click on Report Outage).  Fill out the form and hit the **Submit** button.
+1. We should be ready to test the storage changes at this point. Run or debug the application within Eclipse, and open a browser window. Before you go to the application, use your favorite search engine and download an image you can post with the incident. Then, navigate to `http://localhost:8080/new` (or click on Report Outage). Fill out the form and hit the `Submit` button.
 
     ![image](./media/image-021.gif)
 
     You should be redirected to the Dashboard screen, which will contain your new Incident.  
 
-1. Let's install the Microsoft Azure Storage Explorer.  Go to `http://storageexplorer.com/`, download the appropriate version of the azure storage explorer and install it.  When you run the Azure Storage Explorer, you will
-have to configure it with your storage account or azure subscription credentials to be able to connect to your Azure storage.
+1. Within your virtual machine, open the Azure Storage Explorer. If it has not been installed automatically you can download the setup from [storageexplorer.com](http://storageexplorer.com/).
+ 
+1. Connect it to your Azure Storage using your login data.
 
 1. In the Microsoft Azure Storage Explorer, navigate to your Storage Account and ensure that the blob was created.
 
-    ![image](./media/image-022.gif)
+    ![image](./media/2017-06-16_16_29_00.png)
 
-  You can also use the Azure Storage Explorer to view the `thumbnails` queue, and verify that there is an entry for the image we uploaded.  It is also safe to delete the images and queue entries using Azure Storage Explorer, and enter new Incidents for testing.
+    You can also use the Azure Storage Explorer to view the `thumbnails` queue, and verify that there is an entry for the image we uploaded. It is also safe to delete the images and queue entries using Azure Storage Explorer, and enter new Incidents for testing.
 
-Our application can now create new incidents and upload related images to Azure Blob Storage.  It will also put an 
-entry into an Azure queue, to invoke an image resizing process, for example. In a later demo, we'll show how 
-an [Azure Function](https://azure.microsoft.com/en-us/services/functions/) can be invoked via a queue entry to 
-do tasks such as this.
+Our application can now create new incidents and upload related images to Azure Blob Storage. It will also put an entry into an Azure queue, to invoke an image resizing process, for example. In a later demo, we'll show how an [Azure Function](https://azure.microsoft.com/en-us/services/functions/) can be invoked via a queue entry to do tasks such as this.
 
 ---
 ## Summary
-Our application started as a prototype on our local machine, but now uses a variety of Azure services.  We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
+Our application started as a prototype on our local machine, but now uses a variety of Azure services. We started by consuming data from an API hosted in Azure, optimized that data call by introducing Azure Redis Cache, and enabled the uploading of image files to the affordable and redundant Azure Storage. 
 
-After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs 
+In this hands-on lab, you learned how to:
+* Use Eclipse to connect to an Azure hosted ASP.NET WebAPI that queries a CosmosDB Collection and leveraging several Azure services at the same time.
+* Provision an Azure Web App to host the Web site.
+* Modify a view to add caching. This enables you to use the benefits of the Azure Redis Cache, reducing queries and increasing performance.
+* Modify code to add queuing and blob storage.
 
-#### View Module 3 instructions for [Java](../03-azuread-office365)
+After completing this module, you can continue on to Module 3: Identity with Azure AD and Office 365 APIs.
+
+### View Module 3 instructions for [Java](../03-azuread-office365).
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
